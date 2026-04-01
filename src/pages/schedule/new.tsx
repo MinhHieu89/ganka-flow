@@ -80,8 +80,15 @@ export default function ScheduleNew() {
       patientName,
       date: selectedDate,
       time: selectedTime,
+      endTime: (() => {
+        const [h, m] = selectedTime.split(":").map(Number)
+        const end = new Date(2026, 0, 1, h, m + 30)
+        return `${String(end.getHours()).padStart(2, "0")}:${String(end.getMinutes()).padStart(2, "0")}`
+      })(),
       reason: reason || undefined,
-      doctorName: selectedDoctor?.name,
+      doctorName: selectedDoctor?.name ?? "BS. Nguyễn Hải",
+      status: "upcoming",
+      phone: foundPatient?.phone,
     })
 
     addVisit({
