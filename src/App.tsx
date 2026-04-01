@@ -7,6 +7,7 @@ import { ReceptionistProvider } from "@/contexts/receptionist-context"
 import IntakeDashboard from "@/pages/intake/index"
 import IntakeNew from "@/pages/intake/new"
 import IntakeEdit from "@/pages/intake/edit"
+import ScheduleCalendar from "@/pages/schedule/index"
 import ScheduleNew from "@/pages/schedule/new"
 
 export function App() {
@@ -23,6 +24,7 @@ export function App() {
                 <Route path="/intake" element={<IntakeDashboard />} />
                 <Route path="/intake/new" element={<IntakeNew />} />
                 <Route path="/intake/:id/edit" element={<IntakeEdit />} />
+                <Route path="/schedule" element={<ScheduleCalendar />} />
                 <Route path="/schedule/new" element={<ScheduleNew />} />
               </Routes>
             </SidebarInset>
