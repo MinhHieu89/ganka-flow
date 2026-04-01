@@ -62,14 +62,14 @@ export function AppointmentPopover({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <div className="flex items-center gap-3">
-            <div className="bg-primary/10 text-primary flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
               {getInitials(appointment.patientName)}
             </div>
             <div>
               <DialogTitle className="text-base">
                 {appointment.patientName}
               </DialogTitle>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-sm text-muted-foreground">
                 {appointment.patientId}
               </p>
             </div>
@@ -78,7 +78,7 @@ export function AppointmentPopover({
 
         <div className="space-y-3 py-2">
           <div className="flex items-center gap-3">
-            <span className="text-muted-foreground w-16 shrink-0 text-sm">
+            <span className="w-16 shrink-0 text-sm text-muted-foreground">
               Trạng thái
             </span>
             <Badge
@@ -91,7 +91,7 @@ export function AppointmentPopover({
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="text-muted-foreground w-16 shrink-0 text-sm">
+            <span className="w-16 shrink-0 text-sm text-muted-foreground">
               Thời gian
             </span>
             <span className="text-sm">
@@ -101,7 +101,7 @@ export function AppointmentPopover({
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="text-muted-foreground w-16 shrink-0 text-sm">
+            <span className="w-16 shrink-0 text-sm text-muted-foreground">
               Bác sĩ
             </span>
             <div className="flex items-center gap-2">
@@ -117,7 +117,7 @@ export function AppointmentPopover({
 
           {appointment.reason && (
             <div className="flex items-center gap-3">
-              <span className="text-muted-foreground w-16 shrink-0 text-sm">
+              <span className="w-16 shrink-0 text-sm text-muted-foreground">
                 Lý do
               </span>
               <span className="text-sm">{appointment.reason}</span>
@@ -126,7 +126,7 @@ export function AppointmentPopover({
 
           {appointment.phone && (
             <div className="flex items-center gap-3">
-              <span className="text-muted-foreground w-16 shrink-0 text-sm">
+              <span className="w-16 shrink-0 text-sm text-muted-foreground">
                 SĐT
               </span>
               <span className="text-sm">{appointment.phone}</span>

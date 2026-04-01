@@ -72,21 +72,21 @@ export function DayView({
     <div>
       {/* Grid */}
       <div
-        className="border-border overflow-hidden rounded-lg border"
+        className="overflow-hidden rounded-lg border border-border"
         style={{
           display: "grid",
           gridTemplateColumns: `60px repeat(${mockDoctors.length}, 1fr)`,
         }}
       >
         {/* Header row */}
-        <div className="bg-muted/50 border-border border-b p-2" />
+        <div className="border-b border-border bg-muted/50 p-2" />
         {mockDoctors.map((doc) => {
           const colors = DOCTOR_COLORS[doc.name]
           const count = doctorCounts.get(doc.name) ?? 0
           return (
             <div
               key={doc.id}
-              className="bg-muted/50 border-border border-b border-l p-3 text-center"
+              className="border-b border-l border-border bg-muted/50 p-3 text-center"
             >
               <div className="flex items-center justify-center gap-2">
                 <span
@@ -97,7 +97,7 @@ export function DayView({
                 />
                 <span className="text-sm font-semibold">{doc.name}</span>
               </div>
-              <div className="text-muted-foreground mt-0.5 text-xs">
+              <div className="mt-0.5 text-xs text-muted-foreground">
                 {count} lịch hẹn
               </div>
             </div>
@@ -112,7 +112,7 @@ export function DayView({
               {/* Time label */}
               <div
                 className={cn(
-                  "border-border flex items-center justify-center border-b px-1 text-xs font-medium",
+                  "flex items-center justify-center border-b border-border px-1 text-xs font-medium",
                   "text-muted-foreground",
                   isHalfHour ? "border-dashed" : "border-solid",
                   slotIdx === timeSlots.length - 1 && "border-b-0"
@@ -133,7 +133,7 @@ export function DayView({
                   <div
                     key={doc.id}
                     className={cn(
-                      "group border-border relative border-b border-l",
+                      "group relative border-b border-l border-border",
                       isHalfHour ? "border-dashed" : "border-solid",
                       slotIdx === timeSlots.length - 1 && "border-b-0",
                       !hasAppointment && "cursor-pointer"
@@ -170,7 +170,7 @@ export function DayView({
                             {appt.patientName}
                           </div>
                           {appt.reason && (
-                            <div className="text-muted-foreground truncate text-[10px]">
+                            <div className="truncate text-[10px] text-muted-foreground">
                               {appt.reason}
                             </div>
                           )}
@@ -178,8 +178,8 @@ export function DayView({
                       ))
                     ) : (
                       <div className="flex h-full items-center justify-center">
-                        <div className="border-border/50 flex h-[calc(100%-8px)] w-[calc(100%-8px)] items-center justify-center rounded-md border border-dashed">
-                          <span className="text-muted-foreground text-xs opacity-0 transition-opacity group-hover:opacity-100">
+                        <div className="flex h-[calc(100%-8px)] w-[calc(100%-8px)] items-center justify-center rounded-md border border-dashed border-border/50">
+                          <span className="text-xs text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100">
                             + Đặt lịch
                           </span>
                         </div>
@@ -194,20 +194,18 @@ export function DayView({
       </div>
 
       {/* Summary bar */}
-      <div className="text-muted-foreground mt-3 flex items-center gap-4 text-xs">
+      <div className="mt-3 flex items-center gap-4 text-xs text-muted-foreground">
         <span>
-          <span className="text-foreground font-medium">
+          <span className="font-medium text-foreground">
             {totalAppointments}
           </span>{" "}
           lịch hẹn
         </span>
         <span>
-          <span className="text-foreground font-medium">{emptySlotCount}</span>{" "}
+          <span className="font-medium text-foreground">{emptySlotCount}</span>{" "}
           slot trống
         </span>
-        <span className="ml-auto">
-          Nhấn vào slot trống để đặt lịch hẹn mới
-        </span>
+        <span className="ml-auto">Nhấn vào slot trống để đặt lịch hẹn mới</span>
       </div>
     </div>
   )

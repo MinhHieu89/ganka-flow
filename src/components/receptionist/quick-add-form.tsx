@@ -153,9 +153,7 @@ export function QuickAddForm({
             <Label>Lý do khám</Label>
             <Textarea
               value={reason}
-              onChange={(e) =>
-                setReason(e.target.value.slice(0, 500))
-              }
+              onChange={(e) => setReason(e.target.value.slice(0, 500))}
               placeholder="Tái khám, khám mắt khô, đo khúc xạ..."
               maxLength={500}
               rows={3}

@@ -136,13 +136,10 @@ export function ScheduleCalendar() {
     setCurrentDate(TODAY)
   }, [])
 
-  const handleClickAppointment = useCallback(
-    (_appt: Appointment, _anchorEl: HTMLElement) => {
-      setPopoverAppt(_appt)
-      setPopoverOpen(true)
-    },
-    []
-  )
+  const handleClickAppointment = useCallback((appt: Appointment) => {
+    setPopoverAppt(appt)
+    setPopoverOpen(true)
+  }, [])
 
   const handleClickEmptySlot = useCallback(
     (date: string, time: string, doctor?: string) => {

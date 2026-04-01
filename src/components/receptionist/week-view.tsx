@@ -53,7 +53,11 @@ export function WeekView({
 
   for (const apt of appointments) {
     if (apt.status === "cancelled") continue
-    if (doctorFilter && doctorFilter !== "all" && apt.doctorName !== doctorFilter)
+    if (
+      doctorFilter &&
+      doctorFilter !== "all" &&
+      apt.doctorName !== doctorFilter
+    )
       continue
 
     const key = `${apt.date}_${apt.time}`
@@ -67,11 +71,11 @@ export function WeekView({
     <div className="flex flex-col gap-2">
       {/* Grid */}
       <div
-        className="border-border overflow-hidden rounded-lg border"
+        className="overflow-hidden rounded-lg border border-border"
         style={{ display: "grid", gridTemplateColumns: "60px repeat(6, 1fr)" }}
       >
         {/* Header row */}
-        <div className="bg-muted/50 border-border border-b p-2" />
+        <div className="border-b border-border bg-muted/50 p-2" />
         {weekDates.map((date) => {
           const d = new Date(date + "T00:00:00")
           const dayOfWeek = d.getDay()
@@ -83,11 +87,11 @@ export function WeekView({
           return (
             <div
               key={date}
-              className="bg-muted/50 border-border flex flex-col items-center justify-center border-b border-l py-2"
+              className="flex flex-col items-center justify-center border-b border-l border-border bg-muted/50 py-2"
             >
               <span
                 className={cn(
-                  "text-muted-foreground text-xs font-medium",
+                  "text-xs font-medium text-muted-foreground",
                   isWeekend && "text-amber-500"
                 )}
               >
@@ -96,8 +100,7 @@ export function WeekView({
               <span
                 className={cn(
                   "mt-0.5 flex h-7 w-7 items-center justify-center text-sm font-semibold",
-                  isToday &&
-                    "bg-primary text-primary-foreground rounded-full"
+                  isToday && "rounded-full bg-primary text-primary-foreground"
                 )}
               >
                 {dayNum}
@@ -115,11 +118,11 @@ export function WeekView({
               {/* Time label */}
               <div
                 className={cn(
-                  "border-border flex items-start justify-end border-b px-2 pt-1",
+                  "flex items-start justify-end border-b border-border px-2 pt-1",
                   isHalfHour && "border-dashed"
                 )}
               >
-                <span className="text-muted-foreground text-xs">{time}</span>
+                <span className="text-xs text-muted-foreground">{time}</span>
               </div>
 
               {/* Day cells */}
@@ -132,7 +135,7 @@ export function WeekView({
                   <div
                     key={`${date}_${time}`}
                     className={cn(
-                      "border-border min-h-[48px] cursor-pointer border-b border-l p-0.5 transition-colors",
+                      "min-h-[48px] cursor-pointer border-b border-l border-border p-0.5 transition-colors",
                       isHalfHour && "border-dashed",
                       !isValid && "bg-muted/30",
                       isValid && "hover:bg-accent/50"
@@ -144,13 +147,12 @@ export function WeekView({
                     }}
                   >
                     {cellAppointments.map((apt) => {
-                      const colors =
-                        DOCTOR_COLORS[apt.doctorName] ?? {
-                          bg: "bg-gray-50 dark:bg-gray-950/30",
-                          border: "border-gray-200 dark:border-gray-800",
-                          text: "text-gray-800 dark:text-gray-300",
-                          dot: "bg-gray-500",
-                        }
+                      const colors = DOCTOR_COLORS[apt.doctorName] ?? {
+                        bg: "bg-gray-50 dark:bg-gray-950/30",
+                        border: "border-gray-200 dark:border-gray-800",
+                        text: "text-gray-800 dark:text-gray-300",
+                        dot: "bg-gray-500",
+                      }
 
                       return (
                         <button
@@ -184,13 +186,16 @@ export function WeekView({
       </div>
 
       {/* Legend bar */}
-      <div className="text-muted-foreground flex items-center gap-4 px-1 text-xs">
+      <div className="flex items-center gap-4 px-1 text-xs text-muted-foreground">
         {mockDoctors.map((doc) => {
           const colors = DOCTOR_COLORS[doc.name]
           return (
             <div key={doc.id} className="flex items-center gap-1.5">
               <span
-                className={cn("inline-block h-2.5 w-2.5 rounded-full", colors?.dot)}
+                className={cn(
+                  "inline-block h-2.5 w-2.5 rounded-full",
+                  colors?.dot
+                )}
               />
               <span>{doc.name}</span>
             </div>

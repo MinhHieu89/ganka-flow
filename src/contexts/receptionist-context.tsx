@@ -112,9 +112,7 @@ export function ReceptionistProvider({ children }: { children: ReactNode }) {
   function cancelAppointment(appointmentId: string) {
     setAppointments((prev) =>
       prev.map((a) =>
-        a.id === appointmentId
-          ? { ...a, status: "cancelled" as const }
-          : a
+        a.id === appointmentId ? { ...a, status: "cancelled" as const } : a
       )
     )
   }
