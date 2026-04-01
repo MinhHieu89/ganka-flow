@@ -1,9 +1,16 @@
+import { useParams, Navigate } from "react-router"
+import { useReceptionist } from "@/contexts/receptionist-context"
+import { IntakeForm } from "@/components/receptionist/intake-form"
+
 export default function IntakeEdit() {
-  return (
-    <div className="flex flex-1 items-center justify-center p-4">
-      <h1 className="text-2xl font-semibold text-muted-foreground">
-        Sửa thông tin BN — đang xây dựng
-      </h1>
-    </div>
-  )
+  const { id } = useParams<{ id: string }>()
+  const { getPatient } = useReceptionist()
+
+  const patient = id ? getPatient(id) : undefined
+
+  if (!patient) {
+    return <Navigate to="/intake" replace />
+  }
+
+  return <IntakeForm patient={patient} />
 }
