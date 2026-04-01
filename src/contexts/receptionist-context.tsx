@@ -23,6 +23,7 @@ interface ReceptionistContextType {
   cancelVisit: (visitId: string) => void
   checkInVisit: (visitId: string) => void
   addAppointment: (appointment: Omit<Appointment, "id">) => void
+  cancelAppointment: (appointmentId: string) => void
 }
 
 const ReceptionistContext = createContext<ReceptionistContextType | null>(null)
@@ -108,6 +109,16 @@ export function ReceptionistProvider({ children }: { children: ReactNode }) {
     setAppointments((prev) => [...prev, newAppointment])
   }
 
+  function cancelAppointment(appointmentId: string) {
+    setAppointments((prev) =>
+      prev.map((a) =>
+        a.id === appointmentId
+          ? { ...a, status: "cancelled" as const }
+          : a
+      )
+    )
+  }
+
   return (
     <ReceptionistContext.Provider
       value={{
@@ -124,6 +135,7 @@ export function ReceptionistProvider({ children }: { children: ReactNode }) {
         cancelVisit,
         checkInVisit,
         addAppointment,
+        cancelAppointment,
       }}
     >
       {children}
