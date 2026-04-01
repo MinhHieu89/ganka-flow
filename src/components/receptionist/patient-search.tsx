@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useMemo } from "react"
 import { Input } from "@/components/ui/input"
 import { useReceptionist } from "@/contexts/receptionist-context"
 import type { Patient } from "@/data/mock-patients"
@@ -16,19 +16,15 @@ export function PatientSearch({
 }: PatientSearchProps) {
   const { searchPatients } = useReceptionist()
   const [query, setQuery] = useState("")
-  const [results, setResults] = useState<Patient[]>([])
   const [isOpen, setIsOpen] = useState(false)
   const wrapperRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    if (query.length >= 2) {
-      setResults(searchPatients(query))
-      setIsOpen(true)
-    } else {
-      setResults([])
-      setIsOpen(false)
-    }
+  const results = useMemo(() => {
+    if (query.length >= 2) return searchPatients(query)
+    return []
   }, [query, searchPatients])
+
+  const showDropdown = isOpen && query.length >= 2
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -48,16 +44,19 @@ export function PatientSearch({
       <div className="relative">
         <HugeiconsIcon
           icon={Search01Icon}
-          className="absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
+          className="absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground"
         />
         <Input
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            setQuery(e.target.value)
+            setIsOpen(true)
+          }}
           placeholder={placeholder}
           className="pl-9"
         />
       </div>
-      {isOpen && results.length > 0 && (
+      {showDropdown && results.length > 0 && (
         <div className="absolute z-50 mt-1 w-full rounded-md border border-border bg-popover shadow-md">
           {results.map((patient) => (
             <button
@@ -79,7 +78,7 @@ export function PatientSearch({
           ))}
         </div>
       )}
-      {isOpen && query.length >= 2 && results.length === 0 && (
+      {showDropdown && results.length === 0 && (
         <div className="absolute z-50 mt-1 w-full rounded-md border border-border bg-popover p-3 text-sm text-muted-foreground shadow-md">
           Không tìm thấy bệnh nhân
         </div>

@@ -1,0 +1,257 @@
+<h2>Section 5: Appointment Booking — /schedule/new</h2>
+<p class="subtitle">Two-column layout: patient info left, calendar + slots right</p>
+
+<div class="mockup" style="margin-bottom: 28px;">
+  <div class="mockup-header">/schedule/new — Đặt lịch hẹn (Existing Patient)</div>
+  <div class="mockup-body" style="padding: 32px 40px; font-family: system-ui, -apple-system, sans-serif; background: #fff;">
+
+    <!-- Search bar -->
+    <div style="margin-bottom: 20px;">
+      <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Tìm bệnh nhân</div>
+      <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af; display: flex; align-items: center; gap: 8px; max-width: 400px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Nhập SĐT hoặc tên BN...
+      </div>
+    </div>
+
+    <!-- Green found banner -->
+    <div style="padding: 10px 14px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; font-size: 13px; color: #15803d; margin-bottom: 24px; display: flex; align-items: center; gap: 8px;">
+      <span>✓</span>
+      <span>Đã tìm thấy: <strong>Trần Thị Bình</strong> (1992)</span>
+    </div>
+
+    <!-- Two-column layout -->
+    <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 32px;">
+
+      <!-- Left: Patient info + form fields -->
+      <div>
+        <!-- Patient card (read-only) -->
+        <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 10px; padding: 18px; margin-bottom: 20px;">
+          <div style="font-size: 12px; font-weight: 500; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">Thông tin bệnh nhân</div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 13px;">
+            <div><span style="color: #9ca3af;">Họ tên</span><div style="font-weight: 600; color: #111; margin-top: 2px;">Trần Thị Bình</div></div>
+            <div><span style="color: #9ca3af;">SĐT</span><div style="font-weight: 600; color: #111; margin-top: 2px;">0987 654 321</div></div>
+            <div><span style="color: #9ca3af;">Năm sinh</span><div style="font-weight: 600; color: #111; margin-top: 2px;">1992</div></div>
+            <div><span style="color: #9ca3af;">Giới tính</span><div style="font-weight: 600; color: #111; margin-top: 2px;">Nữ</div></div>
+          </div>
+          <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #e5e7eb; font-size: 12px;">
+            <span style="color: #9ca3af;">Lần khám gần nhất</span>
+            <div style="color: #374151; margin-top: 2px;">15/01/2026 — Khô mắt — BS. Nguyễn Hải</div>
+          </div>
+        </div>
+
+        <!-- Lý do khám -->
+        <div style="margin-bottom: 18px;">
+          <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Lý do khám <span style="color: #e11d48;">*</span></div>
+          <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #9ca3af; min-height: 60px;">Nhập lý do khám...</div>
+          <div style="text-align: right; font-size: 11px; color: #9ca3af; margin-top: 4px;">0/500</div>
+        </div>
+
+        <!-- Bác sĩ chỉ định -->
+        <div style="margin-bottom: 18px;">
+          <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Bác sĩ chỉ định</div>
+          <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #374151; display: flex; justify-content: space-between; align-items: center;">BS. Nguyễn Hải <span style="color: #9ca3af;">⌄</span></div>
+          <div style="font-size: 11px; color: #9ca3af; margin-top: 4px; font-style: italic;">Mặc định: bác sĩ lần khám trước</div>
+        </div>
+
+        <!-- Ghi chú -->
+        <div>
+          <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Ghi chú</div>
+          <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af;">Ghi chú thêm cho lịch hẹn...</div>
+        </div>
+      </div>
+
+      <!-- Right: Calendar + Time slots -->
+      <div>
+        <!-- Mini calendar -->
+        <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 10px; padding: 18px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <span style="color: #9ca3af; cursor: pointer;">←</span>
+            <div style="font-size: 14px; font-weight: 600; color: #111;">Tháng 4, 2026</div>
+            <span style="color: #9ca3af; cursor: pointer;">→</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; font-size: 12px;">
+            <div style="color: #9ca3af; font-weight: 500; padding: 6px;">T2</div>
+            <div style="color: #9ca3af; font-weight: 500; padding: 6px;">T3</div>
+            <div style="color: #9ca3af; font-weight: 500; padding: 6px;">T4</div>
+            <div style="color: #9ca3af; font-weight: 500; padding: 6px;">T5</div>
+            <div style="color: #9ca3af; font-weight: 500; padding: 6px;">T6</div>
+            <div style="color: #9ca3af; font-weight: 500; padding: 6px;">T7</div>
+            <div style="color: #9ca3af; font-weight: 500; padding: 6px;">CN</div>
+            <!-- Week 1 -->
+            <div style="padding: 6px; color: #d1d5db;"></div>
+            <div style="padding: 6px; color: #d1d5db; text-decoration: line-through;">1</div>
+            <div style="padding: 6px; color: #374151;">2</div>
+            <div style="padding: 6px; color: #374151;">3</div>
+            <div style="padding: 6px; color: #374151;">4</div>
+            <div style="padding: 6px; color: #374151;">5</div>
+            <div style="padding: 6px; color: #374151;">6</div>
+            <!-- Week 2 -->
+            <div style="padding: 6px; color: #d1d5db; text-decoration: line-through;">7</div>
+            <div style="padding: 6px; color: #374151;">8</div>
+            <div style="padding: 6px; color: #374151;">9</div>
+            <div style="padding: 6px; background: #18181b; color: white; border-radius: 6px; font-weight: 600;">10</div>
+            <div style="padding: 6px; color: #374151;">11</div>
+            <div style="padding: 6px; color: #374151;">12</div>
+            <div style="padding: 6px; color: #374151;">13</div>
+            <!-- Week 3 -->
+            <div style="padding: 6px; color: #d1d5db; text-decoration: line-through;">14</div>
+            <div style="padding: 6px; color: #374151;">15</div>
+            <div style="padding: 6px; color: #374151;">16</div>
+            <div style="padding: 6px; color: #374151;">17</div>
+            <div style="padding: 6px; color: #374151;">18</div>
+            <div style="padding: 6px; color: #374151;">19</div>
+            <div style="padding: 6px; color: #374151;">20</div>
+            <!-- Week 4 -->
+            <div style="padding: 6px; color: #d1d5db; text-decoration: line-through;">21</div>
+            <div style="padding: 6px; color: #374151;">22</div>
+            <div style="padding: 6px; color: #374151;">23</div>
+            <div style="padding: 6px; color: #374151;">24</div>
+            <div style="padding: 6px; color: #374151;">25</div>
+            <div style="padding: 6px; color: #374151;">26</div>
+            <div style="padding: 6px; color: #374151;">27</div>
+            <!-- Week 5 -->
+            <div style="padding: 6px; color: #d1d5db; text-decoration: line-through;">28</div>
+            <div style="padding: 6px; color: #374151;">29</div>
+            <div style="padding: 6px; color: #374151;">30</div>
+            <div style="padding: 6px;"></div>
+            <div style="padding: 6px;"></div>
+            <div style="padding: 6px;"></div>
+            <div style="padding: 6px;"></div>
+          </div>
+          <div style="margin-top: 10px; display: flex; gap: 14px; font-size: 11px; color: #9ca3af;">
+            <span><span style="text-decoration: line-through;">—</span> T2 nghỉ</span>
+            <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 8px; background: #18181b; border-radius: 2px; display: inline-block;"></span> Đang chọn</span>
+          </div>
+        </div>
+
+        <!-- Time slots -->
+        <div>
+          <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 10px;">Chọn giờ — Thứ 6, 10/04/2026</div>
+          <div style="font-size: 12px; color: #9ca3af; margin-bottom: 12px;">Mỗi slot 30 phút • Tối đa 3 BN/slot</div>
+
+          <!-- Morning slots -->
+          <div style="font-size: 11px; font-weight: 500; color: #9ca3af; text-transform: uppercase; margin-bottom: 8px;">Sáng</div>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 14px;">
+            <div style="padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; text-align: center; font-size: 12px; color: #374151; cursor: pointer;">08:00</div>
+            <div style="padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; text-align: center; font-size: 12px; color: #374151; cursor: pointer;">08:30</div>
+            <div style="padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; text-align: center; font-size: 12px; color: #374151; cursor: pointer;">09:00</div>
+            <div style="padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; text-align: center; font-size: 12px; color: #d1d5db; background: #f9fafb; cursor: not-allowed;">09:30 <span style="font-size: 10px;">đầy</span></div>
+            <div style="padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; text-align: center; font-size: 12px; color: #374151; cursor: pointer;">10:00</div>
+            <div style="padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; text-align: center; font-size: 12px; color: #374151; cursor: pointer;">10:30</div>
+            <div style="padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; text-align: center; font-size: 12px; color: #374151; cursor: pointer;">11:00</div>
+            <div style="padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; text-align: center; font-size: 12px; color: #374151; cursor: pointer;">11:30</div>
+          </div>
+
+          <!-- Afternoon slots -->
+          <div style="font-size: 11px; font-weight: 500; color: #9ca3af; text-transform: uppercase; margin-bottom: 8px;">Chiều</div>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 14px;">
+            <div style="padding: 8px; border: 2px solid #18181b; border-radius: 6px; text-align: center; font-size: 12px; color: #111; font-weight: 600; background: #f5f5f5;">13:00</div>
+            <div style="padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; text-align: center; font-size: 12px; color: #374151; cursor: pointer;">13:30</div>
+            <div style="padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; text-align: center; font-size: 12px; color: #374151; cursor: pointer;">14:00</div>
+            <div style="padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; text-align: center; font-size: 12px; color: #374151; cursor: pointer;">14:30</div>
+            <div style="padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; text-align: center; font-size: 12px; color: #374151; cursor: pointer;">15:00</div>
+            <div style="padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; text-align: center; font-size: 12px; color: #374151; cursor: pointer;">15:30</div>
+            <div style="padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; text-align: center; font-size: 12px; color: #374151; cursor: pointer;">16:00</div>
+            <div style="padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; text-align: center; font-size: 12px; color: #374151; cursor: pointer;">16:30</div>
+          </div>
+
+          <!-- Legend -->
+          <div style="display: flex; gap: 16px; font-size: 11px; color: #9ca3af;">
+            <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 12px; height: 12px; border: 1px solid #e5e7eb; border-radius: 3px; display: inline-block;"></span> Trống</span>
+            <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 12px; height: 12px; border: 2px solid #18181b; border-radius: 3px; background: #f5f5f5; display: inline-block;"></span> Đang chọn</span>
+            <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 12px; height: 12px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 3px; display: inline-block;"></span> Đầy</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Confirmation bar -->
+    <div style="margin-top: 24px; padding: 14px 18px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
+      <div style="font-size: 13px; color: #374151;">
+        <strong>Trần Thị Bình</strong> — Thứ 6, 10/04/2026 lúc <strong>13:00</strong> — BS. Nguyễn Hải
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <div style="padding: 8px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 13px; color: #6b7280; cursor: pointer;">Hủy</div>
+        <div style="padding: 8px 16px; background: #18181b; color: white; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;">Xác nhận đặt hẹn</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- New patient variant -->
+<div class="mockup">
+  <div class="mockup-header">/schedule/new — Đặt lịch hẹn (New Patient — search not found)</div>
+  <div class="mockup-body" style="padding: 32px 40px; font-family: system-ui, -apple-system, sans-serif; background: #fff;">
+
+    <!-- Search bar -->
+    <div style="margin-bottom: 20px;">
+      <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Tìm bệnh nhân</div>
+      <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #374151; display: flex; align-items: center; gap: 8px; max-width: 400px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        0901234567
+      </div>
+    </div>
+
+    <!-- Yellow not found banner -->
+    <div style="padding: 10px 14px; background: #fefce8; border: 1px solid #fde68a; border-radius: 8px; font-size: 13px; color: #a16207; margin-bottom: 24px; display: flex; align-items: center; gap: 8px;">
+      <span>⚠</span>
+      <span>Không tìm thấy bệnh nhân. Nhập thông tin cơ bản để đặt hẹn.</span>
+    </div>
+
+    <!-- Two-column layout -->
+    <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 32px;">
+
+      <!-- Left: Editable minimal fields -->
+      <div>
+        <div style="margin-bottom: 18px;">
+          <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Họ tên <span style="color: #e11d48;">*</span></div>
+          <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af;">Nhập họ tên...</div>
+        </div>
+        <div style="margin-bottom: 18px;">
+          <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">SĐT <span style="color: #e11d48;">*</span></div>
+          <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #374151;">0901234567</div>
+        </div>
+        <div style="margin-bottom: 18px;">
+          <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Lý do khám <span style="color: #e11d48;">*</span></div>
+          <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #9ca3af; min-height: 60px;">Nhập lý do khám...</div>
+        </div>
+        <div style="margin-bottom: 18px;">
+          <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Bác sĩ chỉ định</div>
+          <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af; display: flex; justify-content: space-between; align-items: center;">Chọn bác sĩ... <span style="color: #9ca3af;">⌄</span></div>
+        </div>
+        <div>
+          <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Ghi chú</div>
+          <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af;">Ghi chú thêm...</div>
+        </div>
+
+        <!-- Info note -->
+        <div style="margin-top: 16px; padding: 10px 14px; background: #eff6ff; border-radius: 8px; font-size: 12px; color: #1d4ed8; display: flex; gap: 8px; align-items: flex-start;">
+          <span>ℹ</span>
+          <span>BN mới sẽ được tạo hồ sơ tạm. Hoàn tất hồ sơ đầy đủ khi check-in.</span>
+        </div>
+      </div>
+
+      <!-- Right: Calendar + Time slots (same as above, placeholder) -->
+      <div style="display: flex; align-items: center; justify-content: center; background: #f9fafb; border: 1px dashed #e5e7eb; border-radius: 10px; min-height: 300px; color: #9ca3af; font-size: 13px;">
+        Lịch + khung giờ (giống phần trên)
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="section" style="margin-top: 20px;">
+  <h3>Appointment Form Behavior</h3>
+  <ul style="line-height: 1.8; color: #475569;">
+    <li><strong>Search first</strong> — type phone/name, autocomplete dropdown shows matches</li>
+    <li><strong>Existing patient</strong> — green banner, read-only card, doctor defaults to last visit's doctor</li>
+    <li><strong>New patient</strong> — yellow banner, editable fields (name, phone, reason required), creates temp patient record</li>
+    <li><strong>Calendar</strong> — month view, Mondays struck through (clinic closed), past dates disabled</li>
+    <li><strong>Time slots</strong> — morning/afternoon groups, 30-min intervals, "đầy" for full slots</li>
+    <li><strong>Confirmation bar</strong> — summary for lễ tân to read to patient on phone before confirming</li>
+  </ul>
+</div>

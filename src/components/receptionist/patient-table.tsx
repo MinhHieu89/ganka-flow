@@ -8,12 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useReceptionist } from "@/contexts/receptionist-context"
-import {
-  STATUS_CONFIG,
-  SOURCE_CONFIG,
-  type Visit,
-  type PatientStatus,
-} from "@/data/mock-patients"
+import { STATUS_CONFIG, SOURCE_CONFIG, type Visit } from "@/data/mock-patients"
 import { ActionMenu } from "./action-menu"
 
 type SortField = "name" | "birthYear" | "scheduledAt" | "source" | "status"
@@ -59,9 +54,7 @@ export function PatientTable({
         cmp = (patA?.birthYear ?? 0) - (patB?.birthYear ?? 0)
         break
       case "scheduledAt":
-        cmp = (a.scheduledAt ?? "99:99").localeCompare(
-          b.scheduledAt ?? "99:99"
-        )
+        cmp = (a.scheduledAt ?? "99:99").localeCompare(b.scheduledAt ?? "99:99")
         break
       case "source":
         cmp = a.source.localeCompare(b.source)
@@ -147,9 +140,7 @@ export function PatientTable({
                 </span>
               </TableCell>
               <TableCell
-                className={
-                  !visit.reason ? "italic text-muted-foreground" : ""
-                }
+                className={!visit.reason ? "text-muted-foreground italic" : ""}
               >
                 {visit.reason || "Chưa rõ"}
               </TableCell>

@@ -128,7 +128,7 @@ export default function ScheduleNew() {
           <div className="relative mb-3">
             <HugeiconsIcon
               icon={Search01Icon}
-              className="absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
+              className="absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground"
             />
             <Input
               value={searchQuery}
@@ -255,7 +255,7 @@ export default function ScheduleNew() {
 
       {/* Confirmation bar */}
       <ConfirmationBar
-        patientName={foundPatient?.name ?? newName || null}
+        patientName={(foundPatient?.name ?? newName) || null}
         date={selectedDate}
         time={selectedTime}
         reason={reason || null}

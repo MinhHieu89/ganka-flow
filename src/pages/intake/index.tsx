@@ -9,7 +9,11 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useReceptionist } from "@/contexts/receptionist-context"
-import { type PatientStatus, type Patient, type Visit } from "@/data/mock-patients"
+import {
+  type PatientStatus,
+  type Patient,
+  type Visit,
+} from "@/data/mock-patients"
 import { KpiCards } from "@/components/receptionist/kpi-cards"
 import { StatusFilters } from "@/components/receptionist/status-filters"
 import { PatientTable } from "@/components/receptionist/patient-table"
@@ -17,15 +21,17 @@ import { PatientSearch } from "@/components/receptionist/patient-search"
 import { CheckinModal } from "@/components/receptionist/checkin-modal"
 import { WalkinModal } from "@/components/receptionist/walkin-modal"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { Calendar01Icon, UserAdd01Icon, Refresh01Icon } from "@hugeicons/core-free-icons"
+import {
+  Calendar01Icon,
+  UserAdd01Icon,
+  Refresh01Icon,
+} from "@hugeicons/core-free-icons"
 
 export default function IntakeDashboard() {
   const navigate = useNavigate()
   const { todayVisits, cancelVisit } = useReceptionist()
 
-  const [activeFilter, setActiveFilter] = useState<PatientStatus | "all">(
-    "all"
-  )
+  const [activeFilter, setActiveFilter] = useState<PatientStatus | "all">("all")
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
 
@@ -44,7 +50,8 @@ export default function IntakeDashboard() {
     all: todayVisits.length,
     chua_den: todayVisits.filter((v) => v.status === "chua_den").length,
     cho_kham: todayVisits.filter((v) => v.status === "cho_kham").length,
-    dang_sang_loc: todayVisits.filter((v) => v.status === "dang_sang_loc").length,
+    dang_sang_loc: todayVisits.filter((v) => v.status === "dang_sang_loc")
+      .length,
     dang_kham: todayVisits.filter((v) => v.status === "dang_kham").length,
     hoan_thanh: todayVisits.filter((v) => v.status === "hoan_thanh").length,
     da_huy: todayVisits.filter((v) => v.status === "da_huy").length,

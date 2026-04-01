@@ -1,0 +1,79 @@
+<h2>PROJECT.md Structure</h2>
+<p class="subtitle">Choose how to organize the living project tracker</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Module-First Structure</h3>
+      <p>Organized by system module. Each module section has its own scope, business rules, status, and decisions.</p>
+      <pre style="font-size:0.8em; opacity:0.8; margin-top:8px;">
+1. Project Overview (clinic, team, tech stack)
+2. Phase Roadmap (what's in/out per phase)
+3. Modules
+   ├── Patient Intake
+   ├── Pre-Exam (Screening)
+   ├── EMR (Doctor Exam)
+   ├── Dry Eye System
+   ├── Reporting
+   ├── Pharmacy (future)
+   ├── Optical Center (future)
+   └── Online Sales (deferred)
+4. Cross-Cutting Concerns (roles, data rules, notifications)
+5. Key Decisions Log
+6. Current Status</pre>
+      <div class="pros-cons" style="margin-top:12px;">
+        <div class="pros"><h4>Pros</h4><ul><li>Easy to find module-specific rules</li><li>Maps to how developers work on features</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Cross-module workflows (e.g. payment flow) split across sections</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Phase-First Structure</h3>
+      <p>Organized by implementation phase. Each phase has its modules, scope, and acceptance criteria.</p>
+      <pre style="font-size:0.8em; opacity:0.8; margin-top:8px;">
+1. Project Overview (clinic, team, tech stack)
+2. System Architecture (modules, data rules, roles)
+3. Phase 1: Clinical Core
+   ├── Scope & modules
+   ├── Business rules
+   └── Acceptance criteria
+4. Phase 2: Operations
+   ├── Pharmacy, Optical Center, Payments
+   └── ...
+5. Phase 3: Online & Integration
+6. Key Decisions Log
+7. Current Status</pre>
+      <div class="pros-cons" style="margin-top:12px;">
+        <div class="pros"><h4>Pros</h4><ul><li>Clear delivery roadmap</li><li>Easy to track "what's next"</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Module rules scattered across phases</li><li>Harder to reference a single module's full spec</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Hybrid: Overview + Modules + Phases</h3>
+      <p>Modules define WHAT (business rules & scope). Phases define WHEN (delivery order). Best of both.</p>
+      <pre style="font-size:0.8em; opacity:0.8; margin-top:8px;">
+1. Project Overview
+2. System Modules (full business rules per module)
+3. Data & Architecture Rules
+4. Roles & Permissions
+5. Phase Roadmap (which modules/features per phase)
+   ├── Phase 1: Clinical Core (current)
+   ├── Phase 2: Operations
+   └── Phase 3: Online & Integration
+6. Key Decisions Log
+7. Current Status & Next Steps</pre>
+      <div class="pros-cons" style="margin-top:12px;">
+        <div class="pros"><h4>Pros</h4><ul><li>Module rules in one place</li><li>Delivery plan clearly separated</li><li>Recommended for living doc</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Slightly longer document</li></ul></div>
+      </div>
+    </div>
+  </div>
+</div>

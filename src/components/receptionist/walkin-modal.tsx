@@ -19,11 +19,7 @@ interface WalkinModalProps {
   onOpenChange: (open: boolean) => void
 }
 
-export function WalkinModal({
-  patient,
-  open,
-  onOpenChange,
-}: WalkinModalProps) {
+export function WalkinModal({ patient, open, onOpenChange }: WalkinModalProps) {
   const { addVisit } = useReceptionist()
   const navigate = useNavigate()
   const [reason, setReason] = useState("")

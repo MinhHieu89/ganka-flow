@@ -1,0 +1,152 @@
+<h2>Section 4 (v2): Patient Intake Form — /intake/new</h2>
+<p class="subtitle">Matching reference screenshots — spacious layout, icon section headers, VD placeholders</p>
+
+<div class="mockup">
+  <div class="mockup-header">/intake/new — Tiếp nhận bệnh nhân</div>
+  <div class="mockup-body" style="padding: 32px 40px; font-family: system-ui, -apple-system, sans-serif; background: #fff;">
+
+    <!-- Section 1: Thông tin cá nhân -->
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+      <div style="font-size: 17px; font-weight: 700; color: #111;">Thông tin cá nhân</div>
+    </div>
+    <div style="border-top: 1px solid #e5e7eb; margin-bottom: 20px;"></div>
+
+    <!-- Row 1: Họ và tên (wide) + Giới tính -->
+    <div style="display: grid; grid-template-columns: 2.5fr 1fr; gap: 24px; margin-bottom: 18px;">
+      <div>
+        <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Họ và tên <span style="color: #e11d48;">*</span></div>
+        <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af;">Nhập họ và tên đầy đủ</div>
+      </div>
+      <div>
+        <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Giới tính <span style="color: #e11d48;">*</span></div>
+        <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af; display: flex; justify-content: space-between; align-items: center;"><span>&nbsp;</span> <span style="color: #9ca3af;">⌄</span></div>
+      </div>
+    </div>
+
+    <!-- Row 2: Ngày sinh + SĐT + Email -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-bottom: 18px;">
+      <div>
+        <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Ngày sinh <span style="color: #e11d48;">*</span></div>
+        <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af; display: flex; align-items: center; gap: 8px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          dd/mm/yyyy
+        </div>
+      </div>
+      <div>
+        <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Số điện thoại <span style="color: #e11d48;">*</span></div>
+        <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af;">&nbsp;</div>
+      </div>
+      <div>
+        <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Email</div>
+        <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af;">&nbsp;</div>
+      </div>
+    </div>
+
+    <!-- Row 3: Địa chỉ (full width) -->
+    <div style="margin-bottom: 18px;">
+      <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Địa chỉ</div>
+      <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af;">&nbsp;</div>
+    </div>
+
+    <!-- Row 4: Nghề nghiệp + Số CCCD -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px;">
+      <div>
+        <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Nghề nghiệp</div>
+        <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af;">VD: Nhân viên văn phòng</div>
+      </div>
+      <div>
+        <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Số CCCD</div>
+        <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af;">&nbsp;</div>
+      </div>
+    </div>
+
+    <!-- Section 2: Thông tin khám -->
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      <div style="font-size: 17px; font-weight: 700; color: #111;">Thông tin khám</div>
+    </div>
+    <div style="border-top: 1px solid #e5e7eb; margin-bottom: 20px;"></div>
+
+    <div style="margin-bottom: 32px;">
+      <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Lý do đến khám <span style="color: #e11d48;">*</span></div>
+      <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #9ca3af; min-height: 80px;">Mô tả lý do bệnh nhân đến khám. VD: Mắt khô rát 2 tuần, nhìn mờ khi dùng máy tính...</div>
+      <div style="display: flex; justify-content: space-between; margin-top: 6px;">
+        <div style="font-size: 11px; color: #9ca3af; font-style: italic;">Tối đa 500 ký tự. Ghi rõ triệu chứng, thời gian, mức độ nếu BN cung cấp.</div>
+        <div style="font-size: 11px; color: #9ca3af;">0/500</div>
+      </div>
+    </div>
+
+    <!-- Section 3: Tiền sử bệnh -->
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      <div style="font-size: 17px; font-weight: 700; color: #111;">Tiền sử bệnh</div>
+      <span style="font-size: 13px; color: #9ca3af; font-weight: 400;">(tùy chọn)</span>
+    </div>
+    <div style="border-top: 1px solid #e5e7eb; margin-bottom: 20px;"></div>
+
+    <!-- Row 1: Tiền sử bệnh mắt + toàn thân -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 18px;">
+      <div>
+        <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Tiền sử bệnh mắt</div>
+        <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #9ca3af; min-height: 70px;">VD: Cận thị từ nhỏ, đã Lasik 2020...</div>
+      </div>
+      <div>
+        <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Tiền sử bệnh toàn thân</div>
+        <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #9ca3af; min-height: 70px;">VD: Tiểu đường type 2, cao huyết áp...</div>
+      </div>
+    </div>
+
+    <!-- Row 2: Thuốc + Dị ứng -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px;">
+      <div>
+        <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Thuốc đang dùng</div>
+        <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af;">VD: Metformin 500mg, Amlodipine 5mg...</div>
+      </div>
+      <div>
+        <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Dị ứng</div>
+        <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af;">VD: Penicillin, phấn hoa, hải sản...</div>
+      </div>
+    </div>
+
+    <!-- Section 4: Lối sống -->
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <div style="font-size: 17px; font-weight: 700; color: #111;">Lối sống</div>
+      <span style="font-size: 13px; color: #9ca3af; font-weight: 400;">(tùy chọn)</span>
+    </div>
+    <div style="border-top: 1px solid #e5e7eb; margin-bottom: 20px;"></div>
+
+    <!-- Row 1: Screen time + Môi trường + Kính áp tròng -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-bottom: 18px;">
+      <div>
+        <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Thời gian sử dụng màn hình (giờ/ngày)</div>
+        <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af;">VD: 8</div>
+      </div>
+      <div>
+        <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Môi trường làm việc</div>
+        <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af; display: flex; justify-content: space-between; align-items: center;">Chọn... <span style="color: #9ca3af;">⌄</span></div>
+      </div>
+      <div>
+        <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Sử dụng kính áp tròng</div>
+        <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af; display: flex; justify-content: space-between; align-items: center;">Chọn... <span style="color: #9ca3af;">⌄</span></div>
+      </div>
+    </div>
+
+    <!-- Row 2: Ghi chú (full width) -->
+    <div style="margin-bottom: 32px;">
+      <div style="font-size: 13px; font-weight: 600; color: #111; margin-bottom: 8px;">Ghi chú khác về lối sống</div>
+      <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af;">VD: Hay bơi lội, thường xuyên lái xe đêm, dùng thuốc nhỏ mắt hàng ngày...</div>
+    </div>
+
+    <!-- Footer Actions -->
+    <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid #f3f4f6;">
+      <div style="padding: 8px 18px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">Hủy</div>
+      <div style="display: flex; gap: 10px;">
+        <div style="padding: 8px 18px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 13px; color: #374151; font-weight: 500; cursor: pointer;">Lưu</div>
+        <div style="padding: 8px 18px; background: #18181b; color: white; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;">Lưu & chuyển Pre-Exam →</div>
+      </div>
+    </div>
+
+  </div>
+</div>

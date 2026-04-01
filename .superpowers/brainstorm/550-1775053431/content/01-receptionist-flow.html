@@ -1,0 +1,108 @@
+<h2>Receptionist Module — Screen Flow</h2>
+<p class="subtitle">How the 4 screens and 3 popups connect together</p>
+
+<div class="mockup">
+  <div class="mockup-header">Receptionist Workflow Map</div>
+  <div class="mockup-body" style="padding: 24px; font-family: system-ui, sans-serif;">
+
+    <!-- Flow diagram using CSS -->
+    <div style="display: flex; flex-direction: column; gap: 32px; max-width: 900px; margin: 0 auto;">
+
+      <!-- Entry point: Dashboard -->
+      <div style="text-align: center;">
+        <div style="display: inline-block; background: #1e293b; color: white; padding: 16px 32px; border-radius: 12px; font-size: 18px; font-weight: 700;">
+          /intake — Dashboard
+        </div>
+        <div style="color: #64748b; font-size: 13px; margin-top: 6px;">KPI cards + Today's patient table + Search</div>
+      </div>
+
+      <!-- Arrows from Dashboard -->
+      <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+
+        <!-- Branch 1: New Patient -->
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; flex: 1; min-width: 200px; max-width: 240px;">
+          <div style="color: #8b5cf6; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Button: "Tiếp nhận BN mới"</div>
+          <div style="width: 2px; height: 20px; background: #8b5cf6;"></div>
+          <div style="background: #f5f3ff; border: 2px solid #8b5cf6; padding: 14px 18px; border-radius: 10px; text-align: center; width: 100%;">
+            <div style="font-weight: 700; color: #5b21b6; font-size: 15px;">/intake/new</div>
+            <div style="font-size: 12px; color: #7c3aed; margin-top: 4px;">Patient Intake Form</div>
+            <div style="font-size: 11px; color: #94a3b8; margin-top: 4px;">4 sections, full page</div>
+          </div>
+          <div style="width: 2px; height: 16px; background: #8b5cf6;"></div>
+          <div style="font-size: 11px; color: #64748b; background: #f1f5f9; padding: 6px 12px; border-radius: 6px;">
+            Save → back to Dashboard<br>
+            Save & Pre-Exam → next module
+          </div>
+        </div>
+
+        <!-- Branch 2: Check-in Scheduled -->
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; flex: 1; min-width: 200px; max-width: 240px;">
+          <div style="color: #f59e0b; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Button: "Check-in" (on row)</div>
+          <div style="width: 2px; height: 20px; background: #f59e0b;"></div>
+          <div style="background: #fffbeb; border: 2px solid #f59e0b; padding: 14px 18px; border-radius: 10px; text-align: center; width: 100%;">
+            <div style="font-weight: 700; color: #b45309; font-size: 15px;">Modal: Check-in</div>
+            <div style="font-size: 12px; color: #d97706; margin-top: 4px;">3 variants based on data</div>
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 4px; flex-wrap: wrap; justify-content: center;">
+            <div style="font-size: 10px; background: #ecfdf5; border: 1px solid #6ee7b7; padding: 4px 8px; border-radius: 4px; color: #047857;">Complete → 1-click confirm</div>
+            <div style="font-size: 10px; background: #fef3c7; border: 1px solid #fbbf24; padding: 4px 8px; border-radius: 4px; color: #92400e;">Incomplete → fill gaps first</div>
+          </div>
+        </div>
+
+        <!-- Branch 3: Walk-in Existing -->
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; flex: 1; min-width: 200px; max-width: 240px;">
+          <div style="color: #06b6d4; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Search → click result</div>
+          <div style="width: 2px; height: 20px; background: #06b6d4;"></div>
+          <div style="background: #ecfeff; border: 2px solid #06b6d4; padding: 14px 18px; border-radius: 10px; text-align: center; width: 100%;">
+            <div style="font-weight: 700; color: #0e7490; font-size: 15px;">Modal: Walk-in</div>
+            <div style="font-size: 12px; color: #0891b2; margin-top: 4px;">Existing patient, new visit</div>
+            <div style="font-size: 11px; color: #94a3b8; margin-top: 4px;">Enter reason → create visit</div>
+          </div>
+        </div>
+
+        <!-- Branch 4: Appointment -->
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; flex: 1; min-width: 200px; max-width: 240px;">
+          <div style="color: #10b981; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Button: "Đặt lịch hẹn"</div>
+          <div style="width: 2px; height: 20px; background: #10b981;"></div>
+          <div style="background: #ecfdf5; border: 2px solid #10b981; padding: 14px 18px; border-radius: 10px; text-align: center; width: 100%;">
+            <div style="font-weight: 700; color: #047857; font-size: 15px;">/schedule/new</div>
+            <div style="font-size: 12px; color: #059669; margin-top: 4px;">Appointment Booking</div>
+            <div style="font-size: 11px; color: #94a3b8; margin-top: 4px;">Calendar + time slots, full page</div>
+          </div>
+          <div style="width: 2px; height: 16px; background: #10b981;"></div>
+          <div style="font-size: 11px; color: #64748b; background: #f1f5f9; padding: 6px 12px; border-radius: 6px;">
+            New patient → minimal fields<br>
+            Existing → read-only card
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Status flow -->
+      <div style="margin-top: 16px; padding: 16px 24px; background: #f8fafc; border-radius: 10px; border: 1px solid #e2e8f0;">
+        <div style="font-weight: 600; font-size: 13px; color: #475569; margin-bottom: 10px;">Patient Status Progression</div>
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <span style="background: #ede9fe; color: #6d28d9; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600;">Chưa đến</span>
+          <span style="color: #94a3b8;">→ check-in →</span>
+          <span style="background: #fef3c7; color: #b45309; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600;">Chờ khám</span>
+          <span style="color: #94a3b8;">→ doctor starts →</span>
+          <span style="background: #dbeafe; color: #1d4ed8; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600;">Đang khám</span>
+          <span style="color: #94a3b8;">→ done →</span>
+          <span style="background: #d1fae5; color: #047857; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600;">Hoàn thành</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px;">
+  <h3>Key Design Decisions</h3>
+  <ul style="line-height: 1.8; color: #475569;">
+    <li><strong>Dashboard modals</strong> — Check-in and walk-in are quick actions, stay as modals on /intake</li>
+    <li><strong>Full pages</strong> — Intake form (/intake/new) and Appointment (/schedule/new) are detailed forms</li>
+    <li><strong>Patient ID</strong> — GK-YYYY-NNNN format, auto-generated</li>
+    <li><strong>Static mock data</strong> — No backend, all data is hardcoded for now</li>
+    <li><strong>shadcn theme colors</strong> — Status badges adapted to neutral base CSS variables</li>
+  </ul>
+</div>

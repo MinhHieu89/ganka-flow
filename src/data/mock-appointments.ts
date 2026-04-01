@@ -20,7 +20,8 @@ export const mockDoctors = [
   { id: "d2", name: "BS. Trần Minh" },
 ]
 
-export function generateTimeSlots(date: string): {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function generateTimeSlots(_date: string): {
   morning: TimeSlot[]
   afternoon: TimeSlot[]
 } {

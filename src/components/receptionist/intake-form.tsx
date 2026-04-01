@@ -23,10 +23,9 @@ import {
 
 interface IntakeFormProps {
   patient?: Patient
-  autoCheckIn?: boolean
 }
 
-export function IntakeForm({ patient, autoCheckIn }: IntakeFormProps) {
+export function IntakeForm({ patient }: IntakeFormProps) {
   const navigate = useNavigate()
   const { addPatient, updatePatient, searchPatients } = useReceptionist()
 
@@ -125,7 +124,7 @@ export function IntakeForm({ patient, autoCheckIn }: IntakeFormProps) {
     }
   }
 
-  function FieldError({ field }: { field: string }) {
+  function renderFieldError(field: string) {
     return errors[field] ? (
       <p className="mt-1 text-xs text-destructive">{errors[field]}</p>
     ) : null
@@ -136,7 +135,11 @@ export function IntakeForm({ patient, autoCheckIn }: IntakeFormProps) {
       {/* Section 1: Thông tin cá nhân */}
       <section>
         <div className="mb-1.5 flex items-center gap-2">
-          <HugeiconsIcon icon={UserAdd01Icon} className="size-5" strokeWidth={1.5} />
+          <HugeiconsIcon
+            icon={UserAdd01Icon}
+            className="size-5"
+            strokeWidth={1.5}
+          />
           <h2 className="text-lg font-bold">Thông tin cá nhân</h2>
         </div>
         <div className="mb-5 border-t border-border" />
@@ -155,7 +158,7 @@ export function IntakeForm({ patient, autoCheckIn }: IntakeFormProps) {
                 maxLength={100}
                 aria-invalid={!!errors.name}
               />
-              <FieldError field="name" />
+              {renderFieldError("name")}
             </div>
             <div>
               <Label>
@@ -174,7 +177,7 @@ export function IntakeForm({ patient, autoCheckIn }: IntakeFormProps) {
                   <SelectItem value="Khác">Khác</SelectItem>
                 </SelectContent>
               </Select>
-              <FieldError field="gender" />
+              {renderFieldError("gender")}
             </div>
           </div>
 
@@ -190,7 +193,7 @@ export function IntakeForm({ patient, autoCheckIn }: IntakeFormProps) {
                 placeholder="dd/mm/yyyy"
                 aria-invalid={!!errors.dob}
               />
-              <FieldError field="dob" />
+              {renderFieldError("dob")}
             </div>
             <div>
               <Label>
@@ -201,7 +204,7 @@ export function IntakeForm({ patient, autoCheckIn }: IntakeFormProps) {
                 onChange={(e) => updateField("phone", e.target.value)}
                 aria-invalid={!!errors.phone}
               />
-              <FieldError field="phone" />
+              {renderFieldError("phone")}
             </div>
             <div>
               <Label>Email</Label>
@@ -211,7 +214,7 @@ export function IntakeForm({ patient, autoCheckIn }: IntakeFormProps) {
                 type="email"
                 aria-invalid={!!errors.email}
               />
-              <FieldError field="email" />
+              {renderFieldError("email")}
             </div>
           </div>
 
@@ -225,9 +228,7 @@ export function IntakeForm({ patient, autoCheckIn }: IntakeFormProps) {
               </span>
               <button
                 className="font-semibold text-primary hover:underline"
-                onClick={() =>
-                  navigate(`/intake/${duplicatePatient!.id}/edit`)
-                }
+                onClick={() => navigate(`/intake/${duplicatePatient!.id}/edit`)}
               >
                 Mở hồ sơ cũ
               </button>
@@ -269,7 +270,11 @@ export function IntakeForm({ patient, autoCheckIn }: IntakeFormProps) {
       {/* Section 2: Thông tin khám */}
       <section>
         <div className="mb-1.5 flex items-center gap-2">
-          <HugeiconsIcon icon={Clock01Icon} className="size-5" strokeWidth={1.5} />
+          <HugeiconsIcon
+            icon={Clock01Icon}
+            className="size-5"
+            strokeWidth={1.5}
+          />
           <h2 className="text-lg font-bold">Thông tin khám</h2>
         </div>
         <div className="mb-5 border-t border-border" />
@@ -281,17 +286,14 @@ export function IntakeForm({ patient, autoCheckIn }: IntakeFormProps) {
           <Textarea
             value={form.chiefComplaint}
             onChange={(e) =>
-              updateField(
-                "chiefComplaint",
-                e.target.value.slice(0, 500)
-              )
+              updateField("chiefComplaint", e.target.value.slice(0, 500))
             }
             placeholder="Mô tả lý do bệnh nhân đến khám. VD: Mắt khô rát 2 tuần, nhìn mờ khi dùng máy tính..."
             rows={3}
             aria-invalid={!!errors.chiefComplaint}
           />
           <div className="mt-1 flex justify-between">
-            <span className="text-xs italic text-muted-foreground">
+            <span className="text-xs text-muted-foreground italic">
               Tối đa 500 ký tự. Ghi rõ triệu chứng, thời gian, mức độ nếu BN
               cung cấp.
             </span>
@@ -299,14 +301,18 @@ export function IntakeForm({ patient, autoCheckIn }: IntakeFormProps) {
               {form.chiefComplaint.length}/500
             </span>
           </div>
-          <FieldError field="chiefComplaint" />
+          {renderFieldError("chiefComplaint")}
         </div>
       </section>
 
       {/* Section 3: Tiền sử bệnh */}
       <section>
         <div className="mb-1.5 flex items-center gap-2">
-          <HugeiconsIcon icon={PlusSignCircleIcon} className="size-5" strokeWidth={1.5} />
+          <HugeiconsIcon
+            icon={PlusSignCircleIcon}
+            className="size-5"
+            strokeWidth={1.5}
+          />
           <h2 className="text-lg font-bold">Tiền sử bệnh</h2>
           <span className="text-sm text-muted-foreground">(tùy chọn)</span>
         </div>
@@ -327,9 +333,7 @@ export function IntakeForm({ patient, autoCheckIn }: IntakeFormProps) {
               <Label>Tiền sử bệnh toàn thân</Label>
               <Textarea
                 value={form.systemicHistory}
-                onChange={(e) =>
-                  updateField("systemicHistory", e.target.value)
-                }
+                onChange={(e) => updateField("systemicHistory", e.target.value)}
                 placeholder="VD: Tiểu đường type 2, cao huyết áp..."
                 rows={3}
               />
@@ -361,7 +365,11 @@ export function IntakeForm({ patient, autoCheckIn }: IntakeFormProps) {
       {/* Section 4: Lối sống */}
       <section>
         <div className="mb-1.5 flex items-center gap-2">
-          <HugeiconsIcon icon={TimeQuarterPassIcon} className="size-5" strokeWidth={1.5} />
+          <HugeiconsIcon
+            icon={TimeQuarterPassIcon}
+            className="size-5"
+            strokeWidth={1.5}
+          />
           <h2 className="text-lg font-bold">Lối sống</h2>
           <span className="text-sm text-muted-foreground">(tùy chọn)</span>
         </div>

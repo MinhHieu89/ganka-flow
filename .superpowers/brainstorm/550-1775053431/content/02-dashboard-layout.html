@@ -1,0 +1,160 @@
+<h2>Section 2: Dashboard Layout — /intake</h2>
+<p class="subtitle">The receptionist's main workspace</p>
+
+<!-- KPI Cards -->
+<div class="mockup">
+  <div class="mockup-header">/intake — Receptionist Dashboard</div>
+  <div class="mockup-body" style="padding: 20px; font-family: system-ui, sans-serif; background: #f8fafc;">
+
+    <!-- Action Bar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+      <div style="display: flex; gap: 10px;">
+        <div style="background: #7c3aed; color: white; padding: 9px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;">+ Tiếp nhận BN mới</div>
+        <div style="background: white; color: #374151; padding: 9px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; border: 1px solid #e5e7eb; cursor: pointer;">📅 Đặt lịch hẹn</div>
+      </div>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <div style="background: white; border: 1px solid #e5e7eb; padding: 9px 16px; border-radius: 8px; font-size: 13px; color: #9ca3af; width: 260px;">🔍 Tìm kiếm BN (SĐT, tên, mã BN)...</div>
+      </div>
+    </div>
+
+    <!-- KPI Cards Row -->
+    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 20px;">
+      <div style="background: white; border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px;">
+        <div style="font-size: 12px; color: #6b7280; font-weight: 500;">Lịch hẹn hôm nay</div>
+        <div style="font-size: 28px; font-weight: 700; color: #7c3aed; margin-top: 4px;">12</div>
+        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">3 chưa đến</div>
+      </div>
+      <div style="background: white; border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px;">
+        <div style="font-size: 12px; color: #6b7280; font-weight: 500;">Chờ khám</div>
+        <div style="font-size: 28px; font-weight: 700; color: #d97706; margin-top: 4px;">4</div>
+        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">Đang chờ</div>
+      </div>
+      <div style="background: white; border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px;">
+        <div style="font-size: 12px; color: #6b7280; font-weight: 500;">Đang sàng lọc</div>
+        <div style="font-size: 28px; font-weight: 700; color: #0ea5e9; margin-top: 4px;">1</div>
+        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">Với kỹ thuật viên</div>
+      </div>
+      <div style="background: white; border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px;">
+        <div style="font-size: 12px; color: #6b7280; font-weight: 500;">Đang khám</div>
+        <div style="font-size: 28px; font-weight: 700; color: #2563eb; margin-top: 4px;">2</div>
+        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">Với bác sĩ</div>
+      </div>
+      <div style="background: white; border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px;">
+        <div style="font-size: 12px; color: #6b7280; font-weight: 500;">Hoàn thành</div>
+        <div style="font-size: 28px; font-weight: 700; color: #059669; margin-top: 4px;">5</div>
+        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">Hôm nay</div>
+      </div>
+    </div>
+
+    <!-- Status Filter Tabs -->
+    <div style="display: flex; gap: 6px; margin-bottom: 16px;">
+      <div style="padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; background: #1e293b; color: white;">Tất cả (24)</div>
+      <div style="padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; background: #f3f4f6; color: #6b7280;">Chưa đến (3)</div>
+      <div style="padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; background: #f3f4f6; color: #6b7280;">Chờ khám (4)</div>
+      <div style="padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; background: #f3f4f6; color: #6b7280;">Đang sàng lọc (1)</div>
+      <div style="padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; background: #f3f4f6; color: #6b7280;">Đang khám (2)</div>
+      <div style="padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; background: #f3f4f6; color: #6b7280;">Hoàn thành (5)</div>
+    </div>
+
+    <!-- Patient Table -->
+    <div style="background: white; border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <thead>
+          <tr style="background: #f9fafb; border-bottom: 1px solid #e5e7eb;">
+            <th style="padding: 12px 16px; text-align: left; font-weight: 600; color: #374151; width: 40px;">STT</th>
+            <th style="padding: 12px 16px; text-align: left; font-weight: 600; color: #374151;">Họ tên</th>
+            <th style="padding: 12px 16px; text-align: left; font-weight: 600; color: #374151; width: 80px;">Năm sinh</th>
+            <th style="padding: 12px 16px; text-align: left; font-weight: 600; color: #374151; width: 80px;">Giờ hẹn</th>
+            <th style="padding: 12px 16px; text-align: left; font-weight: 600; color: #374151; width: 80px;">Nguồn</th>
+            <th style="padding: 12px 16px; text-align: left; font-weight: 600; color: #374151;">Lý do khám</th>
+            <th style="padding: 12px 16px; text-align: left; font-weight: 600; color: #374151; width: 120px;">Trạng thái</th>
+            <th style="padding: 12px 16px; text-align: center; font-weight: 600; color: #374151; width: 80px;">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Row 1: Chưa đến -->
+          <tr style="border-bottom: 1px solid #f3f4f6; background: #fafafa;">
+            <td style="padding: 12px 16px; color: #9ca3af;">1</td>
+            <td style="padding: 12px 16px; font-weight: 500;">Nguyễn Văn An</td>
+            <td style="padding: 12px 16px; color: #6b7280;">1985</td>
+            <td style="padding: 12px 16px; color: #6b7280;">14:00</td>
+            <td style="padding: 12px 16px;"><span style="background: #ede9fe; color: #7c3aed; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">Hẹn</span></td>
+            <td style="padding: 12px 16px; color: #9ca3af; font-style: italic;">Khám mắt định kỳ</td>
+            <td style="padding: 12px 16px;"><span style="background: #ede9fe; color: #6d28d9; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">Chưa đến</span></td>
+            <td style="padding: 12px 16px; text-align: center;"><span style="background: #7c3aed; color: white; padding: 5px 12px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer;">Check-in</span></td>
+          </tr>
+          <!-- Row 2: Chờ khám -->
+          <tr style="border-bottom: 1px solid #f3f4f6;">
+            <td style="padding: 12px 16px; color: #9ca3af;">2</td>
+            <td style="padding: 12px 16px; font-weight: 500;">Trần Thị Bình</td>
+            <td style="padding: 12px 16px; color: #6b7280;">1992</td>
+            <td style="padding: 12px 16px; color: #6b7280;">13:30</td>
+            <td style="padding: 12px 16px;"><span style="background: #ede9fe; color: #7c3aed; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">Hẹn</span></td>
+            <td style="padding: 12px 16px;">Khô mắt, mỏi mắt</td>
+            <td style="padding: 12px 16px;"><span style="background: #fef3c7; color: #b45309; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">Chờ khám</span></td>
+            <td style="padding: 12px 16px; text-align: center;"><span style="color: #9ca3af; cursor: pointer; font-size: 18px;">⋯</span></td>
+          </tr>
+          <!-- Row 3: Đang sàng lọc -->
+          <tr style="border-bottom: 1px solid #f3f4f6;">
+            <td style="padding: 12px 16px; color: #9ca3af;">3</td>
+            <td style="padding: 12px 16px; font-weight: 500;">Lê Hoàng Cường</td>
+            <td style="padding: 12px 16px; color: #6b7280;">1978</td>
+            <td style="padding: 12px 16px; color: #6b7280;">13:00</td>
+            <td style="padding: 12px 16px;"><span style="background: #ede9fe; color: #7c3aed; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">Hẹn</span></td>
+            <td style="padding: 12px 16px;">Giảm thị lực</td>
+            <td style="padding: 12px 16px;"><span style="background: #e0f2fe; color: #0369a1; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">Đang sàng lọc</span></td>
+            <td style="padding: 12px 16px; text-align: center;"><span style="color: #9ca3af; cursor: pointer; font-size: 18px;">⋯</span></td>
+          </tr>
+          <!-- Row 4: Walk-in, Đang khám -->
+          <tr style="border-bottom: 1px solid #f3f4f6;">
+            <td style="padding: 12px 16px; color: #9ca3af;">4</td>
+            <td style="padding: 12px 16px; font-weight: 500;">Phạm Minh Đức</td>
+            <td style="padding: 12px 16px; color: #6b7280;">2001</td>
+            <td style="padding: 12px 16px; color: #9ca3af;">—</td>
+            <td style="padding: 12px 16px;"><span style="background: #ffe4e6; color: #e11d48; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">Walk-in</span></td>
+            <td style="padding: 12px 16px;">Đau mắt đỏ</td>
+            <td style="padding: 12px 16px;"><span style="background: #dbeafe; color: #1d4ed8; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">Đang khám</span></td>
+            <td style="padding: 12px 16px; text-align: center;"><span style="color: #9ca3af; cursor: pointer; font-size: 18px;">⋯</span></td>
+          </tr>
+          <!-- Row 5: Hoàn thành -->
+          <tr>
+            <td style="padding: 12px 16px; color: #9ca3af;">5</td>
+            <td style="padding: 12px 16px; font-weight: 500;">Vũ Thị Em</td>
+            <td style="padding: 12px 16px; color: #6b7280;">1965</td>
+            <td style="padding: 12px 16px; color: #6b7280;">13:00</td>
+            <td style="padding: 12px 16px;"><span style="background: #ede9fe; color: #7c3aed; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">Hẹn</span></td>
+            <td style="padding: 12px 16px;">Tái khám khô mắt</td>
+            <td style="padding: 12px 16px;"><span style="background: #d1fae5; color: #047857; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">Hoàn thành</span></td>
+            <td style="padding: 12px 16px; text-align: center;"><span style="color: #9ca3af; cursor: pointer; font-size: 18px;">⋯</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; font-size: 12px; color: #6b7280;">
+      <span>Hiển thị 1–5 / 24 bệnh nhân</span>
+      <div style="display: flex; gap: 4px; align-items: center;">
+        <span style="padding: 4px 10px; border: 1px solid #e5e7eb; border-radius: 4px; cursor: pointer;">←</span>
+        <span style="padding: 4px 10px; background: #1e293b; color: white; border-radius: 4px;">1</span>
+        <span style="padding: 4px 10px; border: 1px solid #e5e7eb; border-radius: 4px; cursor: pointer;">2</span>
+        <span style="padding: 4px 10px; border: 1px solid #e5e7eb; border-radius: 4px; cursor: pointer;">3</span>
+        <span style="padding: 4px 10px; border: 1px solid #e5e7eb; border-radius: 4px; cursor: pointer;">→</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section" style="margin-top: 20px;">
+  <h3>Dashboard Components</h3>
+  <ul style="line-height: 1.8; color: #475569;">
+    <li><strong>Action bar</strong> — "Tiếp nhận BN mới" (→ /intake/new), "Đặt lịch hẹn" (→ /schedule/new), Search box</li>
+    <li><strong>5 KPI cards</strong> — Lịch hẹn, Chờ khám, Đang sàng lọc, Đang khám, Hoàn thành</li>
+    <li><strong>Status filter tabs</strong> — Click to filter table by status (+ "Tất cả")</li>
+    <li><strong>Patient table</strong> — 8 columns: STT, Họ tên, Năm sinh, Giờ hẹn, Nguồn, Lý do khám, Trạng thái, Thao tác</li>
+    <li><strong>"Chưa đến" rows</strong> — Subtle gray background, italic reason text, "Check-in" button</li>
+    <li><strong>Other rows</strong> — ⋯ menu (Xem hồ sơ, Sửa thông tin, Hủy lượt khám)</li>
+    <li><strong>Pagination</strong> — 10/20/50 rows per page</li>
+  </ul>
+</div>

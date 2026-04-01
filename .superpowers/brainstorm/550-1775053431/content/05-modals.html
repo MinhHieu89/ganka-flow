@@ -1,0 +1,142 @@
+<h2>Section 3: Dashboard Modals — Check-in & Walk-in</h2>
+<p class="subtitle">3 modal variants triggered from the ⋮ menu or search results</p>
+
+<!-- Modal 1: Check-in Complete -->
+<div class="mockup" style="margin-bottom: 28px;">
+  <div class="mockup-header">Modal A — Check-in: Hồ sơ đầy đủ (Complete Record)</div>
+  <div class="mockup-body" style="padding: 0; font-family: system-ui, -apple-system, sans-serif; background: #f8fafc; display: flex; justify-content: center; align-items: center; min-height: 380px;">
+    <div style="background: #fff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); width: 480px; overflow: hidden;">
+      <!-- Header -->
+      <div style="padding: 20px 24px 0; display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+          <div style="font-size: 16px; font-weight: 700; color: #111;">Check-in bệnh nhân</div>
+          <div style="font-size: 12px; color: #9ca3af; margin-top: 2px;">Xác nhận thông tin trước khi check-in</div>
+        </div>
+        <span style="color: #9ca3af; cursor: pointer; font-size: 18px;">✕</span>
+      </div>
+      <!-- Patient Info -->
+      <div style="padding: 16px 24px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 13px;">
+          <div><span style="color: #9ca3af;">Họ tên</span><div style="font-weight: 600; color: #111; margin-top: 2px;">Trần Thị Bình</div></div>
+          <div><span style="color: #9ca3af;">Năm sinh</span><div style="font-weight: 600; color: #111; margin-top: 2px;">1992</div></div>
+          <div><span style="color: #9ca3af;">Giới tính</span><div style="font-weight: 600; color: #111; margin-top: 2px;">Nữ</div></div>
+          <div><span style="color: #9ca3af;">SĐT</span><div style="font-weight: 600; color: #111; margin-top: 2px;">0987 654 321</div></div>
+          <div><span style="color: #9ca3af;">Nghề nghiệp</span><div style="font-weight: 600; color: #111; margin-top: 2px;">Nhân viên văn phòng</div></div>
+          <div><span style="color: #9ca3af;">Lý do khám</span><div style="font-weight: 600; color: #111; margin-top: 2px;">Khô mắt, mỏi mắt</div></div>
+        </div>
+        <!-- Last visit -->
+        <div style="margin-top: 14px; font-size: 13px;">
+          <span style="color: #9ca3af;">Lần khám gần nhất</span>
+          <div style="font-weight: 500; color: #374151; margin-top: 2px;">15/01/2026 — Khô mắt — BS. Nguyễn Hải</div>
+        </div>
+      </div>
+      <!-- Info note -->
+      <div style="margin: 0 24px; padding: 10px 14px; background: #eff6ff; border-radius: 8px; font-size: 12px; color: #1d4ed8; display: flex; gap: 8px; align-items: flex-start;">
+        <span style="font-size: 14px;">ℹ</span>
+        <span>Xác nhận thông tin với bệnh nhân trước khi check-in.</span>
+      </div>
+      <!-- Actions -->
+      <div style="padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+        <div style="font-size: 13px; color: #7c3aed; font-weight: 500; cursor: pointer;">Sửa thông tin</div>
+        <div style="display: flex; gap: 8px;">
+          <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #6b7280; cursor: pointer;">Hủy</div>
+          <div style="padding: 8px 16px; background: #18181b; color: white; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;">Xác nhận check-in</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 2: Check-in Incomplete -->
+<div class="mockup" style="margin-bottom: 28px;">
+  <div class="mockup-header">Modal B — Check-in: Hồ sơ chưa đầy đủ (Incomplete Record)</div>
+  <div class="mockup-body" style="padding: 0; font-family: system-ui, -apple-system, sans-serif; background: #f8fafc; display: flex; justify-content: center; align-items: center; min-height: 380px;">
+    <div style="background: #fff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); width: 480px; overflow: hidden;">
+      <!-- Header -->
+      <div style="padding: 20px 24px 0; display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+          <div style="font-size: 16px; font-weight: 700; color: #111;">Check-in bệnh nhân</div>
+          <div style="font-size: 12px; color: #9ca3af; margin-top: 2px;">Hồ sơ cần bổ sung trước khi check-in</div>
+        </div>
+        <span style="color: #9ca3af; cursor: pointer; font-size: 18px;">✕</span>
+      </div>
+      <!-- Patient Info with missing fields -->
+      <div style="padding: 16px 24px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 13px;">
+          <div><span style="color: #9ca3af;">Họ tên</span><div style="font-weight: 600; color: #111; margin-top: 2px;">Nguyễn Văn An</div></div>
+          <div><span style="color: #9ca3af;">Năm sinh</span><div style="font-style: italic; color: #d1d5db; margin-top: 2px;">Chưa có</div></div>
+          <div><span style="color: #9ca3af;">Giới tính</span><div style="font-style: italic; color: #d1d5db; margin-top: 2px;">Chưa có</div></div>
+          <div><span style="color: #9ca3af;">SĐT</span><div style="font-weight: 600; color: #111; margin-top: 2px;">0912 345 678</div></div>
+          <div><span style="color: #9ca3af;">Nghề nghiệp</span><div style="font-style: italic; color: #d1d5db; margin-top: 2px;">Chưa có</div></div>
+          <div><span style="color: #9ca3af;">Lý do khám</span><div style="font-style: italic; color: #d1d5db; margin-top: 2px;">Chưa rõ</div></div>
+        </div>
+      </div>
+      <!-- Warning -->
+      <div style="margin: 0 24px; padding: 10px 14px; background: #fefce8; border-radius: 8px; font-size: 12px; color: #a16207; display: flex; gap: 8px; align-items: flex-start;">
+        <span style="font-size: 14px;">⚠</span>
+        <span>Hồ sơ bệnh nhân chưa đầy đủ. Cần bổ sung thông tin bắt buộc trước khi check-in.</span>
+      </div>
+      <!-- Actions -->
+      <div style="padding: 16px 24px; display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px;">
+        <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #6b7280; cursor: pointer;">Hủy</div>
+        <div style="padding: 8px 16px; background: #18181b; color: white; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;">Check-in & bổ sung hồ sơ →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 3: Walk-in Existing Patient -->
+<div class="mockup">
+  <div class="mockup-header">Modal C — Walk-in: Bệnh nhân cũ tạo lượt khám mới</div>
+  <div class="mockup-body" style="padding: 0; font-family: system-ui, -apple-system, sans-serif; background: #f8fafc; display: flex; justify-content: center; align-items: center; min-height: 420px;">
+    <div style="background: #fff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); width: 480px; overflow: hidden;">
+      <!-- Header -->
+      <div style="padding: 20px 24px 0; display: flex; justify-content: space-between; align-items: flex-start;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="font-size: 16px; font-weight: 700; color: #111;">Tạo lượt khám mới</div>
+          <span style="background: #ffe4e6; color: #e11d48; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">Walk-in</span>
+        </div>
+        <span style="color: #9ca3af; cursor: pointer; font-size: 18px;">✕</span>
+      </div>
+      <!-- Patient Info (read-only) -->
+      <div style="padding: 16px 24px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 13px;">
+          <div><span style="color: #9ca3af;">Họ tên</span><div style="font-weight: 600; color: #111; margin-top: 2px;">Phạm Minh Đức</div></div>
+          <div><span style="color: #9ca3af;">Năm sinh</span><div style="font-weight: 600; color: #111; margin-top: 2px;">2001</div></div>
+          <div><span style="color: #9ca3af;">Giới tính</span><div style="font-weight: 600; color: #111; margin-top: 2px;">Nam</div></div>
+          <div><span style="color: #9ca3af;">SĐT</span><div style="font-weight: 600; color: #111; margin-top: 2px;">0901 234 567</div></div>
+        </div>
+        <!-- Last visit -->
+        <div style="margin-top: 14px; font-size: 13px;">
+          <span style="color: #9ca3af;">Lần khám gần nhất</span>
+          <div style="font-weight: 500; color: #374151; margin-top: 2px;">20/02/2026 — Cận thị — BS. Trần Minh</div>
+        </div>
+      </div>
+      <!-- Reason textarea -->
+      <div style="padding: 0 24px;">
+        <div style="font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px;">Lý do khám lần này <span style="color: #e11d48;">*</span></div>
+        <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af; min-height: 60px;">Nhập lý do khám...</div>
+        <div style="text-align: right; font-size: 11px; color: #d1d5db; margin-top: 4px;">0 / 500</div>
+      </div>
+      <!-- Actions -->
+      <div style="padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+        <div style="font-size: 13px; color: #7c3aed; font-weight: 500; cursor: pointer;">Sửa thông tin</div>
+        <div style="display: flex; gap: 8px;">
+          <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #6b7280; cursor: pointer;">Hủy</div>
+          <div style="padding: 8px 16px; background: #18181b; color: white; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;">Tạo lượt khám</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 20px;">
+  <h3>Modal Trigger Rules</h3>
+  <ul style="line-height: 1.8; color: #475569;">
+    <li><strong>Modal A</strong> — ⋮ menu → "Check-in" on a "Chưa đến" row with complete data</li>
+    <li><strong>Modal B</strong> — same trigger, but system detects missing required fields (DOB, gender, reason)</li>
+    <li><strong>Modal C</strong> — search bar → select existing patient → opens walk-in modal</li>
+    <li><strong>"Sửa thông tin"</strong> link navigates to /intake/:id/edit</li>
+    <li><strong>"Check-in & bổ sung hồ sơ →"</strong> navigates to /intake/:id/edit, auto-checks-in on save</li>
+  </ul>
+</div>

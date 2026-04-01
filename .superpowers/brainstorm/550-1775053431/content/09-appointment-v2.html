@@ -1,0 +1,325 @@
+<h2>Section 5 (v2): Appointment Booking — /schedule/new</h2>
+<p class="subtitle">Matching reference — bordered left panel, compact calendar, slot counts, confirmation bar</p>
+
+<!-- CASE 1: Existing Patient -->
+<div class="mockup" style="margin-bottom: 28px;">
+  <div class="mockup-header">Case 1 — Existing Patient (found)</div>
+  <div class="mockup-body" style="padding: 32px 40px; font-family: system-ui, -apple-system, sans-serif; background: #fff;">
+
+    <div style="font-size: 20px; font-weight: 700; color: #111; margin-bottom: 24px;">Đặt lịch hẹn</div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+
+      <!-- Left: Patient info panel (bordered) -->
+      <div style="border: 1px solid #e5e7eb; border-radius: 10px; padding: 24px;">
+        <div style="font-size: 15px; font-weight: 700; color: #111; margin-bottom: 16px;">Thông tin bệnh nhân</div>
+
+        <!-- Search -->
+        <div style="font-size: 13px; font-weight: 500; color: #111; margin-bottom: 6px;">Tìm bệnh nhân</div>
+        <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #374151; display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Lê Thu Nga
+        </div>
+
+        <!-- Green found banner -->
+        <div style="padding: 10px 14px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; font-size: 13px; color: #15803d; margin-bottom: 18px; display: flex; align-items: center; gap: 8px;">
+          <span>ℹ</span>
+          <span>Đã tìm thấy: <strong>Lê Thu Nga</strong> — GK-2026-0021</span>
+        </div>
+
+        <!-- Bác sĩ chỉ định -->
+        <div style="margin-bottom: 16px;">
+          <div style="font-size: 13px; font-weight: 500; color: #111; margin-bottom: 6px;">Bác sĩ chỉ định</div>
+          <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #374151; display: flex; justify-content: space-between; align-items: center;">BS nào trống <span style="color: #9ca3af;">⌄</span></div>
+        </div>
+
+        <!-- Lý do khám -->
+        <div>
+          <div style="font-size: 13px; font-weight: 500; color: #111; margin-bottom: 6px;">Lý do khám</div>
+          <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #9ca3af; min-height: 80px;"></div>
+        </div>
+      </div>
+
+      <!-- Right: Calendar + slots -->
+      <div>
+        <div style="font-size: 15px; font-weight: 700; color: #111; margin-bottom: 16px;">Chọn ngày & giờ</div>
+
+        <!-- Calendar -->
+        <div style="margin-bottom: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <span style="color: #9ca3af; cursor: pointer; font-size: 16px;">‹</span>
+            <div style="font-size: 14px; font-weight: 600; color: #111;">Tháng Tư 2026</div>
+            <span style="color: #9ca3af; cursor: pointer; font-size: 16px;">›</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0; text-align: center; font-size: 13px;">
+            <!-- Day headers -->
+            <div style="color: #9ca3af; font-weight: 500; padding: 8px 4px; font-size: 12px;">Th 2</div>
+            <div style="color: #9ca3af; font-weight: 500; padding: 8px 4px; font-size: 12px;">Th 3</div>
+            <div style="color: #9ca3af; font-weight: 500; padding: 8px 4px; font-size: 12px;">Th 4</div>
+            <div style="color: #9ca3af; font-weight: 500; padding: 8px 4px; font-size: 12px;">Th 5</div>
+            <div style="color: #9ca3af; font-weight: 500; padding: 8px 4px; font-size: 12px;">Th 6</div>
+            <div style="color: #9ca3af; font-weight: 500; padding: 8px 4px; font-size: 12px;">Th 7</div>
+            <div style="color: #9ca3af; font-weight: 500; padding: 8px 4px; font-size: 12px;">CN</div>
+            <!-- Week 1 -->
+            <div style="padding: 10px 4px; color: #d1d5db;">30</div>
+            <div style="padding: 10px 4px; color: #d1d5db;">31</div>
+            <div style="padding: 10px 4px;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: #18181b; color: white; border-radius: 10px; font-weight: 600;">1</span></div>
+            <div style="padding: 10px 4px; color: #374151;">2</div>
+            <div style="padding: 10px 4px; color: #374151;">3</div>
+            <div style="padding: 10px 4px; color: #374151;">4</div>
+            <div style="padding: 10px 4px; color: #374151;">5</div>
+            <!-- Week 2 -->
+            <div style="padding: 10px 4px; color: #374151;">6</div>
+            <div style="padding: 10px 4px; color: #e11d48; font-weight: 500;">7</div>
+            <div style="padding: 10px 4px; color: #374151;">8</div>
+            <div style="padding: 10px 4px; color: #374151;">9</div>
+            <div style="padding: 10px 4px; color: #374151;">10</div>
+            <div style="padding: 10px 4px; color: #e11d48; font-weight: 500;">11</div>
+            <div style="padding: 10px 4px; color: #374151;">12</div>
+            <!-- Week 3 -->
+            <div style="padding: 10px 4px; color: #e11d48; font-weight: 500;">13</div>
+            <div style="padding: 10px 4px; color: #e11d48; font-weight: 500;">14</div>
+            <div style="padding: 10px 4px; color: #374151;">15</div>
+            <div style="padding: 10px 4px; color: #374151;">16</div>
+            <div style="padding: 10px 4px; color: #374151;">17</div>
+            <div style="padding: 10px 4px; color: #e11d48; font-weight: 500;">18</div>
+            <div style="padding: 10px 4px; color: #374151;">19</div>
+            <!-- Week 4 -->
+            <div style="padding: 10px 4px; color: #374151;">20</div>
+            <div style="padding: 10px 4px; color: #e11d48; font-weight: 500;">21</div>
+            <div style="padding: 10px 4px; color: #374151;">22</div>
+            <div style="padding: 10px 4px; color: #374151;">23</div>
+            <div style="padding: 10px 4px; color: #374151;">24</div>
+            <div style="padding: 10px 4px; color: #374151;">25</div>
+            <div style="padding: 10px 4px; color: #374151;">26</div>
+            <!-- Week 5 -->
+            <div style="padding: 10px 4px; color: #374151;">27</div>
+            <div style="padding: 10px 4px; color: #e11d48; font-weight: 500;">28</div>
+            <div style="padding: 10px 4px; color: #374151;">29</div>
+            <div style="padding: 10px 4px; color: #e11d48; font-weight: 500;">30</div>
+            <div style="padding: 10px 4px; color: #d1d5db;">1</div>
+            <div style="padding: 10px 4px; color: #d1d5db;">2</div>
+            <div style="padding: 10px 4px; color: #d1d5db;">3</div>
+          </div>
+        </div>
+
+        <!-- Time slots: Sáng -->
+        <div style="margin-bottom: 16px;">
+          <div style="font-size: 14px; font-weight: 600; color: #111; margin-bottom: 4px;">Sáng <span style="font-size: 12px; font-weight: 400; color: #9ca3af;">0 slot trống / 8</span></div>
+          <div style="border-top: 1px solid #e5e7eb; margin-bottom: 10px;"></div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #d1d5db; background: #fafafa; text-decoration: line-through;">08:00</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #d1d5db; background: #fafafa; text-decoration: line-through;">08:30</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #d1d5db; background: #fafafa; text-decoration: line-through;">09:00</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #d1d5db; background: #fafafa; text-decoration: line-through;">09:30</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #d1d5db; background: #fafafa; text-decoration: line-through;">10:00</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #d1d5db; background: #fafafa; text-decoration: line-through;">10:30</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #d1d5db; background: #fafafa; text-decoration: line-through;">11:00</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #d1d5db; background: #fafafa; text-decoration: line-through;">11:30</div>
+          </div>
+        </div>
+
+        <!-- Time slots: Chiều -->
+        <div style="margin-bottom: 16px;">
+          <div style="font-size: 14px; font-weight: 600; color: #111; margin-bottom: 4px;">Chiều <span style="font-size: 12px; font-weight: 400; color: #9ca3af;">0 slot trống / 16</span></div>
+          <div style="border-top: 1px solid #e5e7eb; margin-bottom: 10px;"></div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #d1d5db; background: #fafafa; text-decoration: line-through;">12:00</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #d1d5db; background: #fafafa; text-decoration: line-through;">12:30</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #d1d5db; background: #fafafa; text-decoration: line-through;">13:00</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #d1d5db; background: #fafafa; text-decoration: line-through;">13:30</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #d1d5db; background: #fafafa; text-decoration: line-through;">14:00</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #d1d5db; background: #fafafa; text-decoration: line-through;">14:30</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #d1d5db; background: #fafafa; text-decoration: line-through;">15:00</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #d1d5db; background: #fafafa; text-decoration: line-through;">15:30</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #d1d5db; background: #fafafa; text-decoration: line-through;">16:00</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #d1d5db; background: #fafafa; text-decoration: line-through;">16:30</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CASE 2: New Patient -->
+<div class="mockup" style="margin-bottom: 28px;">
+  <div class="mockup-header">Case 2 — New Patient (not found)</div>
+  <div class="mockup-body" style="padding: 32px 40px; font-family: system-ui, -apple-system, sans-serif; background: #fff;">
+
+    <div style="font-size: 20px; font-weight: 700; color: #111; margin-bottom: 24px;">Đặt lịch hẹn</div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+
+      <!-- Left: Patient info panel (bordered) -->
+      <div style="border: 1px solid #e5e7eb; border-radius: 10px; padding: 24px;">
+        <div style="font-size: 15px; font-weight: 700; color: #111; margin-bottom: 16px;">Thông tin bệnh nhân</div>
+
+        <!-- Search -->
+        <div style="font-size: 13px; font-weight: 500; color: #111; margin-bottom: 6px;">Tìm bệnh nhân</div>
+        <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #374151; display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          2453453
+        </div>
+
+        <!-- Yellow not found banner -->
+        <div style="padding: 10px 14px; background: #fefce8; border: 1px solid #fde68a; border-radius: 8px; font-size: 12px; color: #a16207; margin-bottom: 18px; display: flex; gap: 8px; align-items: flex-start;">
+          <span>⚠</span>
+          <span>Không tìm thấy BN với SĐT này. Nhập thông tin bên dưới để tạo hẹn cho BN mới.</span>
+        </div>
+
+        <!-- Editable fields -->
+        <div style="margin-bottom: 16px;">
+          <div style="font-size: 13px; font-weight: 500; color: #111; margin-bottom: 6px;">Họ tên <span style="color: #e11d48;">*</span></div>
+          <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af;"></div>
+        </div>
+        <div style="margin-bottom: 16px;">
+          <div style="font-size: 13px; font-weight: 500; color: #111; margin-bottom: 6px;">Số điện thoại <span style="color: #e11d48;">*</span></div>
+          <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af;"></div>
+        </div>
+
+        <!-- Info note -->
+        <div style="padding: 10px 14px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; font-size: 12px; color: #1d4ed8; margin-bottom: 18px; display: flex; gap: 8px; align-items: flex-start;">
+          <span>ℹ</span>
+          <span>BN mới chỉ cần tên + SĐT + lý do khám để đặt hẹn. Thông tin đầy đủ sẽ bổ sung khi BN đến check-in.</span>
+        </div>
+
+        <!-- Bác sĩ chỉ định -->
+        <div style="margin-bottom: 16px;">
+          <div style="font-size: 13px; font-weight: 500; color: #111; margin-bottom: 6px;">Bác sĩ chỉ định</div>
+          <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #374151; display: flex; justify-content: space-between; align-items: center;">BS nào trống <span style="color: #9ca3af;">⌄</span></div>
+        </div>
+
+        <!-- Lý do khám -->
+        <div>
+          <div style="font-size: 13px; font-weight: 500; color: #111; margin-bottom: 6px;">Lý do khám</div>
+          <div style="border: 1px solid #d1d5db; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #9ca3af; min-height: 80px;"></div>
+        </div>
+      </div>
+
+      <!-- Right: Calendar + slots with available slots -->
+      <div>
+        <div style="font-size: 15px; font-weight: 700; color: #111; margin-bottom: 16px;">Chọn ngày & giờ</div>
+
+        <!-- Calendar -->
+        <div style="margin-bottom: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <span style="color: #9ca3af; cursor: pointer; font-size: 16px;">‹</span>
+            <div style="font-size: 14px; font-weight: 600; color: #111;">Tháng Tư 2026</div>
+            <span style="color: #9ca3af; cursor: pointer; font-size: 16px;">›</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0; text-align: center; font-size: 13px;">
+            <div style="color: #9ca3af; font-weight: 500; padding: 8px 4px; font-size: 12px;">Th 2</div>
+            <div style="color: #9ca3af; font-weight: 500; padding: 8px 4px; font-size: 12px;">Th 3</div>
+            <div style="color: #9ca3af; font-weight: 500; padding: 8px 4px; font-size: 12px;">Th 4</div>
+            <div style="color: #9ca3af; font-weight: 500; padding: 8px 4px; font-size: 12px;">Th 5</div>
+            <div style="color: #9ca3af; font-weight: 500; padding: 8px 4px; font-size: 12px;">Th 6</div>
+            <div style="color: #9ca3af; font-weight: 500; padding: 8px 4px; font-size: 12px;">Th 7</div>
+            <div style="color: #9ca3af; font-weight: 500; padding: 8px 4px; font-size: 12px;">CN</div>
+            <!-- Week 1 -->
+            <div style="padding: 10px 4px; color: #d1d5db;">30</div>
+            <div style="padding: 10px 4px; color: #d1d5db;">31</div>
+            <div style="padding: 10px 4px; color: #e11d48; font-weight: 500;">1</div>
+            <div style="padding: 10px 4px;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: #18181b; color: white; border-radius: 10px; font-weight: 600;">2</span></div>
+            <div style="padding: 10px 4px; color: #374151;">3</div>
+            <div style="padding: 10px 4px; color: #374151;">4</div>
+            <div style="padding: 10px 4px; color: #374151;">5</div>
+            <!-- Week 2 -->
+            <div style="padding: 10px 4px; color: #374151;">6</div>
+            <div style="padding: 10px 4px; color: #e11d48; font-weight: 500;">7</div>
+            <div style="padding: 10px 4px; color: #374151;">8</div>
+            <div style="padding: 10px 4px; color: #374151;">9</div>
+            <div style="padding: 10px 4px; color: #374151;">10</div>
+            <div style="padding: 10px 4px; color: #e11d48; font-weight: 500;">11</div>
+            <div style="padding: 10px 4px; color: #374151;">12</div>
+            <!-- Week 3 -->
+            <div style="padding: 10px 4px; color: #e11d48; font-weight: 500;">13</div>
+            <div style="padding: 10px 4px; color: #e11d48; font-weight: 500;">14</div>
+            <div style="padding: 10px 4px; color: #374151;">15</div>
+            <div style="padding: 10px 4px; color: #374151;">16</div>
+            <div style="padding: 10px 4px; color: #374151;">17</div>
+            <div style="padding: 10px 4px; color: #e11d48; font-weight: 500;">18</div>
+            <div style="padding: 10px 4px; color: #374151;">19</div>
+            <!-- Week 4 -->
+            <div style="padding: 10px 4px; color: #374151;">20</div>
+            <div style="padding: 10px 4px; color: #374151;">21</div>
+            <div style="padding: 10px 4px; color: #374151;">22</div>
+            <div style="padding: 10px 4px; color: #374151;">23</div>
+            <div style="padding: 10px 4px; color: #374151;">24</div>
+            <div style="padding: 10px 4px; color: #374151;">25</div>
+            <div style="padding: 10px 4px; color: #374151;">26</div>
+            <!-- Week 5 -->
+            <div style="padding: 10px 4px; color: #374151;">27</div>
+            <div style="padding: 10px 4px; color: #374151;">28</div>
+            <div style="padding: 10px 4px; color: #374151;">29</div>
+            <div style="padding: 10px 4px; color: #374151;">30</div>
+            <div style="padding: 10px 4px; color: #d1d5db;">1</div>
+            <div style="padding: 10px 4px; color: #d1d5db;">2</div>
+            <div style="padding: 10px 4px; color: #d1d5db;">3</div>
+          </div>
+        </div>
+
+        <!-- Time slots: Sáng -->
+        <div style="margin-bottom: 16px;">
+          <div style="font-size: 14px; font-weight: 600; color: #111; margin-bottom: 4px;">Sáng <span style="font-size: 12px; font-weight: 400; color: #9ca3af;">8 slot trống / 8</span></div>
+          <div style="border-top: 1px solid #e5e7eb; margin-bottom: 10px;"></div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">08:00</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">08:30</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">09:00</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">09:30</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">10:00</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">10:30</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">11:00</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">11:30</div>
+          </div>
+        </div>
+
+        <!-- Time slots: Chiều -->
+        <div style="margin-bottom: 16px;">
+          <div style="font-size: 14px; font-weight: 600; color: #111; margin-bottom: 4px;">Chiều <span style="font-size: 12px; font-weight: 400; color: #9ca3af;">16 slot trống / 16</span></div>
+          <div style="border-top: 1px solid #e5e7eb; margin-bottom: 10px;"></div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">12:00</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">12:30</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">13:00</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">13:30</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">14:00</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">14:30</div>
+            <div style="padding: 8px 16px; border: 2px solid #7c3aed; border-radius: 8px; font-size: 13px; color: #7c3aed; font-weight: 600; background: #faf5ff; cursor: pointer;">15:00</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">15:30</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">16:00</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">16:30</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">17:00</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">17:30</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">18:00</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">18:30</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">19:00</div>
+            <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">19:30</div>
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div style="display: flex; gap: 16px; font-size: 11px; color: #9ca3af; margin-top: 8px;">
+          <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 14px; height: 14px; border: 1px solid #e5e7eb; border-radius: 4px; display: inline-block;"></span> Trống</span>
+          <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 14px; height: 14px; border: 2px solid #7c3aed; border-radius: 4px; display: inline-block;"></span> Đang chọn</span>
+          <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 14px; height: 14px; background: #fafafa; border: 1px solid #e5e7eb; border-radius: 4px; display: inline-block;"></span> Đã đầy</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation bar (sticky bottom) -->
+    <div style="margin-top: 28px; padding: 16px 20px; background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <div style="font-size: 14px; font-weight: 600; color: #5b21b6;">Xác nhận lịch hẹn</div>
+        <div style="font-size: 13px; color: #374151; margin-top: 2px;">... — Th 5, 02/04/2026 lúc 15:00</div>
+        <div style="font-size: 12px; color: #9ca3af; margin-top: 2px;">Chưa nhập lý do — Không chỉ định BS</div>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <div style="padding: 8px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 13px; color: #374151; cursor: pointer;">Hủy</div>
+        <div style="padding: 8px 16px; background: #7c3aed; color: white; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;">Xác nhận lịch hẹn</div>
+      </div>
+    </div>
+
+  </div>
+</div>

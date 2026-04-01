@@ -35,7 +35,11 @@ function getCalendarDays(year: number, month: number) {
   const daysInMonth = new Date(year, month + 1, 0).getDate()
   const daysInPrevMonth = new Date(year, month, 0).getDate()
 
-  const days: { day: number; month: "prev" | "current" | "next"; date: string }[] = []
+  const days: {
+    day: number
+    month: "prev" | "current" | "next"
+    date: string
+  }[] = []
 
   for (let i = startDow - 1; i >= 0; i--) {
     const d = daysInPrevMonth - i
@@ -70,7 +74,8 @@ function getCalendarDays(year: number, month: number) {
   return days
 }
 
-function isHoliday(date: string): boolean {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function isHoliday(_date: string): boolean {
   // Placeholder: mark some dates as holidays (red)
   // For now, no holidays — extend later
   return false
@@ -131,7 +136,9 @@ export function AppointmentCalendar({
               className={cn(
                 "flex items-center justify-center py-2.5 text-sm",
                 isOtherMonth && "text-muted-foreground/40",
-                past && !isOtherMonth && "text-muted-foreground/40 line-through",
+                past &&
+                  !isOtherMonth &&
+                  "text-muted-foreground/40 line-through",
                 holiday && !isOtherMonth && "font-medium text-red-500",
                 !disabled &&
                   !isSelected &&

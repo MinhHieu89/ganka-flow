@@ -72,7 +72,7 @@ export function CheckinModal({ visit, open, onOpenChange }: CheckinModalProps) {
               {f.value ? (
                 <div className="mt-0.5 text-sm font-semibold">{f.value}</div>
               ) : (
-                <div className="mt-0.5 text-sm italic text-muted-foreground/50">
+                <div className="mt-0.5 text-sm text-muted-foreground/50 italic">
                   Chưa có
                 </div>
               )}
@@ -97,8 +97,8 @@ export function CheckinModal({ visit, open, onOpenChange }: CheckinModalProps) {
           <div className="flex items-start gap-2 rounded-md bg-amber-50 p-3 text-xs text-amber-700 dark:bg-amber-950/30 dark:text-amber-400">
             <span className="mt-0.5">⚠</span>
             <span>
-              Hồ sơ bệnh nhân chưa đầy đủ. Cần bổ sung thông tin bắt buộc
-              trước khi check-in.
+              Hồ sơ bệnh nhân chưa đầy đủ. Cần bổ sung thông tin bắt buộc trước
+              khi check-in.
             </span>
           </div>
         )}

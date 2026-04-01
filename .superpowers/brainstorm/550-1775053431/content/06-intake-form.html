@@ -1,0 +1,162 @@
+<h2>Section 4: Patient Intake Form — /intake/new</h2>
+<p class="subtitle">4-section form for new patient registration</p>
+
+<div class="mockup">
+  <div class="mockup-header">/intake/new — Tiếp nhận bệnh nhân mới</div>
+  <div class="mockup-body" style="padding: 24px 32px; font-family: system-ui, -apple-system, sans-serif; background: #fff; max-width: 800px;">
+
+    <!-- Page header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+      <div>
+        <div style="font-size: 20px; font-weight: 700; color: #111;">Tiếp nhận bệnh nhân mới</div>
+        <div style="font-size: 13px; color: #9ca3af; margin-top: 4px;">Mã BN: <span style="font-weight: 600; color: #374151;">GK-2026-0006</span> <span style="font-size: 11px; color: #d1d5db;">(tự động)</span></div>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #6b7280; cursor: pointer;">Hủy</div>
+        <div style="padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; font-weight: 500; cursor: pointer;">Lưu</div>
+        <div style="padding: 8px 16px; background: #18181b; color: white; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;">Lưu & chuyển Sàng lọc</div>
+      </div>
+    </div>
+
+    <!-- Section 1: Thông tin cá nhân -->
+    <div style="margin-bottom: 28px;">
+      <div style="font-size: 15px; font-weight: 700; color: #111; margin-bottom: 4px;">1. Thông tin cá nhân</div>
+      <div style="font-size: 12px; color: #9ca3af; margin-bottom: 16px;">Thông tin bắt buộc được đánh dấu <span style="color: #e11d48;">*</span></div>
+
+      <!-- Row 1: Name (2/3) + Gender (1/3) -->
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 14px;">
+        <div>
+          <div style="font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px;">Họ và tên <span style="color: #e11d48;">*</span></div>
+          <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 9px 14px; font-size: 13px; color: #9ca3af;">Nhập họ và tên...</div>
+        </div>
+        <div>
+          <div style="font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px;">Giới tính <span style="color: #e11d48;">*</span></div>
+          <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 9px 14px; font-size: 13px; color: #9ca3af; display: flex; justify-content: space-between; align-items: center;">Chọn... <span style="font-size: 10px;">▾</span></div>
+        </div>
+      </div>
+
+      <!-- Row 2: DOB + Phone -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px;">
+        <div>
+          <div style="font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px;">Ngày sinh <span style="color: #e11d48;">*</span></div>
+          <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 9px 14px; font-size: 13px; color: #9ca3af; display: flex; justify-content: space-between; align-items: center;">dd/mm/yyyy <span style="font-size: 14px;">📅</span></div>
+        </div>
+        <div>
+          <div style="font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px;">Số điện thoại <span style="color: #e11d48;">*</span></div>
+          <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 9px 14px; font-size: 13px; color: #9ca3af;">0xxx xxx xxx</div>
+        </div>
+      </div>
+
+      <!-- Duplicate phone warning (shown conditionally) -->
+      <div style="margin-bottom: 14px; padding: 10px 14px; background: #fefce8; border: 1px solid #fde68a; border-radius: 8px; font-size: 12px; color: #a16207; display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <span>⚠</span>
+          <span>SĐT <strong>0987 654 321</strong> đã tồn tại — BN: <strong>Trần Thị Bình</strong> (1992)</span>
+        </div>
+        <div style="color: #7c3aed; font-weight: 600; font-size: 12px; cursor: pointer; white-space: nowrap;">Mở hồ sơ cũ</div>
+      </div>
+
+      <!-- Row 3: Email + Address -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px;">
+        <div>
+          <div style="font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px;">Email</div>
+          <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 9px 14px; font-size: 13px; color: #9ca3af;">email@example.com</div>
+        </div>
+        <div>
+          <div style="font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px;">Nghề nghiệp</div>
+          <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 9px 14px; font-size: 13px; color: #9ca3af;">Nhập nghề nghiệp...</div>
+        </div>
+      </div>
+
+      <!-- Row 4: Address (full width) -->
+      <div style="margin-bottom: 0;">
+        <div style="font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px;">Địa chỉ</div>
+        <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 9px 14px; font-size: 13px; color: #9ca3af;">Nhập địa chỉ...</div>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div style="border-top: 1px solid #f3f4f6; margin-bottom: 24px;"></div>
+
+    <!-- Section 2: Thông tin khám -->
+    <div style="margin-bottom: 28px;">
+      <div style="font-size: 15px; font-weight: 700; color: #111; margin-bottom: 14px;">2. Thông tin khám</div>
+      <div>
+        <div style="font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px;">Lý do đến khám <span style="color: #e11d48;">*</span></div>
+        <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af; min-height: 60px;">Mô tả triệu chứng hoặc lý do khám...</div>
+        <div style="text-align: right; font-size: 11px; color: #d1d5db; margin-top: 4px;">0 / 500</div>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div style="border-top: 1px solid #f3f4f6; margin-bottom: 24px;"></div>
+
+    <!-- Section 3: Tiền sử bệnh -->
+    <div style="margin-bottom: 28px;">
+      <div style="font-size: 15px; font-weight: 700; color: #111; margin-bottom: 4px;">3. Tiền sử bệnh</div>
+      <div style="font-size: 12px; color: #9ca3af; margin-bottom: 14px;">Tất cả các trường đều không bắt buộc</div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px;">
+        <div>
+          <div style="font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px;">Tiền sử bệnh mắt</div>
+          <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af; min-height: 50px;">Bệnh mắt đã từng mắc...</div>
+        </div>
+        <div>
+          <div style="font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px;">Tiền sử bệnh toàn thân</div>
+          <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #9ca3af; min-height: 50px;">Tiểu đường, huyết áp, dị ứng...</div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div>
+          <div style="font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px;">Thuốc đang dùng</div>
+          <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 9px 14px; font-size: 13px; color: #9ca3af;">Tên thuốc, liều lượng...</div>
+        </div>
+        <div>
+          <div style="font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px;">Dị ứng</div>
+          <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 9px 14px; font-size: 13px; color: #9ca3af;">Dị ứng thuốc, thực phẩm...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div style="border-top: 1px solid #f3f4f6; margin-bottom: 24px;"></div>
+
+    <!-- Section 4: Lifestyle -->
+    <div style="margin-bottom: 8px;">
+      <div style="font-size: 15px; font-weight: 700; color: #111; margin-bottom: 4px;">4. Lối sống</div>
+      <div style="font-size: 12px; color: #9ca3af; margin-bottom: 14px;">Hỗ trợ đánh giá Dry Eye — không bắt buộc</div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 14px;">
+        <div>
+          <div style="font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px;">Thời gian dùng màn hình</div>
+          <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 9px 14px; font-size: 13px; color: #9ca3af; display: flex; justify-content: space-between;">0 <span style="color: #d1d5db;">giờ/ngày</span></div>
+        </div>
+        <div>
+          <div style="font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px;">Môi trường làm việc</div>
+          <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 9px 14px; font-size: 13px; color: #9ca3af; display: flex; justify-content: space-between; align-items: center;">Chọn... <span style="font-size: 10px;">▾</span></div>
+        </div>
+        <div>
+          <div style="font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px;">Kính áp tròng</div>
+          <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 9px 14px; font-size: 13px; color: #9ca3af; display: flex; justify-content: space-between; align-items: center;">Chọn... <span style="font-size: 10px;">▾</span></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px;">Ghi chú lối sống</div>
+        <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 9px 14px; font-size: 13px; color: #9ca3af;">Ghi chú thêm...</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section" style="margin-top: 20px;">
+  <h3>Form Behavior</h3>
+  <ul style="line-height: 1.8; color: #475569;">
+    <li><strong>Patient ID</strong> — auto-generated GK-YYYY-NNNN, shown but not editable</li>
+    <li><strong>5 required fields</strong> — Họ tên, Giới tính, Ngày sinh, SĐT, Lý do khám (red asterisk)</li>
+    <li><strong>Duplicate phone</strong> — yellow warning + "Mở hồ sơ cũ" link appears real-time on phone input</li>
+    <li><strong>Save actions</strong> — "Lưu" returns to dashboard, "Lưu & chuyển Sàng lọc" transitions to Pre-Exam</li>
+    <li><strong>Edit mode</strong> (/intake/:id/edit) — same form, pre-filled with existing data</li>
+    <li><strong>Validation</strong> — inline errors below fields, red border on invalid fields</li>
+  </ul>
+</div>
