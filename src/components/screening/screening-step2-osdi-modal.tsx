@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { getOsdiSeverity } from "@/lib/osdi-utils"
 
 interface OsdiModalProps {
   open: boolean
@@ -28,10 +29,7 @@ const QUESTION_GROUPS = [
   {
     title:
       "Trong một ngày điển hình trong 1 tuần qua, bạn có gặp phải bất kỳ triệu chứng nào của mắt dưới đây không:",
-    questions: [
-      "Chói mắt",
-      "Nhìn mờ giữa các lần chớp mắt liên tục",
-    ],
+    questions: ["Chói mắt", "Nhìn mờ giữa các lần chớp mắt liên tục"],
   },
   {
     title:
@@ -51,41 +49,15 @@ const QUESTION_GROUPS = [
   },
 ]
 
-function getOsdiSeverity(score: number): {
-  label: string
-  key: "normal" | "moderate" | "severe"
-  className: string
-} {
-  if (score <= 3)
-    return {
-      label: "Bình thường (0-3)",
-      key: "normal",
-      className: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
-    }
-  if (score <= 8)
-    return {
-      label: "Trung bình (4-8)",
-      key: "moderate",
-      className: "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400",
-    }
-  return {
-    label: "Nặng (≥9)",
-    key: "severe",
-    className: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400",
-  }
-}
-
-export { getOsdiSeverity }
-
 export function ScreeningStep2OsdiModal({
   open,
   onOpenChange,
   initialAnswers,
   onSubmit,
 }: OsdiModalProps) {
-  const [answers, setAnswers] = useState<(number | null)[]>(
-    () => [...initialAnswers]
-  )
+  const [answers, setAnswers] = useState<(number | null)[]>(() => [
+    ...initialAnswers,
+  ])
 
   // Reset answers when modal opens
   function handleOpenChange(isOpen: boolean) {
@@ -104,10 +76,7 @@ export function ScreeningStep2OsdiModal({
   }
 
   const answeredCount = answers.filter((a) => a !== null).length
-  const totalScore = answers.reduce<number>(
-    (sum, a) => sum + (a ?? 0),
-    0
-  )
+  const totalScore = answers.reduce<number>((sum, a) => sum + (a ?? 0), 0)
   const severity = getOsdiSeverity(totalScore)
 
   function handleSubmit() {
@@ -175,9 +144,8 @@ export function ScreeningStep2OsdiModal({
 
         {/* Scoring reference */}
         <div className="bg-muted/50 px-5 py-2 text-xs text-muted-foreground">
-          <strong>Thang điểm tham chiếu:</strong> Không bao giờ = 0 ·
-          Thỉnh thoảng = 1 · Thường xuyên = 2 · Hầu hết thời gian = 3 ·
-          Liên tục = 4
+          <strong>Thang điểm tham chiếu:</strong> Không bao giờ = 0 · Thỉnh
+          thoảng = 1 · Thường xuyên = 2 · Hầu hết thời gian = 3 · Liên tục = 4
         </div>
 
         <DialogFooter className="flex-row items-center justify-between border-t border-border px-5 py-3">
@@ -199,10 +167,7 @@ export function ScreeningStep2OsdiModal({
             )}
           </div>
           <div className="flex gap-2">
-            <Button
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-            >
+            <Button variant="outline" onClick={() => onOpenChange(false)}>
               Hủy
             </Button>
             <Button onClick={handleSubmit}>Ghi nhận điểm</Button>

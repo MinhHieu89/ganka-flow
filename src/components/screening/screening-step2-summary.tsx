@@ -36,9 +36,7 @@ const DURATION_UNIT_LABELS: Record<string, string> = {
   năm: "năm",
 }
 
-export function ScreeningStep2Summary({
-  form,
-}: ScreeningStep2SummaryProps) {
+export function ScreeningStep2Summary({ form }: ScreeningStep2SummaryProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   const hasRedFlags =
@@ -72,7 +70,7 @@ export function ScreeningStep2Summary({
           icon={ArrowDown01Icon}
           className={cn(
             "size-4 text-muted-foreground transition-transform",
-            isOpen && "rotate-180",
+            isOpen && "rotate-180"
           )}
           strokeWidth={1.5}
         />

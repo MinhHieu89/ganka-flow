@@ -29,11 +29,7 @@ export function ScreeningStep2GroupSelector({
   return (
     <section className="rounded-lg border border-border bg-background p-4">
       <div className="mb-3 flex items-center gap-2">
-        <HugeiconsIcon
-          icon={Tag01Icon}
-          className="size-4"
-          strokeWidth={1.5}
-        />
+        <HugeiconsIcon icon={Tag01Icon} className="size-4" strokeWidth={1.5} />
         <span className="text-sm font-semibold">Chọn nhóm bệnh</span>
         <span className="text-xs text-muted-foreground">
           (chọn 1 hoặc nhiều)
@@ -56,7 +52,7 @@ export function ScreeningStep2GroupSelector({
                 "flex items-center gap-1.5 rounded-full px-4 py-2 text-sm transition-colors",
                 isSelected
                   ? "border-2 border-primary bg-primary/5 font-medium text-primary"
-                  : "border border-border text-muted-foreground hover:bg-muted/50",
+                  : "border border-border text-muted-foreground hover:bg-muted/50"
               )}
             >
               <span>{group.icon}</span>

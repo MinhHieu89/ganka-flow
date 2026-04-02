@@ -4,10 +4,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import type { DryEyeFormData } from "@/data/mock-patients"
-import {
-  ScreeningStep2OsdiModal,
-  getOsdiSeverity,
-} from "./screening-step2-osdi-modal"
+import { ScreeningStep2OsdiModal } from "./screening-step2-osdi-modal"
+import { getOsdiSeverity } from "@/lib/osdi-utils"
 import { cn } from "@/lib/utils"
 
 interface ScreeningStep2DryEyeProps {
@@ -155,9 +153,7 @@ export function ScreeningStep2DryEye({
 
       {/* Meibomian */}
       <div>
-        <Label className="mb-1.5 block text-xs font-semibold">
-          Meibomian
-        </Label>
+        <Label className="mb-1.5 block text-xs font-semibold">Meibomian</Label>
         <Textarea
           value={data.meibomian}
           onChange={(e) => updateField("meibomian", e.target.value)}
@@ -168,9 +164,7 @@ export function ScreeningStep2DryEye({
 
       {/* Staining */}
       <div>
-        <Label className="mb-1.5 block text-xs font-semibold">
-          Staining
-        </Label>
+        <Label className="mb-1.5 block text-xs font-semibold">Staining</Label>
         <Textarea
           value={data.staining}
           onChange={(e) => updateField("staining", e.target.value)}

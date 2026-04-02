@@ -60,10 +60,7 @@ export function ScreeningStep2GroupForm({
       {/* Card body */}
       <div className="p-4">
         {group === "dryEye" ? (
-          <ScreeningStep2DryEye
-            data={dryEyeData}
-            onUpdate={onDryEyeUpdate}
-          />
+          <ScreeningStep2DryEye data={dryEyeData} onUpdate={onDryEyeUpdate} />
         ) : (
           <ScreeningStep2PlaceholderGroup group={group} />
         )}
