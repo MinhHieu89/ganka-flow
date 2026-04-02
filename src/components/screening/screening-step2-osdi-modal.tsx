@@ -88,7 +88,7 @@ export function ScreeningStep2OsdiModal({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-w-xl gap-0 p-0">
+      <DialogContent className="max-w-3xl gap-0 p-0">
         <DialogHeader className="px-5 pt-5 pb-3">
           <DialogTitle>Bảng hỏi OSDI-6</DialogTitle>
         </DialogHeader>
@@ -140,12 +140,6 @@ export function ScreeningStep2OsdiModal({
               })}
             </div>
           ))}
-        </div>
-
-        {/* Scoring reference */}
-        <div className="bg-muted/50 px-5 py-2 text-xs text-muted-foreground">
-          <strong>Thang điểm tham chiếu:</strong> Không bao giờ = 0 · Thỉnh
-          thoảng = 1 · Thường xuyên = 2 · Hầu hết thời gian = 3 · Liên tục = 4
         </div>
 
         <DialogFooter className="flex-row items-center justify-between border-t border-border px-5 py-3">
