@@ -44,6 +44,35 @@ export interface Visit {
   lastVisitDate?: string
   lastVisitDiagnosis?: string
   lastVisitDoctor?: string
+  screeningData?: ScreeningFormData
+}
+
+export interface ScreeningFormData {
+  chiefComplaint: string
+  ucvaOd: string
+  ucvaOs: string
+  currentRxOd: string
+  currentRxOs: string
+  redFlags: {
+    eyePain: boolean
+    suddenVisionLoss: boolean
+    asymmetry: boolean
+  }
+  symptoms: {
+    dryEyes: boolean
+    gritty: boolean
+    blurry: boolean
+    tearing: boolean
+    itchy: boolean
+    headache: boolean
+  }
+  blinkImprovement: "yes" | "no" | "unclear" | null
+  symptomDuration: number
+  symptomDurationUnit: "ngày" | "tuần" | "tháng" | "năm"
+  screenTime: string
+  contactLens: "yes" | "no" | null
+  discomfortLevel: "mild" | "moderate" | "severe" | null
+  notes: string
 }
 
 export const STATUS_CONFIG: Record<

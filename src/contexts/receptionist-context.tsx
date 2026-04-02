@@ -6,6 +6,7 @@ import {
   type Patient,
   type Visit,
   type PatientStatus,
+  type ScreeningFormData,
 } from "@/data/mock-patients"
 import { mockAppointments, type Appointment } from "@/data/mock-appointments"
 
@@ -24,6 +25,7 @@ interface ReceptionistContextType {
   checkInVisit: (visitId: string) => void
   addAppointment: (appointment: Omit<Appointment, "id">) => void
   cancelAppointment: (appointmentId: string) => void
+  saveScreeningData: (visitId: string, data: ScreeningFormData) => void
 }
 
 const ReceptionistContext = createContext<ReceptionistContextType | null>(null)
@@ -117,6 +119,14 @@ export function ReceptionistProvider({ children }: { children: ReactNode }) {
     )
   }
 
+  function saveScreeningData(visitId: string, data: ScreeningFormData) {
+    setVisits((prev) =>
+      prev.map((v) =>
+        v.id === visitId ? { ...v, screeningData: data } : v
+      )
+    )
+  }
+
   return (
     <ReceptionistContext.Provider
       value={{
@@ -134,6 +144,7 @@ export function ReceptionistProvider({ children }: { children: ReactNode }) {
         checkInVisit,
         addAppointment,
         cancelAppointment,
+        saveScreeningData,
       }}
     >
       {children}
