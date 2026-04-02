@@ -73,6 +73,27 @@ export interface ScreeningFormData {
   contactLens: "yes" | "no" | null
   discomfortLevel: "mild" | "moderate" | "severe" | null
   notes: string
+  step2?: Step2FormData
+}
+
+export type DiseaseGroup = "dryEye" | "refraction" | "myopiaControl" | "general"
+
+export interface DryEyeFormData {
+  osdiScore: number | null
+  osdiAnswers: (number | null)[] // 6 answers, each 0-4 or null
+  osdiSeverity: "normal" | "moderate" | "severe" | null
+  tbutOd: string
+  tbutOs: string
+  schirmerOd: string
+  schirmerOs: string
+  meibomian: string
+  staining: string
+}
+
+export interface Step2FormData {
+  selectedGroups: DiseaseGroup[]
+  groupOrder: DiseaseGroup[]
+  dryEye: DryEyeFormData
 }
 
 export const STATUS_CONFIG: Record<
