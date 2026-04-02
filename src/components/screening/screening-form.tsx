@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router"
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { useReceptionist } from "@/contexts/receptionist-context"
 import type { Patient, Visit, ScreeningFormData } from "@/data/mock-patients"
@@ -90,7 +91,9 @@ export function ScreeningForm({ patient, visit }: ScreeningFormProps) {
 
   function handleSaveDraft() {
     saveScreeningData(visit.id, form)
+    setIsDirty(false)
     navigate("/screening")
+    toast.success("Đã lưu nháp")
   }
 
   function handleContinue() {
@@ -98,12 +101,14 @@ export function ScreeningForm({ patient, visit }: ScreeningFormProps) {
     saveScreeningData(visit.id, form)
     updateVisitStatus(visit.id, "dang_kham")
     navigate("/screening")
+    toast.success("Hoàn thành sàng lọc")
   }
 
   function handleFastTrack() {
     saveScreeningData(visit.id, form)
     updateVisitStatus(visit.id, "dang_kham")
     navigate("/screening")
+    toast.warning("Đã chuyển bệnh nhân đến bác sĩ (Red Flag)")
   }
 
   return (

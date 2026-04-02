@@ -44,7 +44,7 @@ export function ScreeningFormHeader({
             className={
               waitMinutes >= 30
                 ? "font-semibold text-destructive"
-                : "font-semibold text-amber-500"
+                : "text-amber-500"
             }
           >
             {waitMinutes}p

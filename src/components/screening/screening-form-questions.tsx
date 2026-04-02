@@ -7,6 +7,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { HelpCircleIcon } from "@hugeicons/core-free-icons"
 import { cn } from "@/lib/utils"
 import type { ScreeningFormData } from "@/data/mock-patients"
 
@@ -58,6 +60,11 @@ export function ScreeningFormQuestions({
   return (
     <section className="rounded-lg border border-border bg-background p-5">
       <div className="mb-1.5 flex items-center gap-2">
+        <HugeiconsIcon
+          icon={HelpCircleIcon}
+          className="size-5"
+          strokeWidth={1.5}
+        />
         <h2 className="text-lg font-bold">Câu hỏi định hướng</h2>
       </div>
       <div className="mb-5 border-t border-border" />

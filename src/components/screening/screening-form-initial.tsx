@@ -1,6 +1,8 @@
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { ClipboardIcon } from "@hugeicons/core-free-icons"
 import type { ScreeningFormData } from "@/data/mock-patients"
 
 interface ScreeningFormInitialProps {
@@ -20,6 +22,11 @@ export function ScreeningFormInitial({
   return (
     <section className="rounded-lg border border-border bg-background p-5">
       <div className="mb-1.5 flex items-center gap-2">
+        <HugeiconsIcon
+          icon={ClipboardIcon}
+          className="size-5"
+          strokeWidth={1.5}
+        />
         <h2 className="text-lg font-bold">Thông tin khám ban đầu</h2>
       </div>
       <div className="mb-5 border-t border-border" />

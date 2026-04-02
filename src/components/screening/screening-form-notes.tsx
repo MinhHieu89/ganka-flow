@@ -1,4 +1,6 @@
 import { Textarea } from "@/components/ui/textarea"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { PencilEdit01Icon } from "@hugeicons/core-free-icons"
 import type { ScreeningFormData } from "@/data/mock-patients"
 
 interface ScreeningFormNotesProps {
@@ -16,6 +18,11 @@ export function ScreeningFormNotes({
   return (
     <section className="rounded-lg border border-border bg-background p-5">
       <div className="mb-1.5 flex items-center gap-2">
+        <HugeiconsIcon
+          icon={PencilEdit01Icon}
+          className="size-5"
+          strokeWidth={1.5}
+        />
         <h2 className="text-lg font-bold">Ghi chú</h2>
       </div>
       <div className="mb-5 border-t border-border" />
