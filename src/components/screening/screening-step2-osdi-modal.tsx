@@ -90,7 +90,7 @@ export function ScreeningStep2OsdiModal({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="max-w-xl gap-0 p-0">
         <DialogHeader className="px-5 pt-5 pb-3">
-          <DialogTitle>📝 Bảng hỏi OSDI-6</DialogTitle>
+          <DialogTitle>Bảng hỏi OSDI-6</DialogTitle>
         </DialogHeader>
 
         <div className="max-h-[420px] overflow-y-auto px-5">

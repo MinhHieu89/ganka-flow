@@ -10,14 +10,13 @@ interface ScreeningStep2GroupSelectorProps {
 
 const DISEASE_GROUPS: {
   key: DiseaseGroup
-  icon: string
   label: string
   testCount: number
 }[] = [
-  { key: "dryEye", icon: "👁️", label: "Khô mắt", testCount: 5 },
-  { key: "refraction", icon: "🔍", label: "Khúc xạ", testCount: 3 },
-  { key: "myopiaControl", icon: "📏", label: "Cận thị", testCount: 4 },
-  { key: "general", icon: "🏥", label: "Tổng quát", testCount: 4 },
+  { key: "dryEye", label: "Khô mắt", testCount: 5 },
+  { key: "refraction", label: "Khúc xạ", testCount: 3 },
+  { key: "myopiaControl", label: "Cận thị", testCount: 4 },
+  { key: "general", label: "Tổng quát", testCount: 4 },
 ]
 
 export { DISEASE_GROUPS }
@@ -55,7 +54,6 @@ export function ScreeningStep2GroupSelector({
                   : "border border-border text-muted-foreground hover:bg-muted/50"
               )}
             >
-              <span>{group.icon}</span>
               {group.label}
               {isSelected && (
                 <span className="flex size-4 items-center justify-center rounded-full bg-primary text-[9px] text-primary-foreground">

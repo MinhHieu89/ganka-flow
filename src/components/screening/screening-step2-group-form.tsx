@@ -1,5 +1,7 @@
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { DragDropVerticalIcon } from "@hugeicons/core-free-icons"
 import type { DiseaseGroup, DryEyeFormData } from "@/data/mock-patients"
 import { DISEASE_GROUPS } from "./screening-step2-group-selector"
 import { ScreeningStep2DryEye } from "./screening-step2-dry-eye"
@@ -48,9 +50,12 @@ export function ScreeningStep2GroupForm({
           {...attributes}
           {...listeners}
         >
-          ⠿
+          <HugeiconsIcon
+            icon={DragDropVerticalIcon}
+            className="size-4"
+            strokeWidth={1.5}
+          />
         </button>
-        <span className="text-lg">{groupInfo.icon}</span>
         <span className="text-sm font-semibold">{groupInfo.label}</span>
         <span className="ml-auto rounded-full bg-muted px-2.5 py-0.5 text-xs text-muted-foreground">
           {groupInfo.testCount} tests

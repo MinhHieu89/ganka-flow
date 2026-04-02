@@ -76,7 +76,7 @@ export function ScreeningStep2DryEye({
                 : "border-primary text-primary"
             )}
           >
-            {hasOsdiScore ? "✏️ Làm lại" : "📝 Làm bảng hỏi OSDI"}
+            {hasOsdiScore ? "Làm lại" : "Làm bảng hỏi OSDI"}
           </Button>
         </div>
       </div>
