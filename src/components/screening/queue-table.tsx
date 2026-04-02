@@ -166,9 +166,7 @@ export function QueueTable({
                 ) : waitMinutes !== null ? (
                   <span
                     className={
-                      waitMinutes >= 30
-                        ? "font-semibold text-destructive"
-                        : "text-amber-500"
+                      waitMinutes >= 30 ? "font-semibold text-destructive" : ""
                     }
                   >
                     {waitMinutes}p
@@ -198,7 +196,7 @@ export function QueueTable({
                   </Button>
                 ) : (
                   <Button size="sm" onClick={() => onStartScreening(visit)}>
-                    Bắt đầu
+                    Bắt đầu sàng lọc
                   </Button>
                 )}
               </TableCell>
