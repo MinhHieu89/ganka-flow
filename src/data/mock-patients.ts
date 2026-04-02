@@ -45,6 +45,7 @@ export interface Visit {
   lastVisitDiagnosis?: string
   lastVisitDoctor?: string
   screeningData?: ScreeningFormData
+  examData?: ExamData
 }
 
 export interface ScreeningFormData {
@@ -96,6 +97,56 @@ export interface Step2FormData {
   dryEye: DryEyeFormData
 }
 
+export interface Diagnosis {
+  text: string
+  icd10Code?: string
+  isPrimary: boolean
+}
+
+export interface Medication {
+  name: string
+  dosage: string
+  frequency: string
+  duration: string
+  notes?: string
+}
+
+export interface Procedure {
+  name: string
+  notes: string
+}
+
+export interface OpticalRxData {
+  od: { sph: string; cyl: string; axis: string; add: string; pd: string }
+  os: { sph: string; cyl: string; axis: string; add: string; pd: string }
+}
+
+export interface DryEyeExamData {
+  tbutOd: string
+  tbutOs: string
+  meibomian: string
+  staining: string
+}
+
+export interface RefractionData {
+  od: { sph: string; cyl: string; axis: string; add: string; pd: string }
+  os: { sph: string; cyl: string; axis: string; add: string; pd: string }
+}
+
+export interface ExamData {
+  va: { od: string; os: string }
+  iop: { od: string; os: string }
+  slitLamp: string
+  fundus: string
+  refractionExam?: RefractionData
+  dryEyeExam?: DryEyeExamData
+  diagnoses: Diagnosis[]
+  medications: Medication[]
+  opticalRx?: OpticalRxData
+  procedures: Procedure[]
+  followUp?: { date: string; reason: string }
+}
+
 export const STATUS_CONFIG: Record<
   PatientStatus,
   { label: string; color: string }
@@ -126,6 +177,72 @@ export function generatePatientId(): string {
 }
 
 export const mockPatients: Patient[] = [
+  {
+    id: "GK-2026-0035",
+    name: "Nguyễn Thị Lan",
+    gender: "Nữ",
+    dob: "12/04/1988",
+    birthYear: 1988,
+    phone: "0901112233",
+    occupation: "Kế toán",
+    chiefComplaint: "Mỏi mắt, nhìn mờ",
+    screenTime: 9,
+    workEnvironment: "Văn phòng",
+    createdAt: "2026-04-02T08:00:00Z",
+  },
+  {
+    id: "GK-2026-0038",
+    name: "Hoàng Văn Bình",
+    gender: "Nam",
+    dob: "30/06/1995",
+    birthYear: 1995,
+    phone: "0933445566",
+    occupation: "Lập trình viên",
+    chiefComplaint: "Khô mắt kéo dài",
+    eyeHistory: "Cận thị -3.50D",
+    screenTime: 12,
+    workEnvironment: "Văn phòng",
+    contactLens: "Hàng ngày",
+    createdAt: "2026-04-02T08:10:00Z",
+  },
+  {
+    id: "GK-2026-0042",
+    name: "Trần Văn Minh",
+    gender: "Nam",
+    dob: "14/05/1990",
+    birthYear: 1990,
+    phone: "0944556677",
+    occupation: "Nhân viên kinh doanh",
+    chiefComplaint: "Mắt đỏ, cộm",
+    screenTime: 6,
+    workEnvironment: "Văn phòng",
+    createdAt: "2026-04-02T08:20:00Z",
+  },
+  {
+    id: "GK-2026-0044",
+    name: "Phạm Đức Huy",
+    gender: "Nam",
+    dob: "20/08/2012",
+    birthYear: 2012,
+    phone: "0955667788",
+    chiefComplaint: "Nhìn bảng không rõ",
+    screenTime: 5,
+    workEnvironment: "Học sinh",
+    createdAt: "2026-04-02T08:30:00Z",
+  },
+  {
+    id: "GK-2026-0045",
+    name: "Vũ Mai Hương",
+    gender: "Nữ",
+    dob: "03/11/1975",
+    birthYear: 1975,
+    phone: "0966778899",
+    occupation: "Giáo viên",
+    chiefComplaint: "Tái khám cận thị",
+    eyeHistory: "Cận thị -2.00D",
+    lastVisitDate: "10/01/2026",
+    createdAt: "2026-04-02T08:40:00Z",
+  },
   {
     id: "GK-2026-0001",
     name: "Nguyễn Văn An",
@@ -249,5 +366,230 @@ export const mockVisits: Visit[] = [
     lastVisitDate: "20/02/2026",
     lastVisitDiagnosis: "Khô mắt mạn tính",
     lastVisitDoctor: "BS. Nguyễn Hải",
+  },
+  {
+    id: "v-doc-1",
+    patientId: "GK-2026-0035",
+    status: "cho_kham",
+    source: "hen",
+    reason: "Mỏi mắt, nhìn mờ",
+    scheduledAt: "09:00",
+    checkedInAt: "2026-04-02T08:55:00Z",
+    date: "2026-04-02",
+    doctorName: "BS. Nguyễn Hải",
+    screeningData: {
+      chiefComplaint: "Mỏi mắt khi nhìn màn hình lâu, nhìn mờ cuối ngày",
+      ucvaOd: "7/10",
+      ucvaOs: "8/10",
+      currentRxOd: "-1.50",
+      currentRxOs: "-1.25",
+      redFlags: {
+        eyePain: false,
+        suddenVisionLoss: false,
+        asymmetry: false,
+      },
+      symptoms: {
+        dryEyes: true,
+        gritty: false,
+        blurry: true,
+        tearing: false,
+        itchy: false,
+        headache: true,
+      },
+      blinkImprovement: "yes",
+      symptomDuration: 3,
+      symptomDurationUnit: "tháng",
+      screenTime: "9",
+      contactLens: "no",
+      discomfortLevel: "mild",
+      notes: "Làm việc văn phòng nhiều giờ",
+    },
+  },
+  {
+    id: "v-doc-2",
+    patientId: "GK-2026-0038",
+    status: "cho_kham",
+    source: "walk_in",
+    reason: "Khô mắt kéo dài",
+    checkedInAt: "2026-04-02T09:10:00Z",
+    date: "2026-04-02",
+    doctorName: "BS. Nguyễn Hải",
+    lastVisitDate: "05/02/2026",
+    lastVisitDiagnosis: "Khô mắt nhẹ",
+    lastVisitDoctor: "BS. Nguyễn Hải",
+    screeningData: {
+      chiefComplaint: "Khô mắt, cộm mắt cả ngày, đặc biệt khi đeo kính áp tròng",
+      ucvaOd: "10/10",
+      ucvaOs: "10/10",
+      currentRxOd: "-3.50",
+      currentRxOs: "-3.25",
+      redFlags: {
+        eyePain: false,
+        suddenVisionLoss: false,
+        asymmetry: false,
+      },
+      symptoms: {
+        dryEyes: true,
+        gritty: true,
+        blurry: false,
+        tearing: true,
+        itchy: true,
+        headache: false,
+      },
+      blinkImprovement: "unclear",
+      symptomDuration: 6,
+      symptomDurationUnit: "tháng",
+      screenTime: "12",
+      contactLens: "yes",
+      discomfortLevel: "moderate",
+      notes: "Đeo kính áp tròng hàng ngày khoảng 10 tiếng",
+      step2: {
+        selectedGroups: ["dryEye"],
+        groupOrder: ["dryEye"],
+        dryEye: {
+          osdiScore: 38,
+          osdiAnswers: [3, 2, 3, 2, 4, 3],
+          osdiSeverity: "moderate",
+          tbutOd: "5",
+          tbutOs: "4",
+          schirmerOd: "8",
+          schirmerOs: "7",
+          meibomian: "Tắc nghẽn tuyến meibomian độ 2",
+          staining: "Nhuộm fluorescein (+) nhẹ vùng dưới",
+        },
+      },
+    },
+  },
+  {
+    id: "v-doc-3",
+    patientId: "GK-2026-0042",
+    status: "cho_kham",
+    source: "hen",
+    reason: "Mắt đỏ, cộm",
+    scheduledAt: "09:30",
+    checkedInAt: "2026-04-02T09:25:00Z",
+    date: "2026-04-02",
+    doctorName: "BS. Nguyễn Hải",
+    screeningData: {
+      chiefComplaint: "Mắt đỏ kèm cộm, chảy ghèn nhẹ",
+      ucvaOd: "9/10",
+      ucvaOs: "9/10",
+      currentRxOd: "",
+      currentRxOs: "",
+      redFlags: {
+        eyePain: false,
+        suddenVisionLoss: false,
+        asymmetry: false,
+      },
+      symptoms: {
+        dryEyes: false,
+        gritty: true,
+        blurry: false,
+        tearing: true,
+        itchy: true,
+        headache: false,
+      },
+      blinkImprovement: "no",
+      symptomDuration: 5,
+      symptomDurationUnit: "ngày",
+      screenTime: "6",
+      contactLens: "no",
+      discomfortLevel: "mild",
+      notes: "Có thể dị ứng theo mùa",
+      step2: {
+        selectedGroups: ["refraction"],
+        groupOrder: ["refraction"],
+        dryEye: {
+          osdiScore: null,
+          osdiAnswers: [null, null, null, null, null, null],
+          osdiSeverity: null,
+          tbutOd: "",
+          tbutOs: "",
+          schirmerOd: "",
+          schirmerOs: "",
+          meibomian: "",
+          staining: "",
+        },
+      },
+    },
+  },
+  {
+    id: "v-doc-4",
+    patientId: "GK-2026-0044",
+    status: "cho_kham",
+    source: "hen",
+    reason: "Nhìn bảng không rõ",
+    scheduledAt: "10:00",
+    checkedInAt: "2026-04-02T09:55:00Z",
+    date: "2026-04-02",
+    doctorName: "BS. Nguyễn Hải",
+    screeningData: {
+      chiefComplaint: "Nhìn bảng trên lớp không rõ, phải nheo mắt",
+      ucvaOd: "5/10",
+      ucvaOs: "6/10",
+      currentRxOd: "",
+      currentRxOs: "",
+      redFlags: {
+        eyePain: false,
+        suddenVisionLoss: false,
+        asymmetry: false,
+      },
+      symptoms: {
+        dryEyes: false,
+        gritty: false,
+        blurry: true,
+        tearing: false,
+        itchy: false,
+        headache: true,
+      },
+      blinkImprovement: "no",
+      symptomDuration: 2,
+      symptomDurationUnit: "tháng",
+      screenTime: "5",
+      contactLens: "no",
+      discomfortLevel: "mild",
+      notes: "Bố mẹ cận thị",
+    },
+  },
+  {
+    id: "v-doc-5",
+    patientId: "GK-2026-0045",
+    status: "dang_kham",
+    source: "hen",
+    reason: "Tái khám cận thị",
+    scheduledAt: "08:30",
+    checkedInAt: "2026-04-02T08:25:00Z",
+    date: "2026-04-02",
+    doctorName: "BS. Nguyễn Hải",
+    lastVisitDate: "10/01/2026",
+    lastVisitDiagnosis: "Cận thị cả hai mắt",
+    lastVisitDoctor: "BS. Nguyễn Hải",
+    screeningData: {
+      chiefComplaint: "Tái khám định kỳ, kiểm tra độ kính",
+      ucvaOd: "4/10",
+      ucvaOs: "5/10",
+      currentRxOd: "-2.00",
+      currentRxOs: "-1.75",
+      redFlags: {
+        eyePain: false,
+        suddenVisionLoss: false,
+        asymmetry: false,
+      },
+      symptoms: {
+        dryEyes: false,
+        gritty: false,
+        blurry: true,
+        tearing: false,
+        itchy: false,
+        headache: false,
+      },
+      blinkImprovement: "no",
+      symptomDuration: 12,
+      symptomDurationUnit: "tháng",
+      screenTime: "4",
+      contactLens: "no",
+      discomfortLevel: null,
+      notes: "Đeo kính đúng số",
+    },
   },
 ]
