@@ -14,6 +14,7 @@ const pageTitles: Record<string, string> = {
   "/intake": "Bệnh nhân",
   "/intake/new": "Tiếp nhận bệnh nhân",
   "/schedule/new": "Đặt lịch hẹn",
+  "/screening": "Sàng lọc",
 }
 
 export function SiteHeader() {
@@ -28,7 +29,12 @@ export function SiteHeader() {
 
   // For edit pages, show dynamic title
   const isEdit = pathname.match(/^\/intake\/(.+)\/edit$/)
-  const displayTitle = isEdit ? "Sửa thông tin bệnh nhân" : pageTitle
+  const isScreeningVisit = pathname.match(/^\/screening\/(.+)$/)
+  const displayTitle = isEdit
+    ? "Sửa thông tin bệnh nhân"
+    : isScreeningVisit
+      ? "Sàng lọc bệnh nhân"
+      : pageTitle
 
   return (
     <header className="flex h-16 shrink-0 items-center gap-2">

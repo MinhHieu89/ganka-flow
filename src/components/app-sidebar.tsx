@@ -16,6 +16,7 @@ import {
   CommandIcon,
   UserAdd01Icon,
   Calendar01Icon,
+  Search01Icon,
 } from "@hugeicons/core-free-icons"
 
 const navItems = [
@@ -28,6 +29,11 @@ const navItems = [
     title: "Lịch hẹn",
     url: "/schedule",
     icon: Calendar01Icon,
+  },
+  {
+    title: "Sàng lọc",
+    url: "/screening",
+    icon: Search01Icon,
   },
 ]
 

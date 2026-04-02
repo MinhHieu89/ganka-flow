@@ -9,6 +9,8 @@ import IntakeNew from "@/pages/intake/new"
 import IntakeEdit from "@/pages/intake/edit"
 import ScheduleCalendar from "@/pages/schedule/index"
 import ScheduleNew from "@/pages/schedule/new"
+import ScreeningDashboard from "@/pages/screening/index"
+import ScreeningVisit from "@/pages/screening/visit"
 
 export function App() {
   return (
@@ -26,6 +28,8 @@ export function App() {
                 <Route path="/intake/:id/edit" element={<IntakeEdit />} />
                 <Route path="/schedule" element={<ScheduleCalendar />} />
                 <Route path="/schedule/new" element={<ScheduleNew />} />
+                <Route path="/screening" element={<ScreeningDashboard />} />
+                <Route path="/screening/:visitId" element={<ScreeningVisit />} />
               </Routes>
             </SidebarInset>
           </SidebarProvider>
