@@ -121,9 +121,7 @@ export function ReceptionistProvider({ children }: { children: ReactNode }) {
 
   function saveScreeningData(visitId: string, data: ScreeningFormData) {
     setVisits((prev) =>
-      prev.map((v) =>
-        v.id === visitId ? { ...v, screeningData: data } : v
-      )
+      prev.map((v) => (v.id === visitId ? { ...v, screeningData: data } : v))
     )
   }
 

@@ -2,11 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router"
 import { Button } from "@/components/ui/button"
 import { useReceptionist } from "@/contexts/receptionist-context"
-import type {
-  Patient,
-  Visit,
-  ScreeningFormData,
-} from "@/data/mock-patients"
+import type { Patient, Visit, ScreeningFormData } from "@/data/mock-patients"
 import { ScreeningFormHeader } from "./screening-form-header"
 import { ScreeningStepIndicator } from "./screening-step-indicator"
 import { ScreeningFormInitial } from "./screening-form-initial"
@@ -76,10 +72,8 @@ export function ScreeningForm({ patient, visit }: ScreeningFormProps) {
     const errs: Record<string, string> = {}
     if (!form.chiefComplaint.trim())
       errs.chiefComplaint = "Vui lòng nhập lý do đến khám"
-    if (!form.ucvaOd.trim())
-      errs.ucvaOd = "Vui lòng nhập thị lực mắt phải"
-    if (!form.ucvaOs.trim())
-      errs.ucvaOs = "Vui lòng nhập thị lực mắt trái"
+    if (!form.ucvaOd.trim()) errs.ucvaOd = "Vui lòng nhập thị lực mắt phải"
+    if (!form.ucvaOs.trim()) errs.ucvaOs = "Vui lòng nhập thị lực mắt trái"
     setErrors(errs)
     return Object.keys(errs).length === 0
   }

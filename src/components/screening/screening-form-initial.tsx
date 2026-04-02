@@ -42,7 +42,9 @@ export function ScreeningFormInitial({
           />
           <div className="mt-1 flex justify-between">
             {errors.chiefComplaint ? (
-              <p className="text-xs text-destructive">{errors.chiefComplaint}</p>
+              <p className="text-xs text-destructive">
+                {errors.chiefComplaint}
+              </p>
             ) : (
               <span />
             )}
