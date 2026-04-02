@@ -1,3 +1,6 @@
+import { HugeiconsIcon } from "@hugeicons/react"
+import { CheckmarkCircle01Icon } from "@hugeicons/core-free-icons"
+
 interface ScreeningStepIndicatorProps {
   currentStep?: 1 | 2
 }
@@ -15,7 +18,11 @@ export function ScreeningStepIndicator({
               : "bg-muted text-muted-foreground"
           }`}
         >
-          1
+          {currentStep > 1 ? (
+            <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-3.5" />
+          ) : (
+            1
+          )}
         </div>
         <span
           className={`text-sm ${
@@ -27,7 +34,9 @@ export function ScreeningStepIndicator({
           Khám sàng lọc
         </span>
       </div>
-      <div className="h-px w-10 bg-border" />
+      <div
+        className={`h-px w-10 ${currentStep > 1 ? "bg-primary" : "bg-border"}`}
+      />
       <div className="flex items-center gap-1.5">
         <div
           className={`flex size-6 items-center justify-center rounded-full text-xs font-semibold ${
