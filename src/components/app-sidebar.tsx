@@ -17,6 +17,7 @@ import {
   UserAdd01Icon,
   Calendar01Icon,
   Search01Icon,
+  Stethoscope02Icon,
 } from "@hugeicons/core-free-icons"
 
 const navItems = [
@@ -35,6 +36,7 @@ const navItems = [
     url: "/screening",
     icon: Search01Icon,
   },
+  { title: "Khám bệnh", url: "/doctor", icon: Stethoscope02Icon },
 ]
 
 const user = {
