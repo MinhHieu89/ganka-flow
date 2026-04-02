@@ -15,9 +15,7 @@ export default function ScreeningVisit() {
     return (
       <div className="flex-1 p-6">
         <div className="rounded-lg border border-border p-8 text-center">
-          <p className="text-muted-foreground">
-            Không tìm thấy lượt khám này.
-          </p>
+          <p className="text-muted-foreground">Không tìm thấy lượt khám này.</p>
           <Button variant="outline" className="mt-4" asChild>
             <Link to="/screening">← Quay lại</Link>
           </Button>

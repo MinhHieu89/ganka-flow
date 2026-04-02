@@ -29,7 +29,10 @@ export function App() {
                 <Route path="/schedule" element={<ScheduleCalendar />} />
                 <Route path="/schedule/new" element={<ScheduleNew />} />
                 <Route path="/screening" element={<ScreeningDashboard />} />
-                <Route path="/screening/:visitId" element={<ScreeningVisit />} />
+                <Route
+                  path="/screening/:visitId"
+                  element={<ScreeningVisit />}
+                />
               </Routes>
             </SidebarInset>
           </SidebarProvider>

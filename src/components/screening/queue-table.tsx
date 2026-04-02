@@ -154,7 +154,9 @@ export function QueueTable({
                     </Tooltip>
                   )}
                 </div>
-                <div className="text-xs text-muted-foreground">{patient.id}</div>
+                <div className="text-xs text-muted-foreground">
+                  {patient.id}
+                </div>
               </TableCell>
               <TableCell>{patient.birthYear}</TableCell>
               <TableCell>{patient.gender}</TableCell>

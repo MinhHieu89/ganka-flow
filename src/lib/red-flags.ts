@@ -1,9 +1,4 @@
-const RED_FLAG_KEYWORDS = [
-  "đau mắt",
-  "mất thị lực",
-  "đột ngột",
-  "chấn thương",
-]
+const RED_FLAG_KEYWORDS = ["đau mắt", "mất thị lực", "đột ngột", "chấn thương"]
 
 export function hasRedFlag(reason?: string, chiefComplaint?: string): boolean {
   const text = `${reason ?? ""} ${chiefComplaint ?? ""}`.toLowerCase()
