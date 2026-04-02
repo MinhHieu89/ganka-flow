@@ -54,8 +54,7 @@ export default function DoctorExam() {
     )
   }
 
-  const diseaseGroups =
-    visit.screeningData?.step2?.selectedGroups ?? []
+  const diseaseGroups = visit.screeningData?.step2?.selectedGroups ?? []
 
   function handleSaveDraft() {
     saveExamDraft(visit!.id, examData)
@@ -83,7 +82,7 @@ export default function DoctorExam() {
       </div>
 
       {/* Resizable panels */}
-      <ResizablePanelGroup direction="horizontal" className="flex-1">
+      <ResizablePanelGroup orientation="horizontal" className="flex-1">
         <ResizablePanel defaultSize={30} minSize={20}>
           <PatientPanel patient={patient} visit={visit} />
         </ResizablePanel>
@@ -117,10 +116,7 @@ export default function DoctorExam() {
 
               {/* Treatment Plan */}
               <div className="border-t border-border pt-4">
-                <TreatmentPlan
-                  examData={examData}
-                  onChange={setExamData}
-                />
+                <TreatmentPlan examData={examData} onChange={setExamData} />
               </div>
             </div>
 

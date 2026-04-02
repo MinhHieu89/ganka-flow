@@ -239,8 +239,6 @@ export const mockPatients: Patient[] = [
     phone: "0966778899",
     occupation: "Giáo viên",
     chiefComplaint: "Tái khám cận thị",
-    eyeHistory: "Cận thị -2.00D",
-    lastVisitDate: "10/01/2026",
     createdAt: "2026-04-02T08:40:00Z",
   },
   {
@@ -418,7 +416,8 @@ export const mockVisits: Visit[] = [
     lastVisitDiagnosis: "Khô mắt nhẹ",
     lastVisitDoctor: "BS. Nguyễn Hải",
     screeningData: {
-      chiefComplaint: "Khô mắt, cộm mắt cả ngày, đặc biệt khi đeo kính áp tròng",
+      chiefComplaint:
+        "Khô mắt, cộm mắt cả ngày, đặc biệt khi đeo kính áp tròng",
       ucvaOd: "10/10",
       ucvaOs: "10/10",
       currentRxOd: "-3.50",
