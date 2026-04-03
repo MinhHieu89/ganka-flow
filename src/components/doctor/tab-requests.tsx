@@ -2,6 +2,13 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog"
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -206,25 +213,22 @@ export function TabRequests({ requests, onAddRequest }: TabRequestsProps) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <h2 className="text-base font-medium">Yêu cầu</h2>
-        {!showForm && (
-          <Button
-            size="sm"
-            className="h-7 bg-[#E6F1FB] px-3 text-xs font-medium text-[#0C447C] transition-colors hover:bg-[#d4e6f7]"
-            onClick={() => setShowForm(true)}
-          >
-            + Tạo yêu cầu
-          </Button>
-        )}
+        <Button
+          size="sm"
+          className="h-7 bg-[#E6F1FB] px-3 text-xs font-medium text-[#0C447C] transition-colors hover:bg-[#d4e6f7]"
+          onClick={() => setShowForm(true)}
+        >
+          + Tạo yêu cầu
+        </Button>
       </div>
 
-      {/* Create Request Form */}
-      {showForm && (
-        <div
-          className="rounded-lg border px-5 py-4"
-          style={{ borderColor: "#B5D4F4", backgroundColor: "#F8FBFE" }}
-        >
-          <div className="space-y-3">
-            {/* Loại yêu cầu */}
+      {/* Create Request Dialog */}
+      <Dialog open={showForm} onOpenChange={setShowForm}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Tạo yêu cầu mới</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-3 py-2">
             <div>
               <label className="mb-1 block text-xs font-medium text-muted-foreground">
                 Loại yêu cầu <span className="text-destructive">*</span>
@@ -242,8 +246,6 @@ export function TabRequests({ requests, onAddRequest }: TabRequestsProps) {
                 </SelectContent>
               </Select>
             </div>
-
-            {/* Ưu tiên */}
             <div>
               <label className="mb-1 block text-xs font-medium text-muted-foreground">
                 Ưu tiên
@@ -263,8 +265,6 @@ export function TabRequests({ requests, onAddRequest }: TabRequestsProps) {
                 </SelectContent>
               </Select>
             </div>
-
-            {/* Ghi chú cho KTV */}
             <div>
               <label className="mb-1 block text-xs font-medium text-muted-foreground">
                 Ghi chú cho KTV
@@ -276,9 +276,7 @@ export function TabRequests({ requests, onAddRequest }: TabRequestsProps) {
               />
             </div>
           </div>
-
-          {/* Buttons */}
-          <div className="mt-4 flex justify-end gap-2">
+          <DialogFooter>
             <Button variant="outline" size="sm" onClick={handleCancel}>
               Hủy
             </Button>
@@ -290,9 +288,9 @@ export function TabRequests({ requests, onAddRequest }: TabRequestsProps) {
             >
               Gửi yêu cầu
             </Button>
-          </div>
-        </div>
-      )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Request Cards */}
       {requests.length === 0 ? (

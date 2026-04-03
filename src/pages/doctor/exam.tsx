@@ -46,7 +46,7 @@ export default function DoctorExam() {
   const visit = visits.find((v) => v.id === visitId)
   const patient = visit ? getPatient(visit.patientId) : undefined
 
-  const [activeTab, setActiveTab] = useState<ExamTab>("exam")
+  const [activeTab, setActiveTab] = useState<ExamTab>("patient")
   const [examData, setExamData] = useState<ExamData>(() => ({
     ...(visit?.examData ?? EMPTY_EXAM),
     requests: visit?.requests ?? [],
@@ -69,8 +69,6 @@ export default function DoctorExam() {
   const pendingRequestCount = examData.requests.filter(
     (r) => r.status === "pending" || r.status === "in_progress"
   ).length
-
-  const previousVisit = visit.previousVisits?.[0]
 
   function handleAddRequest(
     request: Omit<VisitRequest, "id" | "requestedAt" | "status">
@@ -133,7 +131,6 @@ export default function DoctorExam() {
               <TabExam
                 examData={examData}
                 onChange={setExamData}
-                previousVisit={previousVisit}
               />
             )}
           </div>

@@ -1,0 +1,429 @@
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font-sans);color:var(--color-text-primary);font-size:14px;line-height:1.5}
+.app{display:flex;flex-direction:column;min-height:840px}
+.hdr{display:flex;align-items:center;gap:12px;padding:10px 20px;border-bottom:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary)}
+.av{width:36px;height:36px;border-radius:50%;background:#E6F1FB;display:flex;align-items:center;justify-content:center;font-weight:500;font-size:13px;color:#0C447C;flex-shrink:0}
+.hinf{flex:1}.hnm{font-weight:500;font-size:15px}
+.hmt{font-size:12px;color:var(--color-text-secondary);display:flex;gap:12px;flex-wrap:wrap}
+.hacts{display:flex;gap:6px}
+.hb{padding:5px 14px;border-radius:6px;border:0.5px solid var(--color-border-secondary);background:transparent;font-size:13px;cursor:pointer;color:var(--color-text-primary)}.hb:hover{background:var(--color-background-secondary)}
+.hbp{padding:5px 14px;border-radius:6px;border:none;background:#1D9E75;color:#fff;font-size:13px;cursor:pointer;font-weight:500}.hbp:hover{background:#0F6E56}
+.bod{display:flex;flex:1}
+.nav{width:175px;border-right:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);padding:10px 0;flex-shrink:0}
+.ni{display:flex;align-items:center;gap:8px;padding:10px 16px;cursor:pointer;font-size:13px;color:var(--color-text-secondary);position:relative}
+.ni:hover{background:var(--color-background-primary);color:var(--color-text-primary)}
+.ni.a{background:var(--color-background-primary);color:var(--color-text-info);font-weight:500}
+.ni.a::before{content:'';position:absolute;left:0;top:3px;bottom:3px;width:3px;background:var(--color-text-info);border-radius:0 2px 2px 0}
+.ni svg{width:15px;height:15px;flex-shrink:0}
+.nibg{margin-left:auto;min-width:18px;height:18px;border-radius:9px;background:#D85A30;color:#fff;font-size:10px;font-weight:500;display:flex;align-items:center;justify-content:center;padding:0 5px}
+.ct{flex:1;padding:20px 24px;overflow-y:auto;background:var(--color-background-tertiary)}
+.sec{display:none}.sec.a{display:block}
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.st{font-size:16px;font-weight:500}
+.ob{padding:3px 8px;border-radius:4px;border:0.5px solid var(--color-border-tertiary);background:transparent;cursor:pointer;font-size:11px;color:var(--color-text-secondary)}.ob:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
+.ccb{padding:4px 10px;border-radius:6px;border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);cursor:pointer;font-size:12px;color:var(--color-text-secondary);display:inline-flex;align-items:center;gap:4px}.ccb:hover{border-color:var(--color-border-secondary);color:var(--color-text-primary)}.ccb.on{background:#E6F1FB;color:#0C447C;border-color:transparent}
+.ccb svg{width:12px;height:12px}
+.eg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.ec{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:14px}
+.el{font-size:12px;font-weight:500;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.el-od{color:#185FA5}.el-os{color:#993C1D}
+.ddd{width:7px;height:7px;border-radius:50%}.dod{background:#378ADD}.dos{background:#D85A30}
+.fg{flex:1}.fl{font-size:11px;color:var(--color-text-secondary);margin-bottom:2px}
+.fr{display:flex;gap:10px;margin-bottom:7px}
+.fi{width:100%;padding:5px 8px;border:0.5px solid var(--color-border-tertiary);border-radius:5px;font-size:13px;background:var(--color-background-primary);color:var(--color-text-primary)}.fi:focus{outline:none;border-color:var(--color-border-info)}
+select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;padding-right:22px}
+.ta{width:100%;padding:6px 8px;border:0.5px solid var(--color-border-tertiary);border-radius:5px;font-size:13px;min-height:40px;resize:vertical;font-family:inherit;background:var(--color-background-primary);color:var(--color-text-primary)}
+.vg{display:grid;grid-template-columns:repeat(auto-fit,minmax(60px,1fr));gap:6px}
+.vi{text-align:center;padding:5px 4px;border-radius:6px;background:var(--color-background-secondary)}
+.vi .vl{font-size:10px;color:var(--color-text-secondary)}.vi .vv{font-size:14px;font-weight:500}
+.cd{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:14px;margin-bottom:12px}
+.cl{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.3px;margin-bottom:6px}
+.kv{font-size:13px;margin-bottom:4px;display:flex;gap:6px}
+.kvl{color:var(--color-text-secondary);min-width:105px;flex-shrink:0}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px}
+.pill{display:inline-block;padding:2px 9px;border-radius:12px;font-size:12px;margin:2px 2px}
+.plb{background:#E6F1FB;color:#0C447C}.plg{background:#F1EFE8;color:#444441}.plr{background:#FCEBEB;color:#791F1F}.plw{background:#FAEEDA;color:#633806}
+.qa{margin-bottom:5px}.qaq{font-size:12px;color:var(--color-text-secondary);margin-bottom:1px}.qaa{font-size:13px}
+.sep{height:0.5px;background:var(--color-border-tertiary);margin:10px 0}
+.stl{font-size:13px;font-weight:500;margin:12px 0 6px}.stl:first-child{margin-top:0}
+.dr{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.db{padding:2px 7px;border-radius:4px;font-size:10px;font-weight:500}
+.dbp{background:#E6F1FB;color:#0C447C}.dbs{background:#F1EFE8;color:#444441}
+.dn{flex:1;font-size:13px}.di{font-size:12px;color:var(--color-text-secondary)}
+.dx{cursor:pointer;color:var(--color-text-secondary);font-size:15px;width:20px;text-align:center}.dx:hover{color:#A32D2D}
+.ba{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:5px;border:0.5px dashed var(--color-border-secondary);background:transparent;cursor:pointer;font-size:12px;color:var(--color-text-secondary)}.ba:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
+.mt{width:100%;border-collapse:collapse;font-size:13px}
+.mt th{text-align:left;padding:6px 8px;font-weight:500;font-size:11px;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-tertiary)}
+.mt td{padding:6px 8px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.hp{display:none;background:var(--color-background-primary);border:0.5px solid #B5D4F4;border-radius:10px;padding:14px;margin-bottom:12px;position:relative}.hp.on{display:block}
+.hx{position:absolute;top:8px;right:10px;cursor:pointer;background:none;border:none;color:var(--color-text-secondary);font-size:15px}.hx:hover{color:var(--color-text-primary)}
+.htb{width:100%;border-collapse:collapse;font-size:12px}
+.htb th{text-align:left;padding:4px 6px;font-weight:500;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-tertiary);font-size:10px}
+.htb td{padding:4px 6px;border-bottom:0.5px solid var(--color-border-tertiary)}.htb tr:last-child td{border-bottom:none}
+.hcc{font-weight:500;background:#F3F8FE;color:#0C447C}
+.eyy{font-size:10px;color:var(--color-text-secondary);font-weight:500}
+.tdd{font-size:10px;padding:1px 5px;border-radius:3px;font-weight:500;margin-left:3px}
+.tdw{background:#FCEBEB;color:#791F1F}.tdn{background:#F1EFE8;color:#444441}
+.vc{display:flex;gap:5px;margin-bottom:6px}
+.vci{padding:2px 8px;border-radius:12px;font-size:10px;background:var(--color-background-secondary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary)}
+.vci.now{background:#E6F1FB;color:#0C447C;border-color:transparent;font-weight:500}
+.mlbl{font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+.rq-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:12px 14px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px}
+.rq-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rq-icon svg{width:16px;height:16px}
+.rq-body{flex:1;min-width:0}
+.rq-title{font-size:13px;font-weight:500;margin-bottom:2px}
+.rq-meta{font-size:11px;color:var(--color-text-secondary)}
+.rq-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0}
+.sts{padding:2px 8px;border-radius:12px;font-size:11px;font-weight:500}
+.sts-done{background:#EAF3DE;color:#27500A}.sts-pend{background:#FAEEDA;color:#854F0B}.sts-prog{background:#E6F1FB;color:#0C447C}
+.add-rq{padding:6px 14px;border-radius:6px;background:#E6F1FB;color:#0C447C;border:none;font-size:12px;cursor:pointer;font-weight:500;display:inline-flex;align-items:center;gap:4px}.add-rq:hover{background:#B5D4F4}
+.rq-result{background:var(--color-background-secondary);border-radius:8px;padding:10px 12px;margin-top:8px;font-size:12px}
+.opt-section{display:none;margin-top:12px}.opt-section.show{display:block}
+.add-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.add-btn{padding:7px 14px;border-radius:8px;border:0.5px dashed var(--color-border-secondary);background:var(--color-background-primary);cursor:pointer;font-size:12px;color:var(--color-text-secondary);display:inline-flex;align-items:center;gap:5px;transition:all .12s}
+.add-btn:hover{border-color:var(--color-text-info);color:var(--color-text-info);background:#F3F8FE}
+.add-btn.added{border-style:solid;border-color:var(--color-border-info);color:var(--color-text-info);background:#E6F1FB}
+.add-btn svg{width:14px;height:14px}
+.remove-sec{float:right;padding:2px 6px;border-radius:4px;border:none;background:transparent;cursor:pointer;font-size:11px;color:var(--color-text-secondary)}.remove-sec:hover{color:#A32D2D;background:#FCEBEB}
+.lv-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:16px;margin-bottom:12px}
+.lv-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.lv-date{font-size:14px;font-weight:500}
+.lv-doc{font-size:12px;color:var(--color-text-secondary)}
+.lv-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.lv-block{padding:10px;border-radius:8px;background:var(--color-background-secondary)}
+.lv-bl{font-size:10px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.3px;margin-bottom:6px}
+.lv-row{font-size:12px;margin-bottom:3px}
+.lv-row b{font-weight:500}
+.lv-diag{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:3px}
+.lv-more{display:inline-flex;align-items:center;gap:3px;padding:4px 10px;border-radius:6px;border:0.5px solid var(--color-border-tertiary);background:transparent;cursor:pointer;font-size:11px;color:var(--color-text-secondary);margin-top:8px}.lv-more:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
+.std{display:inline-flex;align-items:center;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:500;background:#EAF3DE;color:#27500A}
+</style>
+
+<div class="app">
+  <div class="hdr">
+    <div class="av">NA</div>
+    <div class="hinf">
+      <div class="hnm">Nguyễn Văn An</div>
+      <div class="hmt"><span>BN-20260403-0012</span><span>Nam, 45 tuổi</span><span>0912 345 678</span><span>Tái khám lần 3</span></div>
+    </div>
+    <div class="hacts"><button class="hb">In phiếu</button><button class="hbp">Hoàn tất khám</button></div>
+  </div>
+
+  <div class="bod">
+    <div class="nav">
+      <div class="ni a" data-s="pat"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="8" cy="5" r="3"/><path d="M2.5 14c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/></svg>Bệnh nhân</div>
+      <div class="ni" data-s="pre"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 6h6M5 8.5h4M5 11h5"/></svg>Pre-Exam</div>
+      <div class="ni" data-s="req"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M14 2L7 9M14 2l-4 12-3-5-5-3z"/></svg>Yêu cầu<span class="nibg">1</span></div>
+      <div class="ni" data-s="exam"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="5" y="1.5" width="6" height="13" rx="1"/><line x1="5" y1="5.5" x2="11" y2="5.5"/><line x1="5" y1="10.5" x2="11" y2="10.5"/></svg>Khám & kết luận</div>
+    </div>
+
+    <div class="ct">
+
+      <!-- 1. BỆNH NHÂN -->
+      <div class="sec a" id="s-pat">
+        <div class="sh"><div class="st">Thông tin bệnh nhân</div><button class="ob">Chỉnh sửa</button></div>
+        <div class="cd">
+          <div class="row2">
+            <div class="kv"><span class="kvl">Họ tên:</span>Nguyễn Văn An</div>
+            <div class="kv"><span class="kvl">Ngày sinh:</span>15/03/1981 (45 tuổi)</div>
+            <div class="kv"><span class="kvl">Giới tính:</span>Nam</div>
+            <div class="kv"><span class="kvl">Điện thoại:</span>0912 345 678</div>
+            <div class="kv"><span class="kvl">Địa chỉ:</span>45 Nguyễn Trãi, Thanh Xuân, HN</div>
+            <div class="kv"><span class="kvl">BHYT:</span>DN-4851234567</div>
+            <div class="kv"><span class="kvl">Nghề nghiệp:</span>Nhân viên văn phòng</div>
+            <div class="kv"><span class="kvl">Nguồn:</span>Website đặt lịch</div>
+            <div class="kv"><span class="kvl">Liên hệ KC:</span>Nguyễn Thị Lan (vợ) — 0987 654 321</div>
+          </div>
+        </div>
+
+        <div style="font-size:14px;font-weight:500;margin-bottom:10px">Lần khám gần nhất</div>
+
+        <div class="lv-card">
+          <div class="lv-header">
+            <div><div class="lv-date">15/01/2026</div><div class="lv-doc">BS. Nguyễn Thị Mai</div></div>
+            <span style="font-size:12px;color:var(--color-text-secondary)">79 ngày trước</span>
+          </div>
+          <div class="lv-grid">
+            <div class="lv-block">
+              <div class="lv-bl">Chẩn đoán</div>
+              <div class="lv-diag"><span class="pill plb" style="margin:0;font-size:11px">Cận thị 2 mắt — H52.1</span></div>
+              <div class="lv-diag"><span class="pill plg" style="margin:0;font-size:11px">Khô mắt nhẹ — H04.1</span></div>
+            </div>
+            <div class="lv-block">
+              <div class="lv-bl">Thuốc đã kê</div>
+              <div class="lv-row">Refresh Tears 0.5% — 1 giọt 3 lần/ngày — OU</div>
+              <div class="lv-row" style="color:var(--color-text-secondary);font-size:11px">Thời gian: 3 tháng</div>
+            </div>
+            <div class="lv-block">
+              <div class="lv-bl">Thị lực</div>
+              <div class="lv-row"><b style="color:#185FA5">OD:</b> SC 20/40 · CC 20/25 · IOP 15</div>
+              <div class="lv-row"><b style="color:#993C1D">OS:</b> SC 20/30 · CC 20/20 · IOP 14</div>
+            </div>
+            <div class="lv-block">
+              <div class="lv-bl">Khúc xạ (Auto-Ref)</div>
+              <div class="lv-row"><b style="color:#185FA5">OD:</b> -2.50 / -0.75 x 180</div>
+              <div class="lv-row"><b style="color:#993C1D">OS:</b> -2.75 / -0.75 x 5</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;padding-top:10px;border-top:0.5px solid var(--color-border-tertiary)">
+            <div class="lv-bl">Dặn dò</div>
+            <div style="font-size:12px">Giảm screen time. Nhỏ nước mắt nhân tạo đều. Tái khám sau 3 tháng.</div>
+          </div>
+          <button class="lv-more" onclick="alert('Xem toàn bộ hồ sơ lần khám 15/01/2026')">Xem chi tiết lần khám này</button>
+        </div>
+
+        <div class="lv-card" style="opacity:.7">
+          <div class="lv-header">
+            <div><div class="lv-date">20/09/2025</div><div class="lv-doc">BS. Trần Văn Hùng</div></div>
+            <span style="font-size:12px;color:var(--color-text-secondary)">196 ngày trước</span>
+          </div>
+          <div class="lv-grid">
+            <div class="lv-block">
+              <div class="lv-bl">Chẩn đoán</div>
+              <div class="lv-diag"><span class="pill plb" style="margin:0;font-size:11px">Cận thị 2 mắt — H52.1</span></div>
+            </div>
+            <div class="lv-block">
+              <div class="lv-bl">Thị lực</div>
+              <div class="lv-row"><b style="color:#185FA5">OD:</b> SC 20/30 · CC 20/25 · IOP 14</div>
+              <div class="lv-row"><b style="color:#993C1D">OS:</b> SC 20/25 · CC 20/20 · IOP 14</div>
+            </div>
+          </div>
+          <button class="lv-more" onclick="alert('Xem toàn bộ hồ sơ lần khám 20/09/2025')">Xem chi tiết lần khám này</button>
+        </div>
+      </div>
+
+      <!-- 2. PRE-EXAM -->
+      <div class="sec" id="s-pre">
+        <div class="sh">
+          <div class="st">Kết quả Pre-Exam</div>
+          <div style="display:flex;gap:6px">
+            <button class="ccb" onclick="tgl('pe')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 12V6l4-3 4 5 4-4"/></svg>So sánh</button>
+            <button class="ob">Chỉnh sửa</button>
+          </div>
+        </div>
+        <div class="hp" id="h-pe">
+          <button class="hx" onclick="tgl('pe')">&times;</button>
+          <div class="vc"><span class="vci now">Hôm nay</span><span class="vci">15/01/2026</span><span class="vci">20/09/2025</span></div>
+          <table class="htb">
+            <thead><tr><th></th><th></th><th class="hcc">03/04/2026</th><th>15/01/2026</th><th>20/09/2025</th><th></th></tr></thead>
+            <tbody>
+              <tr><td rowspan="2" style="font-weight:500">SC</td><td class="eyy">OD</td><td class="hcc">20/40</td><td>20/40</td><td>20/30</td><td><span class="tdd tdw">&#8595;</span></td></tr>
+              <tr><td class="eyy">OS</td><td class="hcc">20/30</td><td>20/30</td><td>20/25</td><td><span class="tdd tdw">&#8595;</span></td></tr>
+              <tr><td rowspan="2" style="font-weight:500">IOP</td><td class="eyy">OD</td><td class="hcc">16</td><td>15</td><td>14</td><td><span class="tdd tdw">+2</span></td></tr>
+              <tr><td class="eyy">OS</td><td class="hcc">15</td><td>14</td><td>14</td><td><span class="tdd tdn">+1</span></td></tr>
+              <tr><td rowspan="2" style="font-weight:500">Sph</td><td class="eyy">OD</td><td class="hcc">-2.75</td><td>-2.50</td><td>-2.25</td><td><span class="tdd tdw">-0.25</span></td></tr>
+              <tr><td class="eyy">OS</td><td class="hcc">-3.00</td><td>-2.75</td><td>-2.50</td><td><span class="tdd tdw">-0.25</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="cd">
+          <div class="cl">Lý do khám & triệu chứng</div>
+          <div class="kv" style="margin-bottom:6px"><span class="kvl">Lý do khám:</span><span style="font-weight:500">Mờ mắt, nhức đầu</span></div>
+          <div class="row2" style="margin-bottom:8px">
+            <div class="kv"><span class="kvl">Khởi phát:</span>2 tuần trước</div><div class="kv"><span class="kvl">Mức độ:</span>Trung bình (3/5)</div>
+            <div class="kv"><span class="kvl">Diễn biến:</span>Tăng dần</div><div class="kv"><span class="kvl">Mắt:</span>Cả hai mắt</div>
+          </div>
+          <div style="margin-bottom:4px;font-size:12px;color:var(--color-text-secondary)">Triệu chứng:</div>
+          <div><span class="pill plb">Mờ khi nhìn xa</span><span class="pill plb">Nhức đầu vùng trán</span><span class="pill plb">Mỏi mắt cuối ngày</span><span class="pill plg">Khô rát mắt</span></div>
+          <div class="sep"></div>
+          <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:3px">Dấu hiệu cảnh báo:</div>
+          <div style="font-size:13px;color:#27500A">Không có</div>
+        </div>
+        <div class="cd">
+          <div class="cl">Tiền sử</div>
+          <div class="stl" style="margin-top:0">Bệnh mắt</div>
+          <div><span class="pill plb">Cận thị</span><span class="pill plb">Khô mắt</span></div>
+          <div style="font-size:13px;margin-top:3px;color:var(--color-text-secondary)">Đeo kính cận từ 15 tuổi. Khám khô mắt 6 tháng trước.</div>
+          <div class="stl">Toàn thân</div><div style="font-size:13px">Không có bệnh nền</div>
+          <div class="stl">Dị ứng</div><div><span class="pill plr">Tetracycline</span></div>
+          <div class="stl">Thuốc đang dùng</div><div style="font-size:13px">Refresh Tears 0.5% — 3 lần/ngày</div>
+          <div class="stl">Gia đình</div><div style="font-size:13px">Mẹ cận nặng (-8.00D)</div>
+        </div>
+        <div class="cd">
+          <div class="cl">Sàng lọc</div>
+          <div class="row2" style="margin-bottom:8px">
+            <div class="kv"><span class="kvl">OSDI-6:</span><span style="font-weight:500">18/30</span> <span class="pill plw" style="font-size:10px;padding:1px 6px">Trung bình</span></div>
+            <div class="kv"><span class="kvl">Screen time:</span>8–10h/ngày</div>
+            <div class="kv"><span class="kvl">Kính áp tròng:</span>Không</div>
+            <div class="kv"><span class="kvl">Nghỉ mắt:</span>Không thường xuyên</div>
+          </div>
+          <div class="sep"></div>
+          <div class="qa"><div class="qaq">Mắt có bị đỏ hoặc chảy nước thường xuyên?</div><div class="qaa">Thỉnh thoảng, cuối ngày làm việc</div></div>
+          <div class="qa"><div class="qaq">Nhìn thấy chấm đen, đốm sáng bất thường?</div><div class="qaa">Không</div></div>
+          <div class="qa"><div class="qaq">Khó khăn khi lái xe ban đêm?</div><div class="qaa">Có, hơi chói đèn ngược chiều</div></div>
+        </div>
+        <div class="cd">
+          <div class="cl">Thị lực & nhãn áp</div>
+          <div class="eg" style="margin-bottom:0">
+            <div><div class="el el-od"><span class="ddd dod"></span>OD</div><div class="vg"><div class="vi"><div class="vl">SC</div><div class="vv">20/40</div></div><div class="vi"><div class="vl">CC</div><div class="vv">20/25</div></div><div class="vi"><div class="vl">PH</div><div class="vv">20/20</div></div><div class="vi"><div class="vl">Gần</div><div class="vv">J2</div></div><div class="vi"><div class="vl">IOP</div><div class="vv">16</div></div></div></div>
+            <div><div class="el el-os"><span class="ddd dos"></span>OS</div><div class="vg"><div class="vi"><div class="vl">SC</div><div class="vv">20/30</div></div><div class="vi"><div class="vl">CC</div><div class="vv">20/20</div></div><div class="vi"><div class="vl">PH</div><div class="vv">20/20</div></div><div class="vi"><div class="vl">Gần</div><div class="vv">J1</div></div><div class="vi"><div class="vl">IOP</div><div class="vv">15</div></div></div></div>
+          </div>
+        </div>
+        <div class="cd">
+          <div class="cl">Khúc xạ kế (Auto-Ref)</div>
+          <div class="eg" style="margin-bottom:0">
+            <div><div class="el el-od"><span class="ddd dod"></span>OD</div><div class="vg" style="grid-template-columns:1fr 1fr 1fr"><div class="vi"><div class="vl">Sph</div><div class="vv">-2.75</div></div><div class="vi"><div class="vl">Cyl</div><div class="vv">-0.75</div></div><div class="vi"><div class="vl">Axis</div><div class="vv">180°</div></div></div></div>
+            <div><div class="el el-os"><span class="ddd dos"></span>OS</div><div class="vg" style="grid-template-columns:1fr 1fr 1fr"><div class="vi"><div class="vl">Sph</div><div class="vv">-3.00</div></div><div class="vi"><div class="vl">Cyl</div><div class="vv">-1.00</div></div><div class="vi"><div class="vl">Axis</div><div class="vv">5°</div></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. YÊU CẦU -->
+      <div class="sec" id="s-req">
+        <div class="sh"><div class="st">Yêu cầu</div><button class="add-rq" onclick="document.getElementById('new-rq').style.display=document.getElementById('new-rq').style.display==='none'?'block':'none'">+ Tạo yêu cầu</button></div>
+        <div id="new-rq" style="display:none;margin-bottom:14px" class="cd">
+          <div class="cl">Tạo yêu cầu mới</div>
+          <div class="fr"><div class="fg"><div class="fl">Loại</div><select class="fi"><option>Đo khúc xạ chủ quan</option><option>OCT</option><option>Chụp đáy mắt</option><option>Đo thị trường</option><option>Topography giác mạc</option><option>Siêu âm mắt</option><option>Xét nghiệm máu</option><option>Khác...</option></select></div><div class="fg"><div class="fl">Ưu tiên</div><select class="fi"><option>Bình thường</option><option>Khẩn</option></select></div></div>
+          <div class="fg" style="margin-bottom:8px"><div class="fl">Ghi chú cho KTV</div><input class="fi" placeholder="VD: Đo cả Add cho bệnh nhân lão thị..."></div>
+          <div style="display:flex;gap:6px;justify-content:flex-end"><button class="ob" onclick="document.getElementById('new-rq').style.display='none'">Hủy</button><button class="add-rq" onclick="document.getElementById('new-rq').style.display='none'">Gửi yêu cầu</button></div>
+        </div>
+        <div class="rq-card">
+          <div class="rq-icon" style="background:#EAF3DE;color:#27500A"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="5"/><path d="M6 8l1.5 1.5L10.5 6"/></svg></div>
+          <div class="rq-body">
+            <div class="rq-title">Đo khúc xạ chủ quan</div>
+            <div class="rq-meta">Gửi 09:15 · Hoàn tất 09:32 · KTV Trần Minh</div>
+            <div class="rq-result">
+              <div class="eg" style="margin-bottom:0;gap:16px">
+                <div><div style="font-size:11px;font-weight:500;color:#185FA5;margin-bottom:3px">OD</div><div style="font-size:12px">Sph <b>-2.50</b> · Cyl <b>-0.50</b> · Axis <b>175°</b></div><div style="font-size:12px">BCVA <b>20/20</b> · PD <b>31.5</b></div></div>
+                <div><div style="font-size:11px;font-weight:500;color:#993C1D;margin-bottom:3px">OS</div><div style="font-size:12px">Sph <b>-2.75</b> · Cyl <b>-0.75</b> · Axis <b>10°</b></div><div style="font-size:12px">BCVA <b>20/20</b> · PD <b>32.0</b></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="rq-right"><span class="sts sts-done">Hoàn tất</span></div>
+        </div>
+        <div class="rq-card">
+          <div class="rq-icon" style="background:#FAEEDA;color:#854F0B"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="5"/><path d="M8 5.5v3h2.5"/></svg></div>
+          <div class="rq-body"><div class="rq-title">OCT hoàng điểm</div><div class="rq-meta">Gửi 09:40 · Ghi chú: Kiểm tra phù hoàng điểm</div></div>
+          <div class="rq-right"><span class="sts sts-pend">Đang chờ</span></div>
+        </div>
+        <div class="rq-card">
+          <div class="rq-icon" style="background:#E6F1FB;color:#0C447C"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="5"/><path d="M6 8h4"/></svg></div>
+          <div class="rq-body"><div class="rq-title">Chụp đáy mắt</div><div class="rq-meta">Gửi 09:41 · KTV đang thực hiện</div></div>
+          <div class="rq-right"><span class="sts sts-prog">Đang thực hiện</span></div>
+        </div>
+      </div>
+
+      <!-- 4. KHÁM & KẾT LUẬN -->
+      <div class="sec" id="s-exam">
+        <div class="sh"><div class="st">Khám & kết luận</div>
+          <button class="ccb" onclick="tgl('ex')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 12V6l4-3 4 5 4-4"/></svg>Lần trước</button>
+        </div>
+        <div class="hp" id="h-ex">
+          <button class="hx" onclick="tgl('ex')">&times;</button>
+          <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:6px">15/01/2026 — BS. Nguyễn Thị Mai</div>
+          <div class="row2" style="gap:16px">
+            <div><div style="font-size:10px;font-weight:500;color:var(--color-text-secondary);margin-bottom:3px">SINH HIỂN VI</div><table class="htb"><thead><tr><th></th><th>OD</th><th>OS</th></tr></thead><tbody><tr><td>Mi mắt</td><td>BT</td><td>BT</td></tr><tr><td>Giác mạc</td><td>Trong</td><td>Trong</td></tr><tr><td>Thể TTT</td><td>Trong</td><td>Trong</td></tr></tbody></table></div>
+            <div><div style="font-size:10px;font-weight:500;color:var(--color-text-secondary);margin-bottom:3px">ĐÁY MẮT</div><table class="htb"><thead><tr><th></th><th>OD</th><th>OS</th></tr></thead><tbody><tr><td>Đĩa thị</td><td>BT</td><td>BT</td></tr><tr><td>C/D</td><td>0.3</td><td>0.3</td></tr><tr><td>Hoàng điểm</td><td>BT</td><td>BT</td></tr></tbody></table></div>
+          </div>
+          <div class="sep"></div>
+          <div style="font-size:10px;font-weight:500;color:var(--color-text-secondary);margin-bottom:3px">CHẨN ĐOÁN & ĐIỀU TRỊ</div>
+          <div style="font-size:12px">Cận thị 2 mắt (H52.1), Khô mắt nhẹ (H04.1)</div>
+          <div style="font-size:12px;margin-top:3px;color:var(--color-text-secondary)">Refresh Tears 0.5% 3 lần/ngày OU · Tái khám 3 tháng</div>
+        </div>
+
+        <div style="font-size:13px;font-weight:500;margin-bottom:10px">Sinh hiển vi (Slit-lamp)</div>
+        <div class="eg">
+          <div class="ec">
+            <div class="el el-od"><span class="ddd dod"></span>Mắt phải (OD)</div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">Mi mắt</div><select class="fi"><option>Bình thường</option><option>Viêm bờ mi</option><option>Lẹo / Chắp</option></select></div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">Kết mạc</div><select class="fi"><option>Bình thường</option><option>Cương tụ</option><option>Nhú gai</option></select></div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">Giác mạc</div><select class="fi"><option>Trong</option><option>Phù</option><option>Loét</option><option>Sẹo</option></select></div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">Tiền phòng</div><select class="fi"><option>Sạch, sâu</option><option>Tyndall (+)</option><option>Nông</option></select></div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">Mống mắt</div><select class="fi"><option>Bình thường</option><option>Dính</option><option>Tân mạch</option></select></div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">Thể thủy tinh</div><select class="fi"><option>Trong</option><option>Đục nhân</option><option>Đục vỏ</option><option>IOL</option></select></div>
+            <div class="fg"><div class="fl">Ghi chú</div><textarea class="ta" style="min-height:28px" placeholder="Mô tả..."></textarea></div>
+          </div>
+          <div class="ec">
+            <div class="el el-os"><span class="ddd dos"></span>Mắt trái (OS)</div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">Mi mắt</div><select class="fi"><option>Bình thường</option><option>Viêm bờ mi</option><option>Lẹo / Chắp</option></select></div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">Kết mạc</div><select class="fi"><option>Bình thường</option><option>Cương tụ</option><option>Nhú gai</option></select></div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">Giác mạc</div><select class="fi"><option>Trong</option><option>Phù</option><option>Loét</option><option>Sẹo</option></select></div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">Tiền phòng</div><select class="fi"><option>Sạch, sâu</option><option>Tyndall (+)</option><option>Nông</option></select></div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">Mống mắt</div><select class="fi"><option>Bình thường</option><option>Dính</option><option>Tân mạch</option></select></div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">Thể thủy tinh</div><select class="fi"><option>Trong</option><option>Đục nhân</option><option>Đục vỏ</option><option>IOL</option></select></div>
+            <div class="fg"><div class="fl">Ghi chú</div><textarea class="ta" style="min-height:28px" placeholder="Mô tả..."></textarea></div>
+          </div>
+        </div>
+
+        <div style="font-size:13px;font-weight:500;margin-bottom:10px">Đáy mắt (Fundus)</div>
+        <div class="eg">
+          <div class="ec">
+            <div class="el el-od"><span class="ddd dod"></span>OD</div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">Đĩa thị</div><select class="fi"><option>Bình thường</option><option>Phù gai</option><option>Lõm gai rộng</option></select></div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">C/D ratio</div><input class="fi" value="0.3"></div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">Hoàng điểm</div><select class="fi"><option>Bình thường</option><option>Phù</option><option>Thoái hóa</option><option>Drusen</option></select></div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">Mạch máu</div><select class="fi"><option>Bình thường</option><option>Hẹp ĐM</option><option>Tân mạch</option></select></div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">VM ngoại vi</div><select class="fi"><option>Bình thường</option><option>Thoái hóa lattice</option><option>Rách / Lỗ</option></select></div>
+            <div class="fg"><div class="fl">Ghi chú</div><textarea class="ta" style="min-height:28px" placeholder="Mô tả..."></textarea></div>
+          </div>
+          <div class="ec">
+            <div class="el el-os"><span class="ddd dos"></span>OS</div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">Đĩa thị</div><select class="fi"><option>Bình thường</option><option>Phù gai</option><option>Lõm gai rộng</option></select></div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">C/D ratio</div><input class="fi" value="0.3"></div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">Hoàng điểm</div><select class="fi"><option>Bình thường</option><option>Phù</option><option>Thoái hóa</option><option>Drusen</option></select></div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">Mạch máu</div><select class="fi"><option>Bình thường</option><option>Hẹp ĐM</option><option>Tân mạch</option></select></div>
+            <div class="fg" style="margin-bottom:6px"><div class="fl">VM ngoại vi</div><select class="fi"><option>Bình thường</option><option>Thoái hóa lattice</option><option>Rách / Lỗ</option></select></div>
+            <div class="fg"><div class="fl">Ghi chú</div><textarea class="ta" style="min-height:28px" placeholder="Mô tả..."></textarea></div>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+        <div style="font-size:13px;font-weight:500;margin-bottom:10px">Chẩn đoán</div>
+        <div class="cd">
+          <div class="dr"><span class="db dbp">Chính</span><span class="dn">Cận thị 2 mắt</span><span class="di">H52.1</span><span class="dx">&times;</span></div>
+          <div class="dr"><span class="db dbs">Phụ</span><span class="dn">Loạn thị</span><span class="di">H52.2</span><span class="dx">&times;</span></div>
+          <div class="dr" style="border:none"><span class="db dbs">Phụ</span><span class="dn">Hội chứng khô mắt</span><span class="di">H04.1</span><span class="dx">&times;</span></div>
+          <div style="margin-top:8px;display:flex;gap:6px"><input class="fi" style="flex:1" placeholder="Tìm chẩn đoán hoặc mã ICD..."><button class="ba">+ Thêm</button></div>
+        </div>
+        <div class="fg" style="margin-bottom:6px"><div class="fl">Ghi chú chẩn đoán</div><textarea class="ta" placeholder="Mức độ, giai đoạn..."></textarea></div>
+
+        <div class="add-btns" id="add-btns">
+          <button class="add-btn" id="btn-med" onclick="showOpt('med')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M8 3v10M3 8h10"/></svg>Đơn thuốc</button>
+          <button class="add-btn" id="btn-opt" onclick="showOpt('optic')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M8 3v10M3 8h10"/></svg>Đơn kính</button>
+          <button class="add-btn" id="btn-fu" onclick="showOpt('fu')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M8 3v10M3 8h10"/></svg>Tái khám</button>
+        </div>
+
+        <div class="opt-section" id="opt-med">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:13px;font-weight:500">Đơn thuốc</div><button class="remove-sec" onclick="hideOpt('med')">Xóa</button></div>
+          <div class="cd">
+            <table class="mt"><thead><tr><th>Tên thuốc</th><th>Liều</th><th>Tần suất</th><th>Thời gian</th><th>Mắt</th><th></th></tr></thead><tbody>
+              <tr><td>Refresh Tears 0.5%</td><td>1 giọt</td><td>4 lần/ngày</td><td>1 tháng</td><td>OU</td><td><span class="dx">&times;</span></td></tr>
+              <tr><td>Systane Ultra</td><td>1 giọt</td><td>2 lần/ngày</td><td>1 tháng</td><td>OU</td><td><span class="dx">&times;</span></td></tr>
+            </tbody></table>
+            <div style="margin-top:8px"><button class="ba">+ Thêm thuốc</button></div>
+          </div>
+        </div>
+
+        <div class="opt-section" id="opt-optic">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:13px;font-weight:500">Đơn kính</div><button class="remove-sec" onclick="hideOpt('optic')">Xóa</button></div>
+          <div class="cd">
+            <div class="eg" style="margin-bottom:8px">
+              <div><div style="font-weight:500;font-size:12px;color:#185FA5;margin-bottom:5px">OD</div><div class="fr"><div class="fg"><div class="fl">Sph</div><input class="fi" value="-2.50"></div><div class="fg"><div class="fl">Cyl</div><input class="fi" value="-0.50"></div><div class="fg"><div class="fl">Axis</div><input class="fi" value="175"></div><div class="fg"><div class="fl">Add</div><input class="fi" placeholder="+"></div></div></div>
+              <div><div style="font-weight:500;font-size:12px;color:#993C1D;margin-bottom:5px">OS</div><div class="fr"><div class="fg"><div class="fl">Sph</div><input class="fi" value="-2.75"></div><div class="fg"><div class="fl">Cyl</div><input class="fi" value="-0.75"></div><div class="fg"><div class="fl">Axis</div><input class="fi" value="10"></div><div class="fg"><div class="fl">Add</div><input class="fi" placeholder="+"></div></div></div>
+            </div>
+            <div class="fr"><div class="fg"><div class="fl">PD</div><input class="fi" value="63.5"></div><div class="fg"><div class="fl">Loại kính</div><select class="fi"><option>Đơn tròng</option><option>Đa tròng</option><option>Lũy tiến</option></select></div><div class="fg"><div class="fl">Ghi chú</div><input class="fi" placeholder="Phủ chống xanh..."></div></div>
+          </div>
+        </div>
+
+        <div class="opt-section" id="opt-fu">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:13px;font-weight:500">Tái khám</div><button class="remove-sec" onclick="hideOpt('fu')">Xóa</button></div>
+          <div class="cd">
+            <div class="fr"><div class="fg"><div class="fl">Tái khám sau</div><select class="fi"><option>1 tuần</option><option>2 tuần</option><option selected>1 tháng</option><option>3 tháng</option><option>6 tháng</option></select></div><div class="fg"><div class="fl">Ngày</div><input class="fi" type="date" value="2026-05-03"></div><div class="fg"><div class="fl">Bác sĩ</div><select class="fi"><option>BS. Nguyễn Thị Mai</option><option>BS. Trần Văn Hùng</option></select></div></div>
+            <div class="fg" style="margin-top:4px"><div class="fl">Dặn dò</div><textarea class="ta">Nhỏ nước mắt nhân tạo 4 lần/ngày. Giảm screen time. Tái khám sau 1 tháng.</textarea></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.ni').forEach(n=>{n.addEventListener('click',()=>{document.querySelectorAll('.ni').forEach(x=>x.classList.remove('a'));n.classList.add('a');document.querySelectorAll('.sec').forEach(s=>s.classList.remove('a'));document.getElementById('s-'+n.dataset.s).classList.add('a')})});
+function tgl(id){const p=document.getElementById('h-'+id);const sec=p.closest('.sec');const btn=sec.querySelector('.ccb');if(p.classList.contains('on')){p.classList.remove('on');if(btn)btn.classList.remove('on')}else{document.querySelectorAll('.hp').forEach(x=>x.classList.remove('on'));document.querySelectorAll('.ccb').forEach(x=>x.classList.remove('on'));p.classList.add('on');if(btn)btn.classList.add('on')}}
+const optMap={med:'btn-med',optic:'btn-opt',fu:'btn-fu'};
+function showOpt(id){const el=document.getElementById('opt-'+id);const btn=document.getElementById(optMap[id]);if(el.classList.contains('show')){hideOpt(id)}else{el.classList.add('show');btn.classList.add('added');btn.innerHTML='<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h8"/></svg>'+btn.textContent.trim()}}
+function hideOpt(id){const el=document.getElementById('opt-'+id);const btn=document.getElementById(optMap[id]);el.classList.remove('show');btn.classList.remove('added');const label=btn.textContent.trim();btn.innerHTML='<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M8 3v10M3 8h10"/></svg>'+label}
+</script>

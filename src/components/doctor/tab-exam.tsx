@@ -13,9 +13,10 @@ import { HugeiconsIcon } from "@hugeicons/react"
 import { Cancel01Icon } from "@hugeicons/core-free-icons"
 import { cn } from "@/lib/utils"
 import { DiagnosisInput } from "@/components/doctor/diagnosis-input"
+import { MedicationSearch } from "@/components/doctor/medication-search"
+import type { MedicationCatalogEntry } from "@/data/medications"
 import type {
   ExamData,
-  PreviousVisit,
   SlitLampEye,
   FundusEye,
   Medication,
@@ -33,7 +34,6 @@ import {
 interface TabExamProps {
   examData: ExamData
   onChange: (data: ExamData) => void
-  previousVisit?: PreviousVisit
 }
 
 const EMPTY_MEDICATION: Medication = {
@@ -182,55 +182,6 @@ function FundusFields({
   )
 }
 
-function PreviousVisitPanel({
-  visit,
-  onClose,
-}: {
-  visit: PreviousVisit
-  onClose: () => void
-}) {
-  return (
-    <div className="rounded-lg border border-[#B5D4F4] bg-[#F8FBFE] p-4">
-      <div className="mb-3 flex items-center justify-between">
-        <div className="text-sm font-medium">
-          {visit.date} — {visit.doctorName}
-        </div>
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Đóng"
-          className="rounded-sm p-0.5 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        >
-          <HugeiconsIcon icon={Cancel01Icon} size={16} />
-        </button>
-      </div>
-      <div className="space-y-2 text-sm">
-        {visit.diagnoses.length > 0 && (
-          <div>
-            <span className="font-medium">Chẩn đoán: </span>
-            {visit.diagnoses
-              .map((d) => `${d.text}${d.icd10Code ? ` (${d.icd10Code})` : ""}`)
-              .join(", ")}
-          </div>
-        )}
-        {visit.medications.length > 0 && (
-          <div>
-            <span className="font-medium">Thuốc: </span>
-            {visit.medications
-              .map((m) => `${m.name} ${m.dosage} ${m.frequency} (${m.eye})`)
-              .join("; ")}
-          </div>
-        )}
-        {visit.instructions && (
-          <div>
-            <span className="font-medium">Dặn dò: </span>
-            {visit.instructions}
-          </div>
-        )}
-      </div>
-    </div>
-  )
-}
 
 function IconCloseButton({
   onClick,
@@ -260,12 +211,22 @@ function MedicationRow({
   onChange: (m: Medication) => void
   onRemove: () => void
 }) {
+  const handleSelectMedication = (entry: MedicationCatalogEntry) => {
+    onChange({
+      ...med,
+      name: entry.name,
+      dosage: entry.defaultDosage,
+      frequency: entry.defaultFrequency,
+    })
+  }
+
   return (
     <div className="flex items-center gap-2">
       <div className="flex-1">
-        <Input
+        <MedicationSearch
           value={med.name}
-          onChange={(e) => onChange({ ...med, name: e.target.value })}
+          onChange={(name) => onChange({ ...med, name })}
+          onSelect={handleSelectMedication}
         />
       </div>
       <div className="w-24">
@@ -626,8 +587,9 @@ function ToggleButton({
 
 // --- Main component ---
 
-export function TabExam({ examData, onChange, previousVisit }: TabExamProps) {
-  const [showPrevious, setShowPrevious] = useState(false)
+export function TabExam({ examData, onChange }: TabExamProps) {
+  const [showSlitLamp, setShowSlitLamp] = useState(false)
+  const [showFundus, setShowFundus] = useState(false)
   const [showMedication, setShowMedication] = useState(
     examData.medications.length > 0,
   )
@@ -686,67 +648,11 @@ export function TabExam({ examData, onChange, previousVisit }: TabExamProps) {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div>
         <h2 className="text-base font-medium">Khám &amp; kết luận</h2>
-        {previousVisit && (
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => setShowPrevious(!showPrevious)}
-          >
-            Lần trước
-          </Button>
-        )}
       </div>
 
-      {/* Previous Visit Panel */}
-      {showPrevious && previousVisit && (
-        <PreviousVisitPanel
-          visit={previousVisit}
-          onClose={() => setShowPrevious(false)}
-        />
-      )}
-
-      {/* Slit-lamp (Sinh hiển vi) */}
-      <section className="space-y-4">
-        <SectionTitle>Sinh hiển vi</SectionTitle>
-        <div className="flex gap-5">
-          <EyeCard eye="OD" color="#378ADD">
-            <SlitLampFields
-              data={examData.slitLamp.od}
-              onChange={updateSlitLampOd}
-            />
-          </EyeCard>
-          <EyeCard eye="OS" color="#D85A30">
-            <SlitLampFields
-              data={examData.slitLamp.os}
-              onChange={updateSlitLampOs}
-            />
-          </EyeCard>
-        </div>
-      </section>
-
-      {/* Fundus (Đáy mắt) */}
-      <section className="space-y-4">
-        <SectionTitle>Đáy mắt</SectionTitle>
-        <div className="flex gap-5">
-          <EyeCard eye="OD" color="#378ADD">
-            <FundusFields
-              data={examData.fundus.od}
-              onChange={updateFundusOd}
-            />
-          </EyeCard>
-          <EyeCard eye="OS" color="#D85A30">
-            <FundusFields
-              data={examData.fundus.os}
-              onChange={updateFundusOs}
-            />
-          </EyeCard>
-        </div>
-      </section>
-
-      {/* Diagnosis */}
+      {/* Diagnosis — always visible */}
       <section className="space-y-4">
         <SectionTitle>Chẩn đoán</SectionTitle>
         <DiagnosisInput
@@ -764,7 +670,19 @@ export function TabExam({ examData, onChange, previousVisit }: TabExamProps) {
       <div className="h-px bg-border" />
 
       {/* Optional Section Toggles */}
-      <div className="flex gap-2.5">
+      <div className="flex flex-wrap gap-2.5">
+        <ToggleButton
+          active={showSlitLamp}
+          activeLabel="− Sinh hiển vi"
+          inactiveLabel="+ Sinh hiển vi"
+          onClick={() => setShowSlitLamp(!showSlitLamp)}
+        />
+        <ToggleButton
+          active={showFundus}
+          activeLabel="− Đáy mắt"
+          inactiveLabel="+ Đáy mắt"
+          onClick={() => setShowFundus(!showFundus)}
+        />
         <ToggleButton
           active={showMedication}
           activeLabel="− Đơn thuốc"
@@ -784,6 +702,60 @@ export function TabExam({ examData, onChange, previousVisit }: TabExamProps) {
           onClick={toggleFollowUp}
         />
       </div>
+
+      {/* Slit-lamp (Sinh hiển vi) */}
+      {showSlitLamp && (
+        <section className="space-y-4">
+          <div className="flex items-center justify-between">
+            <SectionTitle>Sinh hiển vi</SectionTitle>
+            <IconCloseButton
+              onClick={() => setShowSlitLamp(false)}
+              label="Đóng sinh hiển vi"
+            />
+          </div>
+          <div className="flex gap-5">
+            <EyeCard eye="OD" color="#378ADD">
+              <SlitLampFields
+                data={examData.slitLamp.od}
+                onChange={updateSlitLampOd}
+              />
+            </EyeCard>
+            <EyeCard eye="OS" color="#D85A30">
+              <SlitLampFields
+                data={examData.slitLamp.os}
+                onChange={updateSlitLampOs}
+              />
+            </EyeCard>
+          </div>
+        </section>
+      )}
+
+      {/* Fundus (Đáy mắt) */}
+      {showFundus && (
+        <section className="space-y-4">
+          <div className="flex items-center justify-between">
+            <SectionTitle>Đáy mắt</SectionTitle>
+            <IconCloseButton
+              onClick={() => setShowFundus(false)}
+              label="Đóng đáy mắt"
+            />
+          </div>
+          <div className="flex gap-5">
+            <EyeCard eye="OD" color="#378ADD">
+              <FundusFields
+                data={examData.fundus.od}
+                onChange={updateFundusOd}
+              />
+            </EyeCard>
+            <EyeCard eye="OS" color="#D85A30">
+              <FundusFields
+                data={examData.fundus.os}
+                onChange={updateFundusOs}
+              />
+            </EyeCard>
+          </div>
+        </section>
+      )}
 
       {/* Medication Section */}
       {showMedication && (
