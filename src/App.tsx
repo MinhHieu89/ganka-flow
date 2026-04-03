@@ -14,6 +14,8 @@ import ScreeningVisit from "@/pages/screening/visit"
 import DoctorDashboard from "@/pages/doctor/index"
 import DoctorExam from "@/pages/doctor/exam"
 import { DoctorProvider } from "@/contexts/doctor-context"
+import PatientRegistry from "@/pages/patients/index"
+import PatientDetail from "@/pages/patients/detail"
 
 export function App() {
   return (
@@ -30,6 +32,8 @@ export function App() {
                   <Route path="/intake" element={<IntakeDashboard />} />
                   <Route path="/intake/new" element={<IntakeNew />} />
                   <Route path="/intake/:id/edit" element={<IntakeEdit />} />
+                  <Route path="/patients" element={<PatientRegistry />} />
+                  <Route path="/patients/:id" element={<PatientDetail />} />
                   <Route path="/schedule" element={<ScheduleCalendar />} />
                   <Route path="/schedule/new" element={<ScheduleNew />} />
                   <Route path="/screening" element={<ScreeningDashboard />} />

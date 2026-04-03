@@ -18,9 +18,15 @@ import {
   Calendar01Icon,
   Search01Icon,
   Stethoscope02Icon,
+  UserGroupIcon,
 } from "@hugeicons/core-free-icons"
 
 const navItems = [
+  {
+    title: "Bệnh nhân",
+    url: "/patients",
+    icon: UserGroupIcon,
+  },
   {
     title: "Tiếp nhận",
     url: "/intake",
