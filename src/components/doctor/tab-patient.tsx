@@ -43,18 +43,17 @@ function AdminInfoSection({ patient }: { patient: Patient }) {
           Chỉnh sửa
         </Button>
       </div>
-      <div className="grid grid-cols-1 gap-y-2">
-        {rows.map(({ label, value }) => (
-          <div key={label} className="flex gap-2">
-            <span
-              className="shrink-0 text-xs text-muted-foreground"
-              style={{ minWidth: "100px" }}
-            >
-              {label}
-            </span>
-            <span className="text-xs">{value ?? "—"}</span>
-          </div>
-        ))}
+      <div className="rounded-lg border border-border bg-card px-5 py-4">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-2.5">
+          {rows.map(({ label, value }) => (
+            <div key={label} className="flex gap-3">
+              <span className="w-24 shrink-0 text-sm text-muted-foreground">
+                {label}
+              </span>
+              <span className="text-sm">{value ?? "—"}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )
@@ -102,7 +101,7 @@ function FullVisitCard({ pv }: { pv: PreviousVisit }) {
         {/* 2x2 grid */}
         <div className="grid grid-cols-2 gap-3">
           {/* Chẩn đoán */}
-          <div>
+          <div className="rounded-md bg-muted/40 p-2.5">
             <div className="mb-1.5 text-[10px] font-semibold tracking-wider text-muted-foreground/70 uppercase">
               Chẩn đoán
             </div>
@@ -137,7 +136,7 @@ function FullVisitCard({ pv }: { pv: PreviousVisit }) {
           </div>
 
           {/* Thuốc đã kê */}
-          <div>
+          <div className="rounded-md bg-muted/40 p-2.5">
             <div className="mb-1.5 text-[10px] font-semibold tracking-wider text-muted-foreground/70 uppercase">
               Thuốc đã kê
             </div>
@@ -161,7 +160,7 @@ function FullVisitCard({ pv }: { pv: PreviousVisit }) {
           </div>
 
           {/* Thị lực */}
-          <div>
+          <div className="rounded-md bg-muted/40 p-2.5">
             <div className="mb-1.5 text-[10px] font-semibold tracking-wider text-muted-foreground/70 uppercase">
               Thị lực
             </div>
@@ -177,22 +176,22 @@ function FullVisitCard({ pv }: { pv: PreviousVisit }) {
               <tbody>
                 <tr>
                   <td className="pr-2 font-medium text-muted-foreground">OD</td>
-                  <td className="pr-2">{pv.va.scOd || "—"}</td>
-                  <td className="pr-2">{pv.va.ccOd || "—"}</td>
-                  <td>{pv.va.iopOd || "—"}</td>
+                  <td className="pr-2 tabular-nums">{pv.va.scOd || "—"}</td>
+                  <td className="pr-2 tabular-nums">{pv.va.ccOd || "—"}</td>
+                  <td className="tabular-nums">{pv.va.iopOd || "—"}</td>
                 </tr>
                 <tr>
                   <td className="pr-2 font-medium text-muted-foreground">OS</td>
-                  <td className="pr-2">{pv.va.scOs || "—"}</td>
-                  <td className="pr-2">{pv.va.ccOs || "—"}</td>
-                  <td>{pv.va.iopOs || "—"}</td>
+                  <td className="pr-2 tabular-nums">{pv.va.scOs || "—"}</td>
+                  <td className="pr-2 tabular-nums">{pv.va.ccOs || "—"}</td>
+                  <td className="tabular-nums">{pv.va.iopOs || "—"}</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
           {/* Khúc xạ */}
-          <div>
+          <div className="rounded-md bg-muted/40 p-2.5">
             <div className="mb-1.5 text-[10px] font-semibold tracking-wider text-muted-foreground/70 uppercase">
               Khúc xạ
             </div>
@@ -208,15 +207,15 @@ function FullVisitCard({ pv }: { pv: PreviousVisit }) {
               <tbody>
                 <tr>
                   <td className="pr-2 font-medium text-muted-foreground">OD</td>
-                  <td className="pr-2">{pv.refraction.sphOd || "—"}</td>
-                  <td className="pr-2">{pv.refraction.cylOd || "—"}</td>
-                  <td>{pv.refraction.axisOd || "—"}</td>
+                  <td className="pr-2 tabular-nums">{pv.refraction.sphOd || "—"}</td>
+                  <td className="pr-2 tabular-nums">{pv.refraction.cylOd || "—"}</td>
+                  <td className="tabular-nums">{pv.refraction.axisOd || "—"}</td>
                 </tr>
                 <tr>
                   <td className="pr-2 font-medium text-muted-foreground">OS</td>
-                  <td className="pr-2">{pv.refraction.sphOs || "—"}</td>
-                  <td className="pr-2">{pv.refraction.cylOs || "—"}</td>
-                  <td>{pv.refraction.axisOs || "—"}</td>
+                  <td className="pr-2 tabular-nums">{pv.refraction.sphOs || "—"}</td>
+                  <td className="pr-2 tabular-nums">{pv.refraction.cylOs || "—"}</td>
+                  <td className="tabular-nums">{pv.refraction.axisOs || "—"}</td>
                 </tr>
               </tbody>
             </table>
@@ -241,7 +240,7 @@ function CollapsedVisitCard({ pv }: { pv: PreviousVisit }) {
   const primaryDx = pv.diagnoses.find((d) => d.isPrimary)
 
   return (
-    <div className="rounded-lg border border-border bg-background opacity-70">
+    <div className="rounded-lg border border-border/60 bg-muted/30">
       <div className="flex items-center justify-between px-3 py-2">
         <div className="flex items-center gap-2">
           <span className="text-xs font-medium">{pv.date}</span>
@@ -285,7 +284,7 @@ function VisitHistorySection({ visit }: { visit: Visit }) {
       <div className="mb-3">
         <h2 className="text-base font-medium">Lần khám gần nhất</h2>
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-3">
         {shown.map((pv, i) =>
           i === 0 ? (
             <FullVisitCard key={i} pv={pv} />
@@ -307,7 +306,7 @@ function VisitHistorySection({ visit }: { visit: Visit }) {
 
 export function TabPatient({ patient, visit }: TabPatientProps) {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-8">
       <AdminInfoSection patient={patient} />
       <VisitHistorySection visit={visit} />
     </div>

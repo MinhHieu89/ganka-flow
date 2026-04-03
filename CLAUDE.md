@@ -29,6 +29,7 @@ Ganka Flow is a clinic management system (HIS) for Ganka28, a Vietnamese ophthal
 ## UI Rules
 
 - All user-facing labels, text, and messages must be in Vietnamese with proper diacritics (e.g. "Tiếp nhận", "Lịch hẹn", not "Tiep nhan", "Lich hen")
+- Never use emoji in the UI. Use monochrome icons (Hugeicons) or simple shapes (dots, lines) for status indicators and visual cues
 
 ## Code Conventions
 
@@ -44,3 +45,18 @@ Ganka Flow is a clinic management system (HIS) for Ganka28, a Vietnamese ophthal
 - Entry: `src/main.tsx` → `ThemeProvider` → `App`
 - App shell: `SidebarProvider` + `AppSidebar` + `SiteHeader` + content area
 - shadcn config in `components.json` (radix-vega style, CSS variables for theming, neutral base color)
+
+## Design Context
+
+Full design context is in `.impeccable.md` at the project root. Key points:
+
+- **Users**: Clinic staff (doctors, technicians, nurses, cashier, optical, manager) on desktops, laptops, and tablets
+- **Brand**: Professional, efficient, precise. Clinical and calm — not cold or institutional
+- **Aesthetic**: Minimal, spacious, clean. Teal/blue-green primary for medical trust. Semantic colors only for status (amber=waiting, emerald=success, red=urgent, sky=in-progress)
+- **References**: Untitled UI (whitespace, clean sidebar). Anti-reference: government health systems, dense EHR like Epic
+- **Principles**:
+  1. Clarity over cleverness — explicit labels, clear hierarchy
+  2. Calm density — data-rich without overwhelming, strategic whitespace
+  3. Status at a glance — color-coded workflow states, KPI cards
+  4. Speed of interaction — minimal clicks, keyboard nav, smart defaults
+  5. Medical-grade trust — precise alignment, consistent spacing, no visual bugs

@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { Cancel01Icon } from "@hugeicons/core-free-icons"
+import { cn } from "@/lib/utils"
 import { DiagnosisInput } from "@/components/doctor/diagnosis-input"
 import type {
   ExamData,
@@ -62,7 +63,7 @@ const EMPTY_FOLLOW_UP: NewFollowUp = {
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+    <h3 className="text-[11px] font-semibold tracking-wider text-muted-foreground/80 uppercase">
       {children}
     </h3>
   )
@@ -78,7 +79,7 @@ function EyeCard({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex-1 space-y-3 rounded-lg border p-4">
+    <div className="flex-1 space-y-4 rounded-lg border p-5">
       <div className="flex items-center gap-2">
         <span
           className="inline-block h-2.5 w-2.5 rounded-full"
@@ -115,13 +116,13 @@ function SlitLampFields({
   data: SlitLampEye
   onChange: (d: SlitLampEye) => void
 }) {
-  const fields: { key: keyof Omit<SlitLampEye, "notes">; label: string; placeholder: string }[] = [
-    { key: "lids", label: "Mi mắt (Lids)", placeholder: "Bình thường" },
-    { key: "conjunctiva", label: "Kết mạc (Conjunctiva)", placeholder: "Bình thường" },
-    { key: "cornea", label: "Giác mạc (Cornea)", placeholder: "Trong" },
-    { key: "anteriorChamber", label: "Tiền phòng (AC)", placeholder: "Sạch, sâu" },
-    { key: "iris", label: "Mống mắt (Iris)", placeholder: "Bình thường" },
-    { key: "lens", label: "Thể thủy tinh (Lens)", placeholder: "Trong" },
+  const fields: { key: keyof Omit<SlitLampEye, "notes">; label: string }[] = [
+    { key: "lids", label: "Mi mắt (Lids)" },
+    { key: "conjunctiva", label: "Kết mạc (Conjunctiva)" },
+    { key: "cornea", label: "Giác mạc (Cornea)" },
+    { key: "anteriorChamber", label: "Tiền phòng (AC)" },
+    { key: "iris", label: "Mống mắt (Iris)" },
+    { key: "lens", label: "Thể thủy tinh (Lens)" },
   ]
 
   return (
@@ -129,7 +130,6 @@ function SlitLampFields({
       {fields.map((f) => (
         <FieldRow key={f.key} label={f.label}>
           <Input
-            placeholder={f.placeholder}
             value={data[f.key]}
             onChange={(e) => onChange({ ...data, [f.key]: e.target.value })}
           />
@@ -137,7 +137,6 @@ function SlitLampFields({
       ))}
       <FieldRow label="Ghi chú">
         <Textarea
-          placeholder="Ghi chú thêm..."
           value={data.notes}
           onChange={(e) => onChange({ ...data, notes: e.target.value })}
           rows={2}
@@ -154,12 +153,12 @@ function FundusFields({
   data: FundusEye
   onChange: (d: FundusEye) => void
 }) {
-  const fields: { key: keyof Omit<FundusEye, "notes">; label: string; placeholder: string }[] = [
-    { key: "opticDisc", label: "Đĩa thị (Optic Disc)", placeholder: "Bình thường" },
-    { key: "cdRatio", label: "C/D ratio", placeholder: "0.3" },
-    { key: "macula", label: "Hoàng điểm (Macula)", placeholder: "Bình thường" },
-    { key: "vessels", label: "Mạch máu (Vessels)", placeholder: "Bình thường" },
-    { key: "peripheralRetina", label: "Võng mạc ngoại vi", placeholder: "Bình thường" },
+  const fields: { key: keyof Omit<FundusEye, "notes">; label: string }[] = [
+    { key: "opticDisc", label: "Đĩa thị (Optic Disc)" },
+    { key: "cdRatio", label: "C/D ratio" },
+    { key: "macula", label: "Hoàng điểm (Macula)" },
+    { key: "vessels", label: "Mạch máu (Vessels)" },
+    { key: "peripheralRetina", label: "Võng mạc ngoại vi" },
   ]
 
   return (
@@ -167,7 +166,6 @@ function FundusFields({
       {fields.map((f) => (
         <FieldRow key={f.key} label={f.label}>
           <Input
-            placeholder={f.placeholder}
             value={data[f.key]}
             onChange={(e) => onChange({ ...data, [f.key]: e.target.value })}
           />
@@ -175,7 +173,6 @@ function FundusFields({
       ))}
       <FieldRow label="Ghi chú">
         <Textarea
-          placeholder="Ghi chú thêm..."
           value={data.notes}
           onChange={(e) => onChange({ ...data, notes: e.target.value })}
           rows={2}
@@ -201,7 +198,8 @@ function PreviousVisitPanel({
         <button
           type="button"
           onClick={onClose}
-          className="text-muted-foreground hover:text-foreground"
+          aria-label="Đóng"
+          className="rounded-sm p-0.5 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <HugeiconsIcon icon={Cancel01Icon} size={16} />
         </button>
@@ -234,6 +232,25 @@ function PreviousVisitPanel({
   )
 }
 
+function IconCloseButton({
+  onClick,
+  label = "Xóa",
+}: {
+  onClick: () => void
+  label?: string
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      className="shrink-0 rounded-sm p-0.5 text-muted-foreground transition-colors hover:text-destructive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+    >
+      <HugeiconsIcon icon={Cancel01Icon} size={16} />
+    </button>
+  )
+}
+
 function MedicationRow({
   med,
   onChange,
@@ -247,14 +264,12 @@ function MedicationRow({
     <div className="flex items-center gap-2">
       <div className="flex-1">
         <Input
-          placeholder="Tên thuốc"
           value={med.name}
           onChange={(e) => onChange({ ...med, name: e.target.value })}
         />
       </div>
       <div className="w-24">
         <Input
-          placeholder="Liều"
           value={med.dosage}
           onChange={(e) => onChange({ ...med, dosage: e.target.value })}
         />
@@ -310,13 +325,7 @@ function MedicationRow({
           </SelectContent>
         </Select>
       </div>
-      <button
-        type="button"
-        onClick={onRemove}
-        className="text-muted-foreground hover:text-destructive"
-      >
-        <HugeiconsIcon icon={Cancel01Icon} size={16} />
-      </button>
+      <IconCloseButton onClick={onRemove} label="Xóa thuốc" />
     </div>
   )
 }
@@ -343,16 +352,10 @@ function MedicationSection({
   }
 
   return (
-    <div className="rounded-lg border p-4">
+    <div className="rounded-lg border px-5 py-4">
       <div className="mb-4 flex items-center justify-between">
         <SectionTitle>ĐƠN THUỐC</SectionTitle>
-        <button
-          type="button"
-          onClick={onRemoveSection}
-          className="text-muted-foreground hover:text-destructive"
-        >
-          <HugeiconsIcon icon={Cancel01Icon} size={16} />
-        </button>
+        <IconCloseButton onClick={onRemoveSection} label="Đóng đơn thuốc" />
       </div>
       <div className="space-y-2">
         {/* Header */}
@@ -434,18 +437,12 @@ function OpticalRxSection({
   }
 
   return (
-    <div className="rounded-lg border p-4">
+    <div className="rounded-lg border px-5 py-4">
       <div className="mb-4 flex items-center justify-between">
         <SectionTitle>ĐƠN KÍNH</SectionTitle>
-        <button
-          type="button"
-          onClick={onRemoveSection}
-          className="text-muted-foreground hover:text-destructive"
-        >
-          <HugeiconsIcon icon={Cancel01Icon} size={16} />
-        </button>
+        <IconCloseButton onClick={onRemoveSection} label="Đóng đơn kính" />
       </div>
-      <div className="mb-4 flex gap-4">
+      <div className="mb-4 flex gap-5">
         {renderEyeInputs("od", "OD", "#378ADD")}
         {renderEyeInputs("os", "OS", "#D85A30")}
       </div>
@@ -484,7 +481,6 @@ function OpticalRxSection({
             Ghi chú
           </label>
           <Input
-            placeholder="Ghi chú đơn kính..."
             value={rx.notes}
             onChange={(e) => onChange({ ...rx, notes: e.target.value })}
           />
@@ -521,20 +517,14 @@ function FollowUpSection({
   }
 
   return (
-    <div className="rounded-lg border p-4">
+    <div className="rounded-lg border px-5 py-4">
       <div className="mb-4 flex items-center justify-between">
         <SectionTitle>TÁI KHÁM</SectionTitle>
-        <button
-          type="button"
-          onClick={onRemoveSection}
-          className="text-muted-foreground hover:text-destructive"
-        >
-          <HugeiconsIcon icon={Cancel01Icon} size={16} />
-        </button>
+        <IconCloseButton onClick={onRemoveSection} label="Đóng tái khám" />
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="mb-1 block text-sm text-muted-foreground">
+          <label className="mb-1 block text-xs text-muted-foreground">
             Tái khám sau
           </label>
           <Select
@@ -554,7 +544,7 @@ function FollowUpSection({
           </Select>
         </div>
         <div>
-          <label className="mb-1 block text-sm text-muted-foreground">
+          <label className="mb-1 block text-xs text-muted-foreground">
             Ngày tái khám
           </label>
           <Input
@@ -566,7 +556,7 @@ function FollowUpSection({
           />
         </div>
         <div>
-          <label className="mb-1 block text-sm text-muted-foreground">
+          <label className="mb-1 block text-xs text-muted-foreground">
             Bác sĩ
           </label>
           <Select
@@ -590,11 +580,10 @@ function FollowUpSection({
         </div>
       </div>
       <div className="mt-4">
-        <label className="mb-1 block text-sm text-muted-foreground">
+        <label className="mb-1 block text-xs text-muted-foreground">
           Dặn dò bệnh nhân
         </label>
         <Textarea
-          placeholder="Lời dặn dò cho bệnh nhân..."
           value={followUp.instructions}
           onChange={(e) =>
             onChange({ ...followUp, instructions: e.target.value })
@@ -623,11 +612,12 @@ function ToggleButton({
       variant="outline"
       size="sm"
       onClick={onClick}
-      className={
+      className={cn(
+        "transition-colors",
         active
           ? "border-[#B5D4F4] bg-[#E6F1FB] text-[#0C447C]"
-          : "border-dashed border-border text-muted-foreground"
-      }
+          : "border-dashed border-border text-muted-foreground",
+      )}
     >
       {active ? activeLabel : inactiveLabel}
     </Button>
@@ -694,10 +684,10 @@ export function TabExam({ examData, onChange, previousVisit }: TabExamProps) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Khám &amp; kết luận</h2>
+        <h2 className="text-base font-medium">Khám &amp; kết luận</h2>
         {previousVisit && (
           <Button
             type="button"
@@ -719,9 +709,9 @@ export function TabExam({ examData, onChange, previousVisit }: TabExamProps) {
       )}
 
       {/* Slit-lamp (Sinh hiển vi) */}
-      <section className="space-y-3">
+      <section className="space-y-4">
         <SectionTitle>Sinh hiển vi</SectionTitle>
-        <div className="flex gap-4">
+        <div className="flex gap-5">
           <EyeCard eye="OD" color="#378ADD">
             <SlitLampFields
               data={examData.slitLamp.od}
@@ -738,9 +728,9 @@ export function TabExam({ examData, onChange, previousVisit }: TabExamProps) {
       </section>
 
       {/* Fundus (Đáy mắt) */}
-      <section className="space-y-3">
+      <section className="space-y-4">
         <SectionTitle>Đáy mắt</SectionTitle>
-        <div className="flex gap-4">
+        <div className="flex gap-5">
           <EyeCard eye="OD" color="#378ADD">
             <FundusFields
               data={examData.fundus.od}
@@ -757,14 +747,13 @@ export function TabExam({ examData, onChange, previousVisit }: TabExamProps) {
       </section>
 
       {/* Diagnosis */}
-      <section className="space-y-3">
+      <section className="space-y-4">
         <SectionTitle>Chẩn đoán</SectionTitle>
         <DiagnosisInput
           diagnoses={examData.diagnoses}
           onChange={(diagnoses) => update({ diagnoses })}
         />
         <Textarea
-          placeholder="Ghi chú chẩn đoán (mức độ, giai đoạn...)"
           value={examData.diagnosisNotes}
           onChange={(e) => update({ diagnosisNotes: e.target.value })}
           rows={2}
@@ -775,7 +764,7 @@ export function TabExam({ examData, onChange, previousVisit }: TabExamProps) {
       <div className="h-px bg-border" />
 
       {/* Optional Section Toggles */}
-      <div className="flex gap-2">
+      <div className="flex gap-2.5">
         <ToggleButton
           active={showMedication}
           activeLabel="− Đơn thuốc"

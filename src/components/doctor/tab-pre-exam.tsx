@@ -16,8 +16,8 @@ function Section({
   children: React.ReactNode
 }) {
   return (
-    <div className="rounded-lg border border-border bg-card p-4">
-      <div className="mb-3 text-[10px] font-semibold tracking-wider text-muted-foreground/70 uppercase">
+    <div className="rounded-lg border border-border bg-card px-5 py-4">
+      <div className="mb-3.5 text-[11px] font-semibold tracking-wider text-muted-foreground/70 uppercase">
         {title}
       </div>
       {children}
@@ -91,8 +91,8 @@ function EyeCard({
   currentRx: string
 }) {
   return (
-    <div className="flex-1 rounded-lg border border-border bg-card p-3">
-      <div className="mb-2.5 flex items-center gap-1.5">
+    <div className="flex-1 rounded-lg border border-border bg-card p-4">
+      <div className="mb-3 flex items-center gap-1.5">
         <span
           className="inline-block size-2 rounded-full"
           style={{ backgroundColor: dotColor }}
@@ -178,7 +178,7 @@ export function TabPreExam({ patient, visit }: TabPreExamProps) {
       !!dryEye.schirmerOs)
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {/* Header */}
       <div>
         <h2 className="text-base font-medium">Pre-Exam</h2>
@@ -318,7 +318,7 @@ export function TabPreExam({ patient, visit }: TabPreExamProps) {
 
       {/* 4. Thị lực & nhãn áp */}
       <Section title="Thị lực & nhãn áp">
-        <div className="flex gap-3">
+        <div className="flex gap-4">
           <EyeCard
             label="OD"
             dotColor="#378ADD"

@@ -1,5 +1,6 @@
+import { Link } from "react-router"
 import { Button } from "@/components/ui/button"
-import { PrinterIcon } from "@hugeicons/core-free-icons"
+import { ArrowLeft01Icon, PrinterIcon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 import type { Patient, Visit } from "@/data/mock-patients"
 import { cn } from "@/lib/utils"
@@ -21,7 +22,7 @@ function getInitials(name: string): string {
 function getVisitBadgeLabel(visit: Visit): string {
   const count = visit.previousVisits?.length ?? 0
   if (count === 0) return "Khám lần đầu"
-  return `Tái khám lần ${count}`
+  return "Tái khám"
 }
 
 export function PatientHeader({ patient, visit, onComplete }: PatientHeaderProps) {
@@ -31,7 +32,14 @@ export function PatientHeader({ patient, visit, onComplete }: PatientHeaderProps
   const isFirstVisit = (visit.previousVisits?.length ?? 0) === 0
 
   return (
-    <div className="flex h-14 shrink-0 items-center gap-4 border-b border-border bg-background px-5">
+    <div className="flex h-16 shrink-0 items-center gap-4 border-b border-border bg-background px-6">
+      {/* Back button */}
+      <Button variant="ghost" size="icon-sm" asChild>
+        <Link to="/doctor" aria-label="Quay lại danh sách">
+          <HugeiconsIcon icon={ArrowLeft01Icon} className="size-4" />
+        </Link>
+      </Button>
+
       {/* Avatar */}
       <div
         className="flex size-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold"
@@ -80,16 +88,7 @@ export function PatientHeader({ patient, visit, onComplete }: PatientHeaderProps
         <Button
           size="sm"
           onClick={onComplete}
-          className="text-white"
-          style={{
-            backgroundColor: "#1D9E75",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = "#0F6E56"
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = "#1D9E75"
-          }}
+          className="bg-[#1D9E75] text-white transition-colors hover:bg-[#0F6E56] focus-visible:ring-[#1D9E75]/30"
         >
           Hoàn tất khám
         </Button>

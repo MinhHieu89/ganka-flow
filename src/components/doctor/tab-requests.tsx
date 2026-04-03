@@ -2,6 +2,13 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import {
   REQUEST_TYPES,
   type VisitRequest,
   type RequestStatus,
@@ -17,31 +24,27 @@ interface TabRequestsProps {
 
 const STATUS_CONFIG: Record<
   RequestStatus,
-  { label: string; bg: string; text: string; icon: string }
+  { label: string; bg: string; text: string }
 > = {
   pending: {
     label: "Đang chờ",
     bg: "#FAEEDA",
     text: "#854F0B",
-    icon: "●",
   },
   in_progress: {
     label: "Đang thực hiện",
     bg: "#E6F1FB",
     text: "#0C447C",
-    icon: "⏳",
   },
   completed: {
     label: "Hoàn tất",
     bg: "#EAF3DE",
     text: "#27500A",
-    icon: "✓",
   },
   cancelled: {
     label: "Đã hủy",
     bg: "#F1EFE8",
     text: "#444441",
-    icon: "✕",
   },
 }
 
@@ -126,16 +129,14 @@ function RequestCard({ request }: { request: VisitRequest }) {
   if (request.priority === "urgent") metaParts.push("Khẩn")
 
   return (
-    <div className="rounded-lg border border-border bg-card p-3">
+    <div className="rounded-lg border border-border bg-card px-4 py-3.5">
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-start gap-2">
-          {/* Status icon circle */}
+          {/* Status dot */}
           <span
-            className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold"
-            style={{ backgroundColor: config.bg, color: config.text }}
-          >
-            {config.icon}
-          </span>
+            className="mt-1.5 size-2 shrink-0 rounded-full"
+            style={{ backgroundColor: config.text }}
+          />
           <div>
             <p className="text-sm font-medium">{request.type}</p>
             {metaParts.length > 0 && (
@@ -201,18 +202,14 @@ export function TabRequests({ requests, onAddRequest }: TabRequestsProps) {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {/* Header */}
       <div className="flex items-center justify-between">
         <h2 className="text-base font-medium">Yêu cầu</h2>
         {!showForm && (
           <Button
             size="sm"
-            className="h-7 px-3 text-xs font-medium"
-            style={{
-              backgroundColor: "#E6F1FB",
-              color: "#0C447C",
-            }}
+            className="h-7 bg-[#E6F1FB] px-3 text-xs font-medium text-[#0C447C] transition-colors hover:bg-[#d4e6f7]"
             onClick={() => setShowForm(true)}
           >
             + Tạo yêu cầu
@@ -223,7 +220,7 @@ export function TabRequests({ requests, onAddRequest }: TabRequestsProps) {
       {/* Create Request Form */}
       {showForm && (
         <div
-          className="rounded-lg border p-4"
+          className="rounded-lg border px-5 py-4"
           style={{ borderColor: "#B5D4F4", backgroundColor: "#F8FBFE" }}
         >
           <div className="space-y-3">
@@ -232,18 +229,18 @@ export function TabRequests({ requests, onAddRequest }: TabRequestsProps) {
               <label className="mb-1 block text-xs font-medium text-muted-foreground">
                 Loại yêu cầu <span className="text-destructive">*</span>
               </label>
-              <select
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-                className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
-              >
-                <option value="">-- Chọn loại yêu cầu --</option>
-                {REQUEST_TYPES.map((t) => (
-                  <option key={t} value={t}>
-                    {t}
-                  </option>
-                ))}
-              </select>
+              <Select value={type} onValueChange={setType}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Chọn loại yêu cầu" />
+                </SelectTrigger>
+                <SelectContent>
+                  {REQUEST_TYPES.map((t) => (
+                    <SelectItem key={t} value={t}>
+                      {t}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Ưu tiên */}
@@ -251,16 +248,20 @@ export function TabRequests({ requests, onAddRequest }: TabRequestsProps) {
               <label className="mb-1 block text-xs font-medium text-muted-foreground">
                 Ưu tiên
               </label>
-              <select
+              <Select
                 value={priority}
-                onChange={(e) =>
-                  setPriority(e.target.value as "normal" | "urgent")
+                onValueChange={(v) =>
+                  setPriority(v as "normal" | "urgent")
                 }
-                className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
               >
-                <option value="normal">Bình thường</option>
-                <option value="urgent">Khẩn</option>
-              </select>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="normal">Bình thường</SelectItem>
+                  <SelectItem value="urgent">Khẩn</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Ghi chú cho KTV */}
@@ -270,7 +271,6 @@ export function TabRequests({ requests, onAddRequest }: TabRequestsProps) {
               </label>
               <Input
                 className="h-9"
-                placeholder="Ghi chú thêm cho kỹ thuật viên..."
                 value={notesForTech}
                 onChange={(e) => setNotesForTech(e.target.value)}
               />
@@ -286,8 +286,7 @@ export function TabRequests({ requests, onAddRequest }: TabRequestsProps) {
               size="sm"
               disabled={!type}
               onClick={handleSubmit}
-              style={{ backgroundColor: "#0C447C" }}
-              className="text-white disabled:opacity-50"
+              className="bg-[#0C447C] text-white transition-colors hover:bg-[#093260] disabled:opacity-50"
             >
               Gửi yêu cầu
             </Button>
@@ -301,7 +300,7 @@ export function TabRequests({ requests, onAddRequest }: TabRequestsProps) {
           <p className="text-sm text-muted-foreground">Chưa có yêu cầu nào</p>
         </div>
       ) : (
-        <div className="space-y-2">
+        <div className="space-y-3">
           {requests.map((req) => (
             <RequestCard key={req.id} request={req} />
           ))}

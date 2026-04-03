@@ -174,8 +174,6 @@ export function DiagnosisInput({ diagnoses, onChange }: DiagnosisInputProps) {
 
   return (
     <div className="space-y-3">
-      <div className="text-sm font-semibold">Chẩn đoán</div>
-
       {/* Selected diagnoses */}
       {diagnoses.length > 0 && (
         <div className="space-y-2">
@@ -204,15 +202,16 @@ export function DiagnosisInput({ diagnoses, onChange }: DiagnosisInputProps) {
               {!d.isPrimary && (
                 <button
                   onClick={() => promoteToPrimary(i)}
-                  className="shrink-0 text-muted-foreground/60 transition-colors hover:text-foreground"
-                  title="Đặt làm chẩn đoán chính"
+                  aria-label="Đặt làm chẩn đoán chính"
+                  className="shrink-0 rounded-sm p-0.5 text-muted-foreground/60 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   <HugeiconsIcon icon={ArrowUp01Icon} className="size-3.5" />
                 </button>
               )}
               <button
                 onClick={() => removeDiagnosis(i)}
-                className="shrink-0 text-muted-foreground/50 transition-colors hover:text-destructive"
+                aria-label="Xóa chẩn đoán"
+                className="shrink-0 rounded-sm p-0.5 text-muted-foreground/50 transition-colors hover:text-destructive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 <HugeiconsIcon icon={Cancel01Icon} className="size-3.5" />
               </button>
@@ -224,7 +223,7 @@ export function DiagnosisInput({ diagnoses, onChange }: DiagnosisInputProps) {
       {/* Search input */}
       <div ref={containerRef} className="relative">
         <Input
-          placeholder="Tìm mã ICD-10..."
+          placeholder="Tìm mã ICD-10"
           value={query}
           onChange={(e) => {
             setQuery(e.target.value)

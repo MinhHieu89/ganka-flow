@@ -116,25 +116,27 @@ export default function DoctorExam() {
           pendingRequestCount={pendingRequestCount}
         />
         <div className="flex-1 overflow-y-auto">
-          {activeTab === "patient" && (
-            <TabPatient patient={patient} visit={visit} />
-          )}
-          {activeTab === "preExam" && (
-            <TabPreExam patient={patient} visit={visit} />
-          )}
-          {activeTab === "requests" && (
-            <TabRequests
-              requests={examData.requests}
-              onAddRequest={handleAddRequest}
-            />
-          )}
-          {activeTab === "exam" && (
-            <TabExam
-              examData={examData}
-              onChange={setExamData}
-              previousVisit={previousVisit}
-            />
-          )}
+          <div className="mx-auto max-w-4xl px-6 py-6">
+            {activeTab === "patient" && (
+              <TabPatient patient={patient} visit={visit} />
+            )}
+            {activeTab === "preExam" && (
+              <TabPreExam patient={patient} visit={visit} />
+            )}
+            {activeTab === "requests" && (
+              <TabRequests
+                requests={examData.requests}
+                onAddRequest={handleAddRequest}
+              />
+            )}
+            {activeTab === "exam" && (
+              <TabExam
+                examData={examData}
+                onChange={setExamData}
+                previousVisit={previousVisit}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>
