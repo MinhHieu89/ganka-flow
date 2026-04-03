@@ -58,7 +58,9 @@ function EyeExamCard({
                 <div className="text-[11px] text-muted-foreground">
                   {f.label}
                 </div>
-                <div className="text-[13px]">{od[f.key]}</div>
+                <div className="text-[13px]">
+                  {od[f.key]}
+                </div>
               </div>
             ))}
           </div>
@@ -86,7 +88,9 @@ function EyeExamCard({
                 <div className="text-[11px] text-muted-foreground">
                   {f.label}
                 </div>
-                <div className="text-[13px]">{os[f.key]}</div>
+                <div className="text-[13px]">
+                  {os[f.key]}
+                </div>
               </div>
             ))}
           </div>
@@ -344,8 +348,8 @@ export function VisitDetailPanel({ visit }: VisitDetailPanelProps) {
         {visit.slitLamp && (
           <EyeExamCard
             title="Sinh hiển vi (Slit-Lamp)"
-            od={visit.slitLamp.od}
-            os={visit.slitLamp.os}
+            od={visit.slitLamp.od as unknown as Record<string, string>}
+            os={visit.slitLamp.os as unknown as Record<string, string>}
             fields={[
               { key: "lids", label: "Mi mắt" },
               { key: "conjunctiva", label: "Kết mạc" },
@@ -361,8 +365,8 @@ export function VisitDetailPanel({ visit }: VisitDetailPanelProps) {
         {visit.fundus && (
           <EyeExamCard
             title="Đáy mắt (Fundus)"
-            od={visit.fundus.od}
-            os={visit.fundus.os}
+            od={visit.fundus.od as unknown as Record<string, string>}
+            os={visit.fundus.os as unknown as Record<string, string>}
             fields={[
               { key: "opticDisc", label: "Đĩa thị" },
               { key: "cdRatio", label: "C/D" },
