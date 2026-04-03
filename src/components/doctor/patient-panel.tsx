@@ -34,7 +34,7 @@ export function PatientPanel({ patient, visit }: PatientPanelProps) {
       {/* Chief Complaint */}
       {screening?.chiefComplaint && (
         <div className="border-b border-border/50 px-4 py-3">
-          <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+          <div className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
             Lý do khám
           </div>
           <div className="mt-1 text-sm">{screening.chiefComplaint}</div>
@@ -44,7 +44,7 @@ export function PatientPanel({ patient, visit }: PatientPanelProps) {
       {/* Red Flags */}
       {hasFlags && (
         <div className="border-b border-border/50 bg-red-50 px-4 py-3 dark:bg-red-950/20">
-          <div className="text-xs font-medium uppercase tracking-wide text-red-600">
+          <div className="text-xs font-medium tracking-wide text-red-600 uppercase">
             Cờ đỏ
           </div>
           <div className="mt-1.5 flex flex-col gap-1">
@@ -57,9 +57,7 @@ export function PatientPanel({ patient, visit }: PatientPanelProps) {
               </div>
             )}
             {redFlags?.asymmetry && (
-              <div className="text-xs text-red-600">
-                • Bất đối xứng hai mắt
-              </div>
+              <div className="text-xs text-red-600">• Bất đối xứng hai mắt</div>
             )}
           </div>
         </div>
@@ -68,7 +66,7 @@ export function PatientPanel({ patient, visit }: PatientPanelProps) {
       {/* UCVA */}
       {(screening?.ucvaOd || screening?.ucvaOs) && (
         <div className="border-b border-border/50 px-4 py-3">
-          <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+          <div className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
             UCVA
           </div>
           <div className="mt-1.5 grid grid-cols-2 gap-2">
@@ -91,7 +89,7 @@ export function PatientPanel({ patient, visit }: PatientPanelProps) {
       {/* Screening Symptoms */}
       {screening && (
         <div className="border-b border-border/50 px-4 py-3">
-          <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+          <div className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
             Triệu chứng sàng lọc
           </div>
           <div className="mt-1.5 flex flex-col gap-1">
@@ -119,7 +117,7 @@ export function PatientPanel({ patient, visit }: PatientPanelProps) {
 
       {/* Current Glasses Rx */}
       <div className="px-4 py-3">
-        <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+        <div className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
           Kính đang đeo
         </div>
         {screening?.currentRxOd || screening?.currentRxOs ? (
@@ -138,7 +136,7 @@ export function PatientPanel({ patient, visit }: PatientPanelProps) {
             </div>
           </div>
         ) : (
-          <div className="mt-1 text-xs italic text-muted-foreground">
+          <div className="mt-1 text-xs text-muted-foreground italic">
             Không đeo kính
           </div>
         )}

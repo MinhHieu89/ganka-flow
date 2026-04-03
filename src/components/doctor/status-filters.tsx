@@ -29,7 +29,7 @@ export function DoctorStatusFilters({
             "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
             activeFilter === f.key
               ? "bg-foreground text-background"
-              : "text-muted-foreground hover:text-foreground",
+              : "text-muted-foreground hover:text-foreground"
           )}
         >
           {f.label} {counts[f.key]}

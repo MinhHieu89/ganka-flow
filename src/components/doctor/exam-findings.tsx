@@ -18,10 +18,7 @@ export function ExamFindings({
     diseaseGroups.includes("refraction") ||
     diseaseGroups.includes("myopiaControl")
 
-  function updateField<K extends keyof ExamData>(
-    key: K,
-    value: ExamData[K]
-  ) {
+  function updateField<K extends keyof ExamData>(key: K, value: ExamData[K]) {
     onChange({ ...examData, [key]: value })
   }
 
@@ -182,7 +179,7 @@ export function ExamFindings({
               />
             </div>
           </div>
-          <div className="mb-2 mt-3 text-xs text-muted-foreground">
+          <div className="mt-3 mb-2 text-xs text-muted-foreground">
             OS (Trái)
           </div>
           <div className="grid grid-cols-3 gap-3">
@@ -322,9 +319,7 @@ export function ExamFindings({
               />
             </div>
             <div>
-              <label className="text-xs text-muted-foreground">
-                Meibomian
-              </label>
+              <label className="text-xs text-muted-foreground">Meibomian</label>
               <Input
                 className="mt-1 h-9"
                 value={examData.dryEyeExam?.meibomian ?? ""}

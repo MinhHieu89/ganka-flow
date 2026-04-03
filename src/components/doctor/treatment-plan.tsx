@@ -21,14 +21,10 @@ export function TreatmentPlan({ examData, onChange }: TreatmentPlanProps) {
     if (next.has(section)) {
       next.delete(section)
       // Clear data when removing section
-      if (section === "medication")
-        onChange({ ...examData, medications: [] })
-      if (section === "optical")
-        onChange({ ...examData, opticalRx: undefined })
-      if (section === "procedure")
-        onChange({ ...examData, procedures: [] })
-      if (section === "followUp")
-        onChange({ ...examData, followUp: undefined })
+      if (section === "medication") onChange({ ...examData, medications: [] })
+      if (section === "optical") onChange({ ...examData, opticalRx: undefined })
+      if (section === "procedure") onChange({ ...examData, procedures: [] })
+      if (section === "followUp") onChange({ ...examData, followUp: undefined })
     } else {
       next.add(section)
     }
@@ -189,7 +185,7 @@ export function TreatmentPlan({ examData, onChange }: TreatmentPlanProps) {
             <div className="grid grid-cols-5 gap-2">
               {(["sph", "cyl", "axis", "add", "pd"] as const).map((field) => (
                 <div key={field}>
-                  <label className="text-xs uppercase text-muted-foreground">
+                  <label className="text-xs text-muted-foreground uppercase">
                     {field}
                   </label>
                   <Input
@@ -227,7 +223,7 @@ export function TreatmentPlan({ examData, onChange }: TreatmentPlanProps) {
             <div className="grid grid-cols-5 gap-2">
               {(["sph", "cyl", "axis", "add", "pd"] as const).map((field) => (
                 <div key={field}>
-                  <label className="text-xs uppercase text-muted-foreground">
+                  <label className="text-xs text-muted-foreground uppercase">
                     {field}
                   </label>
                   <Input
@@ -364,7 +360,7 @@ function SectionWrapper({
   return (
     <div className="space-y-3 rounded-lg border border-border p-4">
       <div className="flex items-center justify-between">
-        <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+        <div className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
           {title}
         </div>
         <button

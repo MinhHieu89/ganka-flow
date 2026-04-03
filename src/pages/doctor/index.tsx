@@ -63,11 +63,7 @@ export default function DoctorDashboard() {
         counts={counts}
       />
 
-      <DoctorQueueTable
-        visits={filtered}
-        page={page}
-        pageSize={pageSize}
-      />
+      <DoctorQueueTable visits={filtered} page={page} pageSize={pageSize} />
 
       <div className="flex items-center justify-between text-sm text-muted-foreground">
         <span>

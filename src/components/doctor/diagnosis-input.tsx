@@ -31,8 +31,7 @@ export function DiagnosisInput({ diagnoses, onChange }: DiagnosisInputProps) {
     const q = query.toLowerCase()
     return diagnosisCatalog.filter(
       (d) =>
-        d.text.toLowerCase().includes(q) ||
-        d.icd10.toLowerCase().includes(q)
+        d.text.toLowerCase().includes(q) || d.icd10.toLowerCase().includes(q)
     )
   }, [query])
 

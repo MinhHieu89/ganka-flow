@@ -16,9 +16,7 @@ export function DoctorProvider({ children }: { children: ReactNode }) {
   const { todayVisits, updateVisitStatus, visits } = useReceptionist()
   const currentDoctor = "BS. Nguyễn Hải"
 
-  const doctorVisits = todayVisits.filter(
-    (v) => v.doctorName === currentDoctor,
-  )
+  const doctorVisits = todayVisits.filter((v) => v.doctorName === currentDoctor)
 
   function startExam(visitId: string) {
     updateVisitStatus(visitId, "dang_kham")

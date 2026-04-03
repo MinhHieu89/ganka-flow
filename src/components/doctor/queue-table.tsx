@@ -134,9 +134,7 @@ export function DoctorQueueTable({
                                 Cờ đỏ
                               </span>
                             </TooltipTrigger>
-                            <TooltipContent>
-                              Cờ đỏ — cần ưu tiên
-                            </TooltipContent>
+                            <TooltipContent>Cờ đỏ — cần ưu tiên</TooltipContent>
                           </Tooltip>
                         )}
                       </div>
@@ -150,9 +148,7 @@ export function DoctorQueueTable({
                 <TableCell>{patient?.birthYear ?? "—"}</TableCell>
                 <TableCell>
                   {isExamining ? (
-                    <span className="font-medium text-blue-600">
-                      Đang khám
-                    </span>
+                    <span className="font-medium text-blue-600">Đang khám</span>
                   ) : waitMinutes !== null ? (
                     <span
                       className={

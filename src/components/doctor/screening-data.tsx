@@ -34,10 +34,7 @@ export function ScreeningData({ visit }: ScreeningDataProps) {
       </div>
 
       {isDryEye && (
-        <DryEyeScreeningBlock
-          data={step2!.dryEye}
-          isEditing={isEditing}
-        />
+        <DryEyeScreeningBlock data={step2!.dryEye} isEditing={isEditing} />
       )}
 
       {isRefraction && (
@@ -69,7 +66,9 @@ function DryEyeScreeningBlock({
       <Field
         label="OSDI-6"
         value={
-          data.osdiScore !== null ? `${data.osdiScore} (${data.osdiSeverity})` : "—"
+          data.osdiScore !== null
+            ? `${data.osdiScore} (${data.osdiSeverity})`
+            : "—"
         }
         isEditing={isEditing}
       />

@@ -67,11 +67,12 @@ export function DoctorKpiCards() {
     <div className="grid grid-cols-4 gap-3.5">
       {kpiConfig.map((kpi) => {
         const isNext = kpi.key === "next_appointment"
-        const value = isNext
-          ? nextTime
-          : counts[kpi.key as keyof typeof counts]
-        const subtitle =
-          isNext ? nextSubtitle : kpi.key === "hoan_thanh" ? "hôm nay" : ""
+        const value = isNext ? nextTime : counts[kpi.key as keyof typeof counts]
+        const subtitle = isNext
+          ? nextSubtitle
+          : kpi.key === "hoan_thanh"
+            ? "hôm nay"
+            : ""
 
         return (
           <div
