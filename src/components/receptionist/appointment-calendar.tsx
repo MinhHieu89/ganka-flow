@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils"
+import { TODAY } from "@/lib/demo-date"
 
 interface AppointmentCalendarProps {
   year: number
@@ -82,7 +83,7 @@ function isHoliday(_date: string): boolean {
 }
 
 function isPast(date: string): boolean {
-  return date < "2026-04-01" // hardcoded today for mockup
+  return date < TODAY
 }
 
 export function AppointmentCalendar({

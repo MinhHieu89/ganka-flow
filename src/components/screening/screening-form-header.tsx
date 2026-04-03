@@ -16,7 +16,7 @@ export function ScreeningFormHeader({
 }: ScreeningFormHeaderProps) {
   const waitMinutes = visit.checkedInAt
     ? Math.floor(
-        (new Date("2026-04-01T14:00:00Z").getTime() -
+        (Date.now() -
           new Date(visit.checkedInAt).getTime()) /
           60000
       )

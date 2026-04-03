@@ -1,3 +1,5 @@
+import { TODAY, todayTimestamp } from "@/lib/demo-date"
+
 export type PatientStatus =
   | "chua_den"
   | "cho_kham"
@@ -317,7 +319,7 @@ export const mockVisits: Visit[] = [
     status: "chua_den",
     source: "hen",
     scheduledAt: "14:00",
-    date: "2026-04-01",
+    date: TODAY,
   },
   {
     id: "v2",
@@ -326,8 +328,8 @@ export const mockVisits: Visit[] = [
     source: "hen",
     reason: "Khô mắt, mỏi mắt",
     scheduledAt: "13:30",
-    checkedInAt: "2026-04-01T13:25:00Z",
-    date: "2026-04-01",
+    checkedInAt: todayTimestamp(35),
+    date: TODAY,
     lastVisitDate: "15/01/2026",
     lastVisitDiagnosis: "Khô mắt",
     lastVisitDoctor: "BS. Nguyễn Hải",
@@ -339,8 +341,8 @@ export const mockVisits: Visit[] = [
     source: "hen",
     reason: "Giảm thị lực",
     scheduledAt: "13:00",
-    checkedInAt: "2026-04-01T12:55:00Z",
-    date: "2026-04-01",
+    checkedInAt: todayTimestamp(65),
+    date: TODAY,
   },
   {
     id: "v4",
@@ -348,8 +350,8 @@ export const mockVisits: Visit[] = [
     status: "dang_kham",
     source: "walk_in",
     reason: "Đau mắt đỏ",
-    checkedInAt: "2026-04-01T13:10:00Z",
-    date: "2026-04-01",
+    checkedInAt: todayTimestamp(50),
+    date: TODAY,
     doctorName: "BS. Trần Minh",
   },
   {
@@ -359,8 +361,8 @@ export const mockVisits: Visit[] = [
     source: "hen",
     reason: "Tái khám khô mắt",
     scheduledAt: "13:00",
-    checkedInAt: "2026-04-01T12:50:00Z",
-    date: "2026-04-01",
+    checkedInAt: todayTimestamp(70),
+    date: TODAY,
     lastVisitDate: "20/02/2026",
     lastVisitDiagnosis: "Khô mắt mạn tính",
     lastVisitDoctor: "BS. Nguyễn Hải",
@@ -372,8 +374,8 @@ export const mockVisits: Visit[] = [
     source: "hen",
     reason: "Mỏi mắt, nhìn mờ",
     scheduledAt: "09:00",
-    checkedInAt: "2026-04-02T08:55:00Z",
-    date: "2026-04-01",
+    checkedInAt: todayTimestamp(45),
+    date: TODAY,
     doctorName: "BS. Nguyễn Hải",
     screeningData: {
       chiefComplaint: "Mỏi mắt khi nhìn màn hình lâu, nhìn mờ cuối ngày",
@@ -409,8 +411,8 @@ export const mockVisits: Visit[] = [
     status: "cho_kham",
     source: "walk_in",
     reason: "Khô mắt kéo dài",
-    checkedInAt: "2026-04-02T09:10:00Z",
-    date: "2026-04-01",
+    checkedInAt: todayTimestamp(30),
+    date: TODAY,
     doctorName: "BS. Nguyễn Hải",
     lastVisitDate: "05/02/2026",
     lastVisitDiagnosis: "Khô mắt nhẹ",
@@ -466,8 +468,8 @@ export const mockVisits: Visit[] = [
     source: "hen",
     reason: "Mắt đỏ, cộm",
     scheduledAt: "09:30",
-    checkedInAt: "2026-04-02T09:25:00Z",
-    date: "2026-04-01",
+    checkedInAt: todayTimestamp(20),
+    date: TODAY,
     doctorName: "BS. Nguyễn Hải",
     screeningData: {
       chiefComplaint: "Mắt đỏ kèm cộm, chảy ghèn nhẹ",
@@ -519,8 +521,8 @@ export const mockVisits: Visit[] = [
     source: "hen",
     reason: "Nhìn bảng không rõ",
     scheduledAt: "10:00",
-    checkedInAt: "2026-04-02T09:55:00Z",
-    date: "2026-04-01",
+    checkedInAt: todayTimestamp(10),
+    date: TODAY,
     doctorName: "BS. Nguyễn Hải",
     screeningData: {
       chiefComplaint: "Nhìn bảng trên lớp không rõ, phải nheo mắt",
@@ -557,8 +559,8 @@ export const mockVisits: Visit[] = [
     source: "hen",
     reason: "Tái khám cận thị",
     scheduledAt: "08:30",
-    checkedInAt: "2026-04-02T08:25:00Z",
-    date: "2026-04-01",
+    checkedInAt: todayTimestamp(60),
+    date: TODAY,
     doctorName: "BS. Nguyễn Hải",
     lastVisitDate: "10/01/2026",
     lastVisitDiagnosis: "Cận thị cả hai mắt",

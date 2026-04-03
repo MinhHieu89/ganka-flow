@@ -5,6 +5,7 @@ import {
   type Appointment,
 } from "@/data/mock-appointments"
 import { cn } from "@/lib/utils"
+import { TODAY } from "@/lib/demo-date"
 
 const DAY_NAMES: Record<number, string> = {
   0: "CN",
@@ -15,8 +16,6 @@ const DAY_NAMES: Record<number, string> = {
   5: "T6",
   6: "T7",
 }
-
-const TODAY = "2026-04-01"
 
 interface WeekViewProps {
   weekDates: string[]

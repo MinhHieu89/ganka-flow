@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router"
+import { TODAY } from "@/lib/demo-date"
 import {
   Dialog,
   DialogContent,
@@ -33,7 +34,7 @@ export function WalkinModal({ patient, open, onOpenChange }: WalkinModalProps) {
       status: "cho_kham",
       source: "walk_in",
       reason: reason.trim(),
-      date: "2026-04-01",
+      date: TODAY,
       checkedInAt: new Date().toISOString(),
     })
     setReason("")

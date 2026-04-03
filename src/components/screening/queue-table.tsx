@@ -32,7 +32,7 @@ interface QueueTableProps {
 
 function getWaitMinutes(checkedInAt?: string): number | null {
   if (!checkedInAt) return null
-  const now = new Date("2026-04-01T14:00:00Z") // hardcoded "now" matching mockup date
+  const now = new Date()
   const checkedIn = new Date(checkedInAt)
   return Math.floor((now.getTime() - checkedIn.getTime()) / 60000)
 }

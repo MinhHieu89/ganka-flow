@@ -9,6 +9,7 @@ import {
   type ScreeningFormData,
 } from "@/data/mock-patients"
 import { mockAppointments, type Appointment } from "@/data/mock-appointments"
+import { TODAY } from "@/lib/demo-date"
 
 interface ReceptionistContextType {
   patients: Patient[]
@@ -36,7 +37,7 @@ export function ReceptionistProvider({ children }: { children: ReactNode }) {
   const [appointments, setAppointments] =
     useState<Appointment[]>(mockAppointments)
 
-  const today = "2026-04-01" // hardcoded for mockup
+  const today = TODAY
 
   const todayVisits = visits.filter((v) => v.date === today)
 

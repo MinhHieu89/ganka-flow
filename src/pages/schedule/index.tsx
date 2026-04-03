@@ -9,8 +9,7 @@ import { DayView } from "@/components/receptionist/day-view"
 import { AppointmentPopover } from "@/components/receptionist/appointment-popover"
 import { QuickAddForm } from "@/components/receptionist/quick-add-form"
 import type { Appointment } from "@/data/mock-appointments"
-
-const TODAY = "2026-04-01" // hardcoded for mockup
+import { TODAY } from "@/lib/demo-date"
 
 const VIET_MONTHS = [
   "Th1",
