@@ -31,15 +31,21 @@ export function DiagnosisInput({ diagnoses, onChange }: DiagnosisInputProps) {
     const q = query.toLowerCase()
     return diagnosisCatalog.filter(
       (d) =>
-        d.text.toLowerCase().includes(q) || d.icd10.toLowerCase().includes(q)
+        d.nameVi.toLowerCase().includes(q) ||
+        d.nameEn.toLowerCase().includes(q) ||
+        d.icd10.toLowerCase().includes(q)
     )
   }, [query])
 
-  function addFromCatalog(entry: { text: string; icd10: string }) {
+  function addFromCatalog(entry: {
+    nameVi: string
+    nameEn: string
+    icd10: string
+  }) {
     const isPrimary = diagnoses.length === 0
     onChange([
       ...diagnoses,
-      { text: entry.text, icd10Code: entry.icd10, isPrimary },
+      { text: entry.nameVi, icd10Code: entry.icd10, isPrimary },
     ])
     setQuery("")
     setShowDropdown(false)
@@ -66,28 +72,38 @@ export function DiagnosisInput({ diagnoses, onChange }: DiagnosisInputProps) {
       <div className="text-sm font-semibold">Chẩn đoán</div>
 
       {/* Existing diagnoses */}
-      {diagnoses.map((d, i) => (
-        <div
-          key={i}
-          className="flex items-center gap-2 rounded-md border border-border px-3 py-2"
-        >
-          <span className="text-xs font-medium text-muted-foreground">
-            {d.isPrimary ? "Chính" : "Phụ"}
-          </span>
-          <span className="flex-1 text-sm">{d.text}</span>
-          {d.icd10Code && (
-            <span className="rounded bg-muted px-1.5 py-0.5 text-xs text-muted-foreground">
-              {d.icd10Code}
-            </span>
-          )}
-          <button
-            onClick={() => removeDiagnosis(i)}
-            className="text-muted-foreground hover:text-foreground"
-          >
-            <HugeiconsIcon icon={Cancel01Icon} className="size-3.5" />
-          </button>
+      {diagnoses.length > 0 && (
+        <div className="space-y-2">
+          {diagnoses.map((d, i) => (
+            <div
+              key={i}
+              className="flex items-center gap-2.5 rounded-lg border border-border px-3 py-2.5"
+            >
+              <span
+                className={`shrink-0 rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase ${
+                  d.isPrimary
+                    ? "bg-primary/10 text-primary"
+                    : "bg-muted text-muted-foreground"
+                }`}
+              >
+                {d.isPrimary ? "Chính" : "Phụ"}
+              </span>
+              <span className="flex-1 text-sm">{d.text}</span>
+              {d.icd10Code && (
+                <span className="rounded bg-muted px-1.5 py-0.5 text-[10px] font-medium tabular-nums text-muted-foreground">
+                  {d.icd10Code}
+                </span>
+              )}
+              <button
+                onClick={() => removeDiagnosis(i)}
+                className="shrink-0 text-muted-foreground/50 transition-colors hover:text-foreground"
+              >
+                <HugeiconsIcon icon={Cancel01Icon} className="size-3.5" />
+              </button>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
 
       {/* Search input */}
       <div ref={ref} className="relative">
@@ -105,27 +121,29 @@ export function DiagnosisInput({ diagnoses, onChange }: DiagnosisInputProps) {
             }
           }}
         />
-        <div className="mt-1 text-xs text-muted-foreground">
-          ICD-10 sẽ tự động gắn khi chọn từ danh sách
-        </div>
+        {diagnoses.length === 0 && (
+          <div className="mt-1 text-[11px] text-muted-foreground">
+            ICD-10 tự động gắn khi chọn từ danh sách
+          </div>
+        )}
 
         {showDropdown && query.length >= 2 && (
-          <div className="absolute top-10 z-50 w-full rounded-md border border-border bg-popover shadow-md">
+          <div className="absolute top-10 z-50 max-h-60 w-full overflow-y-auto rounded-lg border border-border bg-popover shadow-lg">
             {results.length > 0 ? (
               results.map((entry) => (
                 <button
                   key={entry.icd10}
                   onClick={() => addFromCatalog(entry)}
-                  className="flex w-full items-center justify-between px-3 py-2 text-left text-sm hover:bg-muted"
+                  className="flex w-full items-center justify-between px-3 py-2.5 text-left text-sm transition-colors hover:bg-muted"
                 >
-                  <span>{entry.text}</span>
-                  <span className="ml-2 rounded bg-muted px-1.5 py-0.5 text-xs text-muted-foreground">
+                  <span>{entry.nameVi}</span>
+                  <span className="ml-3 shrink-0 rounded bg-muted px-1.5 py-0.5 text-[10px] font-medium tabular-nums text-muted-foreground">
                     {entry.icd10}
                   </span>
                 </button>
               ))
             ) : (
-              <div className="px-3 py-2">
+              <div className="px-3 py-2.5">
                 <div className="text-sm text-muted-foreground">
                   Không tìm thấy.{" "}
                   <Button
@@ -134,7 +152,7 @@ export function DiagnosisInput({ diagnoses, onChange }: DiagnosisInputProps) {
                     className="h-auto p-0"
                     onClick={addFreeText}
                   >
-                    Thêm "{query}" dạng tự do
+                    Thêm &ldquo;{query}&rdquo; dạng tự do
                   </Button>
                 </div>
               </div>
