@@ -16,6 +16,7 @@ import DoctorExam from "@/pages/doctor/exam"
 import { DoctorProvider } from "@/contexts/doctor-context"
 import PatientRegistry from "@/pages/patients/index"
 import PatientDetail from "@/pages/patients/detail"
+import PharmacyDashboard from "@/pages/pharmacy/index"
 
 export function App() {
   return (
@@ -43,6 +44,7 @@ export function App() {
                   />
                   <Route path="/doctor" element={<DoctorDashboard />} />
                   <Route path="/doctor/:visitId" element={<DoctorExam />} />
+                  <Route path="/pharmacy" element={<PharmacyDashboard />} />
                 </Routes>
               </SidebarInset>
             </SidebarProvider>
