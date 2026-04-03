@@ -94,18 +94,132 @@ export interface MeasurementData {
   fundus: string
 }
 
+export interface VisitScreening {
+  chiefComplaint: string
+  ucva: { od: string; os: string }
+  currentRx: { od: string; os: string } | null
+  redFlags: {
+    eyePain: boolean
+    suddenVisionLoss: boolean
+    asymmetry: boolean
+  }
+  symptoms: string[]
+  blinkImprovement: string | null
+  symptomDuration: string | null
+  screenTime: string | null
+  contactLens: string | null
+  discomfortLevel: string | null
+}
+
+export interface VisitDryEye {
+  osdiScore: number
+  osdiMax: number
+  osdiSeverity: string
+  od: { tbut: string; schirmer: string; meibomian: string }
+  os: { tbut: string; schirmer: string; meibomian: string }
+  staining: string | null
+}
+
+export interface SlitLampEye {
+  lids: string
+  conjunctiva: string
+  cornea: string
+  anteriorChamber: string
+  iris: string
+  lens: string
+  notes: string
+}
+
+export interface FundusEye {
+  opticDisc: string
+  cdRatio: string
+  macula: string
+  vessels: string
+  peripheralRetina: string
+  notes: string
+}
+
+export interface VisitRefraction {
+  auto: {
+    od: { sph: string; cyl: string; axis: string }
+    os: { sph: string; cyl: string; axis: string }
+  }
+  subjective: {
+    od: {
+      sph: string
+      cyl: string
+      axis: string
+      bcva: string
+      add: string
+      pd: string
+    }
+    os: {
+      sph: string
+      cyl: string
+      axis: string
+      bcva: string
+      add: string
+      pd: string
+    }
+  } | null
+}
+
+export interface VisitOpticalRx {
+  od: { sph: string; cyl: string; axis: string; add: string }
+  os: { sph: string; cyl: string; axis: string; add: string }
+  pd: string
+  lensType: string
+}
+
+export interface VisitMedication {
+  name: string
+  description: string
+  dosage: string
+  frequency: string
+  eye: string
+  duration: string
+  notes: string | null
+}
+
+export interface VisitRequest {
+  type: string
+  status: string
+  result: string | null
+}
+
 export interface VisitRecord {
   id: string
   date: string
   diseaseGroup: DiseaseGroupType
   doctorName: string
-  daysAgo: number | null // null = "Khám lần đầu"
+  daysAgo: number | null
+
+  // Pre-Exam
+  screening: VisitScreening
+
+  // Pre-Exam Step 2 (conditional)
+  dryEye: VisitDryEye | null
+
+  // Exam
   diagnoses: { text: string; icdCode: string; isPrimary: boolean }[]
-  summaryPills: string[]
-  measurements: MeasurementData
-  medications: CurrentMedication[]
+  diagnosisNotes: string | null
+  va: {
+    od: { sc: string; cc: string; ph: string; iop: string }
+    os: { sc: string; cc: string; ph: string; iop: string }
+  }
+  refraction: VisitRefraction
+  slitLamp: { od: SlitLampEye; os: SlitLampEye } | null
+  fundus: { od: FundusEye; os: FundusEye } | null
+
+  // Requests
+  requests: VisitRequest[]
+
+  // Conclusion
+  medications: VisitMedication[]
+  opticalRx: VisitOpticalRx | null
+  procedures: { name: string; notes: string }[]
   instructions: string | null
-  followUp: string | null
+  followUp: { date: string; interval: string; instructions: string } | null
   followUpOverdue: boolean
 }
 
