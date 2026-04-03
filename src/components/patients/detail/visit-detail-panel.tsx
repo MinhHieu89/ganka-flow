@@ -55,7 +55,7 @@ function EyeExamCard({
           <div className="space-y-1.5">
             {fields.map((f) => (
               <div key={f.key}>
-                <div className="text-[10px] text-muted-foreground">
+                <div className="text-[11px] text-muted-foreground">
                   {f.label}
                 </div>
                 <div className="text-[13px]">{od[f.key]}</div>
@@ -83,7 +83,7 @@ function EyeExamCard({
           <div className="space-y-1.5">
             {fields.map((f) => (
               <div key={f.key}>
-                <div className="text-[10px] text-muted-foreground">
+                <div className="text-[11px] text-muted-foreground">
                   {f.label}
                 </div>
                 <div className="text-[13px]">{os[f.key]}</div>
@@ -269,7 +269,7 @@ export function VisitDetailPanel({ visit }: VisitDetailPanelProps) {
 
         {/* 5. Refraction */}
         <MeasurementBlock label="Khúc xạ">
-          <div className="mb-1 text-[10px] font-medium text-muted-foreground">
+          <div className="mb-1 text-[11px] font-medium tracking-wider text-muted-foreground uppercase">
             Auto-Ref
           </div>
           <OdOsRow eye="OD">
@@ -283,7 +283,7 @@ export function VisitDetailPanel({ visit }: VisitDetailPanelProps) {
           {visit.refraction.subjective && (
             <>
               <div className="my-2 border-t border-border" />
-              <div className="mb-1 text-[10px] font-medium text-muted-foreground">
+              <div className="mb-1 text-[11px] font-medium tracking-wider text-muted-foreground uppercase">
                 Chủ quan
               </div>
               <OdOsRow eye="OD">
@@ -422,7 +422,7 @@ export function VisitDetailPanel({ visit }: VisitDetailPanelProps) {
               <div
                 key={i}
                 className={cn(
-                  "flex items-start justify-between py-2.5",
+                  "flex flex-wrap items-start justify-between py-2.5",
                   i < visit.medications.length - 1 &&
                     "border-b border-border"
                 )}
@@ -444,6 +444,11 @@ export function VisitDetailPanel({ visit }: VisitDetailPanelProps) {
                     {med.duration}
                   </div>
                 </div>
+                {med.notes && (
+                  <div className="mt-1 w-full text-xs text-muted-foreground">
+                    {med.notes}
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -468,7 +473,7 @@ export function VisitDetailPanel({ visit }: VisitDetailPanelProps) {
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-center">
                   <div>
-                    <div className="text-[10px] text-muted-foreground">
+                    <div className="text-[11px] text-muted-foreground">
                       Sph
                     </div>
                     <div className="text-[15px] font-medium">
@@ -476,7 +481,7 @@ export function VisitDetailPanel({ visit }: VisitDetailPanelProps) {
                     </div>
                   </div>
                   <div>
-                    <div className="text-[10px] text-muted-foreground">
+                    <div className="text-[11px] text-muted-foreground">
                       Cyl
                     </div>
                     <div className="text-[15px] font-medium">
@@ -484,7 +489,7 @@ export function VisitDetailPanel({ visit }: VisitDetailPanelProps) {
                     </div>
                   </div>
                   <div>
-                    <div className="text-[10px] text-muted-foreground">
+                    <div className="text-[11px] text-muted-foreground">
                       Axis
                     </div>
                     <div className="text-[15px] font-medium">
@@ -512,7 +517,7 @@ export function VisitDetailPanel({ visit }: VisitDetailPanelProps) {
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-center">
                   <div>
-                    <div className="text-[10px] text-muted-foreground">
+                    <div className="text-[11px] text-muted-foreground">
                       Sph
                     </div>
                     <div className="text-[15px] font-medium">
@@ -520,7 +525,7 @@ export function VisitDetailPanel({ visit }: VisitDetailPanelProps) {
                     </div>
                   </div>
                   <div>
-                    <div className="text-[10px] text-muted-foreground">
+                    <div className="text-[11px] text-muted-foreground">
                       Cyl
                     </div>
                     <div className="text-[15px] font-medium">
@@ -528,7 +533,7 @@ export function VisitDetailPanel({ visit }: VisitDetailPanelProps) {
                     </div>
                   </div>
                   <div>
-                    <div className="text-[10px] text-muted-foreground">
+                    <div className="text-[11px] text-muted-foreground">
                       Axis
                     </div>
                     <div className="text-[15px] font-medium">
