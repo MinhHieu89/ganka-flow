@@ -10,6 +10,37 @@ export type PatientStatus =
 
 export type PatientSource = "hen" | "walk_in"
 
+export type PatientType = "kham_benh" | "mua_thuoc"
+export type PatientActiveStatus = "hoat_dong" | "ngung_hoat_dong"
+
+export const PATIENT_TYPE_CONFIG: Record<
+  PatientType,
+  { label: string; color: string }
+> = {
+  kham_benh: {
+    label: "Bệnh nhân khám bệnh",
+    color: "text-sky-700 bg-sky-100",
+  },
+  mua_thuoc: {
+    label: "Khách mua thuốc",
+    color: "text-amber-800 bg-amber-100",
+  },
+}
+
+export const ACTIVE_STATUS_CONFIG: Record<
+  PatientActiveStatus,
+  { label: string; color: string }
+> = {
+  hoat_dong: {
+    label: "Hoạt động",
+    color: "text-emerald-800 bg-emerald-100",
+  },
+  ngung_hoat_dong: {
+    label: "Ngừng HĐ",
+    color: "text-red-800 bg-red-100",
+  },
+}
+
 export interface Patient {
   id: string // GK-YYYY-NNNN
   name: string
@@ -26,11 +57,14 @@ export interface Patient {
   systemicHistory?: string
   currentMedications?: string
   allergies?: string
+  familyHistory?: string
   screenTime?: number
   workEnvironment?: string
   contactLens?: string
   lifestyleNotes?: string
   createdAt: string // ISO date
+  type: PatientType
+  activeStatus: PatientActiveStatus
 }
 
 export interface Visit {
@@ -77,6 +111,24 @@ export interface ScreeningFormData {
   screenTime: string
   contactLens: "yes" | "no" | null
   discomfortLevel: "mild" | "moderate" | "severe" | null
+  progression?: string
+  affectedEye?: string
+  pinholeOd?: string
+  pinholeOs?: string
+  nearOd?: string
+  nearOs?: string
+  iopOd?: string
+  iopOs?: string
+  autoRef?: {
+    sphOd: string
+    cylOd: string
+    axisOd: string
+    sphOs: string
+    cylOs: string
+    axisOs: string
+  }
+  screeningQuestions?: { question: string; answer: string }[]
+  eyeRest?: string
   notes: string
   step2?: Step2FormData
 }
@@ -314,6 +366,8 @@ export const mockPatients: Patient[] = [
     screenTime: 9,
     workEnvironment: "Văn phòng",
     createdAt: "2026-04-02T08:00:00Z",
+    type: "kham_benh",
+    activeStatus: "hoat_dong",
   },
   {
     id: "GK-2026-0038",
@@ -329,6 +383,8 @@ export const mockPatients: Patient[] = [
     workEnvironment: "Văn phòng",
     contactLens: "Hàng ngày",
     createdAt: "2026-04-02T08:10:00Z",
+    type: "kham_benh",
+    activeStatus: "hoat_dong",
   },
   {
     id: "GK-2026-0042",
@@ -342,6 +398,8 @@ export const mockPatients: Patient[] = [
     screenTime: 6,
     workEnvironment: "Văn phòng",
     createdAt: "2026-04-02T08:20:00Z",
+    type: "kham_benh",
+    activeStatus: "hoat_dong",
   },
   {
     id: "GK-2026-0044",
@@ -354,6 +412,8 @@ export const mockPatients: Patient[] = [
     screenTime: 5,
     workEnvironment: "Học sinh",
     createdAt: "2026-04-02T08:30:00Z",
+    type: "kham_benh",
+    activeStatus: "hoat_dong",
   },
   {
     id: "GK-2026-0045",
@@ -364,7 +424,13 @@ export const mockPatients: Patient[] = [
     phone: "0966778899",
     occupation: "Giáo viên",
     chiefComplaint: "Tái khám cận thị",
+    eyeHistory: "Cận thị từ năm 15 tuổi",
+    allergies: "Tetracycline",
+    currentMedications: "Refresh Tears 0.5% — 4 lần/ngày",
+    familyHistory: "Mẹ cận nặng (-6.00D)",
     createdAt: "2026-04-02T08:40:00Z",
+    type: "kham_benh",
+    activeStatus: "hoat_dong",
   },
   {
     id: "GK-2026-0001",
@@ -378,6 +444,8 @@ export const mockPatients: Patient[] = [
     screenTime: 10,
     workEnvironment: "Văn phòng",
     createdAt: "2026-03-15T10:00:00Z",
+    type: "kham_benh",
+    activeStatus: "hoat_dong",
   },
   {
     id: "GK-2026-0002",
@@ -396,6 +464,8 @@ export const mockPatients: Patient[] = [
     workEnvironment: "Văn phòng",
     contactLens: "Thỉnh thoảng",
     createdAt: "2026-01-10T09:00:00Z",
+    type: "kham_benh",
+    activeStatus: "hoat_dong",
   },
   {
     id: "GK-2026-0003",
@@ -409,6 +479,8 @@ export const mockPatients: Patient[] = [
     systemicHistory: "Tiểu đường type 2",
     currentMedications: "Metformin 500mg",
     createdAt: "2026-02-20T14:00:00Z",
+    type: "kham_benh",
+    activeStatus: "hoat_dong",
   },
   {
     id: "GK-2026-0004",
@@ -419,6 +491,8 @@ export const mockPatients: Patient[] = [
     phone: "0978123456",
     chiefComplaint: "Đau mắt đỏ",
     createdAt: "2026-04-01T08:30:00Z",
+    type: "kham_benh",
+    activeStatus: "hoat_dong",
   },
   {
     id: "GK-2026-0005",
@@ -432,6 +506,107 @@ export const mockPatients: Patient[] = [
     eyeHistory: "Đã Lasik 2018",
     screenTime: 3,
     createdAt: "2026-01-05T11:00:00Z",
+    type: "kham_benh",
+    activeStatus: "hoat_dong",
+  },
+  {
+    id: "GK-2026-0010",
+    name: "Đỗ Thị Hồng",
+    gender: "Nữ",
+    dob: "25/12/1980",
+    birthYear: 1980,
+    phone: "0911223344",
+    occupation: "Nội trợ",
+    chiefComplaint: "Nhìn gần mờ",
+    createdAt: "2026-03-01T09:00:00Z",
+    type: "kham_benh",
+    activeStatus: "hoat_dong",
+  },
+  {
+    id: "GK-2026-0012",
+    name: "Bùi Quang Hà",
+    gender: "Nam",
+    dob: "08/02/1999",
+    birthYear: 1999,
+    phone: "0922334455",
+    occupation: "Sinh viên",
+    chiefComplaint: "Cận thị tăng nhanh",
+    createdAt: "2026-03-05T10:30:00Z",
+    type: "kham_benh",
+    activeStatus: "hoat_dong",
+  },
+  {
+    id: "GK-2026-0015",
+    name: "Trịnh Văn Khánh",
+    gender: "Nam",
+    dob: "17/07/1970",
+    birthYear: 1970,
+    phone: "0933445566",
+    occupation: "Hưu trí",
+    allergies: "Chloramphenicol, Sulfamide",
+    systemicHistory: "Cao huyết áp",
+    createdAt: "2026-02-15T08:00:00Z",
+    type: "kham_benh",
+    activeStatus: "hoat_dong",
+  },
+  {
+    id: "GK-2026-0018",
+    name: "Lý Thị Ngọc",
+    gender: "Nữ",
+    dob: "30/09/1955",
+    birthYear: 1955,
+    phone: "0944556677",
+    createdAt: "2026-01-20T14:00:00Z",
+    type: "kham_benh",
+    activeStatus: "ngung_hoat_dong",
+  },
+  {
+    id: "GK-2026-0020",
+    name: "Hoàng Minh Phúc",
+    gender: "Nam",
+    dob: "12/04/2005",
+    birthYear: 2005,
+    phone: "0955667788",
+    chiefComplaint: "Kiểm tra mắt định kỳ",
+    createdAt: "2026-03-10T11:00:00Z",
+    type: "kham_benh",
+    activeStatus: "hoat_dong",
+  },
+  {
+    id: "GK-2026-0022",
+    name: "Ngô Thị Quỳnh",
+    gender: "Nữ",
+    dob: "05/06/1988",
+    birthYear: 1988,
+    phone: "0966778899",
+    createdAt: "2026-03-20T09:30:00Z",
+    type: "mua_thuoc",
+    activeStatus: "hoat_dong",
+  },
+  {
+    id: "GK-2026-0025",
+    name: "Phan Văn Sơn",
+    gender: "Nam",
+    dob: "22/11/1960",
+    birthYear: 1960,
+    phone: "0977889900",
+    createdAt: "2026-02-28T16:00:00Z",
+    type: "mua_thuoc",
+    activeStatus: "hoat_dong",
+  },
+  {
+    id: "GK-2026-0030",
+    name: "Đinh Thị Uyên",
+    gender: "Nữ",
+    dob: "14/08/1993",
+    birthYear: 1993,
+    phone: "0988990011",
+    occupation: "Nhân viên ngân hàng",
+    chiefComplaint: "Mỏi mắt cuối ngày",
+    screenTime: 10,
+    createdAt: "2026-03-25T08:00:00Z",
+    type: "kham_benh",
+    activeStatus: "ngung_hoat_dong",
   },
 ]
 
@@ -835,8 +1010,14 @@ export const mockVisits: Visit[] = [
       chiefComplaint: "Tái khám định kỳ, kiểm tra độ kính",
       ucvaOd: "4/10",
       ucvaOs: "5/10",
-      currentRxOd: "-2.00",
-      currentRxOs: "-1.75",
+      currentRxOd: "9/10",
+      currentRxOs: "10/10",
+      pinholeOd: "10/10",
+      pinholeOs: "10/10",
+      nearOd: "J2",
+      nearOs: "J1",
+      iopOd: "14",
+      iopOs: "15",
       redFlags: {
         eyePain: false,
         suddenVisionLoss: false,
@@ -853,10 +1034,50 @@ export const mockVisits: Visit[] = [
       blinkImprovement: "no",
       symptomDuration: 12,
       symptomDurationUnit: "tháng",
+      progression: "Ổn định",
+      affectedEye: "Cả hai mắt",
       screenTime: "4",
       contactLens: "no",
       discomfortLevel: null,
+      eyeRest: "Không thường xuyên",
+      autoRef: {
+        sphOd: "-2.25",
+        cylOd: "-0.50",
+        axisOd: "180",
+        sphOs: "-2.00",
+        cylOs: "-0.25",
+        axisOs: "175",
+      },
+      screeningQuestions: [
+        {
+          question: "Mắt có bị đỏ hoặc chảy nước thường xuyên?",
+          answer: "Không",
+        },
+        {
+          question: "Nhìn thấy chấm đen, đốm sáng bất thường?",
+          answer: "Không",
+        },
+        {
+          question: "Khó khăn khi lái xe ban đêm?",
+          answer: "Không",
+        },
+      ],
       notes: "Đeo kính đúng số",
+      step2: {
+        selectedGroups: ["dryEye"],
+        groupOrder: ["dryEye"],
+        dryEye: {
+          osdiScore: 12,
+          osdiAnswers: [1, 1, 0, 2, 1, 1],
+          osdiSeverity: "moderate",
+          tbutOd: "8",
+          tbutOs: "9",
+          schirmerOd: "12",
+          schirmerOs: "14",
+          meibomian: "Tuyến Meibomian bình thường",
+          staining: "Không nhuộm",
+        },
+      },
     },
   },
 ]
