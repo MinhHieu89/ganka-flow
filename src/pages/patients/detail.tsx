@@ -10,11 +10,11 @@ import { TabVisits } from "@/components/patients/detail/tab-visits"
 import { TabTrends } from "@/components/patients/detail/tab-trends"
 
 export default function PatientDetail() {
-  const { id } = useParams<{ id: string }>()
+  const { id: _id } = useParams<{ id: string }>()
   const { sentinelRef, isCollapsed } = useStickyHeader()
   const [activeTab, setActiveTab] = useState("overview")
 
-  // In a real app, fetch by id. For now, use mock data.
+  // In a real app, fetch by _id. For now, use mock data.
   const data = MOCK_PATIENT_DETAIL
 
   return (
