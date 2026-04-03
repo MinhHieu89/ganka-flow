@@ -21,17 +21,23 @@ function removeDiacritics(str: string): string {
     .replace(/Đ/g, "D")
 }
 
-/** Group catalog entries by category, preserving insertion order */
+interface IndexedEntry extends DiagnosisCatalogEntry {
+  flatIdx: number
+}
+
+/** Group catalog entries by category with pre-computed flat indices */
 function groupByCategory(
   entries: DiagnosisCatalogEntry[]
-): { category: string; items: DiagnosisCatalogEntry[] }[] {
-  const map = new Map<string, DiagnosisCatalogEntry[]>()
+): { category: string; items: IndexedEntry[] }[] {
+  const map = new Map<string, IndexedEntry[]>()
+  let idx = 0
   for (const entry of entries) {
+    const indexed = { ...entry, flatIdx: idx++ }
     const group = map.get(entry.category)
     if (group) {
-      group.push(entry)
+      group.push(indexed)
     } else {
-      map.set(entry.category, [entry])
+      map.set(entry.category, [indexed])
     }
   }
   return Array.from(map, ([category, items]) => ({ category, items }))
@@ -85,7 +91,7 @@ export function DiagnosisInput({ diagnoses, onChange }: DiagnosisInputProps) {
   // Reset highlight when results change
   useEffect(() => {
     setHighlightIndex(0)
-  }, [flatResults.length])
+  }, [query])
 
   // Scroll highlighted item into view
   useEffect(() => {
@@ -166,9 +172,6 @@ export function DiagnosisInput({ diagnoses, onChange }: DiagnosisInputProps) {
     }
   }
 
-  // Build a flat index counter for mapping grouped rendering to flatResults
-  let flatIndex = 0
-
   return (
     <div className="space-y-3">
       <div className="text-sm font-semibold">Chẩn đoán</div>
@@ -244,15 +247,13 @@ export function DiagnosisInput({ diagnoses, onChange }: DiagnosisInputProps) {
                   <div className="sticky top-0 bg-popover px-3 py-1.5 text-xs font-medium text-muted-foreground">
                     {group.category}
                   </div>
-                  {group.items.map((entry) => {
-                    const idx = flatIndex++
-                    return (
+                  {group.items.map((entry) => (
                       <button
                         key={entry.icd10}
-                        data-index={idx}
+                        data-index={entry.flatIdx}
                         onClick={() => addFromCatalog(entry)}
                         className={`flex w-full items-center gap-3 px-3 py-2 text-left text-sm transition-colors ${
-                          idx === highlightIndex
+                          entry.flatIdx === highlightIndex
                             ? "bg-accent"
                             : "hover:bg-muted"
                         }`}
@@ -267,8 +268,7 @@ export function DiagnosisInput({ diagnoses, onChange }: DiagnosisInputProps) {
                           {entry.nameEn}
                         </span>
                       </button>
-                    )
-                  })}
+                  ))}
                 </div>
               ))
             ) : (
