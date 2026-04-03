@@ -1,30 +1,40 @@
 import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router"
-import { Button } from "@/components/ui/button"
-import {
-  ResizablePanelGroup,
-  ResizablePanel,
-  ResizableHandle,
-} from "@/components/ui/resizable"
-import { HugeiconsIcon } from "@hugeicons/react"
-import { ArrowLeft01Icon } from "@hugeicons/core-free-icons"
 import { useReceptionist } from "@/contexts/receptionist-context"
 import { useDoctor } from "@/contexts/doctor-context"
-import { PatientPanel } from "@/components/doctor/patient-panel"
-import { ScreeningData } from "@/components/doctor/screening-data"
-import { ExamFindings } from "@/components/doctor/exam-findings"
-import { DiagnosisInput } from "@/components/doctor/diagnosis-input"
-import { TreatmentPlan } from "@/components/doctor/treatment-plan"
-import type { ExamData } from "@/data/mock-patients"
+import { PatientHeader } from "@/components/doctor/patient-header"
+import { ExamSidebar, type ExamTab } from "@/components/doctor/exam-sidebar"
+import { TabPatient } from "@/components/doctor/tab-patient"
+import { TabPreExam } from "@/components/doctor/tab-pre-exam"
+import { TabRequests } from "@/components/doctor/tab-requests"
+import { TabExam } from "@/components/doctor/tab-exam"
+import type { ExamData, VisitRequest } from "@/data/mock-patients"
 
+const EMPTY_SLIT_LAMP_EYE = {
+  lids: "",
+  conjunctiva: "",
+  cornea: "",
+  anteriorChamber: "",
+  iris: "",
+  lens: "",
+  notes: "",
+}
+const EMPTY_FUNDUS_EYE = {
+  opticDisc: "",
+  cdRatio: "",
+  macula: "",
+  vessels: "",
+  peripheralRetina: "",
+  notes: "",
+}
 const EMPTY_EXAM: ExamData = {
-  va: { od: "", os: "" },
-  iop: { od: "", os: "" },
-  slitLamp: "",
-  fundus: "",
+  slitLamp: { od: { ...EMPTY_SLIT_LAMP_EYE }, os: { ...EMPTY_SLIT_LAMP_EYE } },
+  fundus: { od: { ...EMPTY_FUNDUS_EYE }, os: { ...EMPTY_FUNDUS_EYE } },
   diagnoses: [],
+  diagnosisNotes: "",
   medications: [],
   procedures: [],
+  requests: [],
 }
 
 export default function DoctorExam() {
@@ -36,9 +46,11 @@ export default function DoctorExam() {
   const visit = visits.find((v) => v.id === visitId)
   const patient = visit ? getPatient(visit.patientId) : undefined
 
-  const [examData, setExamData] = useState<ExamData>(
-    visit?.examData ?? EMPTY_EXAM
-  )
+  const [activeTab, setActiveTab] = useState<ExamTab>("exam")
+  const [examData, setExamData] = useState<ExamData>(() => ({
+    ...(visit?.examData ?? EMPTY_EXAM),
+    requests: visit?.requests ?? [],
+  }))
 
   useEffect(() => {
     if (visit && visit.status === "cho_kham") {
@@ -54,82 +66,77 @@ export default function DoctorExam() {
     )
   }
 
-  const diseaseGroups = visit.screeningData?.step2?.selectedGroups ?? []
+  const pendingRequestCount = examData.requests.filter(
+    (r) => r.status === "pending" || r.status === "in_progress"
+  ).length
+
+  const previousVisit = visit.previousVisits?.[0]
+
+  function handleAddRequest(
+    request: Omit<VisitRequest, "id" | "requestedAt" | "status">
+  ) {
+    const newRequest: VisitRequest = {
+      ...request,
+      id: `req-${Date.now()}`,
+      requestedAt: new Date().toISOString(),
+      status: "pending",
+    }
+    setExamData((prev) => ({
+      ...prev,
+      requests: [...prev.requests, newRequest],
+    }))
+  }
+
+  function handleComplete() {
+    if (examData.diagnoses.length === 0) {
+      return
+    }
+    completeExam(visit!.id, examData)
+    navigate("/doctor")
+  }
 
   function handleSaveDraft() {
     saveExamDraft(visit!.id, examData)
   }
 
-  function handleComplete() {
-    completeExam(visit!.id, examData)
-    navigate("/doctor")
-  }
+  // Keep handleSaveDraft available but not wired to UI for now
+  void handleSaveDraft
 
   return (
     <div className="flex flex-1 flex-col">
-      {/* Top bar */}
-      <div className="flex items-center gap-3 border-b border-border px-4 py-2">
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          onClick={() => navigate("/doctor")}
-        >
-          <HugeiconsIcon icon={ArrowLeft01Icon} className="size-4" />
-        </Button>
-        <div className="text-sm font-medium">
-          Khám bệnh — {patient.name} · {visit.patientId}
+      <PatientHeader
+        patient={patient}
+        visit={visit}
+        onComplete={handleComplete}
+      />
+      <div className="flex flex-1 overflow-hidden">
+        <ExamSidebar
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          pendingRequestCount={pendingRequestCount}
+        />
+        <div className="flex-1 overflow-y-auto">
+          {activeTab === "patient" && (
+            <TabPatient patient={patient} visit={visit} />
+          )}
+          {activeTab === "preExam" && (
+            <TabPreExam patient={patient} visit={visit} />
+          )}
+          {activeTab === "requests" && (
+            <TabRequests
+              requests={examData.requests}
+              onAddRequest={handleAddRequest}
+            />
+          )}
+          {activeTab === "exam" && (
+            <TabExam
+              examData={examData}
+              onChange={setExamData}
+              previousVisit={previousVisit}
+            />
+          )}
         </div>
       </div>
-
-      {/* Resizable panels */}
-      <ResizablePanelGroup orientation="horizontal" className="flex-1">
-        <ResizablePanel defaultSize={30} minSize={20}>
-          <PatientPanel patient={patient} visit={visit} />
-        </ResizablePanel>
-
-        <ResizableHandle withHandle />
-
-        <ResizablePanel defaultSize={70} minSize={50}>
-          <div className="flex h-full flex-col">
-            <div className="flex-1 space-y-6 overflow-y-auto p-5">
-              {/* Screening data (read-only with edit) */}
-              <ScreeningData visit={visit} />
-
-              {/* Exam findings */}
-              <div className="border-t border-border pt-4">
-                <ExamFindings
-                  examData={examData}
-                  diseaseGroups={diseaseGroups}
-                  onChange={setExamData}
-                />
-              </div>
-
-              {/* Diagnosis */}
-              <div className="border-t border-border pt-4">
-                <DiagnosisInput
-                  diagnoses={examData.diagnoses}
-                  onChange={(diagnoses) =>
-                    setExamData({ ...examData, diagnoses })
-                  }
-                />
-              </div>
-
-              {/* Treatment Plan */}
-              <div className="border-t border-border pt-4">
-                <TreatmentPlan examData={examData} onChange={setExamData} />
-              </div>
-            </div>
-
-            {/* Action bar */}
-            <div className="sticky bottom-0 flex justify-end gap-2 border-t border-border bg-background px-5 py-3">
-              <Button variant="outline" onClick={handleSaveDraft}>
-                Lưu nháp
-              </Button>
-              <Button onClick={handleComplete}>Hoàn tất khám</Button>
-            </div>
-          </div>
-        </ResizablePanel>
-      </ResizablePanelGroup>
     </div>
   )
 }
