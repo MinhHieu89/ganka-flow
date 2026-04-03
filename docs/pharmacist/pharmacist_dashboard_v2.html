@@ -1,0 +1,353 @@
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);color:var(--color-text-primary);font-size:14px;line-height:1.5}
+.dash{padding:1rem 0}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.header h1{font-size:20px;font-weight:500}
+.role-badge{font-size:12px;padding:4px 12px;border-radius:var(--border-radius-md);background:var(--color-background-info);color:var(--color-text-info)}
+.tabs{display:flex;gap:0;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:1rem}
+.tab{padding:10px 20px;font-size:14px;font-weight:400;cursor:pointer;border:none;background:none;color:var(--color-text-secondary);border-bottom:2px solid transparent;transition:all 0.15s}
+.tab:hover{color:var(--color-text-primary)}
+.tab.active{color:var(--color-text-primary);font-weight:500;border-bottom-color:#534AB7}
+.tab .badge{font-size:11px;padding:2px 7px;border-radius:10px;margin-left:6px;background:#FCEBEB;color:#A32D2D;font-weight:500}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:1.25rem}
+.metric{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:14px 16px}
+.metric .label{font-size:12px;color:var(--color-text-secondary);margin-bottom:4px}
+.metric .value{font-size:22px;font-weight:500}
+.metric .value.warn{color:#BA7517}
+.metric .value.danger{color:#A32D2D}
+.filter-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.search-box{display:flex;align-items:center;gap:8px;padding:7px 12px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);width:280px;background:var(--color-background-primary)}
+.search-box input{border:none;outline:none;background:none;font-size:13px;flex:1;color:var(--color-text-primary)}
+.search-icon{color:var(--color-text-tertiary);font-size:14px}
+.filter-pills{display:flex;gap:8px}
+.pill{padding:5px 14px;border-radius:20px;font-size:12px;cursor:pointer;border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);color:var(--color-text-secondary);transition:all 0.15s}
+.pill.active{background:#EEEDFE;color:#534AB7;border-color:#AFA9EC}
+.pill:hover{border-color:var(--color-border-secondary)}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{text-align:left;font-size:12px;font-weight:500;color:var(--color-text-secondary);padding:8px 12px;border-bottom:0.5px solid var(--color-border-tertiary);white-space:nowrap}
+.tbl td{padding:10px 12px;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px;vertical-align:middle}
+.tbl tr:hover td{background:var(--color-background-secondary)}
+.patient-info .name{font-weight:500;font-size:13px}
+.patient-info .id{font-size:11px;color:var(--color-text-tertiary)}
+.status{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:500;white-space:nowrap}
+.status .dot{width:6px;height:6px;border-radius:50%}
+.s-waiting{background:#FAEEDA;color:#854F0B}
+.s-waiting .dot{background:#BA7517}
+.s-done{background:#EAF3DE;color:#3B6D11}
+.s-done .dot{background:#639922}
+.med-count{font-size:12px;color:var(--color-text-secondary);background:var(--color-background-secondary);padding:2px 8px;border-radius:10px}
+.time-info{font-size:12px;color:var(--color-text-secondary)}
+.time-info .elapsed{font-size:11px;color:var(--color-text-tertiary)}
+.actions-cell{position:relative}
+.dot-menu{width:28px;height:28px;border-radius:var(--border-radius-md);border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--color-text-secondary);transition:all 0.15s}
+.dot-menu:hover{background:var(--color-background-secondary)}
+.dropdown{position:absolute;right:0;top:100%;z-index:100;min-width:200px;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:4px;display:none}
+.dropdown.show{display:block}
+.dropdown button{display:flex;align-items:center;gap:8px;width:100%;padding:8px 12px;border:none;background:none;font-size:13px;color:var(--color-text-primary);cursor:pointer;border-radius:var(--border-radius-md);text-align:left}
+.dropdown button:hover{background:var(--color-background-secondary)}
+.dropdown button.primary-action{color:#534AB7;font-weight:500}
+.dropdown .sep{height:0.5px;background:var(--color-border-tertiary);margin:4px 0}
+.alert-row td{background:#FAEEDA20}
+.alert-icon{font-size:12px;color:#BA7517;margin-left:4px}
+.overlay{position:absolute;inset:0;background:rgba(0,0,0,0.35);display:none;align-items:flex-start;justify-content:center;padding-top:40px;z-index:200}
+.overlay.show{display:flex}
+.modal{background:var(--color-background-primary);border-radius:var(--border-radius-lg);width:680px;max-width:95%;border:0.5px solid var(--color-border-tertiary)}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.modal-header h2{font-size:16px;font-weight:500}
+.close-btn{width:28px;height:28px;border:none;background:none;cursor:pointer;border-radius:var(--border-radius-md);color:var(--color-text-secondary);font-size:18px}
+.close-btn:hover{background:var(--color-background-secondary)}
+.modal-body{padding:20px}
+.rx-info{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.rx-field .fl{font-size:11px;color:var(--color-text-tertiary);margin-bottom:2px}
+.rx-field .fv{font-size:13px;font-weight:500}
+.med-table{width:100%;border-collapse:collapse;margin-bottom:16px}
+.med-table th{text-align:left;font-size:11px;font-weight:500;color:var(--color-text-secondary);padding:6px 10px;border-bottom:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary)}
+.med-table td{padding:8px 10px;font-size:13px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.stock-ok{color:#3B6D11;font-size:12px}
+.stock-low{color:#BA7517;font-size:12px}
+.stock-out{color:#A32D2D;font-size:12px}
+.sub-btn{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:3px 8px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);background:none;cursor:pointer;color:#534AB7}
+.sub-btn:hover{background:#EEEDFE}
+.modal-footer{display:flex;justify-content:flex-end;gap:8px;padding:16px 20px;border-top:0.5px solid var(--color-border-tertiary)}
+.btn{padding:8px 20px;border-radius:var(--border-radius-md);font-size:13px;font-weight:500;cursor:pointer;border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);color:var(--color-text-primary)}
+.btn:hover{background:var(--color-background-secondary)}
+.btn-primary{background:#534AB7;color:#fff;border-color:#534AB7}
+.btn-primary:hover{background:#3C3489}
+.allergy-banner{display:flex;align-items:center;gap:8px;padding:8px 14px;background:#FCEBEB;border-radius:var(--border-radius-md);margin-bottom:16px;font-size:12px;color:#A32D2D}
+.note-box{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px;font-size:12px;color:var(--color-text-secondary);margin-bottom:16px}
+.section-label{font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:8px}
+.wrapper{position:relative;min-height:700px}
+</style>
+
+<div class="wrapper">
+<div class="dash">
+  <div class="header">
+    <h1>Nhà thuốc</h1>
+    <span class="role-badge">Dược sĩ: Nguyễn Thị Lan</span>
+  </div>
+  
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this,'queue')">Hàng đợi đơn thuốc <span class="badge">5</span></button>
+    <button class="tab" onclick="switchTab(this,'otc')">Bán OTC</button>
+    <button class="tab" onclick="switchTab(this,'inventory')">Tồn kho</button>
+  </div>
+
+  <div id="tab-queue">
+    <div class="metrics">
+      <div class="metric"><div class="label">Chờ phát thuốc</div><div class="value warn">5</div></div>
+      <div class="metric"><div class="label">Đã phát hôm nay</div><div class="value">12</div></div>
+      <div class="metric"><div class="label">Cảnh báo tồn kho</div><div class="value danger">3</div></div>
+    </div>
+
+    <div class="filter-bar">
+      <div class="search-box">
+        <span class="search-icon">&#9906;</span>
+        <input type="text" placeholder="Tìm theo tên, mã BN, BS kê đơn..." />
+      </div>
+      <div class="filter-pills">
+        <span class="pill active" onclick="filterPill(this)">Tất cả</span>
+        <span class="pill" onclick="filterPill(this)">Chờ phát</span>
+        <span class="pill" onclick="filterPill(this)">Đã phát</span>
+      </div>
+    </div>
+
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>Bệnh nhân</th>
+          <th>BS kê đơn</th>
+          <th>Thời gian</th>
+          <th>Số thuốc</th>
+          <th>Trạng thái</th>
+          <th style="width:40px"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="alert-row">
+          <td><div class="patient-info"><div class="name">Trần Văn Minh <span class="alert-icon" title="Dị ứng thuốc">&#9888;</span></div><div class="id">BN-20260403-0012</div></div></td>
+          <td>BS. Nguyễn Hải</td>
+          <td><div class="time-info">14:35<div class="elapsed">18 phút trước</div></div></td>
+          <td><span class="med-count">4 thuốc</span></td>
+          <td><span class="status s-waiting"><span class="dot"></span>Chờ phát</span></td>
+          <td class="actions-cell">
+            <button class="dot-menu" onclick="toggleMenu(event, this)">&#8942;</button>
+            <div class="dropdown">
+              <button class="primary-action" onclick="openModal()">Phát thuốc</button>
+              <button>Xem đơn thuốc</button>
+              <div class="sep"></div>
+              <button>In đơn thuốc</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="patient-info"><div class="name">Lê Thị Hoa</div><div class="id">BN-20260403-0008</div></div></td>
+          <td>BS. Trần Minh Đức</td>
+          <td><div class="time-info">14:22<div class="elapsed">31 phút trước</div></div></td>
+          <td><span class="med-count">2 thuốc</span></td>
+          <td><span class="status s-waiting"><span class="dot"></span>Chờ phát</span></td>
+          <td class="actions-cell">
+            <button class="dot-menu" onclick="toggleMenu(event, this)">&#8942;</button>
+            <div class="dropdown">
+              <button class="primary-action">Phát thuốc</button>
+              <button>Xem đơn thuốc</button>
+              <div class="sep"></div>
+              <button>In đơn thuốc</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="patient-info"><div class="name">Nguyễn Hoàng Nam</div><div class="id">BN-20260403-0005</div></div></td>
+          <td>BS. Nguyễn Hải</td>
+          <td><div class="time-info">14:10<div class="elapsed">43 phút trước</div></div></td>
+          <td><span class="med-count">3 thuốc</span></td>
+          <td><span class="status s-waiting"><span class="dot"></span>Chờ phát</span></td>
+          <td class="actions-cell">
+            <button class="dot-menu" onclick="toggleMenu(event, this)">&#8942;</button>
+            <div class="dropdown">
+              <button class="primary-action">Phát thuốc</button>
+              <button>Xem đơn thuốc</button>
+              <div class="sep"></div>
+              <button>In đơn thuốc</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="patient-info"><div class="name">Phạm Thị Mai</div><div class="id">BN-20260402-0041</div></div></td>
+          <td>BS. Trần Minh Đức</td>
+          <td><div class="time-info">13:55<div class="elapsed">58 phút trước</div></div></td>
+          <td><span class="med-count">5 thuốc</span></td>
+          <td><span class="status s-waiting"><span class="dot"></span>Chờ phát</span></td>
+          <td class="actions-cell">
+            <button class="dot-menu" onclick="toggleMenu(event, this)">&#8942;</button>
+            <div class="dropdown">
+              <button class="primary-action">Phát thuốc</button>
+              <button>Xem đơn thuốc</button>
+              <div class="sep"></div>
+              <button>In đơn thuốc</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="patient-info"><div class="name">Vũ Đức Anh</div><div class="id">BN-20260403-0003</div></div></td>
+          <td>BS. Nguyễn Hải</td>
+          <td><div class="time-info">13:40<div class="elapsed">1h13 phút trước</div></div></td>
+          <td><span class="med-count">2 thuốc</span></td>
+          <td><span class="status s-waiting"><span class="dot"></span>Chờ phát</span></td>
+          <td class="actions-cell">
+            <button class="dot-menu" onclick="toggleMenu(event, this)">&#8942;</button>
+            <div class="dropdown">
+              <button class="primary-action">Phát thuốc</button>
+              <button>Xem đơn thuốc</button>
+              <div class="sep"></div>
+              <button>In đơn thuốc</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="patient-info"><div class="name">Đỗ Thị Thanh</div><div class="id">BN-20260403-0001</div></div></td>
+          <td>BS. Trần Minh Đức</td>
+          <td><div class="time-info">13:15</div></td>
+          <td><span class="med-count">3 thuốc</span></td>
+          <td><span class="status s-done"><span class="dot"></span>Đã phát</span></td>
+          <td class="actions-cell">
+            <button class="dot-menu" onclick="toggleMenu(event, this)">&#8942;</button>
+            <div class="dropdown">
+              <button>Xem đơn thuốc</button>
+              <button>Xem chi tiết phát thuốc</button>
+              <div class="sep"></div>
+              <button>In đơn thuốc</button>
+              <button>In nhãn thuốc</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="tab-otc" style="display:none">
+    <div style="display:flex;align-items:center;justify-content:center;height:200px;color:var(--color-text-tertiary);font-size:14px">
+      Tab "Bán OTC" — sẽ thiết kế chi tiết ở bước tiếp theo
+    </div>
+  </div>
+  <div id="tab-inventory" style="display:none">
+    <div style="display:flex;align-items:center;justify-content:center;height:200px;color:var(--color-text-tertiary);font-size:14px">
+      Tab "Tồn kho" — sẽ thiết kế chi tiết ở bước tiếp theo
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="dispense-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Phát thuốc — Trần Văn Minh</h2>
+      <button class="close-btn" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="allergy-banner">
+        <span>&#9888;</span>
+        <span>Dị ứng: <strong>Chloramphenicol</strong> — Hệ thống sẽ cảnh báo nếu đơn thuốc chứa thành phần này</span>
+      </div>
+      
+      <div class="rx-info">
+        <div class="rx-field"><div class="fl">Mã bệnh nhân</div><div class="fv">BN-20260403-0012</div></div>
+        <div class="rx-field"><div class="fl">BS kê đơn</div><div class="fv">BS. Nguyễn Hải</div></div>
+        <div class="rx-field"><div class="fl">Chẩn đoán</div><div class="fv">Khô mắt mức độ trung bình (H04.1)</div></div>
+        <div class="rx-field"><div class="fl">Hạn đơn thuốc</div><div class="fv">10/04/2026 (còn 7 ngày)</div></div>
+      </div>
+
+      <div class="note-box">
+        <strong>Ghi chú BS:</strong> Bệnh nhân dùng Omega-3 liều cao. Tái khám sau 4 tuần.
+      </div>
+
+      <div class="section-label">Danh sách thuốc trong đơn</div>
+      <table class="med-table">
+        <thead>
+          <tr>
+            <th style="width:30%">Tên thuốc</th>
+            <th>Liều dùng</th>
+            <th>Số lượng</th>
+            <th>Tồn kho</th>
+            <th style="width:90px">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div style="font-weight:500">Refresh Tears 0.5%</div><div style="font-size:11px;color:var(--color-text-tertiary)">Nước mắt nhân tạo</div></td>
+            <td style="font-size:12px">4 lần/ngày, mỗi lần 1 giọt, cả 2 mắt</td>
+            <td>2 lọ</td>
+            <td><span class="stock-ok">&#10003; 24 lọ</span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><div style="font-weight:500">Systane Gel Drops</div><div style="font-size:11px;color:var(--color-text-tertiary)">Gel bôi trơn mắt</div></td>
+            <td style="font-size:12px">1 lần/ngày, trước khi ngủ, cả 2 mắt</td>
+            <td>1 tuýp</td>
+            <td><span class="stock-ok">&#10003; 15 tuýp</span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><div style="font-weight:500">Omega-3 TG 1000mg</div><div style="font-size:11px;color:var(--color-text-tertiary)">Thực phẩm chức năng</div></td>
+            <td style="font-size:12px">2 viên/ngày, uống sau ăn</td>
+            <td>1 hộp (60v)</td>
+            <td><span class="stock-low">&#9888; 3 hộp</span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              <div style="font-weight:500;text-decoration:line-through;color:var(--color-text-tertiary)">Lotemax 0.5%</div>
+              <div style="font-size:11px;color:var(--color-text-tertiary)">Corticoid nhỏ mắt</div>
+              <div style="margin-top:4px;font-weight:500;color:#534AB7">&#8594; FML 0.1%</div>
+              <div style="font-size:11px;color:#534AB7">Thay thế tương đương</div>
+            </td>
+            <td style="font-size:12px">3 lần/ngày, mỗi lần 1 giọt, cả 2 mắt × 2 tuần</td>
+            <td>1 lọ</td>
+            <td><span class="stock-out">&#10007; Hết hàng</span> → <span class="stock-ok">&#10003; FML: 8 lọ</span></td>
+            <td><button class="sub-btn" onclick="event.stopPropagation()">&#9998; Sửa</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="section-label">Lý do thay thế thuốc</div>
+      <div style="border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 14px;font-size:13px;color:var(--color-text-secondary);margin-bottom:8px">
+        Lotemax 0.5% hết hàng, thay bằng FML 0.1% — cùng nhóm corticoid nhãn khoa, tương đương tác dụng.
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal()">In nhãn thuốc</button>
+      <button class="btn" onclick="closeModal()">In đơn thuốc</button>
+      <button class="btn btn-primary" onclick="closeModal()">Xác nhận phát thuốc</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+function switchTab(el, tabId) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('[id^="tab-"]').forEach(p => p.style.display = 'none');
+  document.getElementById('tab-' + tabId).style.display = 'block';
+}
+function filterPill(el) {
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+}
+function toggleMenu(e, btn) {
+  e.stopPropagation();
+  var dd = btn.nextElementSibling;
+  var isOpen = dd.classList.contains('show');
+  document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('show'));
+  if (!isOpen) dd.classList.add('show');
+}
+function openModal() {
+  document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('show'));
+  document.getElementById('dispense-modal').classList.add('show');
+}
+function closeModal() {
+  document.getElementById('dispense-modal').classList.remove('show');
+}
+document.addEventListener('click', function() {
+  document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('show'));
+});
+</script>

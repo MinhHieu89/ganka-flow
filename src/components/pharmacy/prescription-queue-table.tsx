@@ -16,7 +16,14 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { MoreVerticalIcon } from "@hugeicons/core-free-icons"
+import {
+  MoreVerticalIcon,
+  MedicineBottle02Icon,
+  File02Icon,
+  PrinterIcon,
+  LabelIcon,
+  FileSearchIcon,
+} from "@hugeicons/core-free-icons"
 import { DispenseModal } from "@/components/pharmacy/dispense-modal"
 import type { PrescriptionOrder } from "@/data/mock-pharmacy"
 
@@ -127,28 +134,44 @@ export function PrescriptionQueueTable({
                         />
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
+                    <DropdownMenuContent align="end" className="min-w-48">
                       {rx.status === "pending" ? (
                         <>
                           <DropdownMenuItem
-                            className="font-medium text-primary"
                             onClick={() => setDispenseOrder(rx)}
                           >
+                            <HugeiconsIcon icon={MedicineBottle02Icon} className="size-4" strokeWidth={1.5} />
                             Phát thuốc
                           </DropdownMenuItem>
-                          <DropdownMenuItem>Xem đơn thuốc</DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <HugeiconsIcon icon={File02Icon} className="size-4" strokeWidth={1.5} />
+                            Xem đơn thuốc
+                          </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem>In đơn thuốc</DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <HugeiconsIcon icon={PrinterIcon} className="size-4" strokeWidth={1.5} />
+                            In đơn thuốc
+                          </DropdownMenuItem>
                         </>
                       ) : (
                         <>
-                          <DropdownMenuItem>Xem đơn thuốc</DropdownMenuItem>
                           <DropdownMenuItem>
+                            <HugeiconsIcon icon={File02Icon} className="size-4" strokeWidth={1.5} />
+                            Xem đơn thuốc
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <HugeiconsIcon icon={FileSearchIcon} className="size-4" strokeWidth={1.5} />
                             Xem chi tiết phát thuốc
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem>In đơn thuốc</DropdownMenuItem>
-                          <DropdownMenuItem>In nhãn thuốc</DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <HugeiconsIcon icon={PrinterIcon} className="size-4" strokeWidth={1.5} />
+                            In đơn thuốc
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <HugeiconsIcon icon={LabelIcon} className="size-4" strokeWidth={1.5} />
+                            In nhãn thuốc
+                          </DropdownMenuItem>
                         </>
                       )}
                     </DropdownMenuContent>

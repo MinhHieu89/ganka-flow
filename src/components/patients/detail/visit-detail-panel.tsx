@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { MeasurementBlock, OdOsRow } from "./measurement-block"
 import { DISEASE_GROUP_CONFIG } from "@/data/mock-patient-detail"
@@ -114,40 +113,23 @@ export function VisitDetailPanel({ visit }: VisitDetailPanelProps) {
   return (
     <div className="flex-1 overflow-y-auto py-4 pl-5">
       {/* 1. Header */}
-      <div className="mb-4 flex items-start justify-between">
-        <div>
-          <div className="flex items-center gap-2.5 text-[17px] font-medium">
-            {visit.date}
-            <span
-              className={cn(
-                "rounded-[5px] px-2.5 py-0.5 text-[10px] font-medium",
-                groupConfig.colorClass
-              )}
-            >
-              {groupConfig.label}
-            </span>
-          </div>
-          <div className="mt-0.5 text-[13px] text-muted-foreground">
-            {visit.doctorName} ·{" "}
-            {visit.daysAgo !== null
-              ? `${visit.daysAgo} ngày trước`
-              : "Khám lần đầu"}
-          </div>
-        </div>
-        <div className="flex gap-1.5">
-          <Button variant="outline" size="sm" className="h-7 text-xs">
-            In phiếu
-          </Button>
-          <Button variant="outline" size="sm" className="h-7 text-xs">
-            Xuất PDF
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="h-7 text-xs font-medium"
+      <div className="mb-4">
+        <div className="flex items-center gap-2.5 text-[17px] font-medium">
+          {visit.date}
+          <span
+            className={cn(
+              "rounded-[5px] px-2.5 py-0.5 text-[10px] font-medium",
+              groupConfig.colorClass
+            )}
           >
-            Xem đầy đủ
-          </Button>
+            {groupConfig.label}
+          </span>
+        </div>
+        <div className="mt-0.5 text-[13px] text-muted-foreground">
+          {visit.doctorName} ·{" "}
+          {visit.daysAgo !== null
+            ? `${visit.daysAgo} ngày trước`
+            : "Khám lần đầu"}
         </div>
       </div>
 

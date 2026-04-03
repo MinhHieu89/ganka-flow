@@ -1,14 +1,15 @@
 // src/components/patients/detail/patient-header.tsx
+import { useState } from "react"
 import { useNavigate } from "react-router"
 import { Button } from "@/components/ui/button"
 import { HugeiconsIcon } from "@hugeicons/react"
 import {
   ArrowLeft01Icon,
   PencilEdit02Icon,
-  Download04Icon,
   Stethoscope02Icon,
 } from "@hugeicons/core-free-icons"
 import { cn } from "@/lib/utils"
+import { CreateVisitDialog } from "./create-visit-dialog"
 import type {
   PatientPersonalInfo,
   PatientDetailAlert,
@@ -42,6 +43,7 @@ export function PatientDetailHeader({
 }: PatientDetailHeaderProps) {
   const navigate = useNavigate()
   const initials = getInitials(patient.name)
+  const [showCreateVisit, setShowCreateVisit] = useState(false)
 
   if (isCollapsed) {
     return (
@@ -69,10 +71,16 @@ export function PatientDetailHeader({
             <Button
               size="sm"
               className="h-7 bg-[#1D9E75] text-xs text-white hover:bg-[#0F6E56]"
+              onClick={() => setShowCreateVisit(true)}
             >
               Tạo lượt khám
             </Button>
           </div>
+          <CreateVisitDialog
+            open={showCreateVisit}
+            onOpenChange={setShowCreateVisit}
+            patientName={patient.name}
+          />
         </div>
       </div>
     )
@@ -117,17 +125,10 @@ export function PatientDetailHeader({
                 />
                 Chỉnh sửa
               </Button>
-              <Button variant="outline" size="sm" className="gap-1.5">
-                <HugeiconsIcon
-                  icon={Download04Icon}
-                  className="size-3.5"
-                  strokeWidth={1.5}
-                />
-                Xuất PDF
-              </Button>
               <Button
                 size="sm"
                 className="gap-1.5 bg-[#1D9E75] text-white hover:bg-[#0F6E56]"
+                onClick={() => setShowCreateVisit(true)}
               >
                 <HugeiconsIcon
                   icon={Stethoscope02Icon}
@@ -167,6 +168,11 @@ export function PatientDetailHeader({
           </div>
         </div>
       </div>
+      <CreateVisitDialog
+        open={showCreateVisit}
+        onOpenChange={setShowCreateVisit}
+        patientName={patient.name}
+      />
     </div>
   )
 }

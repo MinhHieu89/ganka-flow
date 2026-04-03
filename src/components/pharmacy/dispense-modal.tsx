@@ -90,7 +90,7 @@ export function DispenseModal({
   return (
     <>
       <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
-        <DialogContent className="max-h-[85vh] max-w-[680px] flex flex-col">
+        <DialogContent className="max-h-[85vh] sm:max-w-3xl flex flex-col">
           <DialogHeader>
             <DialogTitle className="text-base font-medium">
               Phát thuốc — {order.patientName}
@@ -103,8 +103,7 @@ export function DispenseModal({
               <div className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-xs text-red-700 dark:border-red-800 dark:bg-red-950 dark:text-red-300">
                 <span className="text-sm">&#9888;</span>
                 <span>
-                  Dị ứng: <strong>{order.allergies.join(", ")}</strong> — Hệ
-                  thống sẽ cảnh báo nếu đơn thuốc chứa thành phần này
+                  Dị ứng: <strong>{order.allergies.join(", ")}</strong>
                 </span>
               </div>
             )}
