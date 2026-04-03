@@ -108,6 +108,8 @@ export function IntakeForm({ patient }: IntakeFormProps) {
       workEnvironment: form.workEnvironment || undefined,
       contactLens: form.contactLens || undefined,
       lifestyleNotes: form.lifestyleNotes || undefined,
+      type: "kham_benh" as const,
+      activeStatus: "hoat_dong" as const,
     }
 
     if (patient) {

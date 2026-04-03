@@ -68,6 +68,8 @@ export default function ScheduleNew() {
         gender: "Khác" as const,
         dob: "",
         birthYear: 0,
+        type: "kham_benh" as const,
+        activeStatus: "hoat_dong" as const,
       })
       patientId = newPat.id
       patientName = newPat.name
