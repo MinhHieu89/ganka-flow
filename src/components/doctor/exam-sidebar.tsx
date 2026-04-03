@@ -1,6 +1,6 @@
 import { HugeiconsIcon } from "@hugeicons/react"
 import {
-  User01Icon,
+  User02Icon,
   ClipboardIcon,
   Note01Icon,
   Stethoscope02Icon,
@@ -20,7 +20,7 @@ const tabs: {
   label: string
   icon: React.ComponentProps<typeof HugeiconsIcon>["icon"]
 }[] = [
-  { id: "patient", label: "Bệnh nhân", icon: User01Icon },
+  { id: "patient", label: "Bệnh nhân", icon: User02Icon },
   { id: "preExam", label: "Pre-Exam", icon: ClipboardIcon },
   { id: "requests", label: "Yêu cầu", icon: Note01Icon },
   { id: "exam", label: "Khám & kết luận", icon: Stethoscope02Icon },

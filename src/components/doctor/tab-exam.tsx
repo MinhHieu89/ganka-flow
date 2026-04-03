@@ -35,25 +35,6 @@ interface TabExamProps {
   previousVisit?: PreviousVisit
 }
 
-const EMPTY_SLIT_LAMP_EYE: SlitLampEye = {
-  lids: "",
-  conjunctiva: "",
-  cornea: "",
-  anteriorChamber: "",
-  iris: "",
-  lens: "",
-  notes: "",
-}
-
-const EMPTY_FUNDUS_EYE: FundusEye = {
-  opticDisc: "",
-  cdRatio: "",
-  macula: "",
-  vessels: "",
-  peripheralRetina: "",
-  notes: "",
-}
-
 const EMPTY_MEDICATION: Medication = {
   name: "",
   dosage: "",
