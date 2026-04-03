@@ -48,6 +48,8 @@ export interface Visit {
   lastVisitDoctor?: string
   screeningData?: ScreeningFormData
   examData?: ExamData
+  previousVisits?: PreviousVisit[]
+  requests?: VisitRequest[]
 }
 
 export interface ScreeningFormData {
@@ -110,6 +112,7 @@ export interface Medication {
   dosage: string
   frequency: string
   duration: string
+  eye?: string
   notes?: string
 }
 
@@ -118,35 +121,155 @@ export interface Procedure {
   notes: string
 }
 
-export interface OpticalRxData {
-  od: { sph: string; cyl: string; axis: string; add: string; pd: string }
-  os: { sph: string; cyl: string; axis: string; add: string; pd: string }
+export interface SlitLampEye {
+  lids: string
+  conjunctiva: string
+  cornea: string
+  anteriorChamber: string
+  iris: string
+  lens: string
+  notes: string
 }
 
-export interface DryEyeExamData {
-  tbutOd: string
-  tbutOs: string
-  meibomian: string
-  staining: string
+export interface SlitLampExam {
+  od: SlitLampEye
+  os: SlitLampEye
 }
 
-export interface RefractionData {
-  od: { sph: string; cyl: string; axis: string; add: string; pd: string }
-  os: { sph: string; cyl: string; axis: string; add: string; pd: string }
+export interface FundusEye {
+  opticDisc: string
+  cdRatio: string
+  macula: string
+  vessels: string
+  peripheralRetina: string
+  notes: string
 }
+
+export interface FundusExam {
+  od: FundusEye
+  os: FundusEye
+}
+
+export type RequestStatus = "pending" | "in_progress" | "completed" | "cancelled"
+
+export interface SubjectiveRefractionResult {
+  od: { sph: string; cyl: string; axis: string; bcva: string; add: string; pd: string }
+  os: { sph: string; cyl: string; axis: string; bcva: string; add: string; pd: string }
+}
+
+export interface GenericResult {
+  conclusion: string
+}
+
+export interface VisitRequest {
+  id: string
+  type: string
+  priority: "normal" | "urgent"
+  status: RequestStatus
+  notesForTech: string
+  requestedAt: string
+  completedAt?: string
+  assignedTo?: string
+  result?: {
+    type: "subjective_refraction" | "generic"
+    data: SubjectiveRefractionResult | GenericResult
+  }
+}
+
+export interface NewOpticalRx {
+  od: { sph: string; cyl: string; axis: string; add: string }
+  os: { sph: string; cyl: string; axis: string; add: string }
+  pd: string
+  lensType: string
+  notes: string
+}
+
+export interface NewFollowUp {
+  interval: string
+  date: string
+  doctor: string
+  instructions: string
+}
+
+export const REQUEST_TYPES = [
+  "Đo khúc xạ chủ quan",
+  "OCT",
+  "Chụp đáy mắt",
+  "Đo thị trường",
+  "Topography giác mạc",
+  "Siêu âm mắt",
+  "Xét nghiệm máu",
+  "Khác",
+] as const
+
+export const FOLLOW_UP_INTERVALS = [
+  "1 tuần",
+  "2 tuần",
+  "1 tháng",
+  "3 tháng",
+  "6 tháng",
+  "1 năm",
+] as const
+
+export const FREQUENCY_OPTIONS = [
+  "1 lần/ngày",
+  "2 lần/ngày",
+  "3 lần/ngày",
+  "4 lần/ngày",
+  "Khi cần",
+] as const
+
+export const DURATION_OPTIONS = [
+  "1 tuần",
+  "2 tuần",
+  "1 tháng",
+  "2 tháng",
+  "3 tháng",
+] as const
+
+export const EYE_OPTIONS = ["OD", "OS", "OU"] as const
+
+export const LENS_TYPE_OPTIONS = ["Đơn tròng", "Đa tròng", "Lũy tiến"] as const
 
 export interface ExamData {
-  va: { od: string; os: string }
-  iop: { od: string; os: string }
-  slitLamp: string
-  fundus: string
-  refractionExam?: RefractionData
-  dryEyeExam?: DryEyeExamData
+  slitLamp: SlitLampExam
+  fundus: FundusExam
   diagnoses: Diagnosis[]
+  diagnosisNotes: string
   medications: Medication[]
-  opticalRx?: OpticalRxData
+  opticalRx?: NewOpticalRx
   procedures: Procedure[]
-  followUp?: { date: string; reason: string }
+  followUp?: NewFollowUp
+  requests: VisitRequest[]
+}
+
+export interface PreviousVisit {
+  date: string
+  doctorName: string
+  diagnoses: { text: string; icd10Code?: string; isPrimary: boolean }[]
+  medications: {
+    name: string
+    dosage: string
+    frequency: string
+    eye: string
+  }[]
+  va: {
+    scOd: string
+    scOs: string
+    ccOd: string
+    ccOs: string
+    iopOd: string
+    iopOs: string
+  }
+  refraction: {
+    sphOd: string
+    sphOs: string
+    cylOd: string
+    cylOs: string
+    axisOd: string
+    axisOs: string
+  }
+  instructions?: string
 }
 
 export const STATUS_CONFIG: Record<
@@ -417,6 +540,40 @@ export const mockVisits: Visit[] = [
     lastVisitDate: "05/02/2026",
     lastVisitDiagnosis: "Khô mắt nhẹ",
     lastVisitDoctor: "BS. Nguyễn Hải",
+    previousVisits: [
+      {
+        date: "05/02/2026",
+        doctorName: "BS. Nguyễn Hải",
+        diagnoses: [
+          { text: "Khô mắt nhẹ", icd10Code: "H04.1", isPrimary: true },
+        ],
+        medications: [
+          {
+            name: "Refresh Tears 0.5%",
+            dosage: "1 giọt",
+            frequency: "3 lần/ngày",
+            eye: "OU",
+          },
+        ],
+        va: {
+          scOd: "10/10",
+          scOs: "10/10",
+          ccOd: "10/10",
+          ccOs: "10/10",
+          iopOd: "16",
+          iopOs: "15",
+        },
+        refraction: {
+          sphOd: "-3.50",
+          sphOs: "-3.25",
+          cylOd: "-0.75",
+          cylOs: "-0.50",
+          axisOd: "10",
+          axisOs: "170",
+        },
+        instructions: "Chườm nóng mi mắt, dùng nước mắt nhân tạo đều đặn",
+      },
+    ],
     screeningData: {
       chiefComplaint:
         "Khô mắt, cộm mắt cả ngày, đặc biệt khi đeo kính áp tròng",
@@ -565,6 +722,115 @@ export const mockVisits: Visit[] = [
     lastVisitDate: "10/01/2026",
     lastVisitDiagnosis: "Cận thị cả hai mắt",
     lastVisitDoctor: "BS. Nguyễn Hải",
+    previousVisits: [
+      {
+        date: "10/01/2026",
+        doctorName: "BS. Nguyễn Hải",
+        diagnoses: [
+          {
+            text: "Cận thị cả hai mắt",
+            icd10Code: "H52.1",
+            isPrimary: true,
+          },
+        ],
+        medications: [
+          {
+            name: "Refresh Tears 0.5%",
+            dosage: "1 giọt",
+            frequency: "4 lần/ngày",
+            eye: "OU",
+          },
+        ],
+        va: {
+          scOd: "4/10",
+          scOs: "5/10",
+          ccOd: "9/10",
+          ccOs: "10/10",
+          iopOd: "14",
+          iopOs: "15",
+        },
+        refraction: {
+          sphOd: "-2.00",
+          sphOs: "-1.75",
+          cylOd: "-0.50",
+          cylOs: "-0.25",
+          axisOd: "180",
+          axisOs: "175",
+        },
+        instructions: "Đeo kính đúng số, tái khám sau 3 tháng",
+      },
+      {
+        date: "15/10/2025",
+        doctorName: "BS. Nguyễn Hải",
+        diagnoses: [
+          {
+            text: "Cận thị cả hai mắt",
+            icd10Code: "H52.1",
+            isPrimary: true,
+          },
+        ],
+        medications: [],
+        va: {
+          scOd: "5/10",
+          scOs: "5/10",
+          ccOd: "10/10",
+          ccOs: "10/10",
+          iopOd: "15",
+          iopOs: "14",
+        },
+        refraction: {
+          sphOd: "-1.75",
+          sphOs: "-1.50",
+          cylOd: "-0.50",
+          cylOs: "-0.25",
+          axisOd: "180",
+          axisOs: "175",
+        },
+        instructions: "Hạn chế thời gian nhìn gần, tái khám sau 3 tháng",
+      },
+    ],
+    requests: [
+      {
+        id: "req-1",
+        type: "Đo khúc xạ chủ quan",
+        priority: "normal" as const,
+        status: "completed" as const,
+        notesForTech: "",
+        requestedAt: todayTimestamp(55),
+        completedAt: todayTimestamp(30),
+        assignedTo: "KTV. Nguyễn Thị Lan",
+        result: {
+          type: "subjective_refraction" as const,
+          data: {
+            od: {
+              sph: "-2.25",
+              cyl: "-0.50",
+              axis: "180",
+              bcva: "10/10",
+              add: "",
+              pd: "31.5",
+            },
+            os: {
+              sph: "-2.00",
+              cyl: "-0.25",
+              axis: "175",
+              bcva: "10/10",
+              add: "",
+              pd: "31.5",
+            },
+          },
+        },
+      },
+      {
+        id: "req-2",
+        type: "OCT",
+        priority: "normal" as const,
+        status: "in_progress" as const,
+        notesForTech: "Kiểm tra lớp sợi thần kinh",
+        requestedAt: todayTimestamp(40),
+        assignedTo: "KTV. Phạm Văn Đức",
+      },
+    ],
     screeningData: {
       chiefComplaint: "Tái khám định kỳ, kiểm tra độ kính",
       ucvaOd: "4/10",
