@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { useParams } from "react-router"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { useStickyHeader } from "@/hooks/use-sticky-header"
 import { MOCK_PATIENT_DETAIL } from "@/data/mock-patient-detail"
@@ -10,11 +9,10 @@ import { TabVisits } from "@/components/patients/detail/tab-visits"
 import { TabTrends } from "@/components/patients/detail/tab-trends"
 
 export default function PatientDetail() {
-  const { id: _id } = useParams<{ id: string }>()
   const { sentinelRef, isCollapsed } = useStickyHeader()
   const [activeTab, setActiveTab] = useState("overview")
 
-  // In a real app, fetch by _id. For now, use mock data.
+  // In a real app, fetch patient by route param. For now, use mock data.
   const data = MOCK_PATIENT_DETAIL
 
   return (
