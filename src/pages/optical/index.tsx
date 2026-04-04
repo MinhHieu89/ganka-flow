@@ -79,6 +79,13 @@ export default function OpticalDashboard() {
             consultations={consultations}
             metrics={consultationMetrics}
             onUpdateConsultations={setConsultations}
+            frames={mockFrames}
+            lenses={mockLenses}
+            onCreateOrder={(order) => {
+              setConsultations((prev) =>
+                prev.filter((c) => c.id !== order.consultationId)
+              )
+            }}
           />
         </TabsContent>
 

@@ -30,6 +30,7 @@ interface ConsultationQueueProps {
   onAcceptPatient: (id: string) => void
   onCreateOrder: (id: string) => void
   onReturnToQueue: (id: string) => void
+  onViewRx: (id: string) => void
 }
 
 function getWaitMinutes(queuedAt: string): number {
@@ -41,6 +42,7 @@ export function ConsultationQueue({
   onAcceptPatient,
   onCreateOrder,
   onReturnToQueue,
+  onViewRx,
 }: ConsultationQueueProps) {
   const sorted = [...consultations].sort((a, b) => {
     if (a.status !== b.status) {
@@ -139,7 +141,7 @@ export function ConsultationQueue({
                           />
                           Tạo đơn kính
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => onViewRx(c.id)}>
                           <HugeiconsIcon
                             icon={EyeIcon}
                             className="size-4"
@@ -167,7 +169,7 @@ export function ConsultationQueue({
                           />
                           Nhận BN
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => onViewRx(c.id)}>
                           <HugeiconsIcon
                             icon={EyeIcon}
                             className="size-4"

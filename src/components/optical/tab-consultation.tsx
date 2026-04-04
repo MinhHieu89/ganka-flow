@@ -8,12 +8,15 @@ import {
 import { OpticalKpiCards } from "@/components/optical/kpi-cards"
 import { OpticalStatusFilters } from "@/components/optical/status-filters"
 import { ConsultationQueue } from "@/components/optical/consultation-queue"
+import { ViewRxModal } from "@/components/optical/view-rx-modal"
+import { CreateOrderModal } from "@/components/optical/create-order-modal"
 import type { KpiCardConfig } from "@/components/optical/kpi-cards"
 import type {
   OpticalConsultation,
   ConsultationStatus,
   ConsultationMetrics,
 } from "@/data/mock-optical"
+import type { FrameItem, LensItem } from "@/data/mock-optical"
 
 type ConsultationFilter = "all" | "waiting_consultation" | "in_consultation"
 
@@ -58,15 +61,30 @@ interface TabConsultationProps {
   onUpdateConsultations: (
     updater: (prev: OpticalConsultation[]) => OpticalConsultation[]
   ) => void
+  frames: FrameItem[]
+  lenses: LensItem[]
+  onCreateOrder: (order: {
+    consultationId: string
+    frameBarcode: string
+    lensCode: string
+    notes?: string
+  }) => void
 }
 
 export function TabConsultation({
   consultations,
   metrics,
   onUpdateConsultations,
+  frames,
+  lenses,
+  onCreateOrder,
 }: TabConsultationProps) {
   const [filter, setFilter] = useState<ConsultationFilter>("all")
   const [search, setSearch] = useState("")
+  const [rxModalConsultation, setRxModalConsultation] =
+    useState<OpticalConsultation | null>(null)
+  const [createOrderConsultation, setCreateOrderConsultation] =
+    useState<OpticalConsultation | null>(null)
 
   const filtered = consultations
     .filter((c) => {
@@ -120,8 +138,14 @@ export function TabConsultation({
     )
   }
 
-  const handleCreateOrder = (_id: string) => {
-    // Placeholder — will open order form in future
+  const handleViewRx = (id: string) => {
+    const c = consultations.find((c) => c.id === id)
+    if (c) setRxModalConsultation(c)
+  }
+
+  const handleCreateOrder = (id: string) => {
+    const c = consultations.find((c) => c.id === id)
+    if (c) setCreateOrderConsultation(c)
   }
 
   return (
@@ -144,6 +168,32 @@ export function TabConsultation({
         onAcceptPatient={handleAcceptPatient}
         onCreateOrder={handleCreateOrder}
         onReturnToQueue={handleReturnToQueue}
+        onViewRx={handleViewRx}
+      />
+      <ViewRxModal
+        open={!!rxModalConsultation}
+        onClose={() => setRxModalConsultation(null)}
+        consultation={rxModalConsultation}
+        onCreateOrder={
+          rxModalConsultation?.status === "in_consultation"
+            ? () => {
+                const c = rxModalConsultation
+                setRxModalConsultation(null)
+                if (c) setCreateOrderConsultation(c)
+              }
+            : undefined
+        }
+      />
+      <CreateOrderModal
+        open={!!createOrderConsultation}
+        onClose={() => setCreateOrderConsultation(null)}
+        consultation={createOrderConsultation}
+        frames={frames}
+        lenses={lenses}
+        onSubmit={(order) => {
+          onCreateOrder(order)
+          setCreateOrderConsultation(null)
+        }}
       />
     </div>
   )
