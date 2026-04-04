@@ -187,11 +187,9 @@ export function OtcPos() {
         open={showPaymentSuccess}
         onClose={() => setShowPaymentSuccess(false)}
         onPrintLabels={() => {
-          setShowPaymentSuccess(false)
           setShowLabels(true)
         }}
         onPrintInvoice={() => {
-          setShowPaymentSuccess(false)
           setShowInvoice(true)
         }}
         onNewOrder={handleNewOrder}
