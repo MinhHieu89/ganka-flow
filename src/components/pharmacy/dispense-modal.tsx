@@ -60,10 +60,20 @@ export function DispenseModal({
   const hasOutOfStock = medications.some(
     (m) => m.isOutOfStock && !m.substitution
   )
+  const hasAllergyConflict = medications.some(
+    (m) =>
+      !m.substitution &&
+      order.allergies?.some((a) =>
+        m.name.toLowerCase().includes(a.toLowerCase())
+      )
+  )
   const daysLeft = daysUntil(order.expiresAt)
   const isExpired = daysLeft < 0
   const canConfirm =
-    !isExpired && !hasOutOfStock && (!hasSubstitutions || substitutionReason.trim() !== "")
+    !isExpired &&
+    !hasOutOfStock &&
+    !hasAllergyConflict &&
+    (!hasSubstitutions || substitutionReason.trim() !== "")
 
   const handleSubstitute = (
     medId: string,
@@ -177,9 +187,14 @@ export function DispenseModal({
                       <TableRow
                         key={med.id}
                         className={
-                          med.isOutOfStock && !med.substitution
+                          !med.substitution &&
+                          order.allergies?.some((a) =>
+                            med.name.toLowerCase().includes(a.toLowerCase())
+                          )
                             ? "bg-red-50 dark:bg-red-950/20"
-                            : ""
+                            : med.isOutOfStock && !med.substitution
+                              ? "bg-red-50 dark:bg-red-950/20"
+                              : ""
                         }
                       >
                         <TableCell>
@@ -187,9 +202,6 @@ export function DispenseModal({
                             <>
                               <div className="font-medium text-muted-foreground line-through">
                                 {med.name}
-                              </div>
-                              <div className="text-xs text-muted-foreground">
-                                {med.group}
                               </div>
                               {med.isOutOfStock && (
                                 <span className="mt-0.5 inline-block rounded bg-red-100 px-2 py-0.5 text-xs text-red-700 dark:bg-red-950 dark:text-red-300">
@@ -206,9 +218,6 @@ export function DispenseModal({
                           ) : (
                             <>
                               <div className="font-medium">{med.name}</div>
-                              <div className="text-xs text-muted-foreground">
-                                {med.group}
-                              </div>
                               {med.isOutOfStock && (
                                 <span className="mt-0.5 inline-block rounded bg-red-100 px-2 py-0.5 text-xs text-red-700 dark:bg-red-950 dark:text-red-300">
                                   &#10007; Hết hàng
