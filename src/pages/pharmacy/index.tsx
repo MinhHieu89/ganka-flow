@@ -4,6 +4,7 @@ import { mockPrescriptions, getPharmacyMetrics } from "@/data/mock-pharmacy"
 import { PharmacyKpiCards } from "@/components/pharmacy/kpi-cards"
 import { PharmacyStatusFilters } from "@/components/pharmacy/status-filters"
 import { PrescriptionQueueTable } from "@/components/pharmacy/prescription-queue-table"
+import { OtcPos } from "@/components/pharmacy/otc-pos"
 import type {
   PrescriptionStatus,
   PrescriptionMedication,
@@ -122,9 +123,7 @@ export default function PharmacyDashboard() {
         </TabsContent>
 
         <TabsContent value="otc">
-          <div className="flex min-h-[200px] items-center justify-center text-sm text-muted-foreground">
-            Sẽ thiết kế chi tiết ở bước tiếp theo
-          </div>
+          <OtcPos />
         </TabsContent>
 
         <TabsContent value="inventory">
