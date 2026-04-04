@@ -77,7 +77,8 @@ export function DispenseModal({
 
   const handleSubstitute = (
     medId: string,
-    replacement: MedicationCatalogItem
+    replacement: MedicationCatalogItem,
+    reason: string,
   ) => {
     setMedications((prev) =>
       prev.map((m) =>
@@ -94,6 +95,7 @@ export function DispenseModal({
           : m
       )
     )
+    setSubstitutionReason(reason)
     setSubstituteTarget(null)
   }
 
@@ -296,8 +298,8 @@ export function DispenseModal({
           medication={substituteTarget}
           open={!!substituteTarget}
           onClose={() => setSubstituteTarget(null)}
-          onSelect={(replacement) =>
-            handleSubstitute(substituteTarget.id, replacement)
+          onSelect={(replacement, reason) =>
+            handleSubstitute(substituteTarget.id, replacement, reason)
           }
         />
       )}

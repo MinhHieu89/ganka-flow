@@ -4,8 +4,11 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Textarea } from "@/components/ui/textarea"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { Search01Icon } from "@hugeicons/core-free-icons"
 import {
@@ -18,7 +21,7 @@ interface SubstituteMedicationDialogProps {
   medication: PrescriptionMedication
   open: boolean
   onClose: () => void
-  onSelect: (replacement: MedicationCatalogItem) => void
+  onSelect: (replacement: MedicationCatalogItem, reason: string) => void
 }
 
 export function SubstituteMedicationDialog({
@@ -28,6 +31,8 @@ export function SubstituteMedicationDialog({
   onSelect,
 }: SubstituteMedicationDialogProps) {
   const [search, setSearch] = useState("")
+  const [selected, setSelected] = useState<MedicationCatalogItem | null>(null)
+  const [reason, setReason] = useState("")
 
   const results = useMemo(() => {
     return medicationCatalog
@@ -40,6 +45,15 @@ export function SubstituteMedicationDialog({
       })
   }, [medication, search])
 
+  const updateReason = (item: MedicationCatalogItem) => {
+    setSelected(item)
+    setReason(
+      `${medication.name} hết hàng, thay bằng ${item.name} — cùng nhóm ${medication.group}.`
+    )
+  }
+
+  const canConfirm = selected !== null && reason.trim() !== ""
+
   return (
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
       <DialogContent className="max-w-md">
@@ -47,12 +61,19 @@ export function SubstituteMedicationDialog({
           <DialogTitle className="text-base font-medium">
             Thay thế thuốc
           </DialogTitle>
-          <p className="text-xs text-muted-foreground">
-            Chọn thuốc tương đương cho{" "}
-            <strong>{medication.name}</strong> (nhóm: {medication.group})
-          </p>
         </DialogHeader>
 
+        {/* Info bar */}
+        <div className="flex items-center gap-2 rounded-lg bg-muted p-3 text-sm">
+          <span>
+            Thuốc gốc: <strong>{medication.name}</strong>
+          </span>
+          <span className="rounded bg-red-100 px-2 py-0.5 text-xs text-red-700 dark:bg-red-950 dark:text-red-300">
+            Hết hàng
+          </span>
+        </div>
+
+        {/* Search */}
         <div className="relative">
           <HugeiconsIcon
             icon={Search01Icon}
@@ -60,14 +81,15 @@ export function SubstituteMedicationDialog({
             strokeWidth={1.5}
           />
           <Input
-            placeholder="Tìm thuốc..."
+            placeholder="Tìm thuốc thay thế..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="pl-9"
           />
         </div>
 
-        <div className="max-h-[240px] space-y-1 overflow-y-auto">
+        {/* Results list */}
+        <div className="max-h-[200px] space-y-1 overflow-y-auto">
           {results.length === 0 ? (
             <div className="py-6 text-center text-sm text-muted-foreground">
               Không tìm thấy thuốc phù hợp
@@ -76,8 +98,12 @@ export function SubstituteMedicationDialog({
             results.map((item) => (
               <button
                 key={item.id}
-                onClick={() => onSelect(item)}
-                className="flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm transition-colors hover:bg-muted"
+                onClick={() => updateReason(item)}
+                className={`flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm transition-colors ${
+                  selected?.id === item.id
+                    ? "bg-primary/10 text-primary"
+                    : "hover:bg-muted"
+                }`}
               >
                 <div>
                   <div className="font-medium">{item.name}</div>
@@ -92,6 +118,31 @@ export function SubstituteMedicationDialog({
             ))
           )}
         </div>
+
+        {/* Reason textarea */}
+        <div>
+          <div className="mb-1.5 text-xs font-medium text-muted-foreground">
+            Lý do thay thế <span className="text-red-500">*</span>
+          </div>
+          <Textarea
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+            placeholder="Nhập lý do thay thế thuốc..."
+            className="min-h-[60px] text-sm"
+          />
+        </div>
+
+        <DialogFooter>
+          <Button variant="outline" onClick={onClose}>
+            Hủy
+          </Button>
+          <Button
+            disabled={!canConfirm}
+            onClick={() => selected && onSelect(selected, reason)}
+          >
+            Xác nhận thay thế
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   )
