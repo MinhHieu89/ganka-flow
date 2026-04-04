@@ -143,7 +143,12 @@ export function CashierTransactionsTable({
                         />
                         Xem hóa đơn
                       </DropdownMenuItem>
-                      <DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => {
+                          onViewInvoice?.(tx.id)
+                          setTimeout(() => window.print(), 300)
+                        }}
+                      >
                         <HugeiconsIcon
                           icon={PrinterIcon}
                           className="mr-2 size-4"
