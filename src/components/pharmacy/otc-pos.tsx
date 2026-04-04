@@ -3,6 +3,7 @@ import { OtcCustomerCard } from "./otc-customer-card"
 import { OtcProductCard } from "./otc-product-card"
 import { OtcOrderPanel } from "./otc-order-panel"
 import { OtcCreateCustomerModal } from "./otc-create-customer-modal"
+import { OtcConfirmPaymentModal } from "./otc-confirm-payment-modal"
 import { OtcPaymentSuccessModal } from "./otc-payment-success-modal"
 import { OtcInvoiceModal } from "./otc-invoice-modal"
 import { OtcLabelModal } from "./otc-label-modal"
@@ -43,6 +44,7 @@ export function OtcPos() {
   const [orders, setOrders] = useState<OtcOrder[]>(mockOtcOrders)
 
   // Modal state
+  const [showConfirmPayment, setShowConfirmPayment] = useState(false)
   const [lastOrder, setLastOrder] = useState<OtcOrder | null>(null)
   const [showPaymentSuccess, setShowPaymentSuccess] = useState(false)
   const [showInvoice, setShowInvoice] = useState(false)
@@ -81,6 +83,11 @@ export function OtcPos() {
 
   const handleCheckout = () => {
     if (!selectedCustomer || orderItems.length === 0) return
+    setShowConfirmPayment(true)
+  }
+
+  const handleConfirmPayment = () => {
+    if (!selectedCustomer || orderItems.length === 0) return
 
     const totalAmount = orderItems.reduce(
       (sum, i) => sum + i.product.price * i.quantity,
@@ -99,6 +106,7 @@ export function OtcPos() {
 
     setOrders((prev) => [...prev, newOrder])
     setLastOrder(newOrder)
+    setShowConfirmPayment(false)
     setShowPaymentSuccess(true)
   }
 
@@ -106,6 +114,7 @@ export function OtcPos() {
     setSelectedCustomer(null)
     setOrderItems([])
     setPaymentMethod("cash")
+    setShowConfirmPayment(false)
     setShowPaymentSuccess(false)
     setShowInvoice(false)
     setShowLabels(false)
@@ -159,6 +168,14 @@ export function OtcPos() {
       </div>
 
       {/* Modals */}
+      <OtcConfirmPaymentModal
+        open={showConfirmPayment}
+        customer={selectedCustomer}
+        items={orderItems}
+        paymentMethod={paymentMethod}
+        onClose={() => setShowConfirmPayment(false)}
+        onConfirm={handleConfirmPayment}
+      />
       <OtcCreateCustomerModal
         open={showCreateCustomer}
         onClose={() => setShowCreateCustomer(false)}
