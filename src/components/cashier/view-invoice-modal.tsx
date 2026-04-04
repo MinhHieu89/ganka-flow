@@ -87,7 +87,7 @@ export function ViewInvoiceModal({
 
   return (
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
-      <DialogContent className="max-h-[90vh] max-w-[480px] overflow-y-auto">
+      <DialogContent className="print-receipt max-h-[90vh] max-w-[480px] overflow-y-auto">
         <DialogHeader>
           <div className="flex items-center gap-2.5">
             <DialogTitle className="text-base">#{tx.id}</DialogTitle>
