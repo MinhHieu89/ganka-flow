@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import { useLocation, useNavigate } from "react-router"
 import { Button } from "@/components/ui/button"
 import type { CompletedPayment } from "@/data/mock-cashier"
@@ -8,14 +7,6 @@ export default function PaymentSuccessPage() {
   const location = useLocation()
   const navigate = useNavigate()
   const payment = (location.state as { payment?: CompletedPayment })?.payment
-
-  // Auto-print on mount
-  useEffect(() => {
-    if (payment) {
-      const timer = setTimeout(() => window.print(), 500)
-      return () => clearTimeout(timer)
-    }
-  }, [payment])
 
   if (!payment) {
     return (
