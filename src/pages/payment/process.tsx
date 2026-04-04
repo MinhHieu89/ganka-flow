@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useParams, useNavigate } from "react-router"
 import { Button } from "@/components/ui/button"
 import {
@@ -18,11 +18,14 @@ import { PaymentDiscount } from "@/components/cashier/payment-discount"
 import { PaymentSummary } from "@/components/cashier/payment-summary"
 import { PaymentMethodsSection } from "@/components/cashier/payment-methods-section"
 import { PaymentActions } from "@/components/cashier/payment-actions"
+import { ReceiptCard } from "@/components/cashier/receipt-card"
+import type { CompletedPayment } from "@/data/mock-cashier"
 
 export default function PaymentProcessingPage() {
   const { paymentRequestId } = useParams<{ paymentRequestId: string }>()
   const navigate = useNavigate()
   const [showCancelDialog, setShowCancelDialog] = useState(false)
+  const [showReceiptPreview, setShowReceiptPreview] = useState(false)
 
   const {
     patient,
@@ -68,8 +71,34 @@ export default function PaymentProcessingPage() {
     })
   }
 
+  const previewPayment = useMemo<CompletedPayment>(
+    () => ({
+      id: `GD-${new Date().toISOString().slice(0, 10).replace(/-/g, "")}-000`,
+      paymentRequestId: paymentRequestId ?? "",
+      patient,
+      items,
+      discount,
+      paymentMethods,
+      subtotal,
+      discountAmount,
+      total,
+      cashierName: "Thu ngân Linh",
+      completedAt: new Date().toISOString(),
+    }),
+    [
+      paymentRequestId,
+      patient,
+      items,
+      discount,
+      paymentMethods,
+      subtotal,
+      discountAmount,
+      total,
+    ]
+  )
+
   function handlePrintPreview() {
-    window.print()
+    setShowReceiptPreview(true)
   }
 
   return (
@@ -148,6 +177,24 @@ export default function PaymentProcessingPage() {
           />
         </div>
       </div>
+
+      {/* Receipt preview dialog */}
+      <Dialog open={showReceiptPreview} onOpenChange={setShowReceiptPreview}>
+        <DialogContent className="max-w-[480px] max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Xem trước biên lai</DialogTitle>
+          </DialogHeader>
+          <ReceiptCard payment={previewPayment} />
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setShowReceiptPreview(false)}
+            >
+              Đóng
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Cancel confirmation dialog */}
       <Dialog open={showCancelDialog} onOpenChange={setShowCancelDialog}>
