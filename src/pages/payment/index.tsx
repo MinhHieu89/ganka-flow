@@ -8,6 +8,7 @@ import { CashierTransactionsTable } from "@/components/cashier/cashier-transacti
 import { ViewInvoiceModal } from "@/components/cashier/view-invoice-modal"
 import { RefundModal } from "@/components/cashier/refund-modal"
 import { ReturnToQueueModal } from "@/components/cashier/return-to-queue-modal"
+import { ViewPaymentRequestModal } from "@/components/cashier/view-payment-request-modal"
 import {
   mockPaymentRequests,
   mockTransactions,
@@ -118,6 +119,9 @@ export default function CashierDashboard() {
         <TabsContent value="queue" className="pt-2">
           <CashierQueueTable
             requests={requests}
+            onViewDetail={(id) =>
+              setModalState({ type: "view-detail", paymentRequestId: id })
+            }
             onReturnToQueue={(id) =>
               setModalState({ type: "return-to-queue", paymentRequestId: id })
             }
@@ -138,6 +142,18 @@ export default function CashierDashboard() {
       </Tabs>
 
       {/* Modals */}
+      {modalState.type === "view-detail" && (
+        <ViewPaymentRequestModal
+          paymentRequestId={modalState.paymentRequestId}
+          open
+          onClose={closeModal}
+          onPay={(id) => {
+            closeModal()
+            navigate(`/payment/process/${id}`)
+          }}
+        />
+      )}
+
       {modalState.type === "view-invoice" && (
         <ViewInvoiceModal
           transactionId={modalState.transactionId}

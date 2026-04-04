@@ -54,10 +54,11 @@ function WaitTime({ queuedAt }: { queuedAt: string }) {
 
 interface CashierQueueTableProps {
   requests: PaymentRequest[]
+  onViewDetail?: (paymentRequestId: string) => void
   onReturnToQueue?: (paymentRequestId: string) => void
 }
 
-export function CashierQueueTable({ requests, onReturnToQueue }: CashierQueueTableProps) {
+export function CashierQueueTable({ requests, onViewDetail, onReturnToQueue }: CashierQueueTableProps) {
   const navigate = useNavigate()
 
   if (requests.length === 0) {
@@ -142,7 +143,9 @@ export function CashierQueueTable({ requests, onReturnToQueue }: CashierQueueTab
                       />
                       Thanh toán
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => onViewDetail?.(req.id)}
+                    >
                       <HugeiconsIcon
                         icon={FileSearchIcon}
                         className="mr-2 size-4"
