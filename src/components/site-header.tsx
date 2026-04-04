@@ -16,6 +16,7 @@ const pageTitles: Record<string, string> = {
   "/schedule/new": "Đặt lịch hẹn",
   "/screening": "Sàng lọc",
   "/doctor": "Khám bệnh",
+  "/payment": "Thu ngân",
 }
 
 export function SiteHeader() {
