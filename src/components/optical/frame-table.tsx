@@ -18,7 +18,6 @@ import {
   MoreVerticalIcon,
   EyeIcon,
   Edit02Icon,
-  Clock01Icon,
 } from "@hugeicons/core-free-icons"
 import { cn } from "@/lib/utils"
 import type { FrameItem } from "@/data/mock-optical"
@@ -26,9 +25,10 @@ import { formatPrice } from "@/data/mock-optical"
 
 interface FrameTableProps {
   frames: FrameItem[]
+  onViewDetail: (frame: FrameItem) => void
 }
 
-export function FrameTable({ frames }: FrameTableProps) {
+export function FrameTable({ frames, onViewDetail }: FrameTableProps) {
   return (
     <Table>
       <TableHeader>
@@ -81,7 +81,7 @@ export function FrameTable({ frames }: FrameTableProps) {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="min-w-48">
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => onViewDetail(f)}>
                       <HugeiconsIcon
                         icon={EyeIcon}
                         className="size-4"
@@ -89,21 +89,13 @@ export function FrameTable({ frames }: FrameTableProps) {
                       />
                       Xem chi tiết
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => onViewDetail(f)}>
                       <HugeiconsIcon
                         icon={Edit02Icon}
                         className="size-4"
                         strokeWidth={1.5}
                       />
                       Chỉnh sửa
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <HugeiconsIcon
-                        icon={Clock01Icon}
-                        className="size-4"
-                        strokeWidth={1.5}
-                      />
-                      Lịch sử xuất/nhập
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

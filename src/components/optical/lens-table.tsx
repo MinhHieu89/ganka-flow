@@ -25,9 +25,10 @@ import { formatPrice } from "@/data/mock-optical"
 
 interface LensTableProps {
   lenses: LensItem[]
+  onViewDetail: (lens: LensItem) => void
 }
 
-export function LensTable({ lenses }: LensTableProps) {
+export function LensTable({ lenses, onViewDetail }: LensTableProps) {
   return (
     <Table>
       <TableHeader>
@@ -82,7 +83,7 @@ export function LensTable({ lenses }: LensTableProps) {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="min-w-48">
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => onViewDetail(l)}>
                       <HugeiconsIcon
                         icon={EyeIcon}
                         className="size-4"
@@ -90,7 +91,7 @@ export function LensTable({ lenses }: LensTableProps) {
                       />
                       Xem chi tiết
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => onViewDetail(l)}>
                       <HugeiconsIcon
                         icon={Edit02Icon}
                         className="size-4"

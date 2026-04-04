@@ -5,8 +5,17 @@ import { OpticalKpiCards } from "@/components/optical/kpi-cards"
 import { OpticalStatusFilters } from "@/components/optical/status-filters"
 import { FrameTable } from "@/components/optical/frame-table"
 import { LensTable } from "@/components/optical/lens-table"
+import { InventoryDetailDrawer } from "@/components/optical/inventory-detail-drawer"
+import { toast } from "sonner"
+import { getFrameDetail, getLensDetail } from "@/data/mock-optical"
 import type { KpiCardConfig } from "@/components/optical/kpi-cards"
-import type { FrameItem, LensItem, InventoryMetrics } from "@/data/mock-optical"
+import type {
+  FrameItem,
+  LensItem,
+  InventoryMetrics,
+  FrameDetail,
+  LensDetail,
+} from "@/data/mock-optical"
 
 type InventorySubTab = "frames" | "lenses"
 type FrameFilter = "all" | "in_stock" | "low_stock" | "out_of_stock"
@@ -63,6 +72,10 @@ export function TabInventory({ frames, lenses, metrics }: TabInventoryProps) {
   const [lensFilter, setLensFilter] = useState<LensFilter>("all")
   const [frameSearch, setFrameSearch] = useState("")
   const [lensSearch, setLensSearch] = useState("")
+  const [drawerItem, setDrawerItem] = useState<FrameDetail | LensDetail | null>(
+    null
+  )
+  const [drawerType, setDrawerType] = useState<"frame" | "lens">("frame")
 
   const filteredFrames = frames
     .filter((f) => {
@@ -142,7 +155,13 @@ export function TabInventory({ frames, lenses, metrics }: TabInventoryProps) {
             search={frameSearch}
             onSearchChange={setFrameSearch}
           />
-          <FrameTable frames={filteredFrames} />
+          <FrameTable
+            frames={filteredFrames}
+            onViewDetail={(f) => {
+              setDrawerItem(getFrameDetail(f))
+              setDrawerType("frame")
+            }}
+          />
         </>
       ) : (
         <>
@@ -154,9 +173,25 @@ export function TabInventory({ frames, lenses, metrics }: TabInventoryProps) {
             search={lensSearch}
             onSearchChange={setLensSearch}
           />
-          <LensTable lenses={filteredLenses} />
+          <LensTable
+            lenses={filteredLenses}
+            onViewDetail={(l) => {
+              setDrawerItem(getLensDetail(l))
+              setDrawerType("lens")
+            }}
+          />
         </>
       )}
+      <InventoryDetailDrawer
+        open={!!drawerItem}
+        onClose={() => setDrawerItem(null)}
+        item={drawerItem}
+        type={drawerType}
+        onSave={() => {
+          toast.success("Đã lưu thay đổi")
+          setDrawerItem(null)
+        }}
+      />
     </div>
   )
 }
