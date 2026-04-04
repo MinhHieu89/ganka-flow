@@ -37,16 +37,22 @@ function calcDiscountAmount(
 }
 
 export function usePaymentProcessing(paymentRequestId: string) {
-  const patient: PaymentPatientInfo = mockPaymentPatients[paymentRequestId] ?? {
-    name: "Không tìm thấy",
-    code: "",
-    gender: "",
-    age: 0,
-    phone: "",
-  }
+  const patient = useMemo<PaymentPatientInfo>(
+    () =>
+      mockPaymentPatients[paymentRequestId] ?? {
+        name: "Không tìm thấy",
+        code: "",
+        gender: "",
+        age: 0,
+        phone: "",
+      },
+    [paymentRequestId]
+  )
 
-  const items: PaymentLineItem[] =
-    mockPaymentLineItems[paymentRequestId] ?? []
+  const items = useMemo<PaymentLineItem[]>(
+    () => mockPaymentLineItems[paymentRequestId] ?? [],
+    [paymentRequestId]
+  )
 
   const subtotal = useMemo(
     () => items.reduce((sum, item) => sum + item.lineTotal, 0),
