@@ -22,34 +22,13 @@ import {
   MoneyReceive01Icon,
   Cancel01Icon,
 } from "@hugeicons/core-free-icons"
-import type {
-  Transaction,
-  TransactionStatus,
-  PaymentCategory,
+import { CategoryBadge } from "@/components/cashier/category-badge"
+import type { Transaction, TransactionStatus } from "@/data/mock-cashier"
+import {
+  formatVND,
+  formatPhone,
+  getPaymentMethodLabel,
 } from "@/data/mock-cashier"
-import { formatVND, formatPhone, getPaymentMethodLabel } from "@/data/mock-cashier"
-
-const CATEGORY_CONFIG: Record<
-  PaymentCategory,
-  { label: string; bg: string; text: string }
-> = {
-  exam: { label: "Khám", bg: "#E6F1FB", text: "#0C447C" },
-  drug: { label: "Thuốc", bg: "#E1F5EE", text: "#085041" },
-  optical: { label: "Kính", bg: "#EEEDFE", text: "#3C3489" },
-  treatment: { label: "Liệu trình", bg: "#FAEEDA", text: "#633806" },
-}
-
-function CategoryBadge({ category }: { category: PaymentCategory }) {
-  const config = CATEGORY_CONFIG[category]
-  return (
-    <span
-      className="inline-block rounded px-2 py-0.5 text-[11px] font-medium"
-      style={{ backgroundColor: config.bg, color: config.text }}
-    >
-      {config.label}
-    </span>
-  )
-}
 
 const STATUS_CONFIG: Record<
   TransactionStatus,
