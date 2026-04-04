@@ -1,4 +1,11 @@
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import type { Patient, Visit } from "@/data/mock-patients"
 import { cn } from "@/lib/utils"
 
@@ -147,9 +154,106 @@ const DISEASE_GROUP_LABELS: Record<string, string> = {
   general: "Tổng quát",
 }
 
+// ── OSDI detail dialog ───────────────────────────────────────────────────────
+
+const OSDI_ANSWER_LABELS = [
+  "Không bao giờ",
+  "Thỉnh thoảng",
+  "Thường xuyên",
+  "Hầu hết thời gian",
+  "Liên tục",
+]
+
+const OSDI_QUESTION_GROUPS = [
+  {
+    title: "Triệu chứng mắt",
+    questions: [
+      { index: 0, text: "Chói mắt" },
+      { index: 1, text: "Nhìn mờ giữa các lần chớp mắt" },
+    ],
+  },
+  {
+    title: "Ảnh hưởng hoạt động",
+    questions: [
+      { index: 2, text: "Lái xe / ngồi trên xe ban đêm" },
+      { index: 3, text: "Xem tivi / máy tính / đọc sách" },
+    ],
+  },
+  {
+    title: "Yếu tố môi trường",
+    questions: [
+      { index: 4, text: "Nơi có gió / khô bụi" },
+      { index: 5, text: "Nơi có độ ẩm thấp / điều hòa" },
+    ],
+  },
+]
+
+function AnswerBadge({ value }: { value: number | null }) {
+  if (value == null) return <span className="text-muted-foreground">—</span>
+  return (
+    <span className="text-sm font-medium">{OSDI_ANSWER_LABELS[value]}</span>
+  )
+}
+
+function OsdiDetailDialog({
+  open,
+  onOpenChange,
+  answers,
+  score,
+  severity,
+}: {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  answers: (number | null)[]
+  score: number
+  severity: string | null
+}) {
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle>Chi tiết OSDI-6</DialogTitle>
+        </DialogHeader>
+        <div className="space-y-4">
+          {OSDI_QUESTION_GROUPS.map((group) => (
+            <div key={group.title}>
+              <div className="mb-2 text-[11px] font-semibold tracking-wider text-muted-foreground/60 uppercase">
+                {group.title}
+              </div>
+              <div className="space-y-2">
+                {group.questions.map(({ index, text }) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between gap-4"
+                  >
+                    <span className="text-sm text-foreground/80">{text}</span>
+                    <AnswerBadge value={answers[index]} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+          <div className="flex items-center justify-between border-t pt-3">
+            <span className="text-sm font-medium">Điểm OSDI-6</span>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-semibold tabular-nums">
+                {score}/100
+              </span>
+              {severity && (
+                <WarnPill>{OSDI_SEVERITY_LABELS[severity]}</WarnPill>
+              )}
+            </div>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
 // ── Main component ────────────────────────────────────────────────────────────
 
 export function TabPreExam({ patient, visit }: TabPreExamProps) {
+  const [osdiDetailOpen, setOsdiDetailOpen] = useState(false)
   const screening = visit.screeningData
 
   const chiefComplaint =
@@ -376,6 +480,21 @@ export function TabPreExam({ patient, visit }: TabPreExamProps) {
                           {OSDI_SEVERITY_LABELS[dryEye!.osdiSeverity]}
                         </WarnPill>
                       )}
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 px-2 text-xs text-muted-foreground"
+                        onClick={() => setOsdiDetailOpen(true)}
+                      >
+                        Xem chi tiết
+                      </Button>
+                      <OsdiDetailDialog
+                        open={osdiDetailOpen}
+                        onOpenChange={setOsdiDetailOpen}
+                        answers={dryEye!.osdiAnswers}
+                        score={dryEye!.osdiScore!}
+                        severity={dryEye!.osdiSeverity}
+                      />
                     </div>
                   )}
 
