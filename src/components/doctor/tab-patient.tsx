@@ -304,6 +304,100 @@ function CollapsedVisitCard({ pv }: { pv: PreviousVisit }) {
   )
 }
 
+function InfoCard({
+  title,
+  children,
+}: {
+  title: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className="rounded-lg border border-border bg-card px-5 py-4">
+      <div className="mb-3.5 text-[11px] font-semibold tracking-wider text-muted-foreground/70 uppercase">
+        {title}
+      </div>
+      {children}
+    </div>
+  )
+}
+
+function RedPill({ children }: { children: React.ReactNode }) {
+  return (
+    <span
+      className="inline-block rounded-full px-2.5 py-0.5 text-xs font-medium"
+      style={{ backgroundColor: "#FCEBEB", color: "#791F1F" }}
+    >
+      {children}
+    </span>
+  )
+}
+
+function MedicalHistorySection({ patient }: { patient: Patient }) {
+  const hasHistory =
+    !!patient.eyeHistory ||
+    !!patient.systemicHistory ||
+    !!patient.allergies ||
+    !!patient.currentMedications ||
+    !!patient.familyHistory
+
+  return (
+    <section>
+      <InfoCard title="Tiền sử">
+        {!hasHistory ? (
+          <p className="text-sm text-muted-foreground">Không có tiền sử</p>
+        ) : (
+          <div className="space-y-4">
+            {patient.eyeHistory && (
+              <div>
+                <div className="mb-1 text-sm font-medium">Bệnh mắt</div>
+                <div className="text-sm">{patient.eyeHistory}</div>
+              </div>
+            )}
+            {patient.systemicHistory && (
+              <div>
+                <div className="mb-1 text-sm font-medium">Toàn thân</div>
+                <div className="text-sm">{patient.systemicHistory}</div>
+              </div>
+            )}
+            {patient.allergies && (
+              <div>
+                <div className="mb-1.5 text-sm font-medium">Dị ứng</div>
+                <div className="flex flex-wrap gap-1.5">
+                  {patient.allergies.split(",").map((a) => (
+                    <RedPill key={a.trim()}>{a.trim()}</RedPill>
+                  ))}
+                </div>
+              </div>
+            )}
+            {patient.currentMedications && (
+              <div>
+                <div className="mb-1 text-sm font-medium">Thuốc đang dùng</div>
+                <div className="text-sm">{patient.currentMedications}</div>
+              </div>
+            )}
+            {patient.familyHistory && (
+              <div>
+                <div className="mb-1 text-sm font-medium">Gia đình</div>
+                <div className="text-sm">{patient.familyHistory}</div>
+              </div>
+            )}
+          </div>
+        )}
+      </InfoCard>
+    </section>
+  )
+}
+
+function NotesSection({ notes }: { notes: string }) {
+  return (
+    <section>
+      <InfoCard title="Ghi chú">
+        <p className="text-sm">{notes}</p>
+      </InfoCard>
+    </section>
+  )
+}
+
 function VisitHistorySection({ visit }: { visit: Visit }) {
   const previousVisits = visit.previousVisits
   if (!previousVisits || previousVisits.length === 0) return null
@@ -341,6 +435,10 @@ export function TabPatient({ patient, visit }: TabPatientProps) {
   return (
     <div className="flex flex-col gap-8">
       <AdminInfoSection patient={patient} />
+      <MedicalHistorySection patient={patient} />
+      {visit.screeningData?.notes && (
+        <NotesSection notes={visit.screeningData.notes} />
+      )}
       <VisitHistorySection visit={visit} />
     </div>
   )

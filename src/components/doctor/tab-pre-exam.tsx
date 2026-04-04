@@ -177,13 +177,6 @@ export function TabPreExam({ patient, visit }: TabPreExamProps) {
         .map(([k]) => k)
     : []
 
-  const hasHistory =
-    !!patient.eyeHistory ||
-    !!patient.systemicHistory ||
-    !!patient.allergies ||
-    !!patient.currentMedications ||
-    !!patient.familyHistory
-
   const dryEye = screening?.step2?.dryEye
   const hasDryEye =
     dryEye &&
@@ -347,57 +340,6 @@ export function TabPreExam({ patient, visit }: TabPreExamProps) {
           />
         </div>
       </Section>
-
-      {/* 4. Tiền sử */}
-      <Section title="Tiền sử">
-        {!hasHistory ? (
-          <p className="text-sm text-muted-foreground">Không có tiền sử</p>
-        ) : (
-          <div className="space-y-4">
-            {patient.eyeHistory && (
-              <div>
-                <div className="mb-1 text-sm font-medium">Bệnh mắt</div>
-                <div className="text-sm">{patient.eyeHistory}</div>
-              </div>
-            )}
-            {patient.systemicHistory && (
-              <div>
-                <div className="mb-1 text-sm font-medium">Toàn thân</div>
-                <div className="text-sm">{patient.systemicHistory}</div>
-              </div>
-            )}
-            {patient.allergies && (
-              <div>
-                <div className="mb-1.5 text-sm font-medium">Dị ứng</div>
-                <div className="flex flex-wrap gap-1.5">
-                  {patient.allergies.split(",").map((a) => (
-                    <RedPill key={a.trim()}>{a.trim()}</RedPill>
-                  ))}
-                </div>
-              </div>
-            )}
-            {patient.currentMedications && (
-              <div>
-                <div className="mb-1 text-sm font-medium">Thuốc đang dùng</div>
-                <div className="text-sm">{patient.currentMedications}</div>
-              </div>
-            )}
-            {patient.familyHistory && (
-              <div>
-                <div className="mb-1 text-sm font-medium">Gia đình</div>
-                <div className="text-sm">{patient.familyHistory}</div>
-              </div>
-            )}
-          </div>
-        )}
-      </Section>
-
-      {/* 5. Ghi chú — matches screening-form-notes.tsx */}
-      {screening?.notes && (
-        <Section title="Ghi chú">
-          <p className="text-sm">{screening.notes}</p>
-        </Section>
-      )}
 
       {/* ── STEP 2 ─────────────────────────────────────────────────────── */}
 
