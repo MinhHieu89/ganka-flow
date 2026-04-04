@@ -20,6 +20,7 @@ interface OtcOrderPanelProps {
   onUpdateQuantity: (productId: string, delta: number) => void
   onRemoveItem: (productId: string) => void
   onPaymentMethodChange: (method: OtcPaymentMethod) => void
+  onClearOrder: () => void
   onCheckout: () => void
   onViewHistory: () => void
 }
@@ -30,6 +31,7 @@ export function OtcOrderPanel({
   selectedCustomer,
   onUpdateQuantity,
   onRemoveItem,
+  onClearOrder,
   onPaymentMethodChange,
   onCheckout,
   onViewHistory,
@@ -46,9 +48,19 @@ export function OtcOrderPanel({
       {/* Header */}
       <div className="mb-3 flex items-center justify-between">
         <h3 className="text-sm font-semibold">Đơn hàng</h3>
-        <span className="rounded-full bg-teal-50 px-2 py-0.5 text-[11px] text-teal-700 dark:bg-teal-950 dark:text-teal-300">
-          {totalProducts} sản phẩm
-        </span>
+        <div className="flex items-center gap-2">
+          {items.length > 0 && (
+            <button
+              onClick={onClearOrder}
+              className="text-[11px] text-red-500 hover:underline"
+            >
+              Xóa tất cả
+            </button>
+          )}
+          <span className="rounded-full bg-teal-50 px-2 py-0.5 text-[11px] text-teal-700 dark:bg-teal-950 dark:text-teal-300">
+            {totalProducts} sản phẩm
+          </span>
+        </div>
       </div>
 
       {/* Items or empty state */}

@@ -161,6 +161,7 @@ export function OtcPos() {
           selectedCustomer={selectedCustomer}
           onUpdateQuantity={handleUpdateQuantity}
           onRemoveItem={handleRemoveItem}
+          onClearOrder={() => setOrderItems([])}
           onPaymentMethodChange={setPaymentMethod}
           onCheckout={handleCheckout}
           onViewHistory={() => setView("history")}
