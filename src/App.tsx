@@ -21,6 +21,7 @@ import OpticalDashboard from "@/pages/optical/index"
 import CashierDashboard from "@/pages/payment/index"
 import PaymentProcessingPage from "@/pages/payment/process"
 import PaymentSuccessPage from "@/pages/payment/success"
+import ShiftClosePage from "@/pages/payment/shift-close"
 
 export function App() {
   return (
@@ -58,6 +59,10 @@ export function App() {
                   <Route
                     path="/payment/:paymentId/success"
                     element={<PaymentSuccessPage />}
+                  />
+                  <Route
+                    path="/payment/shift-close"
+                    element={<ShiftClosePage />}
                   />
                 </Routes>
               </SidebarInset>
