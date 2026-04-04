@@ -24,7 +24,7 @@ import {
   CallingIcon,
 } from "@hugeicons/core-free-icons"
 import { cn } from "@/lib/utils"
-import type { OpticalOrder } from "@/data/mock-optical"
+import type { OpticalOrder, OrderStatus } from "@/data/mock-optical"
 
 interface OrderTableProps {
   orders: OpticalOrder[]

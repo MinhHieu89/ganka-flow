@@ -34,9 +34,9 @@ interface InventoryDetailDrawerProps {
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
 function isFrame(
-  item: FrameDetail | LensDetail,
+  _item: FrameDetail | LensDetail,
   type: "frame" | "lens"
-): item is FrameDetail {
+): _item is FrameDetail {
   return type === "frame"
 }
 
@@ -117,7 +117,7 @@ export function InventoryDetailDrawer({
     setIsEditing(false)
   }
 
-  const barcode = frame ? item.barcode : (item as LensDetail).code
+  const barcode = frame ? frame.barcode : lens!.code
   const subtitle = frame
     ? `${frame.color} - ${frame.material}`
     : `${lens!.type} - ${lens!.refractiveIndex}`
@@ -201,7 +201,7 @@ export function InventoryDetailDrawer({
 
 function ViewMode({
   item,
-  type,
+  type: _type,
   frame,
   lens,
   subtitle,

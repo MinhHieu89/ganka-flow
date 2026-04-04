@@ -71,7 +71,7 @@ function ProductSearch<T>({
   items,
   selected,
   onSelect,
-  onClear,
+  onClear: _onClear,
   label,
   placeholder,
   getSearchableFields,
