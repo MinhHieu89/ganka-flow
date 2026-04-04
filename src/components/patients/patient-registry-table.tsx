@@ -79,7 +79,9 @@ export function PatientRegistryTable({
             Họ và tên{sortIndicator("name")}
           </TableHead>
           <TableHead className="w-32 text-xs">Số điện thoại</TableHead>
-          <TableHead className="w-40 text-xs">Loại bệnh nhân</TableHead>
+          <TableHead className="w-32 text-xs">Tỉnh/Thành phố</TableHead>
+          <TableHead className="w-28 text-xs">Ngày khám</TableHead>
+          <TableHead className="w-28 text-xs">Loại bệnh nhân</TableHead>
           <TableHead className="w-20 text-xs">Giới tính</TableHead>
           <TableHead className="w-20 text-xs">Dị ứng</TableHead>
           <TableHead className="w-28 text-xs">Trạng thái</TableHead>
@@ -101,6 +103,16 @@ export function PatientRegistryTable({
               </TableCell>
               <TableCell className="font-semibold">{patient.name}</TableCell>
               <TableCell>{patient.phone}</TableCell>
+              <TableCell>
+                {patient.city || (
+                  <span className="text-muted-foreground">---</span>
+                )}
+              </TableCell>
+              <TableCell>
+                {patient.lastExamDate || (
+                  <span className="text-muted-foreground">---</span>
+                )}
+              </TableCell>
               <TableCell>
                 <span
                   className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${typeCfg.color}`}
