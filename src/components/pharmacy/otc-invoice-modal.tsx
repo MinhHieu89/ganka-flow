@@ -85,8 +85,7 @@ export function OtcInvoiceModal({
                   PHÒNG KHÁM CHUYÊN KHOA MẮT GANKA28
                 </div>
                 <div className="mt-0.5 text-[11px] text-muted-foreground">
-                  123 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh — ĐT: (028) 1234
-                  5678
+                  123 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh — ĐT: (028) 1234 5678
                 </div>
                 <div className="mt-3 text-lg font-medium tracking-wide">
                   HÓA ĐƠN BÁN HÀNG
@@ -137,12 +136,8 @@ export function OtcInvoiceModal({
                       <td className="py-2 text-center text-muted-foreground">
                         {idx + 1}
                       </td>
-                      <td className="py-2 font-medium">
-                        {item.product.name}
-                      </td>
-                      <td className="py-2 capitalize">
-                        {item.product.unit}
-                      </td>
+                      <td className="py-2 font-medium">{item.product.name}</td>
+                      <td className="py-2 capitalize">{item.product.unit}</td>
                       <td className="py-2 text-right">{item.quantity}</td>
                       <td className="py-2 text-right">
                         {formatVnd(item.product.price)}

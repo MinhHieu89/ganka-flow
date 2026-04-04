@@ -23,8 +23,7 @@ export function OtcCustomerCard({
     if (!search.trim()) return []
     const q = search.toLowerCase()
     return customers.filter(
-      (c) =>
-        c.name.toLowerCase().includes(q) || c.phone.includes(q)
+      (c) => c.name.toLowerCase().includes(q) || c.phone.includes(q)
     )
   }, [search, customers])
 
@@ -76,9 +75,7 @@ export function OtcCustomerCard({
                 className="flex w-full items-center justify-between rounded-md px-2 py-1.5 text-left text-sm hover:bg-muted"
               >
                 <span className="font-medium">{c.name}</span>
-                <span className="text-xs text-muted-foreground">
-                  {c.phone}
-                </span>
+                <span className="text-xs text-muted-foreground">{c.phone}</span>
               </button>
             ))
           ) : (

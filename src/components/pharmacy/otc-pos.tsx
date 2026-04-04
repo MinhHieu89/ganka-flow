@@ -30,8 +30,9 @@ export function OtcPos() {
 
   // Customer state
   const [customers, setCustomers] = useState<OtcCustomer[]>(otcCustomers)
-  const [selectedCustomer, setSelectedCustomer] =
-    useState<OtcCustomer | null>(null)
+  const [selectedCustomer, setSelectedCustomer] = useState<OtcCustomer | null>(
+    null
+  )
   const [showCreateCustomer, setShowCreateCustomer] = useState(false)
 
   // Order state
@@ -55,9 +56,7 @@ export function OtcPos() {
       if (existing) {
         if (existing.quantity >= product.stockQuantity) return prev
         return prev.map((i) =>
-          i.product.id === product.id
-            ? { ...i, quantity: i.quantity + 1 }
-            : i
+          i.product.id === product.id ? { ...i, quantity: i.quantity + 1 } : i
         )
       }
       return [...prev, { product, quantity: 1 }]
@@ -127,7 +126,10 @@ export function OtcPos() {
 
   return (
     <>
-      <div className="flex gap-4 pt-2" style={{ height: "calc(100vh - 180px)" }}>
+      <div
+        className="flex gap-4 pt-2"
+        style={{ height: "calc(100vh - 180px)" }}
+      >
         {/* Left column */}
         <div className="flex flex-1 flex-col gap-3">
           <OtcCustomerCard

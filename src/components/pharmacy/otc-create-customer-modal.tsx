@@ -56,7 +56,7 @@ export function OtcCreateCustomerModal({
   const handleSubmit = () => {
     if (!validate()) return
     const newCustomer: OtcCustomer = {
-      id: `KH-${String(Date.now()).slice(-3)}`,
+      id: `KH-${String(existingCustomers.length + 1).padStart(3, "0")}`,
       name: name.trim(),
       phone,
       birthDate: birthDate || undefined,

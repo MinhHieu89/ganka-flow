@@ -1,6 +1,10 @@
 import { Button } from "@/components/ui/button"
 import { formatVnd } from "@/data/mock-otc"
-import type { OtcOrderItem, OtcPaymentMethod, OtcCustomer } from "@/data/mock-otc"
+import type {
+  OtcOrderItem,
+  OtcPaymentMethod,
+  OtcCustomer,
+} from "@/data/mock-otc"
 
 const paymentMethods: { value: OtcPaymentMethod; label: string }[] = [
   { value: "cash", label: "Tiền mặt" },
@@ -55,14 +59,9 @@ export function OtcOrderPanel({
           </div>
         ) : (
           items.map((item) => (
-            <div
-              key={item.product.id}
-              className="rounded-md bg-muted/50 p-2"
-            >
+            <div key={item.product.id} className="rounded-md bg-muted/50 p-2">
               <div className="flex items-start justify-between">
-                <span className="text-xs font-medium">
-                  {item.product.name}
-                </span>
+                <span className="text-xs font-medium">{item.product.name}</span>
                 <button
                   onClick={() => onRemoveItem(item.product.id)}
                   className="text-[11px] text-red-500 hover:underline"
@@ -73,9 +72,7 @@ export function OtcOrderPanel({
               <div className="mt-1.5 flex items-center justify-between">
                 <div className="flex items-center gap-1.5">
                   <button
-                    onClick={() =>
-                      onUpdateQuantity(item.product.id, -1)
-                    }
+                    onClick={() => onUpdateQuantity(item.product.id, -1)}
                     className="flex size-6 items-center justify-center rounded border border-border bg-background text-xs hover:bg-muted"
                   >
                     −
@@ -84,9 +81,7 @@ export function OtcOrderPanel({
                     {item.quantity}
                   </span>
                   <button
-                    onClick={() =>
-                      onUpdateQuantity(item.product.id, 1)
-                    }
+                    onClick={() => onUpdateQuantity(item.product.id, 1)}
                     disabled={item.quantity >= item.product.stockQuantity}
                     className="flex size-6 items-center justify-center rounded border border-border bg-background text-xs hover:bg-muted disabled:opacity-50"
                   >
@@ -128,11 +123,7 @@ export function OtcOrderPanel({
             </button>
           ))}
         </div>
-        <Button
-          className="w-full"
-          disabled={!canCheckout}
-          onClick={onCheckout}
-        >
+        <Button className="w-full" disabled={!canCheckout} onClick={onCheckout}>
           Thanh toán {formatVnd(totalAmount)}
         </Button>
         <button
