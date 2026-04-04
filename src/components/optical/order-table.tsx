@@ -24,11 +24,14 @@ import {
   CallingIcon,
 } from "@hugeicons/core-free-icons"
 import { cn } from "@/lib/utils"
-import type { OpticalOrder, OrderStatus } from "@/data/mock-optical"
+import type { OpticalOrder } from "@/data/mock-optical"
 
 interface OrderTableProps {
   orders: OpticalOrder[]
-  onUpdateStatus: (id: string, status: OrderStatus) => void
+  onViewDetail: (order: OpticalOrder) => void
+  onStartFabrication: (order: OpticalOrder) => void
+  onCompleteFabrication: (order: OpticalOrder) => void
+  onConfirmDelivery: (order: OpticalOrder) => void
 }
 
 function formatOrderDate(isoDate: string): string {
@@ -59,7 +62,13 @@ const statusConfig: Record<OrderStatus, { label: string; className: string }> =
     },
   }
 
-export function OrderTable({ orders, onUpdateStatus }: OrderTableProps) {
+export function OrderTable({
+  orders,
+  onViewDetail,
+  onStartFabrication,
+  onCompleteFabrication,
+  onConfirmDelivery,
+}: OrderTableProps) {
   const sorted = [...orders].sort((a, b) => {
     if (a.status === "delivered" && b.status !== "delivered") return 1
     if (a.status !== "delivered" && b.status === "delivered") return -1
@@ -132,7 +141,7 @@ export function OrderTable({ orders, onUpdateStatus }: OrderTableProps) {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="min-w-48">
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => onViewDetail(o)}>
                       <HugeiconsIcon
                         icon={EyeIcon}
                         className="size-4"
@@ -143,7 +152,7 @@ export function OrderTable({ orders, onUpdateStatus }: OrderTableProps) {
 
                     {o.status === "ordered" && (
                       <DropdownMenuItem
-                        onClick={() => onUpdateStatus(o.id, "fabricating")}
+                        onClick={() => onStartFabrication(o)}
                       >
                         <HugeiconsIcon
                           icon={Settings02Icon}
@@ -156,7 +165,7 @@ export function OrderTable({ orders, onUpdateStatus }: OrderTableProps) {
 
                     {o.status === "fabricating" && (
                       <DropdownMenuItem
-                        onClick={() => onUpdateStatus(o.id, "ready_delivery")}
+                        onClick={() => onCompleteFabrication(o)}
                       >
                         <HugeiconsIcon
                           icon={CheckmarkCircle02Icon}
@@ -169,7 +178,7 @@ export function OrderTable({ orders, onUpdateStatus }: OrderTableProps) {
 
                     {o.status === "ready_delivery" && (
                       <DropdownMenuItem
-                        onClick={() => onUpdateStatus(o.id, "delivered")}
+                        onClick={() => onConfirmDelivery(o)}
                       >
                         <HugeiconsIcon
                           icon={CheckmarkCircle02Icon}

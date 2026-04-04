@@ -8,6 +8,12 @@ import {
 import { OpticalKpiCards } from "@/components/optical/kpi-cards"
 import { OpticalStatusFilters } from "@/components/optical/status-filters"
 import { OrderTable } from "@/components/optical/order-table"
+import { OrderDetailModal } from "@/components/optical/order-detail-modal"
+import { StatusTransitionModal } from "@/components/optical/status-transition-modal"
+import { DeliveryConfirmModal } from "@/components/optical/delivery-confirm-modal"
+import { toast } from "sonner"
+import { getOrderDetail } from "@/data/mock-optical"
+import type { OrderDetailData } from "@/data/mock-optical"
 import type { KpiCardConfig } from "@/components/optical/kpi-cards"
 import type {
   OpticalOrder,
@@ -68,6 +74,14 @@ interface TabOrdersProps {
 export function TabOrders({ orders, metrics, onUpdateOrders }: TabOrdersProps) {
   const [filter, setFilter] = useState<OrderFilter>("all")
   const [search, setSearch] = useState("")
+  const [detailOrder, setDetailOrder] = useState<OrderDetailData | null>(null)
+  const [transitionOrder, setTransitionOrder] = useState<OpticalOrder | null>(
+    null
+  )
+  const [transitionTarget, setTransitionTarget] = useState<
+    "fabricating" | "ready_delivery"
+  >("fabricating")
+  const [deliveryOrder, setDeliveryOrder] = useState<OpticalOrder | null>(null)
 
   const filtered = orders
     .filter((o) => {
@@ -122,7 +136,74 @@ export function TabOrders({ orders, metrics, onUpdateOrders }: TabOrdersProps) {
         search={search}
         onSearchChange={setSearch}
       />
-      <OrderTable orders={filtered} onUpdateStatus={handleUpdateStatus} />
+      <OrderTable
+        orders={filtered}
+        onViewDetail={(o) => setDetailOrder(getOrderDetail(o))}
+        onStartFabrication={(o) => {
+          setTransitionOrder(o)
+          setTransitionTarget("fabricating")
+        }}
+        onCompleteFabrication={(o) => {
+          setTransitionOrder(o)
+          setTransitionTarget("ready_delivery")
+        }}
+        onConfirmDelivery={(o) => setDeliveryOrder(o)}
+      />
+
+      <OrderDetailModal
+        open={!!detailOrder}
+        onClose={() => setDetailOrder(null)}
+        order={detailOrder}
+        onStartFabrication={() => {
+          if (detailOrder) {
+            setDetailOrder(null)
+            setTransitionOrder(detailOrder)
+            setTransitionTarget("fabricating")
+          }
+        }}
+        onCompleteFabrication={() => {
+          if (detailOrder) {
+            setDetailOrder(null)
+            setTransitionOrder(detailOrder)
+            setTransitionTarget("ready_delivery")
+          }
+        }}
+        onConfirmDelivery={() => {
+          if (detailOrder) {
+            setDetailOrder(null)
+            setDeliveryOrder(detailOrder)
+          }
+        }}
+      />
+
+      <StatusTransitionModal
+        open={!!transitionOrder}
+        onClose={() => setTransitionOrder(null)}
+        order={transitionOrder}
+        targetStatus={transitionTarget}
+        onConfirm={() => {
+          if (transitionOrder) {
+            handleUpdateStatus(transitionOrder.id, transitionTarget)
+            toast.success(
+              transitionTarget === "fabricating"
+                ? "Đã chuyển trạng thái sang Đang gia công"
+                : "Đã chuyển trạng thái sang Sẵn sàng giao"
+            )
+          }
+        }}
+      />
+
+      <DeliveryConfirmModal
+        open={!!deliveryOrder}
+        onClose={() => setDeliveryOrder(null)}
+        order={deliveryOrder}
+        onConfirm={() => {
+          if (deliveryOrder) {
+            handleUpdateStatus(deliveryOrder.id, "delivered" as OrderStatus)
+            toast.success("Đã xác nhận giao kính thành công")
+          }
+        }}
+      />
     </div>
   )
 }
