@@ -19,7 +19,7 @@ export function useRefund(transactionId: string) {
     new Set()
   )
   const [reasonCode, setReasonCode] = useState("")
-  const [refundMethod, setRefundMethod] = useState(() => {
+  const [refundMethod, setRefundMethod] = useState<string>(() => {
     if (!transaction) return "cash"
     return transaction.paymentMethods[0]?.method ?? "cash"
   })
