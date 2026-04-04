@@ -149,7 +149,7 @@ export function OtcLabelModal({ order, open, onClose }: OtcLabelModalProps) {
           <Button variant="outline" onClick={handleToggleSelectionMode}>
             {selectionMode ? "Hủy chọn" : "Chọn nhãn cần in"}
           </Button>
-          <Button>{printButtonText}</Button>
+          <Button onClick={() => window.print()}>{printButtonText}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

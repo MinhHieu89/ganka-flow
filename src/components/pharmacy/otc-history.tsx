@@ -83,10 +83,7 @@ export function OtcHistory({ orders, onBack }: OtcHistoryProps) {
           </thead>
           <tbody>
             {sorted.map((order) => {
-              const itemCount = order.items.reduce(
-                (sum, i) => sum + i.quantity,
-                0
-              )
+              const itemCount = order.items.length
               return (
                 <tr
                   key={order.id}
