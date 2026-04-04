@@ -19,6 +19,8 @@ import PatientDetail from "@/pages/patients/detail"
 import PharmacyDashboard from "@/pages/pharmacy/index"
 import OpticalDashboard from "@/pages/optical/index"
 import CashierDashboard from "@/pages/payment/index"
+import PaymentProcessingPage from "@/pages/payment/process"
+import PaymentSuccessPage from "@/pages/payment/success"
 
 export function App() {
   return (
@@ -49,6 +51,14 @@ export function App() {
                   <Route path="/pharmacy" element={<PharmacyDashboard />} />
                   <Route path="/optical" element={<OpticalDashboard />} />
                   <Route path="/payment" element={<CashierDashboard />} />
+                  <Route
+                    path="/payment/process/:paymentRequestId"
+                    element={<PaymentProcessingPage />}
+                  />
+                  <Route
+                    path="/payment/:paymentId/success"
+                    element={<PaymentSuccessPage />}
+                  />
                 </Routes>
               </SidebarInset>
             </SidebarProvider>

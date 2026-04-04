@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router"
 import {
   Table,
   TableBody,
@@ -56,6 +57,8 @@ interface CashierQueueTableProps {
 }
 
 export function CashierQueueTable({ requests }: CashierQueueTableProps) {
+  const navigate = useNavigate()
+
   if (requests.length === 0) {
     return (
       <div className="rounded-lg border border-border">
@@ -126,7 +129,11 @@ export function CashierQueueTable({ requests }: CashierQueueTableProps) {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-52">
-                    <DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() =>
+                        navigate(`/payment/process/${req.id}`)
+                      }
+                    >
                       <HugeiconsIcon
                         icon={Payment02Icon}
                         className="mr-2 size-4"
