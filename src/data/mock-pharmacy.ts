@@ -27,6 +27,10 @@ export interface PrescriptionOrder {
   id: string
   patientName: string
   patientId: string
+  prescriptionCode: string
+  patientBirthYear: number
+  patientGender: "male" | "female"
+  patientPhone: string
   doctorName: string
   diagnosis: string
   icdCode?: string
@@ -99,6 +103,10 @@ export const mockPrescriptions: PrescriptionOrder[] = [
     id: "RX-001",
     patientName: "Trần Văn Minh",
     patientId: "BN-20260403-0012",
+    prescriptionCode: "DT-20260404-0001",
+    patientBirthYear: 1978,
+    patientGender: "male",
+    patientPhone: "0912345678",
     doctorName: "BS. Nguyễn Hải",
     diagnosis: "Khô mắt mức độ trung bình",
     icdCode: "H04.1",
@@ -164,6 +172,10 @@ export const mockPrescriptions: PrescriptionOrder[] = [
     id: "RX-002",
     patientName: "Lê Thị Hoa",
     patientId: "BN-20260403-0008",
+    prescriptionCode: "DT-20260404-0002",
+    patientBirthYear: 1990,
+    patientGender: "female",
+    patientPhone: "0987654321",
     doctorName: "BS. Trần Minh Đức",
     diagnosis: "Viêm kết mạc dị ứng",
     icdCode: "H10.1",
@@ -199,6 +211,10 @@ export const mockPrescriptions: PrescriptionOrder[] = [
     id: "RX-003",
     patientName: "Nguyễn Hoàng Nam",
     patientId: "BN-20260403-0005",
+    prescriptionCode: "DT-20260404-0003",
+    patientBirthYear: 2010,
+    patientGender: "male",
+    patientPhone: "0933111222",
     doctorName: "BS. Nguyễn Hải",
     diagnosis: "Cận thị tiến triển",
     icdCode: "H52.1",
@@ -244,6 +260,10 @@ export const mockPrescriptions: PrescriptionOrder[] = [
     id: "RX-004",
     patientName: "Phạm Thị Mai",
     patientId: "BN-20260402-0041",
+    prescriptionCode: "DT-20260404-0004",
+    patientBirthYear: 1965,
+    patientGender: "female",
+    patientPhone: "0909888777",
     doctorName: "BS. Trần Minh Đức",
     diagnosis: "Khô mắt nặng — bội nhiễm",
     prescribedAt: todayTimestamp(58),
@@ -308,6 +328,10 @@ export const mockPrescriptions: PrescriptionOrder[] = [
     id: "RX-005",
     patientName: "Vũ Đức Anh",
     patientId: "BN-20260403-0003",
+    prescriptionCode: "DT-20260404-0005",
+    patientBirthYear: 1985,
+    patientGender: "male",
+    patientPhone: "0976543210",
     doctorName: "BS. Nguyễn Hải",
     diagnosis: "Viêm bờ mi",
     icdCode: "H01.0",
@@ -343,6 +367,10 @@ export const mockPrescriptions: PrescriptionOrder[] = [
     id: "RX-006",
     patientName: "Đỗ Thị Thanh",
     patientId: "BN-20260403-0001",
+    prescriptionCode: "DT-20260404-0006",
+    patientBirthYear: 1972,
+    patientGender: "female",
+    patientPhone: "0918222333",
     doctorName: "BS. Trần Minh Đức",
     diagnosis: "Khô mắt nhẹ",
     icdCode: "H04.1",
