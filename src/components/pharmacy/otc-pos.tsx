@@ -135,10 +135,7 @@ export function OtcPos() {
 
   return (
     <>
-      <div
-        className="flex gap-4 pt-2"
-        style={{ height: "calc(100vh - 180px)" }}
-      >
+      <div className="flex h-[calc(90vh-8rem)] min-h-0 gap-4 pt-2">
         {/* Left column */}
         <div className="flex flex-1 flex-col gap-3">
           <OtcCustomerCard
