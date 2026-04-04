@@ -4,7 +4,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -17,14 +16,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { HugeiconsIcon } from "@hugeicons/react"
-import {
-  UnfoldMoreIcon,
-  SparklesIcon,
-  CheckmarkBadgeIcon,
-  CreditCardIcon,
-  NotificationIcon,
-  LogoutIcon,
-} from "@hugeicons/core-free-icons"
+import { UnfoldMoreIcon, LogoutIcon } from "@hugeicons/core-free-icons"
 
 export function NavUser({
   user,
@@ -48,7 +40,7 @@ export function NavUser({
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg">NH</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.name}</span>
@@ -71,7 +63,7 @@ export function NavUser({
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">NH</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user.name}</span>
@@ -80,31 +72,9 @@ export function NavUser({
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <HugeiconsIcon icon={SparklesIcon} strokeWidth={2} />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <HugeiconsIcon icon={CheckmarkBadgeIcon} strokeWidth={2} />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <HugeiconsIcon icon={CreditCardIcon} strokeWidth={2} />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <HugeiconsIcon icon={NotificationIcon} strokeWidth={2} />
-                Notifications
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
             <DropdownMenuItem>
               <HugeiconsIcon icon={LogoutIcon} strokeWidth={2} />
-              Log out
+              Đăng xuất
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

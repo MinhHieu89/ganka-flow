@@ -52,9 +52,9 @@ const navItems = [
 ]
 
 const user = {
-  name: "shadcn",
-  email: "m@example.com",
-  avatar: "/avatars/shadcn.jpg",
+  name: "Nguyễn Minh Hiếu",
+  email: "hieu.nguyen@ganka28.vn",
+  avatar: "",
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
