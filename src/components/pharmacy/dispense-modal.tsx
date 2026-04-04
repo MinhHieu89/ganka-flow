@@ -17,6 +17,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { SubstituteMedicationDialog } from "@/components/pharmacy/substitute-medication-dialog"
+import { PrintLabelsModal } from "@/components/pharmacy/print-labels-modal"
 import type {
   PrescriptionOrder,
   PrescriptionMedication,
@@ -27,7 +28,7 @@ interface DispenseModalProps {
   order: PrescriptionOrder
   open: boolean
   onClose: () => void
-  onConfirm: () => void
+  onConfirm: (finalMedications: PrescriptionMedication[]) => void
 }
 
 function daysUntil(isoDate: string): number {
@@ -55,6 +56,7 @@ export function DispenseModal({
   )
   const [substituteTarget, setSubstituteTarget] =
     useState<PrescriptionMedication | null>(null)
+  const [showLabels, setShowLabels] = useState(false)
 
   const hasSubstitutions = medications.some((m) => m.substitution)
   const hasOutOfStock = medications.some(
@@ -280,18 +282,26 @@ export function DispenseModal({
           </div>
 
           <DialogFooter>
-            <Button variant="outline" onClick={onClose}>
+            <Button variant="outline" onClick={() => setShowLabels(true)}>
               In nhãn thuốc
             </Button>
             <Button variant="outline" onClick={onClose}>
               In đơn thuốc
             </Button>
-            <Button disabled={!canConfirm} onClick={onConfirm}>
+            <Button disabled={!canConfirm} onClick={() => onConfirm(medications)}>
               Xác nhận phát thuốc
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {showLabels && (
+        <PrintLabelsModal
+          order={order}
+          open={showLabels}
+          onClose={() => setShowLabels(false)}
+        />
+      )}
 
       {substituteTarget && (
         <SubstituteMedicationDialog

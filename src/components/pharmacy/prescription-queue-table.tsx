@@ -25,7 +25,16 @@ import {
   FileSearchIcon,
 } from "@hugeicons/core-free-icons"
 import { DispenseModal } from "@/components/pharmacy/dispense-modal"
-import type { PrescriptionOrder } from "@/data/mock-pharmacy"
+import { ViewPrescriptionModal } from "@/components/pharmacy/view-prescription-modal"
+import { DispenseDetailModal } from "@/components/pharmacy/dispense-detail-modal"
+import { PrintLabelsModal } from "@/components/pharmacy/print-labels-modal"
+import type { PrescriptionOrder, PrescriptionMedication } from "@/data/mock-pharmacy"
+
+type OpenModal =
+  | { type: "dispense"; order: PrescriptionOrder }
+  | { type: "view"; order: PrescriptionOrder }
+  | { type: "detail"; order: PrescriptionOrder }
+  | null
 
 function formatElapsed(isoDate: string): string {
   const diff = Math.floor(
@@ -43,16 +52,15 @@ function formatTime(isoDate: string): string {
 
 interface PrescriptionQueueTableProps {
   prescriptions: PrescriptionOrder[]
-  onDispense: (orderId: string) => void
+  onDispense: (orderId: string, finalMedications?: PrescriptionMedication[]) => void
 }
 
 export function PrescriptionQueueTable({
   prescriptions,
   onDispense,
 }: PrescriptionQueueTableProps) {
-  const [dispenseOrder, setDispenseOrder] = useState<PrescriptionOrder | null>(
-    null,
-  )
+  const [openModal, setOpenModal] = useState<OpenModal>(null)
+  const [labelsOrder, setLabelsOrder] = useState<PrescriptionOrder | null>(null)
 
   return (
     <>
@@ -138,12 +146,19 @@ export function PrescriptionQueueTable({
                       {rx.status === "pending" ? (
                         <>
                           <DropdownMenuItem
-                            onClick={() => setDispenseOrder(rx)}
+                            className="text-primary"
+                            onClick={() =>
+                              setOpenModal({ type: "dispense", order: rx })
+                            }
                           >
                             <HugeiconsIcon icon={MedicineBottle02Icon} className="size-4" strokeWidth={1.5} />
                             Phát thuốc
                           </DropdownMenuItem>
-                          <DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() =>
+                              setOpenModal({ type: "view", order: rx })
+                            }
+                          >
                             <HugeiconsIcon icon={File02Icon} className="size-4" strokeWidth={1.5} />
                             Xem đơn thuốc
                           </DropdownMenuItem>
@@ -155,11 +170,19 @@ export function PrescriptionQueueTable({
                         </>
                       ) : (
                         <>
-                          <DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() =>
+                              setOpenModal({ type: "view", order: rx })
+                            }
+                          >
                             <HugeiconsIcon icon={File02Icon} className="size-4" strokeWidth={1.5} />
                             Xem đơn thuốc
                           </DropdownMenuItem>
-                          <DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() =>
+                              setOpenModal({ type: "detail", order: rx })
+                            }
+                          >
                             <HugeiconsIcon icon={FileSearchIcon} className="size-4" strokeWidth={1.5} />
                             Xem chi tiết phát thuốc
                           </DropdownMenuItem>
@@ -183,15 +206,47 @@ export function PrescriptionQueueTable({
         </Table>
       </div>
 
-      {dispenseOrder && (
+      {/* Dispense modal */}
+      {openModal?.type === "dispense" && (
         <DispenseModal
-          order={dispenseOrder}
-          open={!!dispenseOrder}
-          onClose={() => setDispenseOrder(null)}
-          onConfirm={() => {
-            onDispense(dispenseOrder.id)
-            setDispenseOrder(null)
+          order={openModal.order}
+          open
+          onClose={() => setOpenModal(null)}
+          onConfirm={(finalMedications) => {
+            onDispense(openModal.order.id, finalMedications)
+            setOpenModal(null)
           }}
+        />
+      )}
+
+      {/* View prescription modal */}
+      {openModal?.type === "view" && (
+        <ViewPrescriptionModal
+          order={openModal.order}
+          open
+          onClose={() => setOpenModal(null)}
+          onDispense={() =>
+            setOpenModal({ type: "dispense", order: openModal.order })
+          }
+        />
+      )}
+
+      {/* Dispense detail modal */}
+      {openModal?.type === "detail" && (
+        <DispenseDetailModal
+          order={openModal.order}
+          open
+          onClose={() => setOpenModal(null)}
+          onPrintLabels={() => setLabelsOrder(openModal.order)}
+        />
+      )}
+
+      {/* Print labels sub-modal (opened from detail modal) */}
+      {labelsOrder && (
+        <PrintLabelsModal
+          order={labelsOrder}
+          open={!!labelsOrder}
+          onClose={() => setLabelsOrder(null)}
         />
       )}
     </>
