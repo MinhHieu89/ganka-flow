@@ -28,6 +28,7 @@ import { DispenseModal } from "@/components/pharmacy/dispense-modal"
 import { ViewPrescriptionModal } from "@/components/pharmacy/view-prescription-modal"
 import { DispenseDetailModal } from "@/components/pharmacy/dispense-detail-modal"
 import { PrintLabelsModal } from "@/components/pharmacy/print-labels-modal"
+import { PrintPrescriptionModal } from "@/components/pharmacy/print-prescription-modal"
 import type {
   PrescriptionOrder,
   PrescriptionMedication,
@@ -37,6 +38,7 @@ type OpenModal =
   | { type: "dispense"; order: PrescriptionOrder }
   | { type: "view"; order: PrescriptionOrder }
   | { type: "detail"; order: PrescriptionOrder }
+  | { type: "print"; order: PrescriptionOrder }
   | null
 
 function formatElapsed(isoDate: string): string {
@@ -175,7 +177,11 @@ export function PrescriptionQueueTable({
                             Xem đơn thuốc
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() =>
+                              setOpenModal({ type: "print", order: rx })
+                            }
+                          >
                             <HugeiconsIcon
                               icon={PrinterIcon}
                               className="size-4"
@@ -211,7 +217,11 @@ export function PrescriptionQueueTable({
                             Xem chi tiết phát thuốc
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() =>
+                              setOpenModal({ type: "print", order: rx })
+                            }
+                          >
                             <HugeiconsIcon
                               icon={PrinterIcon}
                               className="size-4"
@@ -279,6 +289,14 @@ export function PrescriptionQueueTable({
           order={labelsOrder}
           open={!!labelsOrder}
           onClose={() => setLabelsOrder(null)}
+        />
+      )}
+
+      {openModal?.type === "print" && (
+        <PrintPrescriptionModal
+          order={openModal.order}
+          open
+          onClose={() => setOpenModal(null)}
         />
       )}
     </>

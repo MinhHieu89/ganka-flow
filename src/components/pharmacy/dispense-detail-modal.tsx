@@ -1,3 +1,4 @@
+import { useState } from "react"
 import {
   Dialog,
   DialogContent,
@@ -14,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { PrintPrescriptionModal } from "@/components/pharmacy/print-prescription-modal"
 import type { PrescriptionOrder } from "@/data/mock-pharmacy"
 
 interface DispenseDetailModalProps {
@@ -39,6 +41,7 @@ export function DispenseDetailModal({
   onClose,
   onPrintLabels,
 }: DispenseDetailModalProps) {
+  const [showPrint, setShowPrint] = useState(false)
   const hasSubstitutions = order.dispensedItems?.some(
     (item) => item.isSubstituted
   )
@@ -167,12 +170,20 @@ export function DispenseDetailModal({
             <Button variant="outline" onClick={onPrintLabels}>
               In nhãn thuốc
             </Button>
-            <Button variant="outline" onClick={onClose}>
+            <Button variant="outline" onClick={() => setShowPrint(true)}>
               In đơn thuốc
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {showPrint && (
+        <PrintPrescriptionModal
+          order={order}
+          open={showPrint}
+          onClose={() => setShowPrint(false)}
+        />
+      )}
     </>
   )
 }

@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/table"
 import { SubstituteMedicationDialog } from "@/components/pharmacy/substitute-medication-dialog"
 import { PrintLabelsModal } from "@/components/pharmacy/print-labels-modal"
+import { PrintPrescriptionModal } from "@/components/pharmacy/print-prescription-modal"
 import type {
   PrescriptionOrder,
   PrescriptionMedication,
@@ -57,6 +58,7 @@ export function DispenseModal({
   const [substituteTarget, setSubstituteTarget] =
     useState<PrescriptionMedication | null>(null)
   const [showLabels, setShowLabels] = useState(false)
+  const [showPrint, setShowPrint] = useState(false)
 
   const hasSubstitutions = medications.some((m) => m.substitution)
   const hasOutOfStock = medications.some(
@@ -283,7 +285,7 @@ export function DispenseModal({
             <Button variant="outline" onClick={() => setShowLabels(true)}>
               In nhãn thuốc
             </Button>
-            <Button variant="outline" onClick={onClose}>
+            <Button variant="outline" onClick={() => setShowPrint(true)}>
               In đơn thuốc
             </Button>
             <Button
@@ -301,6 +303,14 @@ export function DispenseModal({
           order={order}
           open={showLabels}
           onClose={() => setShowLabels(false)}
+        />
+      )}
+
+      {showPrint && (
+        <PrintPrescriptionModal
+          order={order}
+          open={showPrint}
+          onClose={() => setShowPrint(false)}
         />
       )}
 
