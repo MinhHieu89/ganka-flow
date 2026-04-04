@@ -178,6 +178,7 @@ export type ReturnReason =
 
 export type ModalState =
   | { type: "closed" }
+  | { type: "view-detail"; paymentRequestId: string }
   | { type: "view-invoice"; transactionId: string }
   | { type: "refund"; transactionId: string }
   | { type: "return-to-queue"; paymentRequestId: string }
@@ -726,4 +727,19 @@ export function getMockRefundableItems(transactionId: string): RefundableItem[] 
     amount: item.lineTotal,
     alreadyRefunded: refundedItemIds.has(item.id),
   }))
+}
+
+// ─── Payment Request Detail Metadata ────────────────────────────────────────
+
+export interface PaymentRequestMeta {
+  doctorName: string
+  visitType: string // "Lần khám mới" | "Tái khám"
+}
+
+export const mockPaymentRequestMeta: Record<string, PaymentRequestMeta> = {
+  "pr-001": { doctorName: "BS. Trần Minh Đức", visitType: "Lần khám mới" },
+  "pr-002": { doctorName: "BS. Nguyễn Hoàng Anh", visitType: "Tái khám" },
+  "pr-003": { doctorName: "BS. Trần Minh Đức", visitType: "Lần khám mới" },
+  "pr-004": { doctorName: "BS. Lê Thanh Hà", visitType: "Tái khám" },
+  "pr-005": { doctorName: "BS. Trần Minh Đức", visitType: "Tái khám" },
 }

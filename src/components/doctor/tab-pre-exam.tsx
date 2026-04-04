@@ -99,6 +99,21 @@ function KvRow({
   )
 }
 
+function MiniCard({
+  label,
+  children,
+}: {
+  label: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className="rounded-lg bg-muted/40 px-3 py-2.5">
+      <div className="mb-1 text-[10px] text-muted-foreground">{label}</div>
+      <div className="text-sm font-semibold">{children}</div>
+    </div>
+  )
+}
+
 function EyeBadge({ eye }: { eye: "OD" | "OS" }) {
   return (
     <span
@@ -388,60 +403,36 @@ export function TabPreExam({ patient, visit }: TabPreExamProps) {
             )}
           </div>
 
-          {/* Chớp mắt cải thiện */}
-          <KvRow
-            label="Chớp mắt cải thiện"
-            value={
-              screening?.blinkImprovement
+          {/* Mini-cards grid */}
+          <div className="grid grid-cols-3 gap-2">
+            <MiniCard label="Chớp mắt cải thiện">
+              {screening?.blinkImprovement
                 ? BLINK_LABELS[screening.blinkImprovement]
-                : "—"
-            }
-            bold
-          />
-
-          {/* Thời gian triệu chứng */}
-          <div className="grid grid-cols-2 gap-x-8">
-            <KvRow
-              label="Thời gian t/c"
-              value={
-                screening?.symptomDuration != null
-                  ? `${screening.symptomDuration} ${screening.symptomDurationUnit}`
-                  : "—"
-              }
-              bold
-            />
-            <KvRow
-              label="Screen time"
-              value={
-                screening?.screenTime ? `${screening.screenTime} giờ/ngày` : "—"
-              }
-              bold
-            />
-          </div>
-
-          {/* Kính áp tròng */}
-          <KvRow
-            label="Kính áp tròng"
-            value={
-              screening?.contactLens === "yes"
+                : "—"}
+            </MiniCard>
+            <MiniCard label="Thời gian t/c">
+              {screening?.symptomDuration != null
+                ? `${screening.symptomDuration} ${screening.symptomDurationUnit}`
+                : "—"}
+            </MiniCard>
+            <MiniCard label="Screen time">
+              {screening?.screenTime
+                ? `${screening.screenTime} giờ/ngày`
+                : "—"}
+            </MiniCard>
+            <MiniCard label="Kính áp tròng">
+              {screening?.contactLens === "yes"
                 ? "Có"
                 : screening?.contactLens === "no"
                   ? "Không"
-                  : "—"
-            }
-            bold
-          />
-
-          {/* Mức độ khó chịu */}
-          <KvRow
-            label="Mức độ khó chịu"
-            value={
-              screening?.discomfortLevel
+                  : "—"}
+            </MiniCard>
+            <MiniCard label="Mức độ khó chịu">
+              {screening?.discomfortLevel
                 ? DISCOMFORT_LABELS[screening.discomfortLevel]
-                : "—"
-            }
-            bold
-          />
+                : "—"}
+            </MiniCard>
+          </div>
         </div>
       </Section>
 
@@ -498,67 +489,59 @@ export function TabPreExam({ patient, visit }: TabPreExamProps) {
                     </div>
                   )}
 
-                  {/* TBUT + Schirmer */}
-                  {(!!dryEye!.tbutOd ||
-                    !!dryEye!.tbutOs ||
-                    !!dryEye!.schirmerOd ||
-                    !!dryEye!.schirmerOs) && (
-                    <div className="rounded-md bg-muted/30 p-2.5">
-                      <div className="grid grid-cols-[5rem_1fr_1fr] gap-x-4 gap-y-1.5 text-xs">
-                        <div />
-                        <div className="text-[10px] font-medium text-muted-foreground">
-                          OD
+                  {/* Mini-cards grid */}
+                  <div className="grid grid-cols-2 gap-2">
+                    {(!!dryEye!.tbutOd || !!dryEye!.tbutOs) && (
+                      <MiniCard label="TBUT">
+                        <div className="flex gap-3">
+                          <span className="flex items-center gap-1">
+                            <EyeBadge eye="OD" />
+                            <span className="tabular-nums">
+                              {dryEye!.tbutOd ? `${dryEye!.tbutOd}s` : "—"}
+                            </span>
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <EyeBadge eye="OS" />
+                            <span className="tabular-nums">
+                              {dryEye!.tbutOs ? `${dryEye!.tbutOs}s` : "—"}
+                            </span>
+                          </span>
                         </div>
-                        <div className="text-[10px] font-medium text-muted-foreground">
-                          OS
+                      </MiniCard>
+                    )}
+                    {(!!dryEye!.schirmerOd || !!dryEye!.schirmerOs) && (
+                      <MiniCard label="Schirmer">
+                        <div className="flex gap-3">
+                          <span className="flex items-center gap-1">
+                            <EyeBadge eye="OD" />
+                            <span className="tabular-nums">
+                              {dryEye!.schirmerOd
+                                ? `${dryEye!.schirmerOd}mm`
+                                : "—"}
+                            </span>
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <EyeBadge eye="OS" />
+                            <span className="tabular-nums">
+                              {dryEye!.schirmerOs
+                                ? `${dryEye!.schirmerOs}mm`
+                                : "—"}
+                            </span>
+                          </span>
                         </div>
-
-                        <div className="text-muted-foreground">TBUT</div>
-                        <div
-                          className={cn(
-                            "font-medium tabular-nums",
-                            !dryEye!.tbutOd && "text-muted-foreground"
-                          )}
-                        >
-                          {dryEye!.tbutOd ? `${dryEye!.tbutOd}s` : "—"}
-                        </div>
-                        <div
-                          className={cn(
-                            "font-medium tabular-nums",
-                            !dryEye!.tbutOs && "text-muted-foreground"
-                          )}
-                        >
-                          {dryEye!.tbutOs ? `${dryEye!.tbutOs}s` : "—"}
-                        </div>
-
-                        <div className="text-muted-foreground">Schirmer</div>
-                        <div
-                          className={cn(
-                            "font-medium tabular-nums",
-                            !dryEye!.schirmerOd && "text-muted-foreground"
-                          )}
-                        >
-                          {dryEye!.schirmerOd ? `${dryEye!.schirmerOd}mm` : "—"}
-                        </div>
-                        <div
-                          className={cn(
-                            "font-medium tabular-nums",
-                            !dryEye!.schirmerOs && "text-muted-foreground"
-                          )}
-                        >
-                          {dryEye!.schirmerOs ? `${dryEye!.schirmerOs}mm` : "—"}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Meibomian + Staining */}
-                  {!!dryEye!.meibomian && (
-                    <KvRow label="Meibomian" value={dryEye!.meibomian} bold />
-                  )}
-                  {!!dryEye!.staining && (
-                    <KvRow label="Staining" value={dryEye!.staining} bold />
-                  )}
+                      </MiniCard>
+                    )}
+                    {!!dryEye!.meibomian && (
+                      <MiniCard label="Meibomian">
+                        {dryEye!.meibomian}
+                      </MiniCard>
+                    )}
+                    {!!dryEye!.staining && (
+                      <MiniCard label="Staining">
+                        {dryEye!.staining}
+                      </MiniCard>
+                    )}
+                  </div>
                 </div>
               </Section>
             )}
