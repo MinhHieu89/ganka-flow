@@ -74,7 +74,9 @@ export function ViewRxModal({
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
       <DialogContent className="flex max-h-[85vh] flex-col sm:max-w-[560px]">
         <DialogHeader>
-          <DialogTitle className="sr-only">Đơn khúc xạ</DialogTitle>
+          <DialogTitle className="text-base font-medium">
+            Đơn kính bác sĩ
+          </DialogTitle>
         </DialogHeader>
 
         {/* Patient info */}
