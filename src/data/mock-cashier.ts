@@ -62,6 +62,54 @@ export interface CashierMetrics {
   cardCount: number
 }
 
+export interface PaymentPatientInfo {
+  name: string
+  code: string
+  gender: string
+  age: number
+  phone: string
+}
+
+export interface PaymentLineItem {
+  id: string
+  category: PaymentCategory
+  description: string
+  quantity: number
+  unitPrice: number
+  lineTotal: number
+  refId?: string
+}
+
+export interface PaymentDiscount {
+  type: "percent" | "fixed"
+  value: number
+  reason: string
+  appliedBy: string
+  amount: number
+}
+
+export interface PaymentMethodEntry {
+  id: string
+  method: PaymentMethod
+  amount: number
+  cashReceived?: number
+  cashChange?: number
+}
+
+export interface CompletedPayment {
+  id: string
+  paymentRequestId: string
+  patient: PaymentPatientInfo
+  items: PaymentLineItem[]
+  discount: PaymentDiscount | null
+  paymentMethods: PaymentMethodEntry[]
+  subtotal: number
+  discountAmount: number
+  total: number
+  cashierName: string
+  completedAt: string
+}
+
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 export function formatVND(amount: number): string {
@@ -276,3 +324,160 @@ export const mockTransactions: Transaction[] = [
     visitId: "v-009",
   },
 ]
+
+// ─── Payment Processing Mock Data ───────────────────────────────────────────
+
+export const mockPaymentPatients: Record<string, PaymentPatientInfo> = {
+  "pr-001": {
+    name: "Nguyễn Thị Mai",
+    code: "BN-20260405-0008",
+    gender: "Nữ",
+    age: 42,
+    phone: "0912345678",
+  },
+  "pr-002": {
+    name: "Trần Văn Hùng",
+    code: "BN-20260405-0012",
+    gender: "Nam",
+    age: 55,
+    phone: "0987654321",
+  },
+  "pr-003": {
+    name: "Lê Hoàng Anh",
+    code: "BN-20260405-0015",
+    gender: "Nam",
+    age: 28,
+    phone: "0365123456",
+  },
+  "pr-004": {
+    name: "Phạm Minh Châu",
+    code: "BN-20260405-0018",
+    gender: "Nữ",
+    age: 36,
+    phone: "0901222333",
+  },
+  "pr-005": {
+    name: "Vũ Đức Thắng",
+    code: "BN-20260405-0003",
+    gender: "Nam",
+    age: 63,
+    phone: "0778999111",
+  },
+}
+
+export const mockPaymentLineItems: Record<string, PaymentLineItem[]> = {
+  "pr-001": [
+    {
+      id: "li-001",
+      category: "exam",
+      description: "Phí khám chuyên khoa mắt",
+      quantity: 1,
+      unitPrice: 200_000,
+      lineTotal: 200_000,
+    },
+    {
+      id: "li-002",
+      category: "exam",
+      description: "Đo khúc xạ tự động",
+      quantity: 1,
+      unitPrice: 50_000,
+      lineTotal: 50_000,
+    },
+    {
+      id: "li-003",
+      category: "drug",
+      description: "Restasis 0.05%",
+      quantity: 2,
+      unitPrice: 240_000,
+      lineTotal: 480_000,
+    },
+    {
+      id: "li-004",
+      category: "drug",
+      description: "Systane Ultra UD",
+      quantity: 1,
+      unitPrice: 125_000,
+      lineTotal: 125_000,
+    },
+  ],
+  "pr-002": [
+    {
+      id: "li-005",
+      category: "optical",
+      description: "Gọng Essilor Stylance X",
+      quantity: 1,
+      unitPrice: 850_000,
+      lineTotal: 850_000,
+    },
+    {
+      id: "li-006",
+      category: "optical",
+      description: "Tròng Hoya 1.67 BlueControl",
+      quantity: 1,
+      unitPrice: 1_200_000,
+      lineTotal: 1_200_000,
+    },
+    {
+      id: "li-007",
+      category: "optical",
+      description: "Phí cắt lắp tròng",
+      quantity: 1,
+      unitPrice: 150_000,
+      lineTotal: 150_000,
+    },
+  ],
+  "pr-003": [
+    {
+      id: "li-008",
+      category: "exam",
+      description: "Phí khám chuyên khoa mắt",
+      quantity: 1,
+      unitPrice: 200_000,
+      lineTotal: 200_000,
+    },
+    {
+      id: "li-009",
+      category: "drug",
+      description: "Tobradex nhỏ mắt",
+      quantity: 1,
+      unitPrice: 180_000,
+      lineTotal: 180_000,
+    },
+    {
+      id: "li-010",
+      category: "drug",
+      description: "Refresh Tears",
+      quantity: 1,
+      unitPrice: 100_000,
+      lineTotal: 100_000,
+    },
+  ],
+  "pr-004": [
+    {
+      id: "li-011",
+      category: "treatment",
+      description: "Gói IPL 6 buổi (Đợt 1 – 50%)",
+      quantity: 1,
+      unitPrice: 2_400_000,
+      lineTotal: 2_400_000,
+    },
+  ],
+  "pr-005": [
+    {
+      id: "li-012",
+      category: "drug",
+      description: "Systane Ultra UD",
+      quantity: 1,
+      unitPrice: 125_000,
+      lineTotal: 125_000,
+    },
+    {
+      id: "li-013",
+      category: "drug",
+      description: "Vitamin A 25000IU",
+      quantity: 30,
+      unitPrice: 2_000,
+      lineTotal: 60_000,
+    },
+  ],
+}
