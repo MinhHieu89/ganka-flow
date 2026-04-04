@@ -768,31 +768,36 @@ export const diagnosisCatalog: DiagnosisCatalogEntry[] = [
   {
     icd10: "E11.311",
     nameVi: "Bệnh võng mạc ĐTĐ nền mắt phải không phù hoàng điểm",
-    nameEn: "T2DM with mild nonproliferative diabetic retinopathy without DME, right eye",
+    nameEn:
+      "T2DM with mild nonproliferative diabetic retinopathy without DME, right eye",
     category: "Bệnh võng mạc đái tháo đường",
   },
   {
     icd10: "E11.312",
     nameVi: "Bệnh võng mạc ĐTĐ nền mắt trái không phù hoàng điểm",
-    nameEn: "T2DM with mild nonproliferative diabetic retinopathy without DME, left eye",
+    nameEn:
+      "T2DM with mild nonproliferative diabetic retinopathy without DME, left eye",
     category: "Bệnh võng mạc đái tháo đường",
   },
   {
     icd10: "E11.313",
     nameVi: "Bệnh võng mạc ĐTĐ nền hai mắt không phù hoàng điểm",
-    nameEn: "T2DM with mild nonproliferative diabetic retinopathy without DME, bilateral",
+    nameEn:
+      "T2DM with mild nonproliferative diabetic retinopathy without DME, bilateral",
     category: "Bệnh võng mạc đái tháo đường",
   },
   {
     icd10: "E11.341",
     nameVi: "Bệnh võng mạc ĐTĐ nặng mắt phải có phù hoàng điểm",
-    nameEn: "T2DM with severe nonproliferative diabetic retinopathy with DME, right eye",
+    nameEn:
+      "T2DM with severe nonproliferative diabetic retinopathy with DME, right eye",
     category: "Bệnh võng mạc đái tháo đường",
   },
   {
     icd10: "E11.342",
     nameVi: "Bệnh võng mạc ĐTĐ nặng mắt trái có phù hoàng điểm",
-    nameEn: "T2DM with severe nonproliferative diabetic retinopathy with DME, left eye",
+    nameEn:
+      "T2DM with severe nonproliferative diabetic retinopathy with DME, left eye",
     category: "Bệnh võng mạc đái tháo đường",
   },
   {

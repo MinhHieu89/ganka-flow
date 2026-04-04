@@ -15,11 +15,7 @@ export function ScreeningFormHeader({
   visit,
 }: ScreeningFormHeaderProps) {
   const waitMinutes = visit.checkedInAt
-    ? Math.floor(
-        (Date.now() -
-          new Date(visit.checkedInAt).getTime()) /
-          60000
-      )
+    ? Math.floor((Date.now() - new Date(visit.checkedInAt).getTime()) / 60000)
     : 0
 
   const sourceLabel = SOURCE_CONFIG[visit.source].label

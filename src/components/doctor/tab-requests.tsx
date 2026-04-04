@@ -25,7 +25,7 @@ import {
 interface TabRequestsProps {
   requests: VisitRequest[]
   onAddRequest: (
-    request: Omit<VisitRequest, "id" | "requestedAt" | "status">,
+    request: Omit<VisitRequest, "id" | "requestedAt" | "status">
   ) => void
 }
 
@@ -92,7 +92,7 @@ function SubjectiveRefractionTable({
             {cols.map((col) => (
               <th
                 key={col}
-                className="pb-1 pr-3 text-right font-medium text-muted-foreground"
+                className="pr-3 pb-1 text-right font-medium text-muted-foreground"
               >
                 {col}
               </th>
@@ -129,7 +129,8 @@ function RequestCard({ request }: { request: VisitRequest }) {
   const isCompleted = request.status === "completed"
 
   const metaParts: string[] = []
-  if (request.requestedAt) metaParts.push(`Gửi ${formatTime(request.requestedAt)}`)
+  if (request.requestedAt)
+    metaParts.push(`Gửi ${formatTime(request.requestedAt)}`)
   if (isCompleted && request.completedAt)
     metaParts.push(`Hoàn tất ${formatTime(request.completedAt)}`)
   if (request.assignedTo) metaParts.push(request.assignedTo)
@@ -252,9 +253,7 @@ export function TabRequests({ requests, onAddRequest }: TabRequestsProps) {
               </label>
               <Select
                 value={priority}
-                onValueChange={(v) =>
-                  setPriority(v as "normal" | "urgent")
-                }
+                onValueChange={(v) => setPriority(v as "normal" | "urgent")}
               >
                 <SelectTrigger>
                   <SelectValue />

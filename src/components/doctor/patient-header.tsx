@@ -14,9 +14,7 @@ interface PatientHeaderProps {
 function getInitials(name: string): string {
   const words = name.trim().split(/\s+/)
   const last2 = words.slice(-2)
-  return last2
-    .map((w) => w[0]?.toUpperCase() ?? "")
-    .join("")
+  return last2.map((w) => w[0]?.toUpperCase() ?? "").join("")
 }
 
 function getVisitBadgeLabel(visit: Visit): string {
@@ -25,7 +23,11 @@ function getVisitBadgeLabel(visit: Visit): string {
   return "Tái khám"
 }
 
-export function PatientHeader({ patient, visit, onComplete }: PatientHeaderProps) {
+export function PatientHeader({
+  patient,
+  visit,
+  onComplete,
+}: PatientHeaderProps) {
   const age = new Date().getFullYear() - patient.birthYear
   const initials = getInitials(patient.name)
   const badgeLabel = getVisitBadgeLabel(visit)
@@ -51,7 +53,7 @@ export function PatientHeader({ patient, visit, onComplete }: PatientHeaderProps
       {/* Patient info */}
       <div className="flex min-w-0 flex-1 items-center gap-4">
         <div className="min-w-0">
-          <span className="truncate text-[15px] font-medium leading-tight">
+          <span className="truncate text-[15px] leading-tight font-medium">
             {patient.name}
           </span>
         </div>
@@ -72,7 +74,7 @@ export function PatientHeader({ patient, visit, onComplete }: PatientHeaderProps
             "shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium",
             isFirstVisit
               ? "bg-sky-100 text-sky-700 dark:bg-sky-950 dark:text-sky-300"
-              : "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300",
+              : "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300"
           )}
         >
           {badgeLabel}
@@ -82,7 +84,11 @@ export function PatientHeader({ patient, visit, onComplete }: PatientHeaderProps
       {/* Action buttons */}
       <div className="flex shrink-0 items-center gap-2">
         <Button variant="outline" size="sm" className="gap-1.5">
-          <HugeiconsIcon icon={PrinterIcon} className="size-4" strokeWidth={1.5} />
+          <HugeiconsIcon
+            icon={PrinterIcon}
+            className="size-4"
+            strokeWidth={1.5}
+          />
           In phiếu
         </Button>
         <Button

@@ -202,11 +202,29 @@ export interface FundusExam {
   os: FundusEye
 }
 
-export type RequestStatus = "pending" | "in_progress" | "completed" | "cancelled"
+export type RequestStatus =
+  | "pending"
+  | "in_progress"
+  | "completed"
+  | "cancelled"
 
 export interface SubjectiveRefractionResult {
-  od: { sph: string; cyl: string; axis: string; bcva: string; add: string; pd: string }
-  os: { sph: string; cyl: string; axis: string; bcva: string; add: string; pd: string }
+  od: {
+    sph: string
+    cyl: string
+    axis: string
+    bcva: string
+    add: string
+    pd: string
+  }
+  os: {
+    sph: string
+    cyl: string
+    axis: string
+    bcva: string
+    add: string
+    pd: string
+  }
 }
 
 export interface GenericResult {

@@ -8,10 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import {
-  mockPatients,
-  type PatientActiveStatus,
-} from "@/data/mock-patients"
+import { mockPatients, type PatientActiveStatus } from "@/data/mock-patients"
 import { PatientFilters } from "@/components/patients/patient-filters"
 import { PatientRegistryTable } from "@/components/patients/patient-registry-table"
 import { HugeiconsIcon } from "@hugeicons/react"
@@ -21,9 +18,9 @@ export default function PatientRegistry() {
   const navigate = useNavigate()
 
   const [search, setSearch] = useState("")
-  const [statusFilter, setStatusFilter] = useState<
-    PatientActiveStatus | "all"
-  >("hoat_dong")
+  const [statusFilter, setStatusFilter] = useState<PatientActiveStatus | "all">(
+    "hoat_dong"
+  )
   const [genderFilter, setGenderFilter] = useState<
     "all" | "Nam" | "Nữ" | "Khác"
   >("all")
@@ -47,7 +44,7 @@ export default function PatientRegistry() {
         (p) =>
           p.name.toLowerCase().includes(q) ||
           p.phone.includes(q) ||
-          p.id.toLowerCase().includes(q),
+          p.id.toLowerCase().includes(q)
       )
     }
 
@@ -62,9 +59,7 @@ export default function PatientRegistry() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-bold">Bệnh nhân</h1>
-          <p className="text-sm text-muted-foreground">
-            Danh sách bệnh nhân
-          </p>
+          <p className="text-sm text-muted-foreground">Danh sách bệnh nhân</p>
         </div>
         <Button onClick={() => navigate("/intake/new")}>
           <HugeiconsIcon icon={UserAdd01Icon} className="size-4" />

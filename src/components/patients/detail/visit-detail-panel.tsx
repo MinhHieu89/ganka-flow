@@ -57,9 +57,7 @@ function EyeExamCard({
                 <div className="text-[11px] text-muted-foreground">
                   {f.label}
                 </div>
-                <div className="text-[13px]">
-                  {od[f.key]}
-                </div>
+                <div className="text-[13px]">{od[f.key]}</div>
               </div>
             ))}
           </div>
@@ -87,9 +85,7 @@ function EyeExamCard({
                 <div className="text-[11px] text-muted-foreground">
                   {f.label}
                 </div>
-                <div className="text-[13px]">
-                  {os[f.key]}
-                </div>
+                <div className="text-[13px]">{os[f.key]}</div>
               </div>
             ))}
           </div>
@@ -309,14 +305,12 @@ export function VisitDetailPanel({ visit }: VisitDetailPanelProps) {
               </span>
             </div>
             <OdOsRow eye="OD">
-              TBUT {visit.dryEye.od.tbut} · Schirmer{" "}
-              {visit.dryEye.od.schirmer} · Meibomian:{" "}
-              {visit.dryEye.od.meibomian}
+              TBUT {visit.dryEye.od.tbut} · Schirmer {visit.dryEye.od.schirmer}{" "}
+              · Meibomian: {visit.dryEye.od.meibomian}
             </OdOsRow>
             <OdOsRow eye="OS">
-              TBUT {visit.dryEye.os.tbut} · Schirmer{" "}
-              {visit.dryEye.os.schirmer} · Meibomian:{" "}
-              {visit.dryEye.os.meibomian}
+              TBUT {visit.dryEye.os.tbut} · Schirmer {visit.dryEye.os.schirmer}{" "}
+              · Meibomian: {visit.dryEye.os.meibomian}
             </OdOsRow>
             {visit.dryEye.staining && (
               <div className="mt-1 text-xs text-muted-foreground">
@@ -409,8 +403,7 @@ export function VisitDetailPanel({ visit }: VisitDetailPanelProps) {
                 key={i}
                 className={cn(
                   "flex flex-wrap items-start justify-between py-2.5",
-                  i < visit.medications.length - 1 &&
-                    "border-b border-border"
+                  i < visit.medications.length - 1 && "border-b border-border"
                 )}
               >
                 <div>
@@ -459,17 +452,13 @@ export function VisitDetailPanel({ visit }: VisitDetailPanelProps) {
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-center">
                   <div>
-                    <div className="text-[11px] text-muted-foreground">
-                      Sph
-                    </div>
+                    <div className="text-[11px] text-muted-foreground">Sph</div>
                     <div className="text-[15px] font-medium">
                       {visit.opticalRx.od.sph}
                     </div>
                   </div>
                   <div>
-                    <div className="text-[11px] text-muted-foreground">
-                      Cyl
-                    </div>
+                    <div className="text-[11px] text-muted-foreground">Cyl</div>
                     <div className="text-[15px] font-medium">
                       {visit.opticalRx.od.cyl}
                     </div>
@@ -503,17 +492,13 @@ export function VisitDetailPanel({ visit }: VisitDetailPanelProps) {
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-center">
                   <div>
-                    <div className="text-[11px] text-muted-foreground">
-                      Sph
-                    </div>
+                    <div className="text-[11px] text-muted-foreground">Sph</div>
                     <div className="text-[15px] font-medium">
                       {visit.opticalRx.os.sph}
                     </div>
                   </div>
                   <div>
-                    <div className="text-[11px] text-muted-foreground">
-                      Cyl
-                    </div>
+                    <div className="text-[11px] text-muted-foreground">Cyl</div>
                     <div className="text-[15px] font-medium">
                       {visit.opticalRx.os.cyl}
                     </div>
@@ -556,8 +541,7 @@ export function VisitDetailPanel({ visit }: VisitDetailPanelProps) {
                 key={i}
                 className={cn(
                   "py-2",
-                  i < visit.procedures.length - 1 &&
-                    "border-b border-border"
+                  i < visit.procedures.length - 1 && "border-b border-border"
                 )}
               >
                 <div className="text-[13px] font-medium">{proc.name}</div>

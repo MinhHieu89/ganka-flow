@@ -182,7 +182,6 @@ function FundusFields({
   )
 }
 
-
 function IconCloseButton({
   onClick,
   label = "Xóa",
@@ -195,7 +194,7 @@ function IconCloseButton({
       type="button"
       onClick={onClick}
       aria-label={label}
-      className="shrink-0 rounded-sm p-0.5 text-muted-foreground transition-colors hover:text-destructive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="shrink-0 rounded-sm p-0.5 text-muted-foreground transition-colors hover:text-destructive focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
     >
       <HugeiconsIcon icon={Cancel01Icon} size={16} />
     </button>
@@ -359,11 +358,7 @@ function OpticalRxSection({
   onChange: (rx: NewOpticalRx) => void
   onRemoveSection: () => void
 }) {
-  const renderEyeInputs = (
-    eye: "od" | "os",
-    label: string,
-    color: string,
-  ) => {
+  const renderEyeInputs = (eye: "od" | "os", label: string, color: string) => {
     const eyeData = rx[eye]
     const updateField = (field: keyof typeof eyeData, value: string) => {
       onChange({ ...rx, [eye]: { ...eyeData, [field]: value } })
@@ -376,15 +371,19 @@ function OpticalRxSection({
             className="inline-block h-2.5 w-2.5 rounded-full"
             style={{ backgroundColor: color }}
           />
-          <span className="text-sm font-semibold">
-            {label}
-          </span>
+          <span className="text-sm font-semibold">{label}</span>
         </div>
         <div className="grid grid-cols-4 gap-2">
           {(["sph", "cyl", "axis", "add"] as const).map((f) => (
             <div key={f}>
               <label className="mb-1 block text-xs text-muted-foreground uppercase">
-                {f === "sph" ? "Sph" : f === "cyl" ? "Cyl" : f === "axis" ? "Axis" : "Add"}
+                {f === "sph"
+                  ? "Sph"
+                  : f === "cyl"
+                    ? "Cyl"
+                    : f === "axis"
+                      ? "Axis"
+                      : "Add"}
               </label>
               <Input
                 value={eyeData[f]}
@@ -511,9 +510,7 @@ function FollowUpSection({
           <Input
             type="date"
             value={followUp.date}
-            onChange={(e) =>
-              onChange({ ...followUp, date: e.target.value })
-            }
+            onChange={(e) => onChange({ ...followUp, date: e.target.value })}
           />
         </div>
         <div>
@@ -522,20 +519,14 @@ function FollowUpSection({
           </label>
           <Select
             value={followUp.doctor}
-            onValueChange={(v) =>
-              onChange({ ...followUp, doctor: v })
-            }
+            onValueChange={(v) => onChange({ ...followUp, doctor: v })}
           >
             <SelectTrigger>
               <SelectValue placeholder="Chọn bác sĩ" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="BS. Nguyễn Hải">
-                BS. Nguyễn Hải
-              </SelectItem>
-              <SelectItem value="BS. Trần Minh">
-                BS. Trần Minh
-              </SelectItem>
+              <SelectItem value="BS. Nguyễn Hải">BS. Nguyễn Hải</SelectItem>
+              <SelectItem value="BS. Trần Minh">BS. Trần Minh</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -577,7 +568,7 @@ function ToggleButton({
         "transition-colors",
         active
           ? "border-[#B5D4F4] bg-[#E6F1FB] text-[#0C447C]"
-          : "border-dashed border-border text-muted-foreground",
+          : "border-dashed border-border text-muted-foreground"
       )}
     >
       {active ? activeLabel : inactiveLabel}
@@ -591,7 +582,7 @@ export function TabExam({ examData, onChange }: TabExamProps) {
   const [showSlitLamp, setShowSlitLamp] = useState(false)
   const [showFundus, setShowFundus] = useState(false)
   const [showMedication, setShowMedication] = useState(
-    examData.medications.length > 0,
+    examData.medications.length > 0
   )
   const [showOptical, setShowOptical] = useState(!!examData.opticalRx)
   const [showFollowUp, setShowFollowUp] = useState(!!examData.followUp)

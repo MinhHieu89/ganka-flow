@@ -214,7 +214,7 @@ export function PrescriptionQueueTable({
                               className="size-4"
                               strokeWidth={1.5}
                             />
-                            Xem chi tiết phát thuốc
+                            Chi tiết phát thuốc
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
                           <DropdownMenuItem
@@ -229,7 +229,9 @@ export function PrescriptionQueueTable({
                             />
                             In đơn thuốc
                           </DropdownMenuItem>
-                          <DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => setLabelsOrder(rx)}
+                          >
                             <HugeiconsIcon
                               icon={LabelIcon}
                               className="size-4"

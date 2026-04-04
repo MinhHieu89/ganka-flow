@@ -128,10 +128,7 @@ export default function DoctorExam() {
               />
             )}
             {activeTab === "exam" && (
-              <TabExam
-                examData={examData}
-                onChange={setExamData}
-              />
+              <TabExam examData={examData} onChange={setExamData} />
             )}
           </div>
         </div>

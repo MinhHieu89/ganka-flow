@@ -46,7 +46,7 @@ export function MedicationSearch({
     if (value.length < 1) return []
     const q = removeDiacritics(value.toLowerCase())
     return medicationCatalog.filter((m) =>
-      removeDiacritics(m.name.toLowerCase()).includes(q),
+      removeDiacritics(m.name.toLowerCase()).includes(q)
     )
   }, [value])
 
@@ -56,9 +56,7 @@ export function MedicationSearch({
 
   useEffect(() => {
     if (!listRef.current) return
-    const el = listRef.current.querySelector(
-      `[data-index="${highlightIndex}"]`,
-    )
+    const el = listRef.current.querySelector(`[data-index="${highlightIndex}"]`)
     if (el) {
       el.scrollIntoView({ block: "nearest" })
     }
@@ -69,7 +67,7 @@ export function MedicationSearch({
       onSelect(entry)
       setShowDropdown(false)
     },
-    [onSelect],
+    [onSelect]
   )
 
   function handleKeyDown(e: React.KeyboardEvent) {
@@ -78,15 +76,11 @@ export function MedicationSearch({
     switch (e.key) {
       case "ArrowDown":
         e.preventDefault()
-        setHighlightIndex((prev) =>
-          prev < results.length - 1 ? prev + 1 : 0,
-        )
+        setHighlightIndex((prev) => (prev < results.length - 1 ? prev + 1 : 0))
         break
       case "ArrowUp":
         e.preventDefault()
-        setHighlightIndex((prev) =>
-          prev > 0 ? prev - 1 : results.length - 1,
-        )
+        setHighlightIndex((prev) => (prev > 0 ? prev - 1 : results.length - 1))
         break
       case "Enter":
         e.preventDefault()

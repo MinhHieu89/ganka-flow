@@ -26,7 +26,10 @@ function AdminInfoSection({ patient }: { patient: Patient }) {
 
   const rows: { label: string; value: string | undefined }[] = [
     { label: "Họ tên", value: patient.name },
-    { label: "Ngày sinh", value: patient.dob ? `${patient.dob} (${age} tuổi)` : undefined },
+    {
+      label: "Ngày sinh",
+      value: patient.dob ? `${patient.dob} (${age} tuổi)` : undefined,
+    },
     { label: "Giới tính", value: patient.gender },
     { label: "CCCD", value: patient.cccd },
     { label: "Điện thoại", value: patient.phone },
@@ -90,7 +93,9 @@ function FullVisitCard({ pv }: { pv: PreviousVisit }) {
           <span className="text-xs text-muted-foreground">·</span>
           <span className="text-xs text-muted-foreground">{pv.doctorName}</span>
           <span className="text-xs text-muted-foreground">·</span>
-          <span className="text-xs text-muted-foreground">{daysAgo(pv.date)}</span>
+          <span className="text-xs text-muted-foreground">
+            {daysAgo(pv.date)}
+          </span>
         </div>
         <Button variant="ghost" size="sm" className="h-6 px-2 text-xs">
           Xem chi tiết
@@ -167,10 +172,16 @@ function FullVisitCard({ pv }: { pv: PreviousVisit }) {
             <table className="w-full text-xs">
               <thead>
                 <tr>
-                  <th className="pb-0.5 pr-2 text-left font-normal text-muted-foreground"></th>
-                  <th className="pb-0.5 pr-2 text-left font-normal text-muted-foreground">SC</th>
-                  <th className="pb-0.5 pr-2 text-left font-normal text-muted-foreground">CC</th>
-                  <th className="pb-0.5 text-left font-normal text-muted-foreground">IOP</th>
+                  <th className="pr-2 pb-0.5 text-left font-normal text-muted-foreground"></th>
+                  <th className="pr-2 pb-0.5 text-left font-normal text-muted-foreground">
+                    SC
+                  </th>
+                  <th className="pr-2 pb-0.5 text-left font-normal text-muted-foreground">
+                    CC
+                  </th>
+                  <th className="pb-0.5 text-left font-normal text-muted-foreground">
+                    IOP
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -198,24 +209,42 @@ function FullVisitCard({ pv }: { pv: PreviousVisit }) {
             <table className="w-full text-xs">
               <thead>
                 <tr>
-                  <th className="pb-0.5 pr-2 text-left font-normal text-muted-foreground"></th>
-                  <th className="pb-0.5 pr-2 text-left font-normal text-muted-foreground">Sph</th>
-                  <th className="pb-0.5 pr-2 text-left font-normal text-muted-foreground">Cyl</th>
-                  <th className="pb-0.5 text-left font-normal text-muted-foreground">Axis</th>
+                  <th className="pr-2 pb-0.5 text-left font-normal text-muted-foreground"></th>
+                  <th className="pr-2 pb-0.5 text-left font-normal text-muted-foreground">
+                    Sph
+                  </th>
+                  <th className="pr-2 pb-0.5 text-left font-normal text-muted-foreground">
+                    Cyl
+                  </th>
+                  <th className="pb-0.5 text-left font-normal text-muted-foreground">
+                    Axis
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td className="pr-2 font-medium text-muted-foreground">OD</td>
-                  <td className="pr-2 tabular-nums">{pv.refraction.sphOd || "—"}</td>
-                  <td className="pr-2 tabular-nums">{pv.refraction.cylOd || "—"}</td>
-                  <td className="tabular-nums">{pv.refraction.axisOd || "—"}</td>
+                  <td className="pr-2 tabular-nums">
+                    {pv.refraction.sphOd || "—"}
+                  </td>
+                  <td className="pr-2 tabular-nums">
+                    {pv.refraction.cylOd || "—"}
+                  </td>
+                  <td className="tabular-nums">
+                    {pv.refraction.axisOd || "—"}
+                  </td>
                 </tr>
                 <tr>
                   <td className="pr-2 font-medium text-muted-foreground">OS</td>
-                  <td className="pr-2 tabular-nums">{pv.refraction.sphOs || "—"}</td>
-                  <td className="pr-2 tabular-nums">{pv.refraction.cylOs || "—"}</td>
-                  <td className="tabular-nums">{pv.refraction.axisOs || "—"}</td>
+                  <td className="pr-2 tabular-nums">
+                    {pv.refraction.sphOs || "—"}
+                  </td>
+                  <td className="pr-2 tabular-nums">
+                    {pv.refraction.cylOs || "—"}
+                  </td>
+                  <td className="tabular-nums">
+                    {pv.refraction.axisOs || "—"}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -228,7 +257,9 @@ function FullVisitCard({ pv }: { pv: PreviousVisit }) {
             <span className="text-[10px] font-semibold tracking-wider text-muted-foreground/70 uppercase">
               Dặn dò
             </span>
-            <p className="mt-1 text-xs text-muted-foreground">{pv.instructions}</p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              {pv.instructions}
+            </p>
           </div>
         )}
       </div>
@@ -247,7 +278,9 @@ function CollapsedVisitCard({ pv }: { pv: PreviousVisit }) {
           <span className="text-xs text-muted-foreground">·</span>
           <span className="text-xs text-muted-foreground">{pv.doctorName}</span>
         </div>
-        <span className="text-xs text-muted-foreground">{daysAgo(pv.date)}</span>
+        <span className="text-xs text-muted-foreground">
+          {daysAgo(pv.date)}
+        </span>
       </div>
       <div className="flex items-center gap-3 border-t border-border/50 px-3 py-2">
         {primaryDx && (

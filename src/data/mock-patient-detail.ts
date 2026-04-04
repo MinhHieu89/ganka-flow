@@ -527,9 +527,7 @@ export const MOCK_PATIENT_DETAIL: PatientDetail = {
         discomfortLevel: null,
       },
       dryEye: null,
-      diagnoses: [
-        { text: "Cận thị 2 mắt", icdCode: "H52.1", isPrimary: true },
-      ],
+      diagnoses: [{ text: "Cận thị 2 mắt", icdCode: "H52.1", isPrimary: true }],
       diagnosisNotes: null,
       va: {
         od: { sc: "20/30", cc: "20/25", ph: "", iop: "14" },

@@ -24,7 +24,7 @@ function Section({
         "rounded-lg border bg-card px-5 py-4",
         variant === "red"
           ? "border-red-300 bg-red-50/30 dark:border-red-800 dark:bg-red-950/20"
-          : "border-border",
+          : "border-border"
       )}
     >
       <div
@@ -32,7 +32,7 @@ function Section({
           "mb-3.5 text-[11px] font-semibold tracking-wider uppercase",
           variant === "red"
             ? "text-red-600 dark:text-red-400"
-            : "text-muted-foreground/70",
+            : "text-muted-foreground/70"
         )}
       >
         {title}
@@ -97,7 +97,7 @@ function EyeBadge({ eye }: { eye: "OD" | "OS" }) {
     <span
       className={cn(
         "inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-bold text-white",
-        eye === "OD" ? "bg-[#378ADD]" : "bg-[#D85A30]",
+        eye === "OD" ? "bg-[#378ADD]" : "bg-[#D85A30]"
       )}
     >
       {eye}
@@ -255,7 +255,10 @@ export function TabPreExam({ patient, visit }: TabPreExamProps) {
       </Section>
 
       {/* 2. Red Flag — matches screening-form-red-flags.tsx */}
-      <Section title="Red Flag" variant={activeRedFlags.length > 0 ? "red" : undefined}>
+      <Section
+        title="Red Flag"
+        variant={activeRedFlags.length > 0 ? "red" : undefined}
+      >
         {activeRedFlags.length === 0 ? (
           <span className="text-sm font-medium text-emerald-600 dark:text-emerald-400">
             Không có Red Flag
@@ -313,9 +316,7 @@ export function TabPreExam({ patient, visit }: TabPreExamProps) {
             <KvRow
               label="Screen time"
               value={
-                screening?.screenTime
-                  ? `${screening.screenTime} giờ/ngày`
-                  : "—"
+                screening?.screenTime ? `${screening.screenTime} giờ/ngày` : "—"
               }
               bold
             />
@@ -455,7 +456,7 @@ export function TabPreExam({ patient, visit }: TabPreExamProps) {
                         <div
                           className={cn(
                             "font-medium tabular-nums",
-                            !dryEye!.tbutOd && "text-muted-foreground",
+                            !dryEye!.tbutOd && "text-muted-foreground"
                           )}
                         >
                           {dryEye!.tbutOd ? `${dryEye!.tbutOd}s` : "—"}
@@ -463,7 +464,7 @@ export function TabPreExam({ patient, visit }: TabPreExamProps) {
                         <div
                           className={cn(
                             "font-medium tabular-nums",
-                            !dryEye!.tbutOs && "text-muted-foreground",
+                            !dryEye!.tbutOs && "text-muted-foreground"
                           )}
                         >
                           {dryEye!.tbutOs ? `${dryEye!.tbutOs}s` : "—"}
@@ -473,22 +474,18 @@ export function TabPreExam({ patient, visit }: TabPreExamProps) {
                         <div
                           className={cn(
                             "font-medium tabular-nums",
-                            !dryEye!.schirmerOd && "text-muted-foreground",
+                            !dryEye!.schirmerOd && "text-muted-foreground"
                           )}
                         >
-                          {dryEye!.schirmerOd
-                            ? `${dryEye!.schirmerOd}mm`
-                            : "—"}
+                          {dryEye!.schirmerOd ? `${dryEye!.schirmerOd}mm` : "—"}
                         </div>
                         <div
                           className={cn(
                             "font-medium tabular-nums",
-                            !dryEye!.schirmerOs && "text-muted-foreground",
+                            !dryEye!.schirmerOs && "text-muted-foreground"
                           )}
                         >
-                          {dryEye!.schirmerOs
-                            ? `${dryEye!.schirmerOs}mm`
-                            : "—"}
+                          {dryEye!.schirmerOs ? `${dryEye!.schirmerOs}mm` : "—"}
                         </div>
                       </div>
                     </div>
@@ -506,7 +503,6 @@ export function TabPreExam({ patient, visit }: TabPreExamProps) {
             )}
           </div>
         )}
-
     </div>
   )
 }

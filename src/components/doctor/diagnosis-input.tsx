@@ -187,9 +187,7 @@ export function DiagnosisInput({ diagnoses, onChange }: DiagnosisInputProps) {
                   {d.icd10Code}
                 </span>
               )}
-              <span className="min-w-0 flex-1 truncate text-sm">
-                {d.text}
-              </span>
+              <span className="min-w-0 flex-1 truncate text-sm">{d.text}</span>
               <span
                 className={`shrink-0 rounded px-1.5 py-0.5 text-[10px] font-semibold ${
                   d.isPrimary
@@ -203,7 +201,7 @@ export function DiagnosisInput({ diagnoses, onChange }: DiagnosisInputProps) {
                 <button
                   onClick={() => promoteToPrimary(i)}
                   aria-label="Đặt làm chẩn đoán chính"
-                  className="shrink-0 rounded-sm p-0.5 text-muted-foreground/60 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="shrink-0 rounded-sm p-0.5 text-muted-foreground/60 transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                 >
                   <HugeiconsIcon icon={ArrowUp01Icon} className="size-3.5" />
                 </button>
@@ -211,7 +209,7 @@ export function DiagnosisInput({ diagnoses, onChange }: DiagnosisInputProps) {
               <button
                 onClick={() => removeDiagnosis(i)}
                 aria-label="Xóa chẩn đoán"
-                className="shrink-0 rounded-sm p-0.5 text-muted-foreground/50 transition-colors hover:text-destructive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="shrink-0 rounded-sm p-0.5 text-muted-foreground/50 transition-colors hover:text-destructive focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
               >
                 <HugeiconsIcon icon={Cancel01Icon} className="size-3.5" />
               </button>
@@ -247,26 +245,26 @@ export function DiagnosisInput({ diagnoses, onChange }: DiagnosisInputProps) {
                     {group.category}
                   </div>
                   {group.items.map((entry) => (
-                      <button
-                        key={entry.icd10}
-                        data-index={entry.flatIdx}
-                        onClick={() => addFromCatalog(entry)}
-                        className={`flex w-full items-center gap-3 px-3 py-2 text-left text-sm transition-colors ${
-                          entry.flatIdx === highlightIndex
-                            ? "bg-accent"
-                            : "hover:bg-muted"
-                        }`}
-                      >
-                        <span className="w-[5.5rem] shrink-0 font-mono text-xs font-medium tabular-nums text-foreground">
-                          {entry.icd10}
-                        </span>
-                        <span className="min-w-0 flex-1 truncate">
-                          {entry.nameVi}
-                        </span>
-                        <span className="hidden max-w-[12rem] shrink-0 truncate text-xs text-muted-foreground sm:inline">
-                          {entry.nameEn}
-                        </span>
-                      </button>
+                    <button
+                      key={entry.icd10}
+                      data-index={entry.flatIdx}
+                      onClick={() => addFromCatalog(entry)}
+                      className={`flex w-full items-center gap-3 px-3 py-2 text-left text-sm transition-colors ${
+                        entry.flatIdx === highlightIndex
+                          ? "bg-accent"
+                          : "hover:bg-muted"
+                      }`}
+                    >
+                      <span className="w-[5.5rem] shrink-0 font-mono text-xs font-medium text-foreground tabular-nums">
+                        {entry.icd10}
+                      </span>
+                      <span className="min-w-0 flex-1 truncate">
+                        {entry.nameVi}
+                      </span>
+                      <span className="hidden max-w-[12rem] shrink-0 truncate text-xs text-muted-foreground sm:inline">
+                        {entry.nameEn}
+                      </span>
+                    </button>
                   ))}
                 </div>
               ))
