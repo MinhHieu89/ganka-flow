@@ -38,6 +38,17 @@ export interface PrescriptionOrder {
   doctorNotes?: string
   allergies?: string[]
   substitutionReason?: string
+  dispensedBy?: string
+  dispensedItems?: DispensedItem[]
+}
+
+export interface DispensedItem {
+  originalMedication: string
+  dispensedMedication: string
+  isSubstituted: boolean
+  dosage: string
+  quantity: number
+  unit: string
 }
 
 export interface PharmacyMetrics {
@@ -337,6 +348,33 @@ export const mockPrescriptions: PrescriptionOrder[] = [
     dispensedAt: todayTimestamp(95),
     expiresAt: expiresIn(30),
     status: "dispensed",
+    dispensedBy: "Nguyễn Thị Lan",
+    dispensedItems: [
+      {
+        originalMedication: "Refresh Tears",
+        dispensedMedication: "Refresh Tears",
+        isSubstituted: false,
+        dosage: "Nhỏ 1–2 giọt mỗi mắt, 3 lần/ngày",
+        quantity: 1,
+        unit: "lọ",
+      },
+      {
+        originalMedication: "Systane Ultra",
+        dispensedMedication: "Systane Ultra",
+        isSubstituted: false,
+        dosage: "Nhỏ 1 giọt mỗi mắt trước khi ngủ",
+        quantity: 1,
+        unit: "lọ",
+      },
+      {
+        originalMedication: "Omega-3",
+        dispensedMedication: "Omega-3",
+        isSubstituted: false,
+        dosage: "Uống 1 viên/ngày sau ăn",
+        quantity: 30,
+        unit: "viên",
+      },
+    ],
     medications: [
       {
         id: "MED-006-1",
