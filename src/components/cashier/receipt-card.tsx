@@ -63,7 +63,7 @@ export function ReceiptCard({ payment }: ReceiptCardProps) {
     : getPaymentMethodLabel(payment.paymentMethods[0].method)
 
   return (
-    <div className="w-full rounded-xl border border-border bg-background p-6">
+    <div className="print-receipt w-full rounded-xl border border-border bg-background p-6">
       {/* Clinic header */}
       <div className="mb-5 border-b border-dashed border-border pb-4 text-center">
         <div className="text-[15px] font-medium">{clinic.name}</div>
