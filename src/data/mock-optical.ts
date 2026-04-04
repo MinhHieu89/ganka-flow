@@ -13,9 +13,12 @@ export interface OpticalConsultation {
   id: string
   patientName: string
   patientId: string
+  gender: string
+  age: number
   doctor: string
   rxOd: string
   rxOs: string
+  rx: RxDetail
   status: ConsultationStatus
   assignedStaff?: string
   queuedAt: string
@@ -57,6 +60,71 @@ export interface LensItem {
   lowStockThreshold: number
 }
 
+export interface RxEye {
+  sph: number
+  cyl: number
+  axis: number
+  add?: number
+}
+
+export interface RxDetail {
+  od: RxEye
+  os: RxEye
+  pd: number
+  ucvaOd: string
+  bcvaOd: string
+  ucvaOs: string
+  bcvaOs: string
+  lensType: string
+  purpose: string
+  doctor: string
+  prescribedAt: string
+  notes?: string
+}
+
+export interface TimelineStep {
+  status: OrderStatus
+  label: string
+  completedAt?: string
+  staffName?: string
+}
+
+export interface OrderDetailData extends OpticalOrder {
+  rx: RxDetail
+  frameBarcode: string
+  lensType: string
+  glassType: string
+  framePrice: number
+  lensPrice: number
+  paymentStatus: "paid" | "partial" | "unpaid"
+  timeline: TimelineStep[]
+  notes?: string
+}
+
+export interface StockHistoryEntry {
+  date: string
+  type: "in" | "out"
+  quantity: number
+  note: string
+}
+
+export interface FrameDetail extends FrameItem {
+  material: string
+  size: string
+  gender: string
+  origin: string
+  costPrice: number
+  stockHistory: StockHistoryEntry[]
+}
+
+export interface LensDetail extends LensItem {
+  coating: string
+  design: string
+  origin: string
+  costPrice: number
+  stockHistory: StockHistoryEntry[]
+}
+
 export interface ConsultationMetrics {
   waitingCount: number
   consultingCount: number
@@ -84,9 +152,24 @@ export const mockConsultations: OpticalConsultation[] = [
     id: "oc-001",
     patientName: "Trần Văn Hùng",
     patientId: `BN-${offsetDate(0).replace(/-/g, "")}-0012`,
+    gender: "Nam",
+    age: 42,
     doctor: "BS. Lê Minh Tuấn",
     rxOd: "-2.50 / -0.75 x 180",
     rxOs: "-3.00 / -1.00 x 175",
+    rx: {
+      od: { sph: -2.5, cyl: -0.75, axis: 180 },
+      os: { sph: -3.0, cyl: -1.0, axis: 175 },
+      pd: 64,
+      ucvaOd: "20/80",
+      bcvaOd: "20/20",
+      ucvaOs: "20/100",
+      bcvaOs: "20/20",
+      lensType: "Đơn tròng",
+      purpose: "Nhìn xa",
+      doctor: "BS. Lê Minh Tuấn",
+      prescribedAt: todayTimestamp(12),
+    },
     status: "in_consultation",
     assignedStaff: "Nguyễn Thị Mai",
     queuedAt: todayTimestamp(12),
@@ -95,9 +178,24 @@ export const mockConsultations: OpticalConsultation[] = [
     id: "oc-002",
     patientName: "Nguyễn Thị Lan",
     patientId: `BN-${offsetDate(0).replace(/-/g, "")}-0008`,
+    gender: "Nữ",
+    age: 58,
     doctor: "BS. Phạm Anh Dũng",
     rxOd: "+1.50 ADD +2.00",
     rxOs: "+1.75 ADD +2.00",
+    rx: {
+      od: { sph: 1.5, cyl: 0, axis: 0, add: 2.0 },
+      os: { sph: 1.75, cyl: 0, axis: 0, add: 2.0 },
+      pd: 62,
+      ucvaOd: "20/40",
+      bcvaOd: "20/20",
+      ucvaOs: "20/40",
+      bcvaOs: "20/20",
+      lensType: "Đa tròng",
+      purpose: "Nhìn xa + đọc sách",
+      doctor: "BS. Phạm Anh Dũng",
+      prescribedAt: todayTimestamp(8),
+    },
     status: "in_consultation",
     assignedStaff: "Nguyễn Thị Mai",
     queuedAt: todayTimestamp(8),
@@ -106,9 +204,24 @@ export const mockConsultations: OpticalConsultation[] = [
     id: "oc-003",
     patientName: "Lê Hoàng Phúc",
     patientId: `BN-${offsetDate(0).replace(/-/g, "")}-0015`,
+    gender: "Nam",
+    age: 25,
     doctor: "BS. Lê Minh Tuấn",
     rxOd: "-4.25 / -1.50 x 10",
     rxOs: "-3.75 / -1.25 x 170",
+    rx: {
+      od: { sph: -4.25, cyl: -1.5, axis: 10 },
+      os: { sph: -3.75, cyl: -1.25, axis: 170 },
+      pd: 66,
+      ucvaOd: "20/200",
+      bcvaOd: "20/20",
+      ucvaOs: "20/150",
+      bcvaOs: "20/20",
+      lensType: "Đơn tròng",
+      purpose: "Nhìn xa",
+      doctor: "BS. Lê Minh Tuấn",
+      prescribedAt: todayTimestamp(35),
+    },
     status: "waiting_consultation",
     queuedAt: todayTimestamp(35),
   },
@@ -116,9 +229,24 @@ export const mockConsultations: OpticalConsultation[] = [
     id: "oc-004",
     patientName: "Phạm Minh Châu",
     patientId: `BN-${offsetDate(0).replace(/-/g, "")}-0019`,
+    gender: "Nữ",
+    age: 31,
     doctor: "BS. Phạm Anh Dũng",
     rxOd: "-1.00 / -0.50 x 90",
     rxOs: "-1.25 / -0.50 x 85",
+    rx: {
+      od: { sph: -1.0, cyl: -0.5, axis: 90 },
+      os: { sph: -1.25, cyl: -0.5, axis: 85 },
+      pd: 60,
+      ucvaOd: "20/40",
+      bcvaOd: "20/20",
+      ucvaOs: "20/50",
+      bcvaOs: "20/20",
+      lensType: "Đơn tròng",
+      purpose: "Nhìn xa",
+      doctor: "BS. Phạm Anh Dũng",
+      prescribedAt: todayTimestamp(22),
+    },
     status: "waiting_consultation",
     queuedAt: todayTimestamp(22),
   },
@@ -126,9 +254,24 @@ export const mockConsultations: OpticalConsultation[] = [
     id: "oc-005",
     patientName: "Võ Thanh Tâm",
     patientId: `BN-${offsetDate(0).replace(/-/g, "")}-0021`,
+    gender: "Nam",
+    age: 35,
     doctor: "BS. Lê Minh Tuấn",
     rxOd: "-5.50 / -2.00 x 5",
     rxOs: "-5.00 / -1.75 x 175",
+    rx: {
+      od: { sph: -5.5, cyl: -2.0, axis: 5 },
+      os: { sph: -5.0, cyl: -1.75, axis: 175 },
+      pd: 65,
+      ucvaOd: "20/400",
+      bcvaOd: "20/20",
+      ucvaOs: "20/300",
+      bcvaOs: "20/20",
+      lensType: "Đơn tròng",
+      purpose: "Nhìn xa",
+      doctor: "BS. Lê Minh Tuấn",
+      prescribedAt: todayTimestamp(10),
+    },
     status: "waiting_consultation",
     queuedAt: todayTimestamp(10),
   },
@@ -506,7 +649,170 @@ export function getInventoryMetrics(
   }
 }
 
-/** Format price with thousands separator: 2800000 → "2,800,000" */
+/** Format price with thousands separator: 2800000 → "2.800.000" */
 export function formatPrice(price: number): string {
-  return price.toLocaleString("en-US")
+  return price.toLocaleString("vi-VN")
+}
+
+// ─── Detail Helpers ──────────────────────────────────────────────────────────
+
+const statusSteps: { status: OrderStatus; label: string }[] = [
+  { status: "ordered", label: "Đã đặt hàng" },
+  { status: "fabricating", label: "Đang gia công" },
+  { status: "ready_delivery", label: "Sẵn sàng giao" },
+  { status: "delivered", label: "Đã giao" },
+]
+
+const defaultRx: RxDetail = {
+  od: { sph: -2.5, cyl: -0.75, axis: 180 },
+  os: { sph: -3.0, cyl: -1.0, axis: 175 },
+  pd: 64,
+  ucvaOd: "20/80",
+  bcvaOd: "20/20",
+  ucvaOs: "20/100",
+  bcvaOs: "20/20",
+  lensType: "Đơn tròng",
+  purpose: "Nhìn xa",
+  doctor: "BS. Lê Minh Tuấn",
+  prescribedAt: todayTimestamp(0),
+}
+
+export function getOrderDetail(order: OpticalOrder): OrderDetailData {
+  const statusIndex = statusSteps.findIndex((s) => s.status === order.status)
+
+  const timeline: TimelineStep[] = statusSteps.map((step, i) => ({
+    status: step.status,
+    label: step.label,
+    completedAt:
+      i <= statusIndex
+        ? i === 0
+          ? order.orderDate
+          : offsetDate(
+              -Math.round(
+                (new Date(offsetDate(0)).getTime() -
+                  new Date(order.orderDate).getTime()) /
+                  (1000 * 60 * 60 * 24) -
+                  i
+              )
+            )
+        : undefined,
+    staffName: i <= statusIndex ? "Nguyễn Thị Mai" : undefined,
+  }))
+
+  const matchedFrame = mockFrames.find((f) =>
+    order.frameName.toLowerCase().includes(f.name.split(" ")[0].toLowerCase())
+  )
+  const matchedLens = mockLenses.find((l) =>
+    order.lensName.toLowerCase().includes(l.name.split(" ")[0].toLowerCase())
+  )
+
+  return {
+    ...order,
+    rx: defaultRx,
+    frameBarcode: matchedFrame?.barcode ?? "GK-FR-00001",
+    lensType: order.lensType,
+    glassType: order.lensSpec,
+    framePrice: matchedFrame?.price ?? 2800000,
+    lensPrice: matchedLens?.price ?? 1800000,
+    paymentStatus: order.status === "delivered" ? "paid" : "partial",
+    timeline,
+    notes: undefined,
+  }
+}
+
+export function getFrameDetail(frame: FrameItem): FrameDetail {
+  const materials: Record<string, string> = {
+    Rayban: "Acetate + Kim loại",
+    Oakley: "O-Matter",
+    "Việt Pháp": "TR90",
+  }
+  const sizes: Record<string, string> = {
+    Rayban: "51-21-145",
+    Oakley: "53-18-143",
+    "Việt Pháp": "52-17-140",
+  }
+  const genders: Record<string, string> = {
+    Rayban: "Unisex",
+    Oakley: "Nam",
+    "Việt Pháp": "Unisex",
+  }
+  const origins: Record<string, string> = {
+    Rayban: "Ý",
+    Oakley: "Mỹ",
+    "Việt Pháp": "Việt Nam",
+  }
+
+  return {
+    ...frame,
+    material: materials[frame.brand] ?? "Nhựa",
+    size: sizes[frame.brand] ?? "52-18-140",
+    gender: genders[frame.brand] ?? "Unisex",
+    origin: origins[frame.brand] ?? "Không rõ",
+    costPrice: Math.round(frame.price * 0.45),
+    stockHistory: [
+      {
+        date: offsetDate(-30),
+        type: "in",
+        quantity: 20,
+        note: "Nhập lô mới",
+      },
+      {
+        date: offsetDate(-15),
+        type: "out",
+        quantity: 5,
+        note: "Bán lẻ",
+      },
+      {
+        date: offsetDate(-7),
+        type: "out",
+        quantity: 3,
+        note: "Bán lẻ",
+      },
+    ],
+  }
+}
+
+export function getLensDetail(lens: LensItem): LensDetail {
+  const coatings: Record<string, string> = {
+    Essilor: "Crizal",
+    Hoya: "Super HiVision",
+    "Việt Pháp": "UV420",
+  }
+  const designs: Record<string, string> = {
+    "Đơn tròng": "Phi cầu",
+    "Đa tròng": "Thiết kế tự do",
+  }
+  const origins: Record<string, string> = {
+    Essilor: "Pháp",
+    Hoya: "Nhật Bản",
+    "Việt Pháp": "Việt Nam",
+  }
+
+  return {
+    ...lens,
+    coating: coatings[lens.brand] ?? "Tiêu chuẩn",
+    design: designs[lens.type] ?? "Phi cầu",
+    origin: origins[lens.brand] ?? "Không rõ",
+    costPrice: Math.round(lens.price * 0.4),
+    stockHistory: [
+      {
+        date: offsetDate(-25),
+        type: "in",
+        quantity: 30,
+        note: "Nhập lô mới",
+      },
+      {
+        date: offsetDate(-10),
+        type: "out",
+        quantity: 8,
+        note: "Gia công đơn hàng",
+      },
+      {
+        date: offsetDate(-3),
+        type: "out",
+        quantity: 2,
+        note: "Gia công đơn hàng",
+      },
+    ],
+  }
 }
