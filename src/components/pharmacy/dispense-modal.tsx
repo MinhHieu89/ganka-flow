@@ -80,7 +80,7 @@ export function DispenseModal({
   const handleSubstitute = (
     medId: string,
     replacement: MedicationCatalogItem,
-    reason: string,
+    reason: string
   ) => {
     setMedications((prev) =>
       prev.map((m) =>
@@ -104,14 +104,14 @@ export function DispenseModal({
   return (
     <>
       <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
-        <DialogContent className="max-h-[85vh] sm:max-w-3xl flex flex-col">
+        <DialogContent className="flex max-h-[85vh] flex-col sm:max-w-3xl">
           <DialogHeader>
             <DialogTitle className="text-base font-medium">
               Phát thuốc — {order.patientName}
             </DialogTitle>
           </DialogHeader>
 
-          <div className="space-y-4 overflow-y-auto flex-1 pr-1">
+          <div className="flex-1 space-y-4 overflow-y-auto pr-1">
             {/* Allergy Banner */}
             {order.allergies && order.allergies.length > 0 && (
               <div className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-xs text-red-700 dark:border-red-800 dark:bg-red-950 dark:text-red-300">
@@ -155,9 +155,7 @@ export function DispenseModal({
                 >
                   {formatDate(order.expiresAt)}{" "}
                   <span className="font-normal text-muted-foreground">
-                    {isExpired
-                      ? "(Quá hạn)"
-                      : `(còn ${daysLeft} ngày)`}
+                    {isExpired ? "(Quá hạn)" : `(còn ${daysLeft} ngày)`}
                   </span>
                 </div>
               </div>
@@ -288,7 +286,10 @@ export function DispenseModal({
             <Button variant="outline" onClick={onClose}>
               In đơn thuốc
             </Button>
-            <Button disabled={!canConfirm} onClick={() => onConfirm(medications)}>
+            <Button
+              disabled={!canConfirm}
+              onClick={() => onConfirm(medications)}
+            >
               Xác nhận phát thuốc
             </Button>
           </DialogFooter>

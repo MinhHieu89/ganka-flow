@@ -36,7 +36,7 @@ export function PharmacyStatusFilters({
         onSearchChange(value)
       }, 300)
     },
-    [onSearchChange],
+    [onSearchChange]
   )
 
   return (
@@ -44,7 +44,7 @@ export function PharmacyStatusFilters({
       <div className="relative w-[300px]">
         <HugeiconsIcon
           icon={Search01Icon}
-          className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
+          className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
           strokeWidth={1.5}
         />
         <Input
@@ -63,7 +63,7 @@ export function PharmacyStatusFilters({
               "rounded-full border px-3.5 py-1 text-xs font-medium transition-colors",
               activeFilter === f.key
                 ? "border-teal-200 bg-teal-50 text-teal-700 dark:border-teal-800 dark:bg-teal-950 dark:text-teal-300"
-                : "border-border text-muted-foreground hover:border-muted-foreground/30",
+                : "border-border text-muted-foreground hover:border-muted-foreground/30"
             )}
           >
             {f.label} {counts[f.key]}

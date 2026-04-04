@@ -7,7 +7,10 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import type { PrescriptionOrder, PrescriptionMedication } from "@/data/mock-pharmacy"
+import type {
+  PrescriptionOrder,
+  PrescriptionMedication,
+} from "@/data/mock-pharmacy"
 
 interface PrintLabelsModalProps {
   order: PrescriptionOrder
@@ -52,7 +55,7 @@ function LabelCard({
     >
       {selectionMode && (
         <div
-          className={`absolute right-2 top-2 flex size-4 items-center justify-center rounded border text-xs ${
+          className={`absolute top-2 right-2 flex size-4 items-center justify-center rounded border text-xs ${
             isSelected
               ? "border-primary bg-primary text-primary-foreground"
               : "border-muted-foreground/30"
@@ -66,9 +69,7 @@ function LabelCard({
       <div
         className={`flex items-start justify-between ${actualSize ? "text-[8px]" : "text-sm"}`}
       >
-        <span
-          className={`font-medium ${isSubstituted ? "text-primary" : ""}`}
-        >
+        <span className={`font-medium ${isSubstituted ? "text-primary" : ""}`}>
           {isSubstituted ? med.substitution!.name : med.name}
           {isSubstituted && (
             <span className="font-normal"> (thay {med.name})</span>
@@ -86,8 +87,8 @@ function LabelCard({
         className={`mt-1 space-y-0.5 ${actualSize ? "text-[7px]" : "text-xs"} text-muted-foreground`}
       >
         <div>
-          BN: <strong className="text-foreground">{order.patientName}</strong>{" "}
-          — {order.patientId}
+          BN: <strong className="text-foreground">{order.patientName}</strong> —{" "}
+          {order.patientId}
         </div>
         <div>Cách dùng: {med.dosage}</div>
       </div>
@@ -137,18 +138,18 @@ export function PrintLabelsModal({
 
   return (
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
-      <DialogContent className="max-h-[85vh] sm:max-w-2xl flex flex-col">
+      <DialogContent className="flex max-h-[85vh] flex-col sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle className="text-base font-medium">
             In nhãn thuốc — {order.patientName}
           </DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-4 overflow-y-auto flex-1 pr-1">
+        <div className="flex-1 space-y-4 overflow-y-auto pr-1">
           {/* Description */}
           <p className="text-xs text-muted-foreground">
-            Xem trước nhãn dán cho từng thuốc. Mỗi nhãn sẽ in trên giấy nhãn
-            dán khổ nhỏ (70 × 35mm).
+            Xem trước nhãn dán cho từng thuốc. Mỗi nhãn sẽ in trên giấy nhãn dán
+            khổ nhỏ (70 × 35mm).
           </p>
 
           {/* Size toggle */}

@@ -28,7 +28,10 @@ import { DispenseModal } from "@/components/pharmacy/dispense-modal"
 import { ViewPrescriptionModal } from "@/components/pharmacy/view-prescription-modal"
 import { DispenseDetailModal } from "@/components/pharmacy/dispense-detail-modal"
 import { PrintLabelsModal } from "@/components/pharmacy/print-labels-modal"
-import type { PrescriptionOrder, PrescriptionMedication } from "@/data/mock-pharmacy"
+import type {
+  PrescriptionOrder,
+  PrescriptionMedication,
+} from "@/data/mock-pharmacy"
 
 type OpenModal =
   | { type: "dispense"; order: PrescriptionOrder }
@@ -37,9 +40,7 @@ type OpenModal =
   | null
 
 function formatElapsed(isoDate: string): string {
-  const diff = Math.floor(
-    (Date.now() - new Date(isoDate).getTime()) / 60000,
-  )
+  const diff = Math.floor((Date.now() - new Date(isoDate).getTime()) / 60000)
   if (diff < 60) return `${diff} phút trước`
   if (diff < 120) return `1h${String(diff - 60).padStart(2, "0")} phút trước`
   return `${Math.floor(diff / 60)}h trước`
@@ -52,7 +53,10 @@ function formatTime(isoDate: string): string {
 
 interface PrescriptionQueueTableProps {
   prescriptions: PrescriptionOrder[]
-  onDispense: (orderId: string, finalMedications?: PrescriptionMedication[]) => void
+  onDispense: (
+    orderId: string,
+    finalMedications?: PrescriptionMedication[]
+  ) => void
 }
 
 export function PrescriptionQueueTable({
@@ -151,7 +155,11 @@ export function PrescriptionQueueTable({
                               setOpenModal({ type: "dispense", order: rx })
                             }
                           >
-                            <HugeiconsIcon icon={MedicineBottle02Icon} className="size-4" strokeWidth={1.5} />
+                            <HugeiconsIcon
+                              icon={MedicineBottle02Icon}
+                              className="size-4"
+                              strokeWidth={1.5}
+                            />
                             Phát thuốc
                           </DropdownMenuItem>
                           <DropdownMenuItem
@@ -159,12 +167,20 @@ export function PrescriptionQueueTable({
                               setOpenModal({ type: "view", order: rx })
                             }
                           >
-                            <HugeiconsIcon icon={File02Icon} className="size-4" strokeWidth={1.5} />
+                            <HugeiconsIcon
+                              icon={File02Icon}
+                              className="size-4"
+                              strokeWidth={1.5}
+                            />
                             Xem đơn thuốc
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
                           <DropdownMenuItem>
-                            <HugeiconsIcon icon={PrinterIcon} className="size-4" strokeWidth={1.5} />
+                            <HugeiconsIcon
+                              icon={PrinterIcon}
+                              className="size-4"
+                              strokeWidth={1.5}
+                            />
                             In đơn thuốc
                           </DropdownMenuItem>
                         </>
@@ -175,7 +191,11 @@ export function PrescriptionQueueTable({
                               setOpenModal({ type: "view", order: rx })
                             }
                           >
-                            <HugeiconsIcon icon={File02Icon} className="size-4" strokeWidth={1.5} />
+                            <HugeiconsIcon
+                              icon={File02Icon}
+                              className="size-4"
+                              strokeWidth={1.5}
+                            />
                             Xem đơn thuốc
                           </DropdownMenuItem>
                           <DropdownMenuItem
@@ -183,16 +203,28 @@ export function PrescriptionQueueTable({
                               setOpenModal({ type: "detail", order: rx })
                             }
                           >
-                            <HugeiconsIcon icon={FileSearchIcon} className="size-4" strokeWidth={1.5} />
+                            <HugeiconsIcon
+                              icon={FileSearchIcon}
+                              className="size-4"
+                              strokeWidth={1.5}
+                            />
                             Xem chi tiết phát thuốc
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
                           <DropdownMenuItem>
-                            <HugeiconsIcon icon={PrinterIcon} className="size-4" strokeWidth={1.5} />
+                            <HugeiconsIcon
+                              icon={PrinterIcon}
+                              className="size-4"
+                              strokeWidth={1.5}
+                            />
                             In đơn thuốc
                           </DropdownMenuItem>
                           <DropdownMenuItem>
-                            <HugeiconsIcon icon={LabelIcon} className="size-4" strokeWidth={1.5} />
+                            <HugeiconsIcon
+                              icon={LabelIcon}
+                              className="size-4"
+                              strokeWidth={1.5}
+                            />
                             In nhãn thuốc
                           </DropdownMenuItem>
                         </>

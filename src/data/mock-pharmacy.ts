@@ -74,16 +74,19 @@ export function expiresIn(days: number): string {
 
 /** Derives pharmacy metrics from a prescription array */
 export function getPharmacyMetrics(
-  prescriptions: PrescriptionOrder[],
+  prescriptions: PrescriptionOrder[]
 ): PharmacyMetrics {
-  const pendingCount = prescriptions.filter((p) => p.status === "pending").length
+  const pendingCount = prescriptions.filter(
+    (p) => p.status === "pending"
+  ).length
   const dispensedToday = prescriptions.filter(
-    (p) => p.status === "dispensed",
+    (p) => p.status === "dispensed"
   ).length
   const lowStockAlerts = prescriptions
     .flatMap((p) => p.medications)
-    .filter((m) => !m.isOutOfStock && m.stockQuantity > 0 && m.stockQuantity <= 10)
-    .length
+    .filter(
+      (m) => !m.isOutOfStock && m.stockQuantity > 0 && m.stockQuantity <= 10
+    ).length
 
   return { pendingCount, dispensedToday, lowStockAlerts }
 }
@@ -103,8 +106,7 @@ export const mockPrescriptions: PrescriptionOrder[] = [
     expiresAt: expiresIn(30),
     status: "pending",
     allergies: ["Chloramphenicol"],
-    doctorNotes:
-      "Bệnh nhân dùng Omega-3 liều cao. Tái khám sau 4 tuần.",
+    doctorNotes: "Bệnh nhân dùng Omega-3 liều cao. Tái khám sau 4 tuần.",
     substitutionReason:
       "Lotemax hiện hết hàng, thay thế bằng FML cùng nhóm corticosteroid nhỏ mắt.",
     medications: [

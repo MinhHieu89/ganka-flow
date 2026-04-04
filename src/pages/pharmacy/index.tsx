@@ -4,7 +4,11 @@ import { mockPrescriptions, getPharmacyMetrics } from "@/data/mock-pharmacy"
 import { PharmacyKpiCards } from "@/components/pharmacy/kpi-cards"
 import { PharmacyStatusFilters } from "@/components/pharmacy/status-filters"
 import { PrescriptionQueueTable } from "@/components/pharmacy/prescription-queue-table"
-import type { PrescriptionStatus, PrescriptionMedication, DispensedItem } from "@/data/mock-pharmacy"
+import type {
+  PrescriptionStatus,
+  PrescriptionMedication,
+  DispensedItem,
+} from "@/data/mock-pharmacy"
 
 type PharmacyFilter = "all" | "pending" | "dispensed"
 
@@ -33,7 +37,9 @@ export default function PharmacyDashboard() {
   const sorted = [...filtered].sort((a, b) => {
     if (a.status !== b.status) return a.status === "pending" ? -1 : 1
     if (a.status === "pending") {
-      return new Date(a.prescribedAt).getTime() - new Date(b.prescribedAt).getTime()
+      return (
+        new Date(a.prescribedAt).getTime() - new Date(b.prescribedAt).getTime()
+      )
     }
     return (
       new Date(b.dispensedAt ?? b.prescribedAt).getTime() -
@@ -47,7 +53,10 @@ export default function PharmacyDashboard() {
     dispensed: prescriptions.filter((p) => p.status === "dispensed").length,
   }
 
-  const handleDispense = (orderId: string, finalMedications?: PrescriptionMedication[]) => {
+  const handleDispense = (
+    orderId: string,
+    finalMedications?: PrescriptionMedication[]
+  ) => {
     setPrescriptions((prev) =>
       prev.map((p) => {
         if (p.id !== orderId) return p
@@ -67,7 +76,7 @@ export default function PharmacyDashboard() {
           dispensedBy: "Nguyễn Thị Lan",
           dispensedItems,
         }
-      }),
+      })
     )
   }
 
@@ -95,7 +104,10 @@ export default function PharmacyDashboard() {
         </TabsList>
 
         <TabsContent value="queue" className="space-y-4 pt-2">
-          <PharmacyKpiCards metrics={metrics} onStockAlertClick={() => setActiveTab("inventory")} />
+          <PharmacyKpiCards
+            metrics={metrics}
+            onStockAlertClick={() => setActiveTab("inventory")}
+          />
           <PharmacyStatusFilters
             activeFilter={filter}
             onFilterChange={setFilter}
@@ -103,7 +115,10 @@ export default function PharmacyDashboard() {
             search={search}
             onSearchChange={setSearch}
           />
-          <PrescriptionQueueTable prescriptions={sorted} onDispense={handleDispense} />
+          <PrescriptionQueueTable
+            prescriptions={sorted}
+            onDispense={handleDispense}
+          />
         </TabsContent>
 
         <TabsContent value="otc">

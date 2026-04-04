@@ -39,12 +39,14 @@ export function DispenseDetailModal({
   onClose,
   onPrintLabels,
 }: DispenseDetailModalProps) {
-  const hasSubstitutions = order.dispensedItems?.some((item) => item.isSubstituted)
+  const hasSubstitutions = order.dispensedItems?.some(
+    (item) => item.isSubstituted
+  )
 
   return (
     <>
       <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
-        <DialogContent className="max-h-[85vh] sm:max-w-3xl flex flex-col">
+        <DialogContent className="flex max-h-[85vh] flex-col sm:max-w-3xl">
           <DialogHeader>
             <div className="flex items-center gap-2">
               <DialogTitle className="text-base font-medium">
@@ -57,7 +59,7 @@ export function DispenseDetailModal({
             </div>
           </DialogHeader>
 
-          <div className="space-y-4 overflow-y-auto flex-1 pr-1">
+          <div className="flex-1 space-y-4 overflow-y-auto pr-1">
             {/* Patient info — 4 fields */}
             <div className="grid grid-cols-2 gap-3">
               <div>
@@ -89,14 +91,11 @@ export function DispenseDetailModal({
             {/* Dispensing metadata bar */}
             <div className="flex items-center justify-between rounded-lg bg-muted p-3 text-sm">
               <span>
-                Dược sĩ phát:{" "}
-                <strong>{order.dispensedBy ?? "—"}</strong>
+                Dược sĩ phát: <strong>{order.dispensedBy ?? "—"}</strong>
               </span>
               <span className="text-muted-foreground">
                 Thời gian:{" "}
-                {order.dispensedAt
-                  ? formatDateTime(order.dispensedAt)
-                  : "—"}
+                {order.dispensedAt ? formatDateTime(order.dispensedAt) : "—"}
               </span>
             </div>
 
