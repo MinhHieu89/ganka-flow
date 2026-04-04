@@ -46,10 +46,14 @@ function formatTime(isoDate: string): string {
 
 interface CashierTransactionsTableProps {
   transactions: Transaction[]
+  onViewInvoice?: (transactionId: string) => void
+  onRefund?: (transactionId: string) => void
 }
 
 export function CashierTransactionsTable({
   transactions,
+  onViewInvoice,
+  onRefund,
 }: CashierTransactionsTableProps) {
   const sorted = [...transactions].sort(
     (a, b) =>
@@ -131,7 +135,7 @@ export function CashierTransactionsTable({
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-56">
-                      <DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => onViewInvoice?.(tx.id)}>
                         <HugeiconsIcon
                           icon={FileSearchIcon}
                           className="mr-2 size-4"
@@ -150,7 +154,7 @@ export function CashierTransactionsTable({
                       {tx.status === "paid" && (
                         <>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => onRefund?.(tx.id)}>
                             <HugeiconsIcon
                               icon={MoneyReceive01Icon}
                               className="mr-2 size-4"

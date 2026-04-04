@@ -1,15 +1,20 @@
 import { useState } from "react"
+import { useNavigate } from "react-router"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { CashierKpiCards } from "@/components/cashier/cashier-kpi-cards"
 import { CashierQueueTable } from "@/components/cashier/cashier-queue-table"
 import { CashierTransactionsTable } from "@/components/cashier/cashier-transactions-table"
+import { ViewInvoiceModal } from "@/components/cashier/view-invoice-modal"
+import { RefundModal } from "@/components/cashier/refund-modal"
+import { ReturnToQueueModal } from "@/components/cashier/return-to-queue-modal"
 import {
   mockPaymentRequests,
   mockTransactions,
   mockShift,
   getCashierMetrics,
 } from "@/data/mock-cashier"
+import type { ModalState } from "@/data/mock-cashier"
 
 function formatVietnameseDate(): string {
   const d = new Date()
@@ -29,11 +34,17 @@ function formatVietnameseDate(): string {
 }
 
 export default function CashierDashboard() {
+  const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState("queue")
+  const [modalState, setModalState] = useState<ModalState>({ type: "closed" })
   const requests = mockPaymentRequests
   const transactions = mockTransactions
   const metrics = getCashierMetrics(transactions)
   const shift = mockShift
+
+  function closeModal() {
+    setModalState({ type: "closed" })
+  }
 
   return (
     <div className="flex-1 space-y-5 p-6">
@@ -52,7 +63,12 @@ export default function CashierDashboard() {
                 <span className="size-1.5 rounded-full bg-green-500" />
                 {shift.label} · {shift.startTime}–{shift.endTime}
               </div>
-              <Button variant="outline" size="sm" className="text-xs">
+              <Button
+                variant="outline"
+                size="sm"
+                className="text-xs"
+                onClick={() => navigate("/payment/shift-close")}
+              >
                 Chốt ca
               </Button>
             </>
@@ -100,13 +116,54 @@ export default function CashierDashboard() {
         </TabsList>
 
         <TabsContent value="queue" className="pt-2">
-          <CashierQueueTable requests={requests} />
+          <CashierQueueTable
+            requests={requests}
+            onReturnToQueue={(id) =>
+              setModalState({ type: "return-to-queue", paymentRequestId: id })
+            }
+          />
         </TabsContent>
 
         <TabsContent value="transactions" className="pt-2">
-          <CashierTransactionsTable transactions={transactions} />
+          <CashierTransactionsTable
+            transactions={transactions}
+            onViewInvoice={(id) =>
+              setModalState({ type: "view-invoice", transactionId: id })
+            }
+            onRefund={(id) =>
+              setModalState({ type: "refund", transactionId: id })
+            }
+          />
         </TabsContent>
       </Tabs>
+
+      {/* Modals */}
+      {modalState.type === "view-invoice" && (
+        <ViewInvoiceModal
+          transactionId={modalState.transactionId}
+          open
+          onClose={closeModal}
+          onRefund={(id) =>
+            setModalState({ type: "refund", transactionId: id })
+          }
+        />
+      )}
+
+      {modalState.type === "refund" && (
+        <RefundModal
+          transactionId={modalState.transactionId}
+          open
+          onClose={closeModal}
+        />
+      )}
+
+      {modalState.type === "return-to-queue" && (
+        <ReturnToQueueModal
+          paymentRequestId={modalState.paymentRequestId}
+          open
+          onClose={closeModal}
+        />
+      )}
     </div>
   )
 }
