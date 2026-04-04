@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/sidebar"
 import { NavUser } from "@/components/nav-user"
 import { HugeiconsIcon } from "@hugeicons/react"
+import logo from "@/assets/logo.svg"
 import {
-  CommandIcon,
   UserAdd01Icon,
   Calendar01Icon,
   Search01Icon,
@@ -65,17 +65,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <NavLink to="/">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <HugeiconsIcon
-                    icon={CommandIcon}
-                    strokeWidth={2}
-                    className="size-4"
-                  />
-                </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Ganka28</span>
-                  <span className="truncate text-xs">Phòng khám mắt</span>
-                </div>
+                <img src={logo} alt="Ganka28" className="h-10" />
               </NavLink>
             </SidebarMenuButton>
           </SidebarMenuItem>
