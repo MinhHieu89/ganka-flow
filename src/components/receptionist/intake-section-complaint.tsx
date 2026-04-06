@@ -142,7 +142,7 @@ export function IntakeSectionComplaint({
           <div className="grid grid-cols-3 gap-6">
             <div>
               <Label className="text-sm text-muted-foreground">Mức độ</Label>
-              <div className="mt-1 flex gap-3">
+              <div className="mt-1.5 space-y-1.5">
                 {SEVERITY_OPTIONS.map((opt) => (
                   <label
                     key={opt.value}
@@ -164,7 +164,7 @@ export function IntakeSectionComplaint({
             </div>
             <div>
               <Label className="text-sm text-muted-foreground">Tần suất</Label>
-              <div className="mt-1 flex gap-3">
+              <div className="mt-1.5 space-y-1.5">
                 {FREQUENCY_OPTIONS.map((opt) => (
                   <label
                     key={opt.value}
@@ -188,7 +188,7 @@ export function IntakeSectionComplaint({
               <Label className="text-sm text-muted-foreground">
                 Ảnh hưởng đến sinh hoạt
               </Label>
-              <div className="mt-1 flex gap-3">
+              <div className="mt-1.5 space-y-1.5">
                 {IMPACT_OPTIONS.map((opt) => (
                   <label
                     key={opt.value}
