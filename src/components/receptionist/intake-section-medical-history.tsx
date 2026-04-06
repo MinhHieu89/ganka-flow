@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
+import { IntakeDatePicker } from "./intake-date-picker"
 import {
   Select,
   SelectContent,
@@ -163,15 +164,15 @@ export function IntakeSectionMedicalHistory({ data, onChange }: Props) {
         </div>
         <div>
           <Label>Lần khám gần nhất</Label>
-          <Input
+          <IntakeDatePicker
             value={data.primaryDoctor?.lastVisit ?? ""}
-            onChange={(e) =>
+            onChange={(v) =>
               onChange("primaryDoctor", {
                 ...(data.primaryDoctor ?? {}),
-                lastVisit: e.target.value,
+                lastVisit: v,
               })
             }
-            placeholder="dd/mm/yyyy"
+            placeholder="Chọn ngày khám"
           />
         </div>
       </div>

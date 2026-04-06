@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { IntakeDatePicker } from "./intake-date-picker"
 import {
   Select,
   SelectContent,
@@ -76,11 +77,11 @@ export function IntakeSectionPersonal({
           <Label>
             Ngày sinh <span className="text-destructive">*</span>
           </Label>
-          <Input
+          <IntakeDatePicker
             value={data.dob}
-            onChange={(e) => onChange("dob", e.target.value)}
-            placeholder="dd/mm/yyyy"
-            aria-invalid={!!errors.dob}
+            onChange={(v) => onChange("dob", v)}
+            placeholder="Chọn ngày sinh"
+            ariaInvalid={!!errors.dob}
           />
           {renderFieldError("dob")}
         </div>

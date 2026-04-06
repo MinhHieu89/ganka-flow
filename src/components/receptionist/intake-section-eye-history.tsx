@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
+import { IntakeDatePicker } from "./intake-date-picker"
 import { CheckboxGrid } from "./intake-checkbox-grid"
 import { ConditionalField } from "./intake-conditional-field"
 import type { IntakeFormData } from "./intake-form"
@@ -164,15 +165,15 @@ export function IntakeSectionEyeHistory({ data, onChange }: Props) {
       <div className="grid grid-cols-2 gap-6">
         <div>
           <Label>Lần khám mắt gần nhất</Label>
-          <Input
+          <IntakeDatePicker
             value={data.lastEyeExam?.date ?? ""}
-            onChange={(e) =>
+            onChange={(v) =>
               onChange("lastEyeExam", {
                 ...(data.lastEyeExam ?? {}),
-                date: e.target.value,
+                date: v,
               })
             }
-            placeholder="dd/mm/yyyy"
+            placeholder="Chọn ngày khám"
           />
         </div>
         <div>
