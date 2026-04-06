@@ -31,7 +31,11 @@ export function IntakeShareModal({
 }: IntakeShareModalProps) {
   const [copied, setCopied] = useState(false)
 
-  const mockUrl = `https://ganka28.vn/intake/${patientId ?? "abc123"}`
+  const token = (patientId ?? "new")
+    .split("")
+    .reduce((acc, c) => acc + c.charCodeAt(0), 0)
+    .toString(36)
+  const mockUrl = `https://ganka28.vn/f/${patientId?.replace("GK-", "").replace(/-/g, "") ?? "0000"}${token}x${Date.now().toString(36).slice(-4)}`
 
   function handleCopy() {
     navigator.clipboard.writeText(mockUrl).then(() => {
