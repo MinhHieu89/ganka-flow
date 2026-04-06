@@ -29,7 +29,6 @@ import {
   HeartCheckIcon,
   Activity01Icon,
   Megaphone01Icon,
-  Agreement02Icon,
   PrinterIcon,
 } from "@hugeicons/core-free-icons"
 import { IntakeSectionPersonal } from "./intake-section-personal"
@@ -39,7 +38,6 @@ import { IntakeSectionMedicalHistory } from "./intake-section-medical-history"
 import { IntakeSectionFamilyHistory } from "./intake-section-family-history"
 import { IntakeSectionLifestyle } from "./intake-section-lifestyle"
 import { IntakeSectionReferral } from "./intake-section-referral"
-import { IntakeSectionConsent } from "./intake-section-consent"
 import { IntakePrintView } from "./intake-print-view"
 
 export interface IntakeFormData {
@@ -102,7 +100,6 @@ export interface IntakeFormData {
   referralSource: string
   referralDetail: string
   // Section VIII
-  consentConfirmed: boolean
 }
 
 function buildInitialForm(patient?: Patient): IntakeFormData {
@@ -158,7 +155,6 @@ function buildInitialForm(patient?: Patient): IntakeFormData {
     hobbies: patient?.hobbies ?? "",
     referralSource: patient?.referralSource ?? "",
     referralDetail: patient?.referralDetail ?? "",
-    consentConfirmed: false,
   }
 }
 
@@ -204,7 +200,6 @@ const SECTIONS = [
     title: "Nguồn thông tin về phòng khám",
     icon: Megaphone01Icon,
   },
-  { id: "consent", num: "VIII", title: "Cam kết", icon: Agreement02Icon },
 ]
 
 export function IntakeForm({ patient }: IntakeFormProps) {
@@ -441,13 +436,6 @@ export function IntakeForm({ patient }: IntakeFormProps) {
     ),
     referral: (
       <IntakeSectionReferral
-        data={form}
-        errors={errors}
-        onChange={updateField}
-      />
-    ),
-    consent: (
-      <IntakeSectionConsent
         data={form}
         errors={errors}
         onChange={updateField}
