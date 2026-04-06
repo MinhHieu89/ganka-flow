@@ -20,6 +20,7 @@ import { PatientTable } from "@/components/receptionist/patient-table"
 import { PatientSearch } from "@/components/receptionist/patient-search"
 import { CheckinModal } from "@/components/receptionist/checkin-modal"
 import { WalkinModal } from "@/components/receptionist/walkin-modal"
+import { CreateVisitModal } from "@/components/receptionist/create-visit-modal"
 import { IntakeShareModal } from "@/components/receptionist/intake-share-modal"
 import { HugeiconsIcon } from "@hugeicons/react"
 import {
@@ -40,6 +41,7 @@ export default function IntakeDashboard() {
   const [checkinVisit, setCheckinVisit] = useState<Visit | null>(null)
   const [walkinPatient, setWalkinPatient] = useState<Patient | null>(null)
   const [shareVisit, setShareVisit] = useState<Visit | null>(null)
+  const [createVisitOpen, setCreateVisitOpen] = useState(false)
 
   // Filter visits
   const filteredVisits =
@@ -81,7 +83,7 @@ export default function IntakeDashboard() {
             <HugeiconsIcon icon={Calendar01Icon} className="size-4" />
             Đặt lịch hẹn
           </Button>
-          <Button onClick={() => navigate("/intake/new")}>
+          <Button onClick={() => setCreateVisitOpen(true)}>
             <HugeiconsIcon icon={UserAdd01Icon} className="size-4" />
             Tiếp nhận BN mới
           </Button>
@@ -165,6 +167,10 @@ export default function IntakeDashboard() {
         patient={walkinPatient}
         open={!!walkinPatient}
         onOpenChange={(open) => !open && setWalkinPatient(null)}
+      />
+      <CreateVisitModal
+        open={createVisitOpen}
+        onOpenChange={setCreateVisitOpen}
       />
       <IntakeShareModal
         open={!!shareVisit}
