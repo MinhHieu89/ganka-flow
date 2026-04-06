@@ -299,7 +299,7 @@ export function ScreeningIntakeSummary({
             {visitReasonLabels.length > 0 && (
               <div className="space-y-1">
                 <SectionHeading>Lý do khám</SectionHeading>
-                <p className="text-muted-foreground">
+                <p className="text-foreground">
                   {visitReasonLabels.join(", ")}
                   {patient.visitReasonOther
                     ? ` — ${patient.visitReasonOther}`
@@ -312,13 +312,13 @@ export function ScreeningIntakeSummary({
             {checkedSymptoms.length > 0 && (
               <div className="space-y-1">
                 <SectionHeading>Triệu chứng</SectionHeading>
-                <p className="text-muted-foreground">
+                <p className="text-foreground">
                   {checkedSymptoms
                     .map((k) => SYMPTOM_LABELS[k] ?? k)
                     .join(", ")}
                 </p>
                 {patient.symptomDetail && (
-                  <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-xs text-muted-foreground">
+                  <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-xs text-foreground">
                     {patient.symptomDetail.onset && (
                       <span>Bắt đầu: {patient.symptomDetail.onset}</span>
                     )}
@@ -346,7 +346,7 @@ export function ScreeningIntakeSummary({
             {hasEyeHistory && (
               <div className="space-y-1">
                 <SectionHeading>Tiền sử mắt</SectionHeading>
-                <div className="space-y-0.5 text-muted-foreground">
+                <div className="space-y-0.5 text-foreground">
                   {(patient.lastEyeExam?.date ||
                     patient.lastEyeExam?.location) && (
                     <p>
@@ -420,7 +420,7 @@ export function ScreeningIntakeSummary({
             {hasMedicalHistory && (
               <div className="space-y-1">
                 <SectionHeading>Tiền sử y tế</SectionHeading>
-                <div className="space-y-0.5 text-muted-foreground">
+                <div className="space-y-0.5 text-foreground">
                   {checkedSystemic.length > 0 && (
                     <p>
                       Bệnh lý:{" "}
@@ -465,7 +465,7 @@ export function ScreeningIntakeSummary({
             {hasFamilyHistory && (
               <div className="space-y-1">
                 <SectionHeading>Tiền sử gia đình</SectionHeading>
-                <div className="space-y-0.5 text-muted-foreground">
+                <div className="space-y-0.5 text-foreground">
                   {familyEyeEntries.length > 0 && (
                     <p>
                       Mắt:{" "}
@@ -499,7 +499,7 @@ export function ScreeningIntakeSummary({
             {hasLifestyle && (
               <div className="space-y-1">
                 <SectionHeading>Lối sống</SectionHeading>
-                <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-muted-foreground">
+                <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-foreground">
                   {patient.smokingInfo &&
                     patient.smokingInfo.status !== "khong" && (
                       <span>
@@ -552,7 +552,7 @@ export function ScreeningIntakeSummary({
             {patient.referralSource && (
               <div className="space-y-1">
                 <SectionHeading>Nguồn thông tin</SectionHeading>
-                <p className="text-muted-foreground">
+                <p className="text-foreground">
                   {REFERRAL_LABELS[patient.referralSource] ??
                     patient.referralSource}
                   {patient.referralDetail
