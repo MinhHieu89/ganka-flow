@@ -15,19 +15,16 @@ import { generateTimeSlots, mockDoctors } from "@/data/mock-appointments"
 import { AppointmentCalendar } from "@/components/receptionist/appointment-calendar"
 import { AppointmentSlots } from "@/components/receptionist/appointment-slots"
 import { ConfirmationBar } from "@/components/receptionist/confirmation-bar"
+import { PatientSearch } from "@/components/receptionist/patient-search"
 import type { Patient } from "@/data/mock-patients"
-import { HugeiconsIcon } from "@hugeicons/react"
-import { Search01Icon } from "@hugeicons/core-free-icons"
 
 export default function ScheduleNew() {
   const navigate = useNavigate()
-  const { searchPatients, addAppointment, addPatient, addVisit } =
-    useReceptionist()
+  const { addAppointment, addPatient, addVisit } = useReceptionist()
 
-  // Search state
-  const [searchQuery, setSearchQuery] = useState("")
+  // Patient state
   const [foundPatient, setFoundPatient] = useState<Patient | null>(null)
-  const [searchDone, setSearchDone] = useState(false)
+  const [showNewPatientForm, setShowNewPatientForm] = useState(false)
 
   // New patient fields
   const [newName, setNewName] = useState("")
@@ -46,22 +43,11 @@ export default function ScheduleNew() {
   const slots = selectedDate ? generateTimeSlots(selectedDate) : null
   const selectedDoctor = mockDoctors.find((d) => d.id === doctorId)
 
-  function handleSearch() {
-    if (searchQuery.length < 2) return
-    const results = searchPatients(searchQuery)
-    if (results.length > 0) {
-      setFoundPatient(results[0])
-    } else {
-      setFoundPatient(null)
-    }
-    setSearchDone(true)
-  }
-
   function handleConfirm() {
     let patientId = foundPatient?.id
     let patientName = foundPatient?.name ?? newName
 
-    if (!foundPatient && newName && newPhone) {
+    if (!foundPatient && showNewPatientForm && newName && newPhone) {
       const newPat = addPatient({
         name: newName,
         phone: newPhone,
@@ -134,50 +120,46 @@ export default function ScheduleNew() {
           <h2 className="mb-4 text-base font-bold">Thông tin bệnh nhân</h2>
 
           <Label className="mb-1.5">Tìm bệnh nhân</Label>
-          <div className="relative mb-3">
-            <HugeiconsIcon
-              icon={Search01Icon}
-              className="absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground"
-            />
-            <Input
-              value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value)
-                setSearchDone(false)
-                setFoundPatient(null)
+          <div className="mb-3">
+            <PatientSearch
+              onSelectPatient={(patient) => {
+                setFoundPatient(patient)
+                setShowNewPatientForm(false)
+                setNewName("")
+                setNewPhone("")
               }}
-              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-              onBlur={handleSearch}
+              onCreateNew={() => {
+                setFoundPatient(null)
+                setShowNewPatientForm(true)
+              }}
               placeholder="Nhập SĐT hoặc tên BN..."
-              className="pl-9"
             />
           </div>
 
-          {/* Found banner */}
-          {searchDone && foundPatient && (
-            <div className="mb-4 flex items-center gap-2 rounded-md border border-green-300 bg-green-50 px-4 py-2.5 text-sm text-green-700 dark:border-green-800 dark:bg-green-950/30 dark:text-green-400">
-              <span>ℹ</span>
+          {/* Selected patient banner */}
+          {foundPatient && (
+            <div className="mb-4 flex items-center justify-between rounded-md border border-green-300 bg-green-50 px-4 py-2.5 text-sm text-green-700 dark:border-green-800 dark:bg-green-950/30 dark:text-green-400">
               <span>
-                Đã tìm thấy: <strong>{foundPatient.name}</strong> —{" "}
-                {foundPatient.id}
+                Đã chọn: <strong>{foundPatient.name}</strong> —{" "}
+                {foundPatient.id} · {foundPatient.phone}
               </span>
-            </div>
-          )}
-
-          {/* Not found banner */}
-          {searchDone && !foundPatient && (
-            <div className="mb-4 flex items-start gap-2 rounded-md border border-amber-300 bg-amber-50 px-4 py-2.5 text-sm text-amber-700 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-400">
-              <span>⚠</span>
-              <span>
-                Không tìm thấy BN với SĐT này. Nhập thông tin bên dưới để tạo
-                hẹn cho BN mới.
-              </span>
+              <button
+                className="text-xs underline hover:no-underline"
+                onClick={() => setFoundPatient(null)}
+              >
+                Bỏ chọn
+              </button>
             </div>
           )}
 
           {/* New patient fields */}
-          {searchDone && !foundPatient && (
+          {showNewPatientForm && !foundPatient && (
             <>
+              <div className="mb-4 flex items-start gap-2 rounded-md border border-amber-300 bg-amber-50 px-4 py-2.5 text-sm text-amber-700 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-400">
+                <span>
+                  Nhập thông tin bên dưới để tạo hẹn cho BN mới.
+                </span>
+              </div>
               <div className="mb-3">
                 <Label>
                   Họ tên <span className="text-destructive">*</span>
@@ -197,7 +179,6 @@ export default function ScheduleNew() {
                 />
               </div>
               <div className="mb-4 flex items-start gap-2 rounded-md bg-blue-50 px-4 py-2.5 text-xs text-blue-700 dark:bg-blue-950/30 dark:text-blue-400">
-                <span>ℹ</span>
                 <span>
                   BN mới chỉ cần tên + SĐT + lý do khám để đặt hẹn. Thông tin
                   đầy đủ sẽ bổ sung khi BN đến check-in.

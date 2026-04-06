@@ -7,11 +7,13 @@ import { Search01Icon } from "@hugeicons/core-free-icons"
 
 interface PatientSearchProps {
   onSelectPatient: (patient: Patient) => void
+  onCreateNew?: () => void
   placeholder?: string
 }
 
 export function PatientSearch({
   onSelectPatient,
+  onCreateNew,
   placeholder = "Tìm theo SĐT hoặc tên BN...",
 }: PatientSearchProps) {
   const { searchPatients } = useReceptionist()
@@ -57,7 +59,7 @@ export function PatientSearch({
         />
       </div>
       {showDropdown && results.length > 0 && (
-        <div className="absolute z-50 mt-1 w-full rounded-md border border-border bg-popover shadow-md">
+        <div className="absolute z-50 mt-1 max-h-64 w-full overflow-y-auto rounded-md border border-border bg-popover shadow-md">
           {results.map((patient) => (
             <button
               key={patient.id}
@@ -79,8 +81,21 @@ export function PatientSearch({
         </div>
       )}
       {showDropdown && results.length === 0 && (
-        <div className="absolute z-50 mt-1 w-full rounded-md border border-border bg-popover p-3 text-sm text-muted-foreground shadow-md">
-          Không tìm thấy bệnh nhân
+        <div className="absolute z-50 mt-1 w-full rounded-md border border-border bg-popover shadow-md">
+          <div className="p-3 text-sm text-muted-foreground">
+            Không tìm thấy bệnh nhân
+          </div>
+          {onCreateNew && (
+            <button
+              className="flex w-full items-center gap-2 border-t border-border px-3 py-2.5 text-left text-sm font-medium text-primary hover:bg-muted"
+              onClick={() => {
+                onCreateNew()
+                setIsOpen(false)
+              }}
+            >
+              + Tạo bệnh nhân mới
+            </button>
+          )}
         </div>
       )}
     </div>

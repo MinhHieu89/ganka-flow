@@ -26,7 +26,7 @@ export function ScreeningStep2GroupSelector({
   onToggle,
 }: ScreeningStep2GroupSelectorProps) {
   return (
-    <section className="rounded-lg border border-border bg-background p-4">
+    <section className="rounded-lg border border-border bg-background p-4 min-w-28">
       <div className="mb-3 flex items-center gap-2">
         <HugeiconsIcon icon={Tag01Icon} className="size-4" strokeWidth={1.5} />
         <span className="text-sm font-semibold">Chọn nhóm bệnh</span>
