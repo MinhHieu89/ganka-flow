@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { QRCodeSVG } from "qrcode.react"
 import {
   Dialog,
@@ -31,11 +31,13 @@ export function IntakeShareModal({
 }: IntakeShareModalProps) {
   const [copied, setCopied] = useState(false)
 
-  const token = (patientId ?? "new")
-    .split("")
-    .reduce((acc, c) => acc + c.charCodeAt(0), 0)
-    .toString(36)
-  const mockUrl = `https://ganka28.vn/f/${patientId?.replace("GK-", "").replace(/-/g, "") ?? "0000"}${token}x${Date.now().toString(36).slice(-4)}`
+  const mockUrl = useMemo(() => {
+    const token = (patientId ?? "new")
+      .split("")
+      .reduce((acc, c) => acc + c.charCodeAt(0), 0)
+      .toString(36)
+    return `https://ganka28.vn/f/${patientId?.replace("GK-", "").replace(/-/g, "") ?? "0000"}${token}x${Date.now().toString(36).slice(-4)}`
+  }, [patientId])
 
   function handleCopy() {
     navigator.clipboard.writeText(mockUrl).then(() => {
