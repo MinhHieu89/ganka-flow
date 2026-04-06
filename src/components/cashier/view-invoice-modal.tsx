@@ -16,8 +16,8 @@ import {
   formatVND,
   formatPhone,
   getPaymentMethodLabel,
-  mockTransactionDetails,
 } from "@/data/mock-cashier"
+import { useCashier } from "@/contexts/cashier-context"
 
 interface ViewInvoiceModalProps {
   transactionId: string
@@ -64,8 +64,9 @@ export function ViewInvoiceModal({
   onClose,
   onRefund,
 }: ViewInvoiceModalProps) {
+  const { getTransactionDetail } = useCashier()
   const tx: TransactionDetail | undefined =
-    mockTransactionDetails[transactionId]
+    getTransactionDetail(transactionId)
 
   const groups = useMemo(() => {
     if (!tx) return []

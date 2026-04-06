@@ -14,6 +14,7 @@ import ScreeningVisit from "@/pages/screening/visit"
 import DoctorDashboard from "@/pages/doctor/index"
 import DoctorExam from "@/pages/doctor/exam"
 import { DoctorProvider } from "@/contexts/doctor-context"
+import { CashierProvider } from "@/contexts/cashier-context"
 import PatientRegistry from "@/pages/patients/index"
 import PatientDetail from "@/pages/patients/detail"
 import PharmacyDashboard from "@/pages/pharmacy/index"
@@ -29,6 +30,7 @@ export function App() {
       <TooltipProvider>
         <ReceptionistProvider>
           <DoctorProvider>
+            <CashierProvider>
             <SidebarProvider>
               <AppSidebar />
               <SidebarInset>
@@ -67,6 +69,7 @@ export function App() {
                 </Routes>
               </SidebarInset>
             </SidebarProvider>
+            </CashierProvider>
           </DoctorProvider>
         </ReceptionistProvider>
       </TooltipProvider>

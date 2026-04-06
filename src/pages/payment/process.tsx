@@ -20,10 +20,12 @@ import { PaymentMethodsSection } from "@/components/cashier/payment-methods-sect
 import { PaymentActions } from "@/components/cashier/payment-actions"
 import { ReceiptCard } from "@/components/cashier/receipt-card"
 import type { CompletedPayment } from "@/data/mock-cashier"
+import { useCashier } from "@/contexts/cashier-context"
 
 export default function PaymentProcessingPage() {
   const { paymentRequestId } = useParams<{ paymentRequestId: string }>()
   const navigate = useNavigate()
+  const { completePayment: persistPayment } = useCashier()
   const [showCancelDialog, setShowCancelDialog] = useState(false)
   const [showReceiptPreview, setShowReceiptPreview] = useState(false)
 
@@ -66,6 +68,7 @@ export default function PaymentProcessingPage() {
 
   function handleConfirmPayment() {
     const completed = confirmPayment()
+    persistPayment(completed)
     navigate(`/payment/${completed.id}/success`, {
       state: { payment: completed },
     })

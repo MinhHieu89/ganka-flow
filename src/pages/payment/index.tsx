@@ -9,13 +9,9 @@ import { ViewInvoiceModal } from "@/components/cashier/view-invoice-modal"
 import { RefundModal } from "@/components/cashier/refund-modal"
 import { ReturnToQueueModal } from "@/components/cashier/return-to-queue-modal"
 import { ViewPaymentRequestModal } from "@/components/cashier/view-payment-request-modal"
-import {
-  mockPaymentRequests,
-  mockTransactions,
-  mockShift,
-  getCashierMetrics,
-} from "@/data/mock-cashier"
+import { mockShift } from "@/data/mock-cashier"
 import type { ModalState } from "@/data/mock-cashier"
+import { useCashier } from "@/contexts/cashier-context"
 
 function formatVietnameseDate(): string {
   const d = new Date()
@@ -38,9 +34,7 @@ export default function CashierDashboard() {
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState("queue")
   const [modalState, setModalState] = useState<ModalState>({ type: "closed" })
-  const requests = mockPaymentRequests
-  const transactions = mockTransactions
-  const metrics = getCashierMetrics(transactions)
+  const { paymentRequests: requests, transactions, metrics } = useCashier()
   const shift = mockShift
 
   function closeModal() {
