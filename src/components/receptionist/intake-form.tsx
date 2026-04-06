@@ -6,11 +6,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { useReceptionist } from "@/contexts/receptionist-context"
 import type {
   Patient,
@@ -34,7 +30,6 @@ import {
   UserAdd01Icon,
   Clock01Icon,
   PlusSignCircleIcon,
-  TimeQuarterPassIcon,
   UserGroupIcon,
   HeartCheckIcon,
   Activity01Icon,
@@ -180,12 +175,42 @@ interface IntakeFormProps {
 
 const SECTIONS = [
   { id: "personal", num: "I", title: "Thông tin cá nhân", icon: UserAdd01Icon },
-  { id: "complaint", num: "II", title: "Lý do khám và triệu chứng", icon: Clock01Icon },
-  { id: "eyeHistory", num: "III", title: "Tiền sử mắt cá nhân", icon: PlusSignCircleIcon },
-  { id: "medicalHistory", num: "IV", title: "Tiền sử y tế tổng quát", icon: HeartCheckIcon },
-  { id: "familyHistory", num: "V", title: "Tiền sử gia đình về mắt và sức khỏe", icon: UserGroupIcon },
-  { id: "lifestyle", num: "VI", title: "Thói quen sinh hoạt và công việc", icon: Activity01Icon },
-  { id: "referral", num: "VII", title: "Nguồn thông tin về phòng khám", icon: Megaphone01Icon },
+  {
+    id: "complaint",
+    num: "II",
+    title: "Lý do khám và triệu chứng",
+    icon: Clock01Icon,
+  },
+  {
+    id: "eyeHistory",
+    num: "III",
+    title: "Tiền sử mắt cá nhân",
+    icon: PlusSignCircleIcon,
+  },
+  {
+    id: "medicalHistory",
+    num: "IV",
+    title: "Tiền sử y tế tổng quát",
+    icon: HeartCheckIcon,
+  },
+  {
+    id: "familyHistory",
+    num: "V",
+    title: "Tiền sử gia đình về mắt và sức khỏe",
+    icon: UserGroupIcon,
+  },
+  {
+    id: "lifestyle",
+    num: "VI",
+    title: "Thói quen sinh hoạt và công việc",
+    icon: Activity01Icon,
+  },
+  {
+    id: "referral",
+    num: "VII",
+    title: "Nguồn thông tin về phòng khám",
+    icon: Megaphone01Icon,
+  },
   { id: "consent", num: "VIII", title: "Cam kết", icon: Agreement02Icon },
 ]
 
@@ -239,7 +264,8 @@ export function IntakeForm({ patient }: IntakeFormProps) {
   function handleSave(goToScreening = false) {
     if (!validate()) return
 
-    const data: Omit<Patient, "id" | "createdAt"> & Partial<Pick<Patient, "id" | "createdAt">> = {
+    const data: Omit<Patient, "id" | "createdAt"> &
+      Partial<Pick<Patient, "id" | "createdAt">> = {
       name: form.name.trim(),
       gender: form.gender as Patient["gender"],
       dob: form.dob,
@@ -251,39 +277,81 @@ export function IntakeForm({ patient }: IntakeFormProps) {
       cityProvince: form.cityProvince || undefined,
       occupation: form.occupation || undefined,
       cccd: form.cccd || undefined,
-      emergencyContact:
-        form.emergencyContactName
-          ? {
-              name: form.emergencyContactName,
-              phone: form.emergencyContactPhone,
-              relationship: form.emergencyContactRelationship,
-            }
-          : undefined,
+      emergencyContact: form.emergencyContactName
+        ? {
+            name: form.emergencyContactName,
+            phone: form.emergencyContactPhone,
+            relationship: form.emergencyContactRelationship,
+          }
+        : undefined,
       visitReasons: form.visitReasons,
       visitReasonOther: form.visitReasonOther || undefined,
-      symptomDetail: Object.keys(form.symptomDetail).length > 0 ? form.symptomDetail : undefined,
-      symptoms: Object.keys(form.symptoms).length > 0 ? form.symptoms : undefined,
-      lastEyeExam: form.lastEyeExam?.date || form.lastEyeExam?.location ? form.lastEyeExam : undefined,
-      currentGlasses: (form.currentGlasses?.types ?? []).length > 0 ? form.currentGlasses : undefined,
-      contactLensStatus: (form.contactLensStatus as Patient["contactLensStatus"]) || undefined,
-      contactLensDetail: form.contactLensStatus === "co" || form.contactLensStatus === "da_tung" ? form.contactLensDetail : undefined,
+      symptomDetail:
+        Object.keys(form.symptomDetail).length > 0
+          ? form.symptomDetail
+          : undefined,
+      symptoms:
+        Object.keys(form.symptoms).length > 0 ? form.symptoms : undefined,
+      lastEyeExam:
+        form.lastEyeExam?.date || form.lastEyeExam?.location
+          ? form.lastEyeExam
+          : undefined,
+      currentGlasses:
+        (form.currentGlasses?.types ?? []).length > 0
+          ? form.currentGlasses
+          : undefined,
+      contactLensStatus:
+        (form.contactLensStatus as Patient["contactLensStatus"]) || undefined,
+      contactLensDetail:
+        form.contactLensStatus === "co" || form.contactLensStatus === "da_tung"
+          ? form.contactLensDetail
+          : undefined,
       eyeInjury: form.eyeInjury?.has ? form.eyeInjury : undefined,
-      diagnosedEyeConditions: Object.values(form.diagnosedEyeConditions).some(Boolean) ? form.diagnosedEyeConditions : undefined,
+      diagnosedEyeConditions: Object.values(form.diagnosedEyeConditions).some(
+        Boolean
+      )
+        ? form.diagnosedEyeConditions
+        : undefined,
       diagnosedEyeConditionOther: form.diagnosedEyeConditionOther || undefined,
-      refractionValues: Object.keys(form.refractionValues).length > 0 ? form.refractionValues : undefined,
-      eyeSurgeries: form.eyeSurgeries.length > 0 ? form.eyeSurgeries : undefined,
-      primaryDoctor: form.primaryDoctor?.name || form.primaryDoctor?.lastVisit ? form.primaryDoctor : undefined,
-      systemicConditions: Object.values(form.systemicConditions).some(Boolean) ? form.systemicConditions : undefined,
-      diabetesDetail: form.diabetesDetail?.yearDiagnosed || form.diabetesDetail?.hba1c ? form.diabetesDetail : undefined,
+      refractionValues:
+        Object.keys(form.refractionValues).length > 0
+          ? form.refractionValues
+          : undefined,
+      eyeSurgeries:
+        form.eyeSurgeries.length > 0 ? form.eyeSurgeries : undefined,
+      primaryDoctor:
+        form.primaryDoctor?.name || form.primaryDoctor?.lastVisit
+          ? form.primaryDoctor
+          : undefined,
+      systemicConditions: Object.values(form.systemicConditions).some(Boolean)
+        ? form.systemicConditions
+        : undefined,
+      diabetesDetail:
+        form.diabetesDetail?.yearDiagnosed || form.diabetesDetail?.hba1c
+          ? form.diabetesDetail
+          : undefined,
       cancerDetail: form.cancerDetail?.type ? form.cancerDetail : undefined,
       systemicConditionOther: form.systemicConditionOther || undefined,
-      medicationsList: form.medicationsList.length > 0 ? form.medicationsList : undefined,
-      allergiesInfo: form.allergiesInfo.none || form.allergiesInfo.items.length > 0 ? form.allergiesInfo : undefined,
-      pregnancyStatus: (form.pregnancyStatus as Patient["pregnancyStatus"]) || undefined,
+      medicationsList:
+        form.medicationsList.length > 0 ? form.medicationsList : undefined,
+      allergiesInfo:
+        form.allergiesInfo.none || form.allergiesInfo.items.length > 0
+          ? form.allergiesInfo
+          : undefined,
+      pregnancyStatus:
+        (form.pregnancyStatus as Patient["pregnancyStatus"]) || undefined,
       pregnancyTrimester: form.pregnancyTrimester || undefined,
-      familyEyeHistory: Object.values(form.familyEyeHistory).some((e) => e.has) ? form.familyEyeHistory : undefined,
-      familyMedicalHistory: Object.values(form.familyMedicalHistory).some((e) => e.has) ? form.familyMedicalHistory : undefined,
-      familyHistoryOther: form.familyHistoryOther?.has ? form.familyHistoryOther : undefined,
+      familyEyeHistory: Object.values(form.familyEyeHistory).some((e) => e.has)
+        ? form.familyEyeHistory
+        : undefined,
+      familyMedicalHistory: Object.values(form.familyMedicalHistory).some(
+        (e) => e.has
+      )
+        ? form.familyMedicalHistory
+        : undefined,
+      familyHistoryOther: form.familyHistoryOther?.has
+        ? form.familyHistoryOther
+        : undefined,
       smokingInfo: form.smokingInfo,
       alcoholInfo: form.alcoholInfo,
       screenTimeComputer: form.screenTimeComputer || undefined,
@@ -449,7 +517,7 @@ export function IntakeForm({ patient }: IntakeFormProps) {
                 In phiếu
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogContent className="max-h-[90vh] max-w-4xl overflow-y-auto">
               <IntakePrintView data={form} patientId={patient?.id} />
               <div className="flex justify-end gap-2 border-t pt-4 print:hidden">
                 <Button variant="outline" onClick={() => setShowPrint(false)}>
@@ -469,9 +537,7 @@ export function IntakeForm({ patient }: IntakeFormProps) {
           <Button variant="outline" onClick={() => handleSave(false)}>
             Lưu
           </Button>
-          <Button onClick={() => handleSave(true)}>
-            Lưu & Sàng lọc →
-          </Button>
+          <Button onClick={() => handleSave(true)}>Lưu & Sàng lọc →</Button>
         </div>
       </div>
     </div>

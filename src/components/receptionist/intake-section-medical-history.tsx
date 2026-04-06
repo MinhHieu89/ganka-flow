@@ -91,11 +91,7 @@ const emptyAllergy: AllergyEntry = {
   reaction: "",
 }
 
-export function IntakeSectionMedicalHistory({
-  data,
-  errors,
-  onChange,
-}: Props) {
+export function IntakeSectionMedicalHistory({ data, onChange }: Props) {
   const conditions = data.systemicConditions ?? {}
   const hasDiabetes = conditions["dtd_type1"] || conditions["dtd_type2"]
   const hasCancer = conditions["ung_thu"]
@@ -118,7 +114,10 @@ export function IntakeSectionMedicalHistory({
   }
 
   function removeMedication(index: number) {
-    onChange("medicationsList", medications.filter((_, i) => i !== index))
+    onChange(
+      "medicationsList",
+      medications.filter((_, i) => i !== index)
+    )
   }
 
   function toggleAllergyNone(none: boolean) {
@@ -183,7 +182,7 @@ export function IntakeSectionMedicalHistory({
         <div className="space-y-4">
           {SYSTEMIC_CONDITION_GROUPS.map((group) => (
             <div key={group.label}>
-              <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              <p className="mb-1.5 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
                 {group.label}
               </p>
               <CheckboxGrid
@@ -289,9 +288,11 @@ export function IntakeSectionMedicalHistory({
         )}
 
         <ConditionalField
-          show={!SYSTEMIC_CONDITION_GROUPS.flatMap((g) =>
-            g.items.map((i) => i.key)
-          ).every((k) => !conditions[k])}
+          show={
+            !SYSTEMIC_CONDITION_GROUPS.flatMap((g) =>
+              g.items.map((i) => i.key)
+            ).every((k) => !conditions[k])
+          }
           label=""
           value=""
           onChange={() => {}}
@@ -331,7 +332,9 @@ export function IntakeSectionMedicalHistory({
                   </Label>
                   <Input
                     value={med.name}
-                    onChange={(e) => updateMedication(i, "name", e.target.value)}
+                    onChange={(e) =>
+                      updateMedication(i, "name", e.target.value)
+                    }
                     className="h-8"
                   />
                 </div>
@@ -339,7 +342,9 @@ export function IntakeSectionMedicalHistory({
                   <Label className="text-xs text-muted-foreground">Liều</Label>
                   <Input
                     value={med.dose}
-                    onChange={(e) => updateMedication(i, "dose", e.target.value)}
+                    onChange={(e) =>
+                      updateMedication(i, "dose", e.target.value)
+                    }
                     className="h-8"
                   />
                 </div>

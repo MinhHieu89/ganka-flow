@@ -299,10 +299,7 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
             value={data.emergencyContactName}
           />{" "}
           <Field label="SĐT" value={data.emergencyContactPhone} />{" "}
-          <Field
-            label="Quan hệ"
-            value={data.emergencyContactRelationship}
-          />
+          <Field label="Quan hệ" value={data.emergencyContactRelationship} />
         </p>
       </div>
 
@@ -330,12 +327,9 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
               />
             </p>
             <p>
-              Mức độ:{" "}
-              <Check checked={data.symptomDetail.severity === "nhe"} />
+              Mức độ: <Check checked={data.symptomDetail.severity === "nhe"} />
               Nhẹ{" "}
-              <Check
-                checked={data.symptomDetail.severity === "trung_binh"}
-              />
+              <Check checked={data.symptomDetail.severity === "trung_binh"} />
               Trung bình{" "}
               <Check checked={data.symptomDetail.severity === "nang"} />
               Nặng
@@ -343,17 +337,11 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
             {data.symptomDetail.affectedEye && (
               <p>
                 Mắt bị ảnh hưởng:{" "}
-                <Check
-                  checked={data.symptomDetail.affectedEye === "phai"}
-                />
+                <Check checked={data.symptomDetail.affectedEye === "phai"} />
                 Phải{" "}
-                <Check
-                  checked={data.symptomDetail.affectedEye === "trai"}
-                />
+                <Check checked={data.symptomDetail.affectedEye === "trai"} />
                 Trái{" "}
-                <Check
-                  checked={data.symptomDetail.affectedEye === "ca_hai"}
-                />
+                <Check checked={data.symptomDetail.affectedEye === "ca_hai"} />
                 Cả hai
               </p>
             )}
@@ -380,10 +368,7 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
       <div>
         <h2>III. Tiền sử mắt cá nhân</h2>
         <p>
-          <Field
-            label="Lần khám mắt gần nhất"
-            value={data.lastEyeExam?.date}
-          />{" "}
+          <Field label="Lần khám mắt gần nhất" value={data.lastEyeExam?.date} />{" "}
           <Field label="Nơi khám" value={data.lastEyeExam?.location} />
         </p>
 
@@ -433,8 +418,7 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
           )}
 
         <p className="mt-2">
-          Chấn thương mắt:{" "}
-          <Check checked={data.eyeInjury?.has ?? false} />
+          Chấn thương mắt: <Check checked={data.eyeInjury?.has ?? false} />
           Có <Check checked={!(data.eyeInjury?.has ?? false)} />
           Không
           {data.eyeInjury?.has && data.eyeInjury?.detail && (
@@ -442,16 +426,12 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
           )}
         </p>
 
-        <p className="mt-2 font-medium">
-          Các bệnh mắt đã được chẩn đoán:
-        </p>
+        <p className="mt-2 font-medium">Các bệnh mắt đã được chẩn đoán:</p>
         <div className="check-grid">
           {Object.entries(EYE_CONDITION_LABELS).map(([key, label]) => (
             <span key={key}>
               <Check
-                checked={
-                  (data.diagnosedEyeConditions ?? {})[key] ?? false
-                }
+                checked={(data.diagnosedEyeConditions ?? {})[key] ?? false}
               />
               {label}
             </span>
@@ -561,17 +541,14 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
               label="Đái tháo đường - Năm chẩn đoán"
               value={data.diabetesDetail.yearDiagnosed}
             />{" "}
-            <Field
-              label="HbA1c gần nhất"
-              value={data.diabetesDetail.hba1c}
-            />
+            <Field label="HbA1c gần nhất" value={data.diabetesDetail.hba1c} />
           </p>
         )}
 
         {hasCancer && data.cancerDetail && (
           <p className="mt-1">
-            <Field label="Loại ung thư" value={data.cancerDetail.type} />{" "}
-            Đang điều trị:{" "}
+            <Field label="Loại ung thư" value={data.cancerDetail.type} /> Đang
+            điều trị:{" "}
             {data.cancerDetail.onTreatment === true
               ? "Có"
               : data.cancerDetail.onTreatment === false
@@ -632,12 +609,9 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
 
         {data.gender === "Nữ" && (
           <p className="mt-2">
-            Thai kỳ:{" "}
-            <Check checked={data.pregnancyStatus === "co"} />
-            Có{" "}
-            <Check checked={data.pregnancyStatus === "khong"} />
-            Không{" "}
-            <Check checked={data.pregnancyStatus === "khong_chac"} />
+            Thai kỳ: <Check checked={data.pregnancyStatus === "co"} />
+            Có <Check checked={data.pregnancyStatus === "khong"} />
+            Không <Check checked={data.pregnancyStatus === "khong_chac"} />
             Không chắc
             {data.pregnancyStatus === "co" && data.pregnancyTrimester && (
               <> - Tam cá nguyệt: {data.pregnancyTrimester}</>
@@ -649,9 +623,7 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
       {/* Section V - Family History */}
       <div>
         <h2>V. Tiền sử gia đình</h2>
-        <p className="mb-1">
-          Có ai trong gia đình bị các bệnh sau không?
-        </p>
+        <p className="mb-1">Có ai trong gia đình bị các bệnh sau không?</p>
 
         <p className="sub-label">Bệnh mắt:</p>
         <div className="family-row">
@@ -661,9 +633,7 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
               <span key={item.key}>
                 <Check checked={entry?.has ?? false} />
                 {item.label}
-                {entry?.has && entry?.who && (
-                  <> ({entry.who})</>
-                )}
+                {entry?.has && entry?.who && <> ({entry.who})</>}
               </span>
             )
           })}
@@ -677,9 +647,7 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
               <span key={item.key}>
                 <Check checked={entry?.has ?? false} />
                 {item.label}
-                {entry?.has && entry?.who && (
-                  <> ({entry.who})</>
-                )}
+                {entry?.has && entry?.who && <> ({entry.who})</>}
               </span>
             )
           })}
@@ -700,8 +668,7 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
         <h2>VI. Thói quen sinh hoạt</h2>
 
         <p>
-          Hút thuốc:{" "}
-          <Check checked={smoking.status === "khong"} />
+          Hút thuốc: <Check checked={smoking.status === "khong"} />
           Không <Check checked={smoking.status === "co"} />
           Có <Check checked={smoking.status === "da_bo"} />
           Đã bỏ
@@ -717,12 +684,9 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
         </p>
 
         <p>
-          Uống rượu/bia:{" "}
-          <Check checked={alcohol.status === "khong"} />
-          Không{" "}
-          <Check checked={alcohol.status === "thinh_thoang"} />
-          Thỉnh thoảng{" "}
-          <Check checked={alcohol.status === "thuong_xuyen"} />
+          Uống rượu/bia: <Check checked={alcohol.status === "khong"} />
+          Không <Check checked={alcohol.status === "thinh_thoang"} />
+          Thỉnh thoảng <Check checked={alcohol.status === "thuong_xuyen"} />
           Thường xuyên
           {alcohol.status === "thuong_xuyen" && alcohol.frequency && (
             <> - {alcohol.frequency} lần/tuần</>
@@ -731,13 +695,11 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
 
         <p>
           Thời gian máy tính/laptop mỗi ngày:{" "}
-          {SCREEN_TIME_LABELS[data.screenTimeComputer] ||
-            "___________________"}
+          {SCREEN_TIME_LABELS[data.screenTimeComputer] || "___________________"}
         </p>
         <p>
           Thời gian điện thoại/tablet mỗi ngày:{" "}
-          {SCREEN_TIME_LABELS[data.screenTimePhone] ||
-            "___________________"}
+          {SCREEN_TIME_LABELS[data.screenTimePhone] || "___________________"}
         </p>
         <p>
           Thời gian hoạt động ngoài trời:{" "}
@@ -758,8 +720,7 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
         </p>
 
         <p>
-          Lái xe thường xuyên:{" "}
-          <Check checked={driving.does} />
+          Lái xe thường xuyên: <Check checked={driving.does} />
           Có <Check checked={!driving.does} />
           Không
           {driving.does && driving.when && (
@@ -768,16 +729,13 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
         </p>
 
         <p>
-          Chơi thể thao:{" "}
-          <Check checked={sports.does} />
+          Chơi thể thao: <Check checked={sports.does} />
           Có <Check checked={!sports.does} />
           Không
           {sports.does && sports.type && <> - Môn: {sports.type}</>}
         </p>
 
-        {data.hobbies && (
-          <p>Sở thích đặc biệt: {data.hobbies}</p>
-        )}
+        {data.hobbies && <p>Sở thích đặc biệt: {data.hobbies}</p>}
       </div>
 
       {/* Section VII - Referral Source */}
@@ -815,9 +773,7 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
             <p>Ngày: ____/____/________</p>
           </div>
           <div>
-            <p>
-              Chữ ký người giám hộ (nếu có): _________________________
-            </p>
+            <p>Chữ ký người giám hộ (nếu có): _________________________</p>
             <p>Quan hệ: ___________ Ngày: ____/____/________</p>
           </div>
         </div>

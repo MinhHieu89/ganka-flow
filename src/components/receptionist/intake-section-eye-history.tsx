@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
@@ -76,7 +75,7 @@ const emptySurgery: EyeSurgery = {
   os: false,
 }
 
-export function IntakeSectionEyeHistory({ data, errors, onChange }: Props) {
+export function IntakeSectionEyeHistory({ data, onChange }: Props) {
   const conditions = data.diagnosedEyeConditions ?? {}
   const hasGlasses = (data.currentGlasses?.types ?? []).length > 0
   const showLensDetail =
@@ -86,18 +85,25 @@ export function IntakeSectionEyeHistory({ data, errors, onChange }: Props) {
 
   function toggleGlassesType(key: string, checked: boolean) {
     const current = data.currentGlasses?.types ?? []
-    const next = checked
-      ? [...current, key]
-      : current.filter((t) => t !== key)
-    onChange("currentGlasses", { ...(data.currentGlasses ?? { types: [] }), types: next })
+    const next = checked ? [...current, key] : current.filter((t) => t !== key)
+    onChange("currentGlasses", {
+      ...(data.currentGlasses ?? { types: [] }),
+      types: next,
+    })
   }
 
   function updateGlasses(field: string, value: unknown) {
-    onChange("currentGlasses", { ...(data.currentGlasses ?? { types: [] }), [field]: value })
+    onChange("currentGlasses", {
+      ...(data.currentGlasses ?? { types: [] }),
+      [field]: value,
+    })
   }
 
   function updateLensDetail(field: string, value: unknown) {
-    onChange("contactLensDetail", { ...(data.contactLensDetail ?? {}), [field]: value })
+    onChange("contactLensDetail", {
+      ...(data.contactLensDetail ?? {}),
+      [field]: value,
+    })
   }
 
   function toggleLensType(key: string, checked: boolean) {
@@ -122,7 +128,12 @@ export function IntakeSectionEyeHistory({ data, errors, onChange }: Props) {
     value: string
   ) {
     const rv = data.refractionValues ?? {}
-    const condKey = condition === "can_thi" ? "myopia" : condition === "vien_thi" ? "hyperopia" : "astigmatism"
+    const condKey =
+      condition === "can_thi"
+        ? "myopia"
+        : condition === "vien_thi"
+          ? "hyperopia"
+          : "astigmatism"
     onChange("refractionValues", {
       ...rv,
       [condKey]: { ...(rv[condKey] ?? {}), [eye]: value },
@@ -130,7 +141,10 @@ export function IntakeSectionEyeHistory({ data, errors, onChange }: Props) {
   }
 
   function addSurgery() {
-    onChange("eyeSurgeries", [...(data.eyeSurgeries ?? []), { ...emptySurgery }])
+    onChange("eyeSurgeries", [
+      ...(data.eyeSurgeries ?? []),
+      { ...emptySurgery },
+    ])
   }
 
   function updateSurgery(index: number, field: string, value: unknown) {
@@ -245,7 +259,10 @@ export function IntakeSectionEyeHistory({ data, errors, onChange }: Props) {
         <Label className="mb-2 block">Có đeo kính áp tròng không?</Label>
         <div className="flex gap-3">
           {CONTACT_LENS_STATUS_OPTIONS.map((opt) => (
-            <label key={opt.value} className="flex items-center gap-1.5 text-sm">
+            <label
+              key={opt.value}
+              className="flex items-center gap-1.5 text-sm"
+            >
               <input
                 type="radio"
                 name="contactLensStatus"
@@ -273,8 +290,12 @@ export function IntakeSectionEyeHistory({ data, errors, onChange }: Props) {
                   >
                     <input
                       type="checkbox"
-                      checked={(data.contactLensDetail?.type ?? []).includes(opt.key)}
-                      onChange={(e) => toggleLensType(opt.key, e.target.checked)}
+                      checked={(data.contactLensDetail?.type ?? []).includes(
+                        opt.key
+                      )}
+                      onChange={(e) =>
+                        toggleLensType(opt.key, e.target.checked)
+                      }
                       className="size-4 accent-[var(--color-primary)]"
                     />
                     {opt.label}
@@ -284,14 +305,18 @@ export function IntakeSectionEyeHistory({ data, errors, onChange }: Props) {
             </div>
             <div className="grid grid-cols-2 gap-6">
               <div>
-                <Label className="text-sm text-muted-foreground">Thương hiệu</Label>
+                <Label className="text-sm text-muted-foreground">
+                  Thương hiệu
+                </Label>
                 <Input
                   value={data.contactLensDetail?.brand ?? ""}
                   onChange={(e) => updateLensDetail("brand", e.target.value)}
                 />
               </div>
               <div>
-                <Label className="text-sm text-muted-foreground">Đeo được bao lâu?</Label>
+                <Label className="text-sm text-muted-foreground">
+                  Đeo được bao lâu?
+                </Label>
                 <Input
                   value={data.contactLensDetail?.duration ?? ""}
                   onChange={(e) => updateLensDetail("duration", e.target.value)}
@@ -314,8 +339,12 @@ export function IntakeSectionEyeHistory({ data, errors, onChange }: Props) {
                   >
                     <input
                       type="checkbox"
-                      checked={(data.contactLensDetail?.issues ?? []).includes(opt.key)}
-                      onChange={(e) => toggleLensIssue(opt.key, e.target.checked)}
+                      checked={(data.contactLensDetail?.issues ?? []).includes(
+                        opt.key
+                      )}
+                      onChange={(e) =>
+                        toggleLensIssue(opt.key, e.target.checked)
+                      }
                       className="size-4 accent-[var(--color-primary)]"
                     />
                     {opt.label}
@@ -344,7 +373,12 @@ export function IntakeSectionEyeHistory({ data, errors, onChange }: Props) {
               type="radio"
               name="eyeInjury"
               checked={hasEyeInjury}
-              onChange={() => onChange("eyeInjury", { has: true, detail: data.eyeInjury?.detail })}
+              onChange={() =>
+                onChange("eyeInjury", {
+                  has: true,
+                  detail: data.eyeInjury?.detail,
+                })
+              }
               className="size-4 accent-[var(--color-primary)]"
             />
             Có
@@ -389,16 +423,31 @@ export function IntakeSectionEyeHistory({ data, errors, onChange }: Props) {
           <div className="mt-3 space-y-2 rounded-lg border border-border p-4">
             <Label className="text-sm font-medium">Số đo khúc xạ</Label>
             {REFRACTION_CONDITIONS.filter((c) => conditions[c]).map((c) => {
-              const label = c === "can_thi" ? "Cận thị" : c === "vien_thi" ? "Viễn thị" : "Loạn thị"
-              const condKey = c === "can_thi" ? "myopia" : c === "vien_thi" ? "hyperopia" : "astigmatism"
+              const label =
+                c === "can_thi"
+                  ? "Cận thị"
+                  : c === "vien_thi"
+                    ? "Viễn thị"
+                    : "Loạn thị"
+              const condKey =
+                c === "can_thi"
+                  ? "myopia"
+                  : c === "vien_thi"
+                    ? "hyperopia"
+                    : "astigmatism"
               return (
-                <div key={c} className="grid grid-cols-[120px_1fr_1fr] items-center gap-4">
+                <div
+                  key={c}
+                  className="grid grid-cols-[120px_1fr_1fr] items-center gap-4"
+                >
                   <span className="text-sm">{label}</span>
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-muted-foreground">OD</span>
                     <Input
                       value={data.refractionValues?.[condKey]?.od ?? ""}
-                      onChange={(e) => updateRefraction(c, "od", e.target.value)}
+                      onChange={(e) =>
+                        updateRefraction(c, "od", e.target.value)
+                      }
                       placeholder="VD: -3.50"
                       className="h-8"
                     />
@@ -407,7 +456,9 @@ export function IntakeSectionEyeHistory({ data, errors, onChange }: Props) {
                     <span className="text-xs text-muted-foreground">OS</span>
                     <Input
                       value={data.refractionValues?.[condKey]?.os ?? ""}
-                      onChange={(e) => updateRefraction(c, "os", e.target.value)}
+                      onChange={(e) =>
+                        updateRefraction(c, "os", e.target.value)
+                      }
                       placeholder="VD: -3.25"
                       className="h-8"
                     />
@@ -453,7 +504,9 @@ export function IntakeSectionEyeHistory({ data, errors, onChange }: Props) {
                 className="grid grid-cols-[1fr_80px_60px_60px_40px] items-end gap-3 rounded-lg border border-border p-3"
               >
                 <div>
-                  <Label className="text-xs text-muted-foreground">Loại phẫu thuật</Label>
+                  <Label className="text-xs text-muted-foreground">
+                    Loại phẫu thuật
+                  </Label>
                   <select
                     value={surgery.type}
                     onChange={(e) => updateSurgery(i, "type", e.target.value)}
@@ -469,7 +522,9 @@ export function IntakeSectionEyeHistory({ data, errors, onChange }: Props) {
                   {surgery.type === "khac" && (
                     <Input
                       value={surgery.typeOther ?? ""}
-                      onChange={(e) => updateSurgery(i, "typeOther", e.target.value)}
+                      onChange={(e) =>
+                        updateSurgery(i, "typeOther", e.target.value)
+                      }
                       placeholder="Loại khác..."
                       className="mt-1 h-8"
                     />

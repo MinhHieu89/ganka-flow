@@ -1,5 +1,4 @@
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import type { IntakeFormData } from "./intake-form"
 import type { FamilyHistoryEntry } from "@/data/mock-patients"
 
@@ -42,7 +41,7 @@ function FamilyHistoryGrid({
 }) {
   return (
     <div>
-      <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+      <p className="mb-1.5 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
         {title}
       </p>
       <div className="space-y-2">
@@ -85,11 +84,7 @@ function FamilyHistoryGrid({
   )
 }
 
-export function IntakeSectionFamilyHistory({
-  data,
-  errors,
-  onChange,
-}: Props) {
+export function IntakeSectionFamilyHistory({ data, onChange }: Props) {
   const familyEye = data.familyEyeHistory ?? {}
   const familyMedical = data.familyMedicalHistory ?? {}
 

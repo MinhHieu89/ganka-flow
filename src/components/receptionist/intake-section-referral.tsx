@@ -10,8 +10,14 @@ interface Props {
 const REFERRAL_OPTIONS = [
   { value: "ban_be", label: "Bạn bè/Người thân giới thiệu" },
   { value: "bac_si_khac", label: "Bác sĩ/Phòng khám khác giới thiệu" },
-  { value: "internet", label: "Tìm kiếm trên Internet (Google, Facebook, Zalo...)" },
-  { value: "quang_cao", label: "Quảng cáo trực tuyến (Facebook Ads, Google Ads...)" },
+  {
+    value: "internet",
+    label: "Tìm kiếm trên Internet (Google, Facebook, Zalo...)",
+  },
+  {
+    value: "quang_cao",
+    label: "Quảng cáo trực tuyến (Facebook Ads, Google Ads...)",
+  },
   { value: "website", label: "Website của phòng khám" },
   { value: "di_ngang", label: "Đi ngang qua phòng khám" },
   { value: "bao_chi", label: "Báo chí/Tạp chí" },
@@ -22,7 +28,7 @@ const REFERRAL_OPTIONS = [
 
 const NEEDS_DETAIL = ["ban_be", "bac_si_khac", "khac"]
 
-export function IntakeSectionReferral({ data, errors, onChange }: Props) {
+export function IntakeSectionReferral({ data, onChange }: Props) {
   return (
     <div className="space-y-3">
       <p className="text-sm text-muted-foreground">

@@ -31,9 +31,7 @@ export function CheckboxGrid({
           key={item.key}
           className={cn(
             "flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2.5 text-sm transition-colors hover:bg-muted/50",
-            values[item.key]
-              ? "border-primary bg-primary/5"
-              : "border-border"
+            values[item.key] ? "border-primary bg-primary/5" : "border-border"
           )}
         >
           <input

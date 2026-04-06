@@ -175,16 +175,16 @@ export function IntakeSectionPersonal({
             <Label>Số điện thoại</Label>
             <Input
               value={data.emergencyContactPhone}
-              onChange={(e) => onChange("emergencyContactPhone", e.target.value)}
+              onChange={(e) =>
+                onChange("emergencyContactPhone", e.target.value)
+              }
             />
           </div>
           <div>
             <Label>Quan hệ</Label>
             <Select
               value={data.emergencyContactRelationship}
-              onValueChange={(v) =>
-                onChange("emergencyContactRelationship", v)
-              }
+              onValueChange={(v) => onChange("emergencyContactRelationship", v)}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Chọn..." />

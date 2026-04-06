@@ -1,4 +1,3 @@
-import { Label } from "@/components/ui/label"
 import type { IntakeFormData } from "./intake-form"
 
 interface Props {
@@ -7,7 +6,7 @@ interface Props {
   onChange: (field: string, value: unknown) => void
 }
 
-export function IntakeSectionConsent({ data, errors, onChange }: Props) {
+export function IntakeSectionConsent({ data, onChange }: Props) {
   return (
     <div className="space-y-4">
       <div className="rounded-lg border border-border bg-muted/30 p-4 text-sm leading-relaxed">
@@ -28,9 +27,7 @@ export function IntakeSectionConsent({ data, errors, onChange }: Props) {
           onChange={(e) => onChange("consentConfirmed", e.target.checked)}
           className="size-4 accent-[var(--color-primary)]"
         />
-        <span>
-          Bệnh nhân đã đồng ý cung cấp thông tin
-        </span>
+        <span>Bệnh nhân đã đồng ý cung cấp thông tin</span>
       </label>
       <p className="text-xs text-muted-foreground italic">
         Chữ ký sẽ được thu thập trên bản in.

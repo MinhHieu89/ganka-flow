@@ -1,6 +1,5 @@
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import { CheckboxGrid } from "./intake-checkbox-grid"
 import { ConditionalField } from "./intake-conditional-field"
 import type { IntakeFormData } from "./intake-form"
@@ -21,7 +20,10 @@ const VISIT_REASON_OPTIONS = [
   { key: "kho_nhin_gan", label: "Khó nhìn gần (đọc sách, xem điện thoại)" },
   { key: "kho_nhin_xa", label: "Khó nhìn xa (xem bảng, lái xe)" },
   { key: "kinh_ap_trong", label: "Muốn đeo kính áp tròng" },
-  { key: "tu_van_phau_thuat", label: "Tư vấn phẫu thuật (LASIK, đục thủy tinh thể...)" },
+  {
+    key: "tu_van_phau_thuat",
+    label: "Tư vấn phẫu thuật (LASIK, đục thủy tinh thể...)",
+  },
   { key: "khac", label: "Khác" },
 ]
 
@@ -66,20 +68,16 @@ const IMPACT_OPTIONS = [
 
 export function IntakeSectionComplaint({
   data,
-  errors,
   onChange,
   renderFieldError,
 }: Props) {
   const visitReasonsMap = Object.fromEntries(
     (data.visitReasons ?? []).map((r) => [r, true])
   )
-  const hasAnySymptom = Object.values(data.symptoms ?? {}).some(Boolean)
 
   function toggleVisitReason(key: string, checked: boolean) {
     const current = data.visitReasons ?? []
-    const next = checked
-      ? [...current, key]
-      : current.filter((r) => r !== key)
+    const next = checked ? [...current, key] : current.filter((r) => r !== key)
     onChange("visitReasons", next)
   }
 
@@ -131,7 +129,9 @@ export function IntakeSectionComplaint({
 
       {/* Symptom Detail */}
       <div>
-        <Label className="mb-2 block">Mô tả chi tiết triệu chứng (nếu có)</Label>
+        <Label className="mb-2 block">
+          Mô tả chi tiết triệu chứng (nếu có)
+        </Label>
         <div className="space-y-3">
           <div>
             <Label className="text-sm text-muted-foreground">
@@ -148,12 +148,17 @@ export function IntakeSectionComplaint({
               <Label className="text-sm text-muted-foreground">Mức độ</Label>
               <div className="mt-1 flex gap-3">
                 {SEVERITY_OPTIONS.map((opt) => (
-                  <label key={opt.value} className="flex items-center gap-1.5 text-sm">
+                  <label
+                    key={opt.value}
+                    className="flex items-center gap-1.5 text-sm"
+                  >
                     <input
                       type="radio"
                       name="severity"
                       checked={data.symptomDetail?.severity === opt.value}
-                      onChange={() => updateSymptomDetail("severity", opt.value)}
+                      onChange={() =>
+                        updateSymptomDetail("severity", opt.value)
+                      }
                       className="size-4 accent-[var(--color-primary)]"
                     />
                     {opt.label}
@@ -165,12 +170,17 @@ export function IntakeSectionComplaint({
               <Label className="text-sm text-muted-foreground">Tần suất</Label>
               <div className="mt-1 flex gap-3">
                 {FREQUENCY_OPTIONS.map((opt) => (
-                  <label key={opt.value} className="flex items-center gap-1.5 text-sm">
+                  <label
+                    key={opt.value}
+                    className="flex items-center gap-1.5 text-sm"
+                  >
                     <input
                       type="radio"
                       name="frequency"
                       checked={data.symptomDetail?.frequency === opt.value}
-                      onChange={() => updateSymptomDetail("frequency", opt.value)}
+                      onChange={() =>
+                        updateSymptomDetail("frequency", opt.value)
+                      }
                       className="size-4 accent-[var(--color-primary)]"
                     />
                     {opt.label}
@@ -184,12 +194,17 @@ export function IntakeSectionComplaint({
               </Label>
               <div className="mt-1 flex gap-3">
                 {IMPACT_OPTIONS.map((opt) => (
-                  <label key={opt.value} className="flex items-center gap-1.5 text-sm">
+                  <label
+                    key={opt.value}
+                    className="flex items-center gap-1.5 text-sm"
+                  >
                     <input
                       type="radio"
                       name="dailyImpact"
                       checked={data.symptomDetail?.dailyImpact === opt.value}
-                      onChange={() => updateSymptomDetail("dailyImpact", opt.value)}
+                      onChange={() =>
+                        updateSymptomDetail("dailyImpact", opt.value)
+                      }
                       className="size-4 accent-[var(--color-primary)]"
                     />
                     {opt.label}

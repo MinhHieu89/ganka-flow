@@ -64,7 +64,7 @@ function RadioRow({
   )
 }
 
-export function IntakeSectionLifestyle({ data, errors, onChange }: Props) {
+export function IntakeSectionLifestyle({ data, onChange }: Props) {
   const smoking = data.smokingInfo ?? { status: "khong" as const }
   const alcohol = data.alcoholInfo ?? { status: "khong" as const }
   const driving = data.drivingInfo ?? { does: false }
@@ -180,7 +180,9 @@ export function IntakeSectionLifestyle({ data, errors, onChange }: Props) {
       {/* Screen time */}
       <div className="grid grid-cols-2 gap-6">
         <div>
-          <Label className="mb-1 block">Thời gian máy tính/laptop mỗi ngày</Label>
+          <Label className="mb-1 block">
+            Thời gian máy tính/laptop mỗi ngày
+          </Label>
           <RadioRow
             name="screenTimeComputer"
             options={SCREEN_TIME_OPTIONS}
@@ -189,7 +191,9 @@ export function IntakeSectionLifestyle({ data, errors, onChange }: Props) {
           />
         </div>
         <div>
-          <Label className="mb-1 block">Thời gian điện thoại/tablet mỗi ngày</Label>
+          <Label className="mb-1 block">
+            Thời gian điện thoại/tablet mỗi ngày
+          </Label>
           <RadioRow
             name="screenTimePhone"
             options={SCREEN_TIME_OPTIONS}
@@ -202,7 +206,9 @@ export function IntakeSectionLifestyle({ data, errors, onChange }: Props) {
       {/* Outdoor time + Sunglasses */}
       <div className="grid grid-cols-2 gap-6">
         <div>
-          <Label className="mb-1 block">Thời gian hoạt động ngoài trời mỗi ngày</Label>
+          <Label className="mb-1 block">
+            Thời gian hoạt động ngoài trời mỗi ngày
+          </Label>
           <RadioRow
             name="outdoorTime"
             options={OUTDOOR_TIME_OPTIONS}
@@ -211,7 +217,9 @@ export function IntakeSectionLifestyle({ data, errors, onChange }: Props) {
           />
         </div>
         <div>
-          <Label className="mb-1 block">Có đeo kính râm khi ra ngoài trời không?</Label>
+          <Label className="mb-1 block">
+            Có đeo kính râm khi ra ngoài trời không?
+          </Label>
           <RadioRow
             name="sunglassesUse"
             options={SUNGLASSES_OPTIONS}
@@ -274,9 +282,7 @@ export function IntakeSectionLifestyle({ data, errors, onChange }: Props) {
               name="drivingWhen"
               options={DRIVING_WHEN_OPTIONS}
               value={driving.when}
-              onChange={(v) =>
-                onChange("drivingInfo", { does: true, when: v })
-              }
+              onChange={(v) => onChange("drivingInfo", { does: true, when: v })}
             />
           </div>
         )}
@@ -314,9 +320,7 @@ export function IntakeSectionLifestyle({ data, errors, onChange }: Props) {
             show={sports.does}
             label="Môn thể thao"
             value={sports.type ?? ""}
-            onChange={(v) =>
-              onChange("sportsInfo", { does: true, type: v })
-            }
+            onChange={(v) => onChange("sportsInfo", { does: true, type: v })}
           />
         </div>
         <div>
