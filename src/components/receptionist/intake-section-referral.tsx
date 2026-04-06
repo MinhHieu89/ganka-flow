@@ -34,11 +34,11 @@ export function IntakeSectionReferral({ data, onChange }: Props) {
       <p className="text-sm font-medium">
         Bạn biết đến phòng khám của chúng tôi qua đâu?
       </p>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-2 gap-x-4 gap-y-0.5">
         {REFERRAL_OPTIONS.map((opt) => (
           <label
             key={opt.value}
-            className="flex cursor-pointer items-center gap-2 px-1 py-1.5 text-sm transition-colors hover:bg-muted/50 rounded"
+            className="flex cursor-pointer items-center gap-2 px-1 py-1 text-sm transition-colors hover:bg-muted/50 rounded"
           >
             <input
               type="radio"

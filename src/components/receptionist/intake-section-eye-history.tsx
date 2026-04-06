@@ -192,11 +192,11 @@ export function IntakeSectionEyeHistory({ data, onChange }: Props) {
       {/* Current glasses */}
       <div>
         <Label className="mb-2 block">Hiện có đeo kính không?</Label>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-0.5">
           {GLASSES_TYPE_OPTIONS.map((opt) => (
             <label
               key={opt.key}
-              className="flex cursor-pointer items-center gap-2 px-1 py-1.5 text-sm transition-colors hover:bg-muted/50 rounded"
+              className="flex cursor-pointer items-center gap-2 px-1 py-1 text-sm transition-colors hover:bg-muted/50 rounded"
             >
               <input
                 type="checkbox"
@@ -274,11 +274,11 @@ export function IntakeSectionEyeHistory({ data, onChange }: Props) {
           <div className="mt-3 space-y-3 rounded-lg border border-border p-4">
             <div>
               <Label className="text-sm text-muted-foreground">Loại</Label>
-              <div className="mt-1 grid grid-cols-2 gap-2">
+              <div className="mt-1 grid grid-cols-2 gap-x-4 gap-y-0.5">
                 {CONTACT_LENS_TYPE_OPTIONS.map((opt) => (
                   <label
                     key={opt.key}
-                    className="flex cursor-pointer items-center gap-2 px-1 py-1.5 text-sm transition-colors hover:bg-muted/50 rounded"
+                    className="flex cursor-pointer items-center gap-2 px-1 py-1 text-sm transition-colors hover:bg-muted/50 rounded"
                   >
                     <input
                       type="checkbox"
@@ -319,11 +319,11 @@ export function IntakeSectionEyeHistory({ data, onChange }: Props) {
               <Label className="text-sm text-muted-foreground">
                 Có gặp vấn đề gì không?
               </Label>
-              <div className="mt-1 grid grid-cols-2 gap-2">
+              <div className="mt-1 grid grid-cols-2 gap-x-4 gap-y-0.5">
                 {CONTACT_LENS_ISSUE_OPTIONS.map((opt) => (
                   <label
                     key={opt.key}
-                    className="flex cursor-pointer items-center gap-2 px-1 py-1.5 text-sm transition-colors hover:bg-muted/50 rounded"
+                    className="flex cursor-pointer items-center gap-2 px-1 py-1 text-sm transition-colors hover:bg-muted/50 rounded"
                   >
                     <input
                       type="checkbox"

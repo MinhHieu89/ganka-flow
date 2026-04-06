@@ -21,7 +21,7 @@ export function CheckboxGrid({
   return (
     <div
       className={cn(
-        "grid gap-2",
+        "grid gap-x-4 gap-y-0.5",
         columns === 3 ? "grid-cols-3" : "grid-cols-2"
       )}
       role="group"
@@ -29,7 +29,7 @@ export function CheckboxGrid({
       {items.map((item) => (
         <label
           key={item.key}
-          className="flex cursor-pointer items-center gap-2 px-1 py-1.5 text-sm transition-colors hover:bg-muted/50 rounded"
+          className="flex cursor-pointer items-center gap-2 px-1 py-1 text-sm transition-colors hover:bg-muted/50 rounded"
         >
           <input
             type="checkbox"
