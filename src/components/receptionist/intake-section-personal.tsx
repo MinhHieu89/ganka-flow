@@ -160,7 +160,7 @@ export function IntakeSectionPersonal({
 
       {/* Emergency Contact */}
       <div>
-        <Label className="mb-2 block text-sm font-medium text-muted-foreground">
+        <Label className="mb-2 block font-medium">
           Người liên hệ khẩn cấp
         </Label>
         <div className="grid grid-cols-3 gap-6">

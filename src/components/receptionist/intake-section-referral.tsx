@@ -31,7 +31,7 @@ const NEEDS_DETAIL = ["ban_be", "bac_si_khac", "khac"]
 export function IntakeSectionReferral({ data, onChange }: Props) {
   return (
     <div className="space-y-3">
-      <p className="text-sm text-muted-foreground">
+      <p className="text-sm font-medium">
         Bạn biết đến phòng khám của chúng tôi qua đâu?
       </p>
       <div className="grid grid-cols-2 gap-2">

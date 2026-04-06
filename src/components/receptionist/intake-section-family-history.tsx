@@ -98,7 +98,7 @@ export function IntakeSectionFamilyHistory({ data, onChange }: Props) {
 
   return (
     <div className="space-y-5">
-      <p className="text-sm text-muted-foreground">
+      <p className="text-sm font-medium">
         Có ai trong gia đình (bố mẹ, ông bà, anh chị em ruột) bị các bệnh sau
         không?
       </p>

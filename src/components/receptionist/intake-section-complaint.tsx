@@ -125,12 +125,12 @@ export function IntakeSectionComplaint({
 
       {/* Symptom Detail */}
       <div>
-        <Label className="mb-2 block">
+        <Label className="mb-2 block font-medium">
           Mô tả chi tiết triệu chứng (nếu có)
         </Label>
         <div className="space-y-3">
           <div>
-            <Label className="text-sm text-muted-foreground">
+            <Label className="text-sm font-medium">
               Bắt đầu từ khi nào?
             </Label>
             <Input
@@ -141,7 +141,7 @@ export function IntakeSectionComplaint({
           </div>
           <div className="grid grid-cols-3 gap-6">
             <div>
-              <Label className="text-sm text-muted-foreground">Mức độ</Label>
+              <Label className="text-sm font-medium">Mức độ</Label>
               <div className="mt-1.5 space-y-1.5">
                 {SEVERITY_OPTIONS.map((opt) => (
                   <label
@@ -163,7 +163,7 @@ export function IntakeSectionComplaint({
               </div>
             </div>
             <div>
-              <Label className="text-sm text-muted-foreground">Tần suất</Label>
+              <Label className="text-sm font-medium">Tần suất</Label>
               <div className="mt-1.5 space-y-1.5">
                 {FREQUENCY_OPTIONS.map((opt) => (
                   <label
@@ -185,7 +185,7 @@ export function IntakeSectionComplaint({
               </div>
             </div>
             <div>
-              <Label className="text-sm text-muted-foreground">
+              <Label className="text-sm font-medium">
                 Ảnh hưởng đến sinh hoạt
               </Label>
               <div className="mt-1.5 space-y-1.5">
@@ -210,7 +210,7 @@ export function IntakeSectionComplaint({
             </div>
           </div>
           <div>
-            <Label className="text-sm text-muted-foreground">
+            <Label className="text-sm font-medium">
               Các yếu tố làm tình trạng tốt hơn hoặc xấu đi
             </Label>
             <Input
@@ -224,7 +224,7 @@ export function IntakeSectionComplaint({
 
       {/* Symptom Checklist */}
       <div>
-        <Label className="mb-2 block">
+        <Label className="mb-2 block font-medium">
           Bạn có gặp các triệu chứng sau không?
         </Label>
         <CheckboxGrid
