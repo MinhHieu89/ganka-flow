@@ -20,6 +20,8 @@ import { PatientTable } from "@/components/receptionist/patient-table"
 import { PatientSearch } from "@/components/receptionist/patient-search"
 import { CheckinModal } from "@/components/receptionist/checkin-modal"
 import { WalkinModal } from "@/components/receptionist/walkin-modal"
+import { CreateVisitModal } from "@/components/receptionist/create-visit-modal"
+import { IntakeShareModal } from "@/components/receptionist/intake-share-modal"
 import { HugeiconsIcon } from "@hugeicons/react"
 import {
   Calendar01Icon,
@@ -29,7 +31,7 @@ import {
 
 export default function IntakeDashboard() {
   const navigate = useNavigate()
-  const { todayVisits, cancelVisit } = useReceptionist()
+  const { todayVisits, cancelVisit, getPatient } = useReceptionist()
 
   const [activeFilter, setActiveFilter] = useState<PatientStatus | "all">("all")
   const [page, setPage] = useState(1)
@@ -38,6 +40,8 @@ export default function IntakeDashboard() {
   // Modals
   const [checkinVisit, setCheckinVisit] = useState<Visit | null>(null)
   const [walkinPatient, setWalkinPatient] = useState<Patient | null>(null)
+  const [shareVisit, setShareVisit] = useState<Visit | null>(null)
+  const [createVisitOpen, setCreateVisitOpen] = useState(false)
 
   // Filter visits
   const filteredVisits =
@@ -79,7 +83,7 @@ export default function IntakeDashboard() {
             <HugeiconsIcon icon={Calendar01Icon} className="size-4" />
             Đặt lịch hẹn
           </Button>
-          <Button onClick={() => navigate("/intake/new")}>
+          <Button onClick={() => setCreateVisitOpen(true)}>
             <HugeiconsIcon icon={UserAdd01Icon} className="size-4" />
             Tiếp nhận BN mới
           </Button>
@@ -105,6 +109,7 @@ export default function IntakeDashboard() {
           visits={filteredVisits}
           onCheckIn={setCheckinVisit}
           onCancel={cancelVisit}
+          onShare={setShareVisit}
           page={page}
           pageSize={pageSize}
         />
@@ -162,6 +167,18 @@ export default function IntakeDashboard() {
         patient={walkinPatient}
         open={!!walkinPatient}
         onOpenChange={(open) => !open && setWalkinPatient(null)}
+      />
+      <CreateVisitModal
+        open={createVisitOpen}
+        onOpenChange={setCreateVisitOpen}
+      />
+      <IntakeShareModal
+        open={!!shareVisit}
+        onOpenChange={(open) => !open && setShareVisit(null)}
+        patientName={
+          shareVisit ? getPatient(shareVisit.patientId)?.name : undefined
+        }
+        patientId={shareVisit?.patientId}
       />
     </div>
   )

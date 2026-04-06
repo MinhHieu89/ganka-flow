@@ -27,7 +27,11 @@ export function CheckinModal({ visit, open, onOpenChange }: CheckinModalProps) {
   if (!patient) return null
 
   const isComplete = Boolean(
-    patient.dob && patient.gender && (visit.reason || patient.chiefComplaint)
+    patient.dob &&
+    patient.gender &&
+    (visit.reason ||
+      (patient.visitReasons && patient.visitReasons.length > 0) ||
+      patient.chiefComplaint)
   )
 
   function handleConfirm() {
@@ -49,7 +53,11 @@ export function CheckinModal({ visit, open, onOpenChange }: CheckinModalProps) {
     { label: "Nghề nghiệp", value: patient.occupation },
     {
       label: "Lý do khám",
-      value: visit.reason || patient.chiefComplaint,
+      value:
+        visit.reason ||
+        (patient.visitReasons && patient.visitReasons.length > 0
+          ? patient.visitReasons.join(", ")
+          : patient.chiefComplaint),
     },
   ]
 

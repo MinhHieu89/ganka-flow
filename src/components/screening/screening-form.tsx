@@ -26,6 +26,7 @@ import type {
   DryEyeFormData,
   Step2FormData,
 } from "@/data/mock-patients"
+import { ScreeningIntakeSummary } from "./screening-intake-summary"
 import { ScreeningFormHeader } from "./screening-form-header"
 import { ScreeningStepIndicator } from "./screening-step-indicator"
 import { ScreeningFormInitial } from "./screening-form-initial"
@@ -240,6 +241,7 @@ export function ScreeningForm({ patient, visit }: ScreeningFormProps) {
 
       {currentStep === 1 ? (
         <>
+          <ScreeningIntakeSummary patient={patient} />
           <ScreeningFormInitial
             form={form}
             errors={errors}

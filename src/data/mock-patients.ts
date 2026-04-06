@@ -41,6 +41,102 @@ export const ACTIVE_STATUS_CONFIG: Record<
   },
 }
 
+export interface EmergencyContact {
+  name: string
+  phone: string
+  relationship: string
+}
+
+export interface SymptomDetail {
+  onset?: string
+  severity?: "nhe" | "trung_binh" | "nang"
+  frequency?: "thinh_thoang" | "thuong_xuyen" | "lien_tuc"
+  dailyImpact?: "khong" | "mot_phan" | "nghiem_trong"
+  factors?: string
+}
+
+export interface GlassesInfo {
+  types: string[]
+  duration?: string
+  seesWell?: boolean
+}
+
+export interface ContactLensDetail {
+  type?: string[]
+  brand?: string
+  duration?: string
+  issues?: string[]
+  issueOther?: string
+}
+
+export interface EyeSurgery {
+  type: string
+  typeOther?: string
+  year?: string
+  od: boolean
+  os: boolean
+}
+
+export interface RefractionValues {
+  myopia?: { od?: string; os?: string }
+  hyperopia?: { od?: string; os?: string }
+  astigmatism?: { od?: string; os?: string }
+}
+
+export interface DiabetesDetail {
+  yearDiagnosed?: string
+  hba1c?: string
+}
+
+export interface CancerDetail {
+  type?: string
+  onTreatment?: boolean
+}
+
+export interface MedicationEntry {
+  name: string
+  dose: string
+  purpose: string
+}
+
+export interface AllergyEntry {
+  type: "thuoc" | "thuc_pham" | "moi_truong" | "khac"
+  name: string
+  reaction: string
+}
+
+export interface AllergiesInfo {
+  none: boolean
+  items: AllergyEntry[]
+}
+
+export interface FamilyHistoryEntry {
+  has: boolean
+  who?: string
+}
+
+export interface SmokingInfo {
+  status: "khong" | "co" | "da_bo"
+  quantity?: string
+  years?: string
+  quitYear?: string
+}
+
+export interface AlcoholInfo {
+  status: "khong" | "thinh_thoang" | "thuong_xuyen"
+  frequency?: string
+}
+
+export interface DrivingInfo {
+  does: boolean
+  when?: "ban_ngay" | "ban_dem" | "ca_hai"
+}
+
+export interface SportsInfo {
+  does: boolean
+  type?: string
+}
+
 export interface Patient {
   id: string // GK-YYYY-NNNN
   name: string
@@ -50,23 +146,78 @@ export interface Patient {
   phone: string
   email?: string
   address?: string
-  city?: string
+  city?: string // deprecated — use district + cityProvince
   occupation?: string
   cccd?: string
   chiefComplaint?: string
-  eyeHistory?: string
-  systemicHistory?: string
-  currentMedications?: string
-  allergies?: string
-  familyHistory?: string
-  screenTime?: number
-  workEnvironment?: string
-  contactLens?: string
-  lifestyleNotes?: string
+  eyeHistory?: string // deprecated
+  systemicHistory?: string // deprecated
+  currentMedications?: string // deprecated
+  allergies?: string // deprecated
+  familyHistory?: string // deprecated
+  screenTime?: number // deprecated
+  workEnvironment?: string // deprecated
+  contactLens?: string // deprecated
+  lifestyleNotes?: string // deprecated
   createdAt: string // ISO date
   lastExamDate?: string // dd/mm/yyyy
   type: PatientType
   activeStatus: PatientActiveStatus
+
+  // Section I additions
+  district?: string
+  cityProvince?: string
+  emergencyContact?: EmergencyContact
+
+  // Section II: Visit reasons & symptoms
+  visitReasons?: string[]
+  visitReasonOther?: string
+  symptomDetail?: SymptomDetail
+  symptoms?: Record<string, boolean>
+
+  // Section III: Eye history
+  lastEyeExam?: { date?: string; location?: string }
+  currentGlasses?: GlassesInfo
+  contactLensStatus?: "co" | "khong" | "da_tung"
+  contactLensDetail?: ContactLensDetail
+  eyeInjury?: { has: boolean; detail?: string }
+  diagnosedEyeConditions?: Record<string, boolean>
+  diagnosedEyeConditionOther?: string
+  refractionValues?: RefractionValues
+  eyeSurgeries?: EyeSurgery[]
+
+  // Section IV: Medical history
+  primaryDoctor?: { name?: string; lastVisit?: string }
+  systemicConditions?: Record<string, boolean>
+  diabetesDetail?: DiabetesDetail
+  cancerDetail?: CancerDetail
+  systemicConditionOther?: string
+  medicationsList?: MedicationEntry[]
+  allergiesInfo?: AllergiesInfo
+  pregnancyStatus?: "mang_thai" | "cho_con_bu" | "khong"
+  pregnancyTrimester?: string
+
+  // Section V: Family history
+  familyEyeHistory?: Record<string, FamilyHistoryEntry>
+  familyMedicalHistory?: Record<string, FamilyHistoryEntry>
+  familyHistoryOther?: { has: boolean; detail?: string; who?: string }
+
+  // Section VI: Lifestyle
+  smokingInfo?: SmokingInfo
+  alcoholInfo?: AlcoholInfo
+  screenTimeComputer?: string
+  screenTimePhone?: string
+  outdoorTime?: string
+  sunglassesUse?: string
+  workNearVision?: boolean
+  workDustyChemical?: boolean
+  drivingInfo?: DrivingInfo
+  sportsInfo?: SportsInfo
+  hobbies?: string
+
+  // Section VII: Referral
+  referralSource?: string
+  referralDetail?: string
 }
 
 export interface Visit {
@@ -382,8 +533,39 @@ export const mockPatients: Patient[] = [
     birthYear: 1988,
     phone: "0901112233",
     city: "Hà Nội",
+    district: "Cầu Giấy",
+    cityProvince: "Hà Nội",
     occupation: "Kế toán",
     chiefComplaint: "Mỏi mắt, nhìn mờ",
+    visitReasons: ["mo_mat", "giam_thi_luc"],
+    symptoms: { mo_mat: true, moi_mat_doc: true, nhuc_dau: true },
+    symptomDetail: {
+      onset: "2 tuần trước",
+      severity: "trung_binh",
+      frequency: "thuong_xuyen",
+      dailyImpact: "mot_phan",
+      factors: "Tệ hơn khi làm việc trên máy tính, tốt hơn khi nghỉ ngơi",
+    },
+    lastEyeExam: { date: "15/01/2026", location: "BV Mắt TW" },
+    currentGlasses: { types: ["can"], duration: "5 năm", seesWell: false },
+    diagnosedEyeConditions: { can_thi: true },
+    refractionValues: { myopia: { od: "-2.75", os: "-3.00" } },
+    systemicConditions: { migraine: true },
+    medicationsList: [
+      { name: "Paracetamol", dose: "500mg", purpose: "Đau đầu" },
+    ],
+    allergiesInfo: { none: false, items: [{ type: "thuoc", name: "Aspirin", reaction: "Nổi mẩn" }] },
+    familyEyeHistory: {
+      can_thi_nang: { has: true, who: "Mẹ" },
+      glaucoma: { has: true, who: "Ông ngoại" },
+    },
+    smokingInfo: { status: "khong" },
+    alcoholInfo: { status: "khong" },
+    screenTimeComputer: "4-8h",
+    screenTimePhone: "2-4h",
+    outdoorTime: "<30m",
+    workNearVision: true,
+    referralSource: "internet",
     screenTime: 9,
     workEnvironment: "Văn phòng",
     lastExamDate: "02/04/2026",
@@ -399,8 +581,55 @@ export const mockPatients: Patient[] = [
     birthYear: 1995,
     phone: "0933445566",
     city: "Hà Nội",
+    district: "Đống Đa",
+    cityProvince: "Hà Nội",
     occupation: "Lập trình viên",
     chiefComplaint: "Khô mắt kéo dài",
+    visitReasons: ["dau_mat_kho_chiu", "kho_nhin_gan"],
+    symptoms: { kho_mat: true, moi_mat_doc: true, choi_sang: true, do_mat: true },
+    symptomDetail: {
+      onset: "3 tháng trước",
+      severity: "trung_binh",
+      frequency: "lien_tuc",
+      dailyImpact: "nghiem_trong",
+      factors: "Xấu đi khi dùng máy tính lâu, điều hòa khô",
+    },
+    lastEyeExam: { date: "10/06/2025", location: "Phòng khám tư" },
+    currentGlasses: { types: ["can", "loan"], duration: "8 năm", seesWell: true },
+    contactLensStatus: "co",
+    contactLensDetail: {
+      type: ["mem", "deo_ngay"],
+      brand: "Acuvue",
+      duration: "3 năm",
+      issues: ["kho_mat"],
+    },
+    diagnosedEyeConditions: { can_thi: true, loan_thi: true, kho_mat_syndrome: true },
+    refractionValues: {
+      myopia: { od: "-3.50", os: "-3.25" },
+      astigmatism: { od: "-0.75", os: "-1.00" },
+    },
+    eyeInjury: { has: false },
+    systemicConditions: { cholesterol_cao: true },
+    allergiesInfo: { none: true, items: [] },
+    familyEyeHistory: {
+      can_thi_nang: { has: true, who: "Bố" },
+    },
+    familyMedicalHistory: {
+      tang_huyet_ap: { has: true, who: "Bố" },
+      dtd: { has: true, who: "Ông nội" },
+    },
+    smokingInfo: { status: "khong" },
+    alcoholInfo: { status: "thinh_thoang" },
+    screenTimeComputer: ">8h",
+    screenTimePhone: "4-8h",
+    outdoorTime: "<30m",
+    sunglassesUse: "thinh_thoang",
+    workNearVision: true,
+    workDustyChemical: false,
+    drivingInfo: { does: false },
+    sportsInfo: { does: true, type: "Bơi lội" },
+    referralSource: "ban_be",
+    referralDetail: "Nguyễn Văn An",
     eyeHistory: "Cận thị -3.50D",
     screenTime: 12,
     workEnvironment: "Văn phòng",
@@ -420,6 +649,8 @@ export const mockPatients: Patient[] = [
     city: "Bắc Ninh",
     occupation: "Nhân viên kinh doanh",
     chiefComplaint: "Mắt đỏ, cộm",
+    visitReasons: ["dau_mat_kho_chiu"],
+    symptoms: { do_mat: true },
     screenTime: 6,
     workEnvironment: "Văn phòng",
     lastExamDate: "02/04/2026",
@@ -436,6 +667,7 @@ export const mockPatients: Patient[] = [
     phone: "0955667788",
     city: "Hà Nội",
     chiefComplaint: "Nhìn bảng không rõ",
+    visitReasons: ["kho_nhin_xa"],
     screenTime: 5,
     workEnvironment: "Học sinh",
     lastExamDate: "02/04/2026",
@@ -453,6 +685,7 @@ export const mockPatients: Patient[] = [
     city: "Hà Nội",
     occupation: "Giáo viên",
     chiefComplaint: "Tái khám cận thị",
+    visitReasons: ["kham_dinh_ky"],
     eyeHistory: "Cận thị từ năm 15 tuổi",
     allergies: "Tetracycline",
     currentMedications: "Refresh Tears 0.5% — 4 lần/ngày",
@@ -491,6 +724,7 @@ export const mockPatients: Patient[] = [
     occupation: "Nhân viên văn phòng",
     address: "45 Kim Mã, Ba Đình, Hà Nội",
     chiefComplaint: "Khô mắt, mỏi mắt",
+    visitReasons: ["dau_mat_kho_chiu"],
     eyeHistory: "Cận thị từ nhỏ",
     allergies: "Penicillin",
     screenTime: 8,
@@ -511,6 +745,7 @@ export const mockPatients: Patient[] = [
     city: "Hải Phòng",
     occupation: "Giáo viên",
     chiefComplaint: "Giảm thị lực",
+    visitReasons: ["giam_thi_luc"],
     systemicHistory: "Tiểu đường type 2",
     currentMedications: "Metformin 500mg",
     lastExamDate: "20/02/2026",
@@ -527,6 +762,7 @@ export const mockPatients: Patient[] = [
     phone: "0978123456",
     city: "Hà Nội",
     chiefComplaint: "Đau mắt đỏ",
+    visitReasons: ["dau_mat_kho_chiu"],
     lastExamDate: "01/04/2026",
     createdAt: "2026-04-01T08:30:00Z",
     type: "kham_benh",
@@ -542,6 +778,7 @@ export const mockPatients: Patient[] = [
     city: "Hà Nội",
     occupation: "Hưu trí",
     chiefComplaint: "Tái khám khô mắt",
+    visitReasons: ["kham_dinh_ky"],
     eyeHistory: "Đã Lasik 2018",
     screenTime: 3,
     lastExamDate: "05/01/2026",
@@ -559,6 +796,7 @@ export const mockPatients: Patient[] = [
     city: "Hưng Yên",
     occupation: "Nội trợ",
     chiefComplaint: "Nhìn gần mờ",
+    visitReasons: ["kho_nhin_gan"],
     lastExamDate: "01/03/2026",
     createdAt: "2026-03-01T09:00:00Z",
     type: "kham_benh",
@@ -574,6 +812,7 @@ export const mockPatients: Patient[] = [
     city: "Hà Nội",
     occupation: "Sinh viên",
     chiefComplaint: "Cận thị tăng nhanh",
+    visitReasons: ["kho_nhin_xa"],
     lastExamDate: "05/03/2026",
     createdAt: "2026-03-05T10:30:00Z",
     type: "kham_benh",
@@ -617,6 +856,7 @@ export const mockPatients: Patient[] = [
     phone: "0955667788",
     city: "Hà Nội",
     chiefComplaint: "Kiểm tra mắt định kỳ",
+    visitReasons: ["kham_dinh_ky"],
     lastExamDate: "10/03/2026",
     createdAt: "2026-03-10T11:00:00Z",
     type: "kham_benh",
@@ -658,6 +898,7 @@ export const mockPatients: Patient[] = [
     city: "Hà Nội",
     occupation: "Nhân viên ngân hàng",
     chiefComplaint: "Mỏi mắt cuối ngày",
+    visitReasons: ["mo_mat"],
     screenTime: 10,
     lastExamDate: "25/03/2026",
     createdAt: "2026-03-25T08:00:00Z",

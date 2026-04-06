@@ -14,9 +14,15 @@ interface ActionMenuProps {
   visit: Visit
   onCheckIn: () => void
   onCancel: () => void
+  onShare?: () => void
 }
 
-export function ActionMenu({ visit, onCheckIn, onCancel }: ActionMenuProps) {
+export function ActionMenu({
+  visit,
+  onCheckIn,
+  onCancel,
+  onShare,
+}: ActionMenuProps) {
   const navigate = useNavigate()
 
   return (
@@ -43,6 +49,11 @@ export function ActionMenu({ visit, onCheckIn, onCancel }: ActionMenuProps) {
         >
           Sửa thông tin
         </DropdownMenuItem>
+        {onShare && (
+          <DropdownMenuItem onClick={onShare}>
+            Gửi phiếu cho BN
+          </DropdownMenuItem>
+        )}
         {visit.status !== "hoan_thanh" && visit.status !== "da_huy" && (
           <DropdownMenuItem
             onClick={onCancel}
