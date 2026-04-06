@@ -1,63 +1,213 @@
 import { useState } from "react"
 import { useNavigate } from "react-router"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { useReceptionist } from "@/contexts/receptionist-context"
-import type { Patient } from "@/data/mock-patients"
+import type {
+  Patient,
+  SymptomDetail,
+  GlassesInfo,
+  ContactLensDetail,
+  EyeSurgery,
+  RefractionValues,
+  DiabetesDetail,
+  CancerDetail,
+  MedicationEntry,
+  AllergiesInfo,
+  FamilyHistoryEntry,
+  SmokingInfo,
+  AlcoholInfo,
+  DrivingInfo,
+  SportsInfo,
+} from "@/data/mock-patients"
 import { HugeiconsIcon } from "@hugeicons/react"
 import {
   UserAdd01Icon,
   Clock01Icon,
   PlusSignCircleIcon,
   TimeQuarterPassIcon,
+  UserGroupIcon,
+  HeartCheckIcon,
+  Activity01Icon,
+  Megaphone01Icon,
+  Agreement02Icon,
+  ArrowDown01Icon,
+  ArrowUp01Icon,
+  PrinterIcon,
 } from "@hugeicons/core-free-icons"
+import { IntakeSectionPersonal } from "./intake-section-personal"
+import { IntakeSectionComplaint } from "./intake-section-complaint"
+import { IntakeSectionEyeHistory } from "./intake-section-eye-history"
+import { IntakeSectionMedicalHistory } from "./intake-section-medical-history"
+import { IntakeSectionFamilyHistory } from "./intake-section-family-history"
+import { IntakeSectionLifestyle } from "./intake-section-lifestyle"
+import { IntakeSectionReferral } from "./intake-section-referral"
+import { IntakeSectionConsent } from "./intake-section-consent"
+import { IntakePrintView } from "./intake-print-view"
 
-interface IntakeFormProps {
-  patient?: Patient
+export interface IntakeFormData {
+  // Section I
+  name: string
+  gender: string
+  dob: string
+  phone: string
+  email: string
+  address: string
+  district: string
+  cityProvince: string
+  occupation: string
+  cccd: string
+  emergencyContactName: string
+  emergencyContactPhone: string
+  emergencyContactRelationship: string
+  // Section II
+  visitReasons: string[]
+  visitReasonOther: string
+  symptomDetail: SymptomDetail
+  symptoms: Record<string, boolean>
+  // Section III
+  lastEyeExam: { date?: string; location?: string }
+  currentGlasses: GlassesInfo
+  contactLensStatus: string
+  contactLensDetail: ContactLensDetail
+  eyeInjury: { has: boolean; detail?: string }
+  diagnosedEyeConditions: Record<string, boolean>
+  diagnosedEyeConditionOther: string
+  refractionValues: RefractionValues
+  eyeSurgeries: EyeSurgery[]
+  // Section IV
+  primaryDoctor: { name?: string; lastVisit?: string }
+  systemicConditions: Record<string, boolean>
+  diabetesDetail: DiabetesDetail
+  cancerDetail: CancerDetail
+  systemicConditionOther: string
+  medicationsList: MedicationEntry[]
+  allergiesInfo: AllergiesInfo
+  pregnancyStatus: string
+  pregnancyTrimester: string
+  // Section V
+  familyEyeHistory: Record<string, FamilyHistoryEntry>
+  familyMedicalHistory: Record<string, FamilyHistoryEntry>
+  familyHistoryOther: { has: boolean; detail?: string; who?: string }
+  // Section VI
+  smokingInfo: SmokingInfo
+  alcoholInfo: AlcoholInfo
+  screenTimeComputer: string
+  screenTimePhone: string
+  outdoorTime: string
+  sunglassesUse: string
+  workNearVision: boolean
+  workDustyChemical: boolean
+  drivingInfo: DrivingInfo
+  sportsInfo: SportsInfo
+  hobbies: string
+  // Section VII
+  referralSource: string
+  referralDetail: string
+  // Section VIII
+  consentConfirmed: boolean
 }
 
-export function IntakeForm({ patient }: IntakeFormProps) {
-  const navigate = useNavigate()
-  const { addPatient, updatePatient, searchPatients } = useReceptionist()
-
-  const [form, setForm] = useState({
+function buildInitialForm(patient?: Patient): IntakeFormData {
+  return {
     name: patient?.name ?? "",
     gender: patient?.gender ?? "",
     dob: patient?.dob ?? "",
     phone: patient?.phone ?? "",
     email: patient?.email ?? "",
     address: patient?.address ?? "",
+    district: patient?.district ?? "",
+    cityProvince: patient?.cityProvince ?? patient?.city ?? "",
     occupation: patient?.occupation ?? "",
     cccd: patient?.cccd ?? "",
-    chiefComplaint: patient?.chiefComplaint ?? "",
-    eyeHistory: patient?.eyeHistory ?? "",
-    systemicHistory: patient?.systemicHistory ?? "",
-    currentMedications: patient?.currentMedications ?? "",
-    allergies: patient?.allergies ?? "",
-    screenTime: patient?.screenTime?.toString() ?? "",
-    workEnvironment: patient?.workEnvironment ?? "",
-    contactLens: patient?.contactLens ?? "",
-    lifestyleNotes: patient?.lifestyleNotes ?? "",
-  })
+    emergencyContactName: patient?.emergencyContact?.name ?? "",
+    emergencyContactPhone: patient?.emergencyContact?.phone ?? "",
+    emergencyContactRelationship: patient?.emergencyContact?.relationship ?? "",
+    visitReasons: patient?.visitReasons ?? [],
+    visitReasonOther: patient?.visitReasonOther ?? "",
+    symptomDetail: patient?.symptomDetail ?? {},
+    symptoms: patient?.symptoms ?? {},
+    lastEyeExam: patient?.lastEyeExam ?? {},
+    currentGlasses: patient?.currentGlasses ?? { types: [] },
+    contactLensStatus: patient?.contactLensStatus ?? "",
+    contactLensDetail: patient?.contactLensDetail ?? {},
+    eyeInjury: patient?.eyeInjury ?? { has: false },
+    diagnosedEyeConditions: patient?.diagnosedEyeConditions ?? {},
+    diagnosedEyeConditionOther: patient?.diagnosedEyeConditionOther ?? "",
+    refractionValues: patient?.refractionValues ?? {},
+    eyeSurgeries: patient?.eyeSurgeries ?? [],
+    primaryDoctor: patient?.primaryDoctor ?? {},
+    systemicConditions: patient?.systemicConditions ?? {},
+    diabetesDetail: patient?.diabetesDetail ?? {},
+    cancerDetail: patient?.cancerDetail ?? {},
+    systemicConditionOther: patient?.systemicConditionOther ?? "",
+    medicationsList: patient?.medicationsList ?? [],
+    allergiesInfo: patient?.allergiesInfo ?? { none: false, items: [] },
+    pregnancyStatus: patient?.pregnancyStatus ?? "",
+    pregnancyTrimester: patient?.pregnancyTrimester ?? "",
+    familyEyeHistory: patient?.familyEyeHistory ?? {},
+    familyMedicalHistory: patient?.familyMedicalHistory ?? {},
+    familyHistoryOther: patient?.familyHistoryOther ?? { has: false },
+    smokingInfo: patient?.smokingInfo ?? { status: "khong" },
+    alcoholInfo: patient?.alcoholInfo ?? { status: "khong" },
+    screenTimeComputer: patient?.screenTimeComputer ?? "",
+    screenTimePhone: patient?.screenTimePhone ?? "",
+    outdoorTime: patient?.outdoorTime ?? "",
+    sunglassesUse: patient?.sunglassesUse ?? "",
+    workNearVision: patient?.workNearVision ?? false,
+    workDustyChemical: patient?.workDustyChemical ?? false,
+    drivingInfo: patient?.drivingInfo ?? { does: false },
+    sportsInfo: patient?.sportsInfo ?? { does: false },
+    hobbies: patient?.hobbies ?? "",
+    referralSource: patient?.referralSource ?? "",
+    referralDetail: patient?.referralDetail ?? "",
+    consentConfirmed: false,
+  }
+}
 
+interface IntakeFormProps {
+  patient?: Patient
+}
+
+const SECTIONS = [
+  { id: "personal", num: "I", title: "Thông tin cá nhân", icon: UserAdd01Icon },
+  { id: "complaint", num: "II", title: "Lý do khám và triệu chứng", icon: Clock01Icon },
+  { id: "eyeHistory", num: "III", title: "Tiền sử mắt cá nhân", icon: PlusSignCircleIcon },
+  { id: "medicalHistory", num: "IV", title: "Tiền sử y tế tổng quát", icon: HeartCheckIcon },
+  { id: "familyHistory", num: "V", title: "Tiền sử gia đình về mắt và sức khỏe", icon: UserGroupIcon },
+  { id: "lifestyle", num: "VI", title: "Thói quen sinh hoạt và công việc", icon: Activity01Icon },
+  { id: "referral", num: "VII", title: "Nguồn thông tin về phòng khám", icon: Megaphone01Icon },
+  { id: "consent", num: "VIII", title: "Cam kết", icon: Agreement02Icon },
+]
+
+export function IntakeForm({ patient }: IntakeFormProps) {
+  const navigate = useNavigate()
+  const { addPatient, updatePatient, searchPatients } = useReceptionist()
+
+  const [form, setForm] = useState<IntakeFormData>(() =>
+    buildInitialForm(patient)
+  )
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>(
+    () => Object.fromEntries(SECTIONS.map((s) => [s.id, true]))
+  )
+  const [showPrint, setShowPrint] = useState(false)
 
-  // Duplicate phone check
   const duplicatePatient =
     form.phone.length >= 10 && !patient
       ? searchPatients(form.phone).find((p) => p.phone === form.phone)
       : undefined
 
-  function updateField(field: string, value: string) {
+  function updateField(field: string, value: unknown) {
     setForm((prev) => ({ ...prev, [field]: value }))
     if (errors[field]) {
       setErrors((prev) => {
@@ -78,18 +228,18 @@ export function IntakeForm({ patient }: IntakeFormProps) {
     } else if (!/^0\d{9,10}$/.test(form.phone)) {
       errs.phone = "SĐT phải có 10–11 số và bắt đầu bằng 0"
     }
-    if (!form.chiefComplaint.trim())
-      errs.chiefComplaint = "Trường này không được bỏ trống"
+    if (form.visitReasons.length === 0)
+      errs.visitReasons = "Chọn ít nhất một lý do khám"
     if (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
       errs.email = "Email không đúng định dạng"
     setErrors(errs)
     return Object.keys(errs).length === 0
   }
 
-  function handleSave(goToPreExam = false) {
+  function handleSave(goToScreening = false) {
     if (!validate()) return
 
-    const data = {
+    const data: Omit<Patient, "id" | "createdAt"> & Partial<Pick<Patient, "id" | "createdAt">> = {
       name: form.name.trim(),
       gender: form.gender as Patient["gender"],
       dob: form.dob,
@@ -97,17 +247,56 @@ export function IntakeForm({ patient }: IntakeFormProps) {
       phone: form.phone,
       email: form.email || undefined,
       address: form.address || undefined,
+      district: form.district || undefined,
+      cityProvince: form.cityProvince || undefined,
       occupation: form.occupation || undefined,
       cccd: form.cccd || undefined,
-      chiefComplaint: form.chiefComplaint.trim(),
-      eyeHistory: form.eyeHistory || undefined,
-      systemicHistory: form.systemicHistory || undefined,
-      currentMedications: form.currentMedications || undefined,
-      allergies: form.allergies || undefined,
-      screenTime: form.screenTime ? Number(form.screenTime) : undefined,
-      workEnvironment: form.workEnvironment || undefined,
-      contactLens: form.contactLens || undefined,
-      lifestyleNotes: form.lifestyleNotes || undefined,
+      emergencyContact:
+        form.emergencyContactName
+          ? {
+              name: form.emergencyContactName,
+              phone: form.emergencyContactPhone,
+              relationship: form.emergencyContactRelationship,
+            }
+          : undefined,
+      visitReasons: form.visitReasons,
+      visitReasonOther: form.visitReasonOther || undefined,
+      symptomDetail: Object.keys(form.symptomDetail).length > 0 ? form.symptomDetail : undefined,
+      symptoms: Object.keys(form.symptoms).length > 0 ? form.symptoms : undefined,
+      lastEyeExam: form.lastEyeExam?.date || form.lastEyeExam?.location ? form.lastEyeExam : undefined,
+      currentGlasses: (form.currentGlasses?.types ?? []).length > 0 ? form.currentGlasses : undefined,
+      contactLensStatus: (form.contactLensStatus as Patient["contactLensStatus"]) || undefined,
+      contactLensDetail: form.contactLensStatus === "co" || form.contactLensStatus === "da_tung" ? form.contactLensDetail : undefined,
+      eyeInjury: form.eyeInjury?.has ? form.eyeInjury : undefined,
+      diagnosedEyeConditions: Object.values(form.diagnosedEyeConditions).some(Boolean) ? form.diagnosedEyeConditions : undefined,
+      diagnosedEyeConditionOther: form.diagnosedEyeConditionOther || undefined,
+      refractionValues: Object.keys(form.refractionValues).length > 0 ? form.refractionValues : undefined,
+      eyeSurgeries: form.eyeSurgeries.length > 0 ? form.eyeSurgeries : undefined,
+      primaryDoctor: form.primaryDoctor?.name || form.primaryDoctor?.lastVisit ? form.primaryDoctor : undefined,
+      systemicConditions: Object.values(form.systemicConditions).some(Boolean) ? form.systemicConditions : undefined,
+      diabetesDetail: form.diabetesDetail?.yearDiagnosed || form.diabetesDetail?.hba1c ? form.diabetesDetail : undefined,
+      cancerDetail: form.cancerDetail?.type ? form.cancerDetail : undefined,
+      systemicConditionOther: form.systemicConditionOther || undefined,
+      medicationsList: form.medicationsList.length > 0 ? form.medicationsList : undefined,
+      allergiesInfo: form.allergiesInfo.none || form.allergiesInfo.items.length > 0 ? form.allergiesInfo : undefined,
+      pregnancyStatus: (form.pregnancyStatus as Patient["pregnancyStatus"]) || undefined,
+      pregnancyTrimester: form.pregnancyTrimester || undefined,
+      familyEyeHistory: Object.values(form.familyEyeHistory).some((e) => e.has) ? form.familyEyeHistory : undefined,
+      familyMedicalHistory: Object.values(form.familyMedicalHistory).some((e) => e.has) ? form.familyMedicalHistory : undefined,
+      familyHistoryOther: form.familyHistoryOther?.has ? form.familyHistoryOther : undefined,
+      smokingInfo: form.smokingInfo,
+      alcoholInfo: form.alcoholInfo,
+      screenTimeComputer: form.screenTimeComputer || undefined,
+      screenTimePhone: form.screenTimePhone || undefined,
+      outdoorTime: form.outdoorTime || undefined,
+      sunglassesUse: form.sunglassesUse || undefined,
+      workNearVision: form.workNearVision || undefined,
+      workDustyChemical: form.workDustyChemical || undefined,
+      drivingInfo: form.drivingInfo?.does ? form.drivingInfo : undefined,
+      sportsInfo: form.sportsInfo?.does ? form.sportsInfo : undefined,
+      hobbies: form.hobbies || undefined,
+      referralSource: form.referralSource || undefined,
+      referralDetail: form.referralDetail || undefined,
       type: "kham_benh" as const,
       activeStatus: "hoat_dong" as const,
     }
@@ -115,12 +304,11 @@ export function IntakeForm({ patient }: IntakeFormProps) {
     if (patient) {
       updatePatient(patient.id, data)
     } else {
-      addPatient(data)
+      addPatient(data as Omit<Patient, "id" | "createdAt">)
     }
 
-    if (goToPreExam) {
-      // Future: navigate to pre-exam
-      navigate("/intake")
+    if (goToScreening) {
+      navigate("/screening")
     } else {
       navigate("/intake")
     }
@@ -132,321 +320,157 @@ export function IntakeForm({ patient }: IntakeFormProps) {
     ) : null
   }
 
+  function toggleSection(id: string) {
+    setOpenSections((prev) => ({ ...prev, [id]: !prev[id] }))
+  }
+
+  const duplicateWarning = duplicatePatient ? (
+    <div className="flex items-center justify-between rounded-md border border-amber-300 bg-amber-50 px-4 py-2.5 text-sm text-amber-700 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-400">
+      <span>
+        SĐT <strong>{form.phone}</strong> đã tồn tại — BN:{" "}
+        <strong>{duplicatePatient.name}</strong> ({duplicatePatient.birthYear})
+      </span>
+      <button
+        className="font-semibold text-primary hover:underline"
+        onClick={() => navigate(`/intake/${duplicatePatient!.id}/edit`)}
+      >
+        Mở hồ sơ cũ
+      </button>
+    </div>
+  ) : null
+
+  const sectionComponents: Record<string, React.ReactNode> = {
+    personal: (
+      <IntakeSectionPersonal
+        data={form}
+        errors={errors}
+        onChange={updateField}
+        renderFieldError={renderFieldError}
+        duplicateWarning={duplicateWarning}
+      />
+    ),
+    complaint: (
+      <IntakeSectionComplaint
+        data={form}
+        errors={errors}
+        onChange={updateField}
+        renderFieldError={renderFieldError}
+      />
+    ),
+    eyeHistory: (
+      <IntakeSectionEyeHistory
+        data={form}
+        errors={errors}
+        onChange={updateField}
+      />
+    ),
+    medicalHistory: (
+      <IntakeSectionMedicalHistory
+        data={form}
+        errors={errors}
+        onChange={updateField}
+      />
+    ),
+    familyHistory: (
+      <IntakeSectionFamilyHistory
+        data={form}
+        errors={errors}
+        onChange={updateField}
+      />
+    ),
+    lifestyle: (
+      <IntakeSectionLifestyle
+        data={form}
+        errors={errors}
+        onChange={updateField}
+      />
+    ),
+    referral: (
+      <IntakeSectionReferral
+        data={form}
+        errors={errors}
+        onChange={updateField}
+      />
+    ),
+    consent: (
+      <IntakeSectionConsent
+        data={form}
+        errors={errors}
+        onChange={updateField}
+      />
+    ),
+  }
+
   return (
-    <div className="mx-auto max-w-4xl space-y-8 p-6">
-      {/* Section 1: Thông tin cá nhân */}
-      <section>
-        <div className="mb-1.5 flex items-center gap-2">
-          <HugeiconsIcon
-            icon={UserAdd01Icon}
-            className="size-5"
-            strokeWidth={1.5}
-          />
-          <h2 className="text-lg font-bold">Thông tin cá nhân</h2>
-        </div>
-        <div className="mb-5 border-t border-border" />
-
-        <div className="space-y-4">
-          {/* Row 1: Name + Gender */}
-          <div className="grid grid-cols-[2.5fr_1fr] gap-6">
-            <div>
-              <Label>
-                Họ và tên <span className="text-destructive">*</span>
-              </Label>
-              <Input
-                value={form.name}
-                onChange={(e) => updateField("name", e.target.value)}
-                placeholder="Nhập họ và tên đầy đủ"
-                maxLength={100}
-                aria-invalid={!!errors.name}
+    <div className="mx-auto max-w-4xl space-y-4 p-6">
+      {SECTIONS.map((section) => (
+        <Collapsible
+          key={section.id}
+          open={openSections[section.id]}
+          onOpenChange={() => toggleSection(section.id)}
+        >
+          <CollapsibleTrigger className="flex w-full items-center justify-between rounded-lg border border-border bg-background px-5 py-3 text-left hover:bg-muted/50">
+            <div className="flex items-center gap-2">
+              <HugeiconsIcon
+                icon={section.icon}
+                className="size-5"
+                strokeWidth={1.5}
               />
-              {renderFieldError("name")}
+              <h2 className="text-lg font-bold">
+                {section.num}. {section.title}
+              </h2>
             </div>
-            <div>
-              <Label>
-                Giới tính <span className="text-destructive">*</span>
-              </Label>
-              <Select
-                value={form.gender}
-                onValueChange={(v) => updateField("gender", v)}
-              >
-                <SelectTrigger aria-invalid={!!errors.gender}>
-                  <SelectValue placeholder="" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Nam">Nam</SelectItem>
-                  <SelectItem value="Nữ">Nữ</SelectItem>
-                  <SelectItem value="Khác">Khác</SelectItem>
-                </SelectContent>
-              </Select>
-              {renderFieldError("gender")}
-            </div>
-          </div>
-
-          {/* Row 2: DOB + Phone + Email */}
-          <div className="grid grid-cols-3 gap-6">
-            <div>
-              <Label>
-                Ngày sinh <span className="text-destructive">*</span>
-              </Label>
-              <Input
-                value={form.dob}
-                onChange={(e) => updateField("dob", e.target.value)}
-                placeholder="dd/mm/yyyy"
-                aria-invalid={!!errors.dob}
-              />
-              {renderFieldError("dob")}
-            </div>
-            <div>
-              <Label>
-                Số điện thoại <span className="text-destructive">*</span>
-              </Label>
-              <Input
-                value={form.phone}
-                onChange={(e) => updateField("phone", e.target.value)}
-                aria-invalid={!!errors.phone}
-              />
-              {renderFieldError("phone")}
-            </div>
-            <div>
-              <Label>Email</Label>
-              <Input
-                value={form.email}
-                onChange={(e) => updateField("email", e.target.value)}
-                type="email"
-                aria-invalid={!!errors.email}
-              />
-              {renderFieldError("email")}
-            </div>
-          </div>
-
-          {/* Duplicate warning */}
-          {duplicatePatient && (
-            <div className="flex items-center justify-between rounded-md border border-amber-300 bg-amber-50 px-4 py-2.5 text-sm text-amber-700 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-400">
-              <span>
-                ⚠ SĐT <strong>{form.phone}</strong> đã tồn tại — BN:{" "}
-                <strong>{duplicatePatient.name}</strong> (
-                {duplicatePatient.birthYear})
-              </span>
-              <button
-                className="font-semibold text-primary hover:underline"
-                onClick={() => navigate(`/intake/${duplicatePatient!.id}/edit`)}
-              >
-                Mở hồ sơ cũ
-              </button>
-            </div>
-          )}
-
-          {/* Row 3: Address */}
-          <div>
-            <Label>Địa chỉ</Label>
-            <Input
-              value={form.address}
-              onChange={(e) => updateField("address", e.target.value)}
-              maxLength={200}
+            <HugeiconsIcon
+              icon={openSections[section.id] ? ArrowUp01Icon : ArrowDown01Icon}
+              className="size-4 text-muted-foreground"
+              strokeWidth={1.5}
             />
-          </div>
+          </CollapsibleTrigger>
+          <CollapsibleContent className="px-5 pt-4 pb-2">
+            {sectionComponents[section.id]}
+          </CollapsibleContent>
+        </Collapsible>
+      ))}
 
-          {/* Row 4: Occupation + CCCD */}
-          <div className="grid grid-cols-2 gap-6">
-            <div>
-              <Label>Nghề nghiệp</Label>
-              <Input
-                value={form.occupation}
-                onChange={(e) => updateField("occupation", e.target.value)}
-                placeholder="VD: Nhân viên văn phòng"
-                maxLength={100}
-              />
-            </div>
-            <div>
-              <Label>Số CCCD</Label>
-              <Input
-                value={form.cccd}
-                onChange={(e) => updateField("cccd", e.target.value)}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 2: Thông tin khám */}
-      <section>
-        <div className="mb-1.5 flex items-center gap-2">
-          <HugeiconsIcon
-            icon={Clock01Icon}
-            className="size-5"
-            strokeWidth={1.5}
-          />
-          <h2 className="text-lg font-bold">Thông tin khám</h2>
-        </div>
-        <div className="mb-5 border-t border-border" />
-
-        <div>
-          <Label>
-            Lý do đến khám <span className="text-destructive">*</span>
-          </Label>
-          <Textarea
-            value={form.chiefComplaint}
-            onChange={(e) =>
-              updateField("chiefComplaint", e.target.value.slice(0, 500))
-            }
-            placeholder="Mô tả lý do bệnh nhân đến khám. VD: Mắt khô rát 2 tuần, nhìn mờ khi dùng máy tính..."
-            rows={3}
-            aria-invalid={!!errors.chiefComplaint}
-          />
-          <div className="mt-1 flex justify-between">
-            <span className="text-xs text-muted-foreground italic">
-              Tối đa 500 ký tự. Ghi rõ triệu chứng, thời gian, mức độ nếu BN
-              cung cấp.
-            </span>
-            <span className="text-xs text-muted-foreground">
-              {form.chiefComplaint.length}/500
-            </span>
-          </div>
-          {renderFieldError("chiefComplaint")}
-        </div>
-      </section>
-
-      {/* Section 3: Tiền sử bệnh */}
-      <section>
-        <div className="mb-1.5 flex items-center gap-2">
-          <HugeiconsIcon
-            icon={PlusSignCircleIcon}
-            className="size-5"
-            strokeWidth={1.5}
-          />
-          <h2 className="text-lg font-bold">Tiền sử bệnh</h2>
-          <span className="text-sm text-muted-foreground">(tùy chọn)</span>
-        </div>
-        <div className="mb-5 border-t border-border" />
-
-        <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-6">
-            <div>
-              <Label>Tiền sử bệnh mắt</Label>
-              <Textarea
-                value={form.eyeHistory}
-                onChange={(e) => updateField("eyeHistory", e.target.value)}
-                placeholder="VD: Cận thị từ nhỏ, đã Lasik 2020..."
-                rows={3}
-              />
-            </div>
-            <div>
-              <Label>Tiền sử bệnh toàn thân</Label>
-              <Textarea
-                value={form.systemicHistory}
-                onChange={(e) => updateField("systemicHistory", e.target.value)}
-                placeholder="VD: Tiểu đường type 2, cao huyết áp..."
-                rows={3}
-              />
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-6">
-            <div>
-              <Label>Thuốc đang dùng</Label>
-              <Input
-                value={form.currentMedications}
-                onChange={(e) =>
-                  updateField("currentMedications", e.target.value)
-                }
-                placeholder="VD: Metformin 500mg, Amlodipine 5mg..."
-              />
-            </div>
-            <div>
-              <Label>Dị ứng</Label>
-              <Input
-                value={form.allergies}
-                onChange={(e) => updateField("allergies", e.target.value)}
-                placeholder="VD: Penicillin, phấn hoa, hải sản..."
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 4: Lối sống */}
-      <section>
-        <div className="mb-1.5 flex items-center gap-2">
-          <HugeiconsIcon
-            icon={TimeQuarterPassIcon}
-            className="size-5"
-            strokeWidth={1.5}
-          />
-          <h2 className="text-lg font-bold">Lối sống</h2>
-          <span className="text-sm text-muted-foreground">(tùy chọn)</span>
-        </div>
-        <div className="mb-5 border-t border-border" />
-
-        <div className="space-y-4">
-          <div className="grid grid-cols-3 gap-6">
-            <div>
-              <Label>Thời gian sử dụng màn hình (giờ/ngày)</Label>
-              <Input
-                value={form.screenTime}
-                onChange={(e) => updateField("screenTime", e.target.value)}
-                placeholder="VD: 8"
-                type="number"
-                min={0}
-                max={24}
-              />
-            </div>
-            <div>
-              <Label>Môi trường làm việc</Label>
-              <Select
-                value={form.workEnvironment}
-                onValueChange={(v) => updateField("workEnvironment", v)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Chọn..." />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Văn phòng">Văn phòng</SelectItem>
-                  <SelectItem value="Ngoài trời">Ngoài trời</SelectItem>
-                  <SelectItem value="Nhà máy">Nhà máy</SelectItem>
-                  <SelectItem value="Khác">Khác</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label>Sử dụng kính áp tròng</Label>
-              <Select
-                value={form.contactLens}
-                onValueChange={(v) => updateField("contactLens", v)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Chọn..." />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Không">Không</SelectItem>
-                  <SelectItem value="Hàng ngày">Hàng ngày</SelectItem>
-                  <SelectItem value="Thỉnh thoảng">Thỉnh thoảng</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-          <div>
-            <Label>Ghi chú khác về lối sống</Label>
-            <Input
-              value={form.lifestyleNotes}
-              onChange={(e) => updateField("lifestyleNotes", e.target.value)}
-              placeholder="VD: Hay bơi lội, thường xuyên lái xe đêm, dùng thuốc nhỏ mắt hàng ngày..."
-              maxLength={300}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <div className="flex items-center justify-between border-t border-border pt-4">
+      {/* Footer actions */}
+      <div className="sticky bottom-0 flex items-center justify-between border-t border-border bg-background pt-4 pb-2">
         <Button variant="outline" onClick={() => navigate("/intake")}>
           Hủy
         </Button>
         <div className="flex gap-2">
+          <Dialog open={showPrint} onOpenChange={setShowPrint}>
+            <DialogTrigger asChild>
+              <Button variant="outline">
+                <HugeiconsIcon
+                  icon={PrinterIcon}
+                  className="mr-1.5 size-4"
+                  strokeWidth={1.5}
+                />
+                In phiếu
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+              <IntakePrintView data={form} patientId={patient?.id} />
+              <div className="flex justify-end gap-2 border-t pt-4 print:hidden">
+                <Button variant="outline" onClick={() => setShowPrint(false)}>
+                  Đóng
+                </Button>
+                <Button onClick={() => window.print()}>
+                  <HugeiconsIcon
+                    icon={PrinterIcon}
+                    className="mr-1.5 size-4"
+                    strokeWidth={1.5}
+                  />
+                  In
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
           <Button variant="outline" onClick={() => handleSave(false)}>
             Lưu
           </Button>
           <Button onClick={() => handleSave(true)}>
-            Lưu & chuyển Pre-Exam →
+            Lưu & Sàng lọc →
           </Button>
         </div>
       </div>
