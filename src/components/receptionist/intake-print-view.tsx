@@ -334,19 +334,8 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
               <Check checked={data.symptomDetail.severity === "nang"} />
               Nặng
             </p>
-            {data.symptomDetail.affectedEye && (
-              <p>
-                Mắt bị ảnh hưởng:{" "}
-                <Check checked={data.symptomDetail.affectedEye === "phai"} />
-                Phải{" "}
-                <Check checked={data.symptomDetail.affectedEye === "trai"} />
-                Trái{" "}
-                <Check checked={data.symptomDetail.affectedEye === "ca_hai"} />
-                Cả hai
-              </p>
-            )}
-            {data.symptomDetail.description && (
-              <p>Mô tả thêm: {data.symptomDetail.description}</p>
+            {data.symptomDetail.factors && (
+              <p>Yếu tố ảnh hưởng: {data.symptomDetail.factors}</p>
             )}
           </>
         )}
@@ -381,8 +370,8 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
                 .map((t) => GLASSES_TYPE_LABELS[t] ?? t)
                 .join(", ")}
             </p>
-            {data.currentGlasses.since && (
-              <p>Đeo từ: {data.currentGlasses.since}</p>
+            {data.currentGlasses.duration && (
+              <p>Đeo từ: {data.currentGlasses.duration}</p>
             )}
           </>
         ) : (
@@ -398,12 +387,12 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
           data.contactLensStatus === "da_tung") &&
           data.contactLensDetail && (
             <p>
-              {data.contactLensDetail.types &&
-                data.contactLensDetail.types.length > 0 && (
+              {data.contactLensDetail.type &&
+                data.contactLensDetail.type.length > 0 && (
                   <>
                     Loại:{" "}
-                    {data.contactLensDetail.types
-                      .map((t) => CONTACT_LENS_TYPE_LABELS[t] ?? t)
+                    {data.contactLensDetail.type
+                      .map((t: string) => CONTACT_LENS_TYPE_LABELS[t] ?? t)
                       .join(", ")}
                     .{" "}
                   </>
@@ -411,8 +400,8 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
               {data.contactLensDetail.brand && (
                 <>Thương hiệu: {data.contactLensDetail.brand}. </>
               )}
-              {data.contactLensDetail.hoursPerDay && (
-                <>Số giờ/ngày: {data.contactLensDetail.hoursPerDay}. </>
+              {data.contactLensDetail.duration && (
+                <>Đeo được: {data.contactLensDetail.duration}. </>
               )}
             </p>
           )}
@@ -442,34 +431,30 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
         )}
 
         {data.refractionValues &&
-          (data.refractionValues.odSphere ||
-            data.refractionValues.osSphere) && (
+          (data.refractionValues.myopia ||
+            data.refractionValues.hyperopia ||
+            data.refractionValues.astigmatism) && (
             <>
-              <p className="mt-2 font-medium">Số đo khúc xạ (nếu biết):</p>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Mắt</th>
-                    <th>Sphere</th>
-                    <th>Cylinder</th>
-                    <th>Axis</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>OD (Phải)</td>
-                    <td>{data.refractionValues.odSphere || "-"}</td>
-                    <td>{data.refractionValues.odCylinder || "-"}</td>
-                    <td>{data.refractionValues.odAxis || "-"}</td>
-                  </tr>
-                  <tr>
-                    <td>OS (Trái)</td>
-                    <td>{data.refractionValues.osSphere || "-"}</td>
-                    <td>{data.refractionValues.osCylinder || "-"}</td>
-                    <td>{data.refractionValues.osAxis || "-"}</td>
-                  </tr>
-                </tbody>
-              </table>
+              <p className="mt-2 font-medium">Số đo khúc xạ:</p>
+              {data.refractionValues.myopia && (
+                <p>
+                  Cận thị - OD: {data.refractionValues.myopia.od || "___"} OS:{" "}
+                  {data.refractionValues.myopia.os || "___"}
+                </p>
+              )}
+              {data.refractionValues.hyperopia && (
+                <p>
+                  Viễn thị - OD: {data.refractionValues.hyperopia.od || "___"}{" "}
+                  OS: {data.refractionValues.hyperopia.os || "___"}
+                </p>
+              )}
+              {data.refractionValues.astigmatism && (
+                <p>
+                  Loạn thị - OD:{" "}
+                  {data.refractionValues.astigmatism.od || "___"} OS:{" "}
+                  {data.refractionValues.astigmatism.os || "___"}
+                </p>
+              )}
             </>
           )}
 
