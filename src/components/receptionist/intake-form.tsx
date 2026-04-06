@@ -30,6 +30,7 @@ import {
   Activity01Icon,
   Megaphone01Icon,
   PrinterIcon,
+  Share01Icon,
 } from "@hugeicons/core-free-icons"
 import { IntakeSectionPersonal } from "./intake-section-personal"
 import { IntakeSectionComplaint } from "./intake-section-complaint"
@@ -39,6 +40,7 @@ import { IntakeSectionFamilyHistory } from "./intake-section-family-history"
 import { IntakeSectionLifestyle } from "./intake-section-lifestyle"
 import { IntakeSectionReferral } from "./intake-section-referral"
 import { IntakePrintView } from "./intake-print-view"
+import { IntakeShareModal } from "./intake-share-modal"
 
 export interface IntakeFormData {
   // Section I
@@ -211,6 +213,7 @@ export function IntakeForm({ patient }: IntakeFormProps) {
   )
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [showPrint, setShowPrint] = useState(false)
+  const [showShare, setShowShare] = useState(false)
 
   const duplicatePatient =
     form.phone.length >= 10 && !patient
@@ -468,6 +471,14 @@ export function IntakeForm({ patient }: IntakeFormProps) {
           Hủy
         </Button>
         <div className="flex gap-2">
+          <Button variant="outline" onClick={() => setShowShare(true)}>
+            <HugeiconsIcon
+              icon={Share01Icon}
+              className="mr-1.5 size-4"
+              strokeWidth={1.5}
+            />
+            Gửi cho BN
+          </Button>
           <Dialog open={showPrint} onOpenChange={setShowPrint}>
             <DialogTrigger asChild>
               <Button variant="outline">
@@ -502,6 +513,13 @@ export function IntakeForm({ patient }: IntakeFormProps) {
           <Button onClick={() => handleSave(true)}>Lưu & Sàng lọc →</Button>
         </div>
       </div>
+
+      <IntakeShareModal
+        open={showShare}
+        onOpenChange={setShowShare}
+        patientName={form.name || undefined}
+        patientId={patient?.id}
+      />
     </div>
   )
 }

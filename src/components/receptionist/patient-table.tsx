@@ -18,6 +18,7 @@ interface PatientTableProps {
   visits: Visit[]
   onCheckIn: (visit: Visit) => void
   onCancel: (visitId: string) => void
+  onShare?: (visit: Visit) => void
   page: number
   pageSize: number
 }
@@ -26,6 +27,7 @@ export function PatientTable({
   visits,
   onCheckIn,
   onCancel,
+  onShare,
   page,
   pageSize,
 }: PatientTableProps) {
@@ -154,6 +156,7 @@ export function PatientTable({
                   visit={visit}
                   onCheckIn={() => onCheckIn(visit)}
                   onCancel={() => onCancel(visit.id)}
+                  onShare={onShare ? () => onShare(visit) : undefined}
                 />
               </TableCell>
             </TableRow>
