@@ -402,7 +402,7 @@ export function IntakeSectionMedicalHistory({ data, onChange }: Props) {
                     value={item.type}
                     onValueChange={(v) => updateAllergy(i, "type", v)}
                   >
-                    <SelectTrigger className="h-8">
+                    <SelectTrigger className="h-8 w-full">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>

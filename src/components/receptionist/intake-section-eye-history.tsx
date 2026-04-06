@@ -196,11 +196,7 @@ export function IntakeSectionEyeHistory({ data, onChange }: Props) {
           {GLASSES_TYPE_OPTIONS.map((opt) => (
             <label
               key={opt.key}
-              className={`flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2.5 text-sm transition-colors hover:bg-muted/50 ${
-                (data.currentGlasses?.types ?? []).includes(opt.key)
-                  ? "border-primary bg-primary/5"
-                  : "border-border"
-              }`}
+              className="flex cursor-pointer items-center gap-2 px-1 py-1.5 text-sm transition-colors hover:bg-muted/50 rounded"
             >
               <input
                 type="checkbox"
@@ -282,11 +278,7 @@ export function IntakeSectionEyeHistory({ data, onChange }: Props) {
                 {CONTACT_LENS_TYPE_OPTIONS.map((opt) => (
                   <label
                     key={opt.key}
-                    className={`flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-sm transition-colors hover:bg-muted/50 ${
-                      (data.contactLensDetail?.type ?? []).includes(opt.key)
-                        ? "border-primary bg-primary/5"
-                        : "border-border"
-                    }`}
+                    className="flex cursor-pointer items-center gap-2 px-1 py-1.5 text-sm transition-colors hover:bg-muted/50 rounded"
                   >
                     <input
                       type="checkbox"
@@ -331,11 +323,7 @@ export function IntakeSectionEyeHistory({ data, onChange }: Props) {
                 {CONTACT_LENS_ISSUE_OPTIONS.map((opt) => (
                   <label
                     key={opt.key}
-                    className={`flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-sm transition-colors hover:bg-muted/50 ${
-                      (data.contactLensDetail?.issues ?? []).includes(opt.key)
-                        ? "border-primary bg-primary/5"
-                        : "border-border"
-                    }`}
+                    className="flex cursor-pointer items-center gap-2 px-1 py-1.5 text-sm transition-colors hover:bg-muted/50 rounded"
                   >
                     <input
                       type="checkbox"

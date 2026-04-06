@@ -38,11 +38,7 @@ export function IntakeSectionReferral({ data, onChange }: Props) {
         {REFERRAL_OPTIONS.map((opt) => (
           <label
             key={opt.value}
-            className={`flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2.5 text-sm transition-colors hover:bg-muted/50 ${
-              data.referralSource === opt.value
-                ? "border-primary bg-primary/5"
-                : "border-border"
-            }`}
+            className="flex cursor-pointer items-center gap-2 px-1 py-1.5 text-sm transition-colors hover:bg-muted/50 rounded"
           >
             <input
               type="radio"

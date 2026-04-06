@@ -1,11 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router"
 import { Button } from "@/components/ui/button"
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { useReceptionist } from "@/contexts/receptionist-context"
 import type {
@@ -35,8 +30,6 @@ import {
   Activity01Icon,
   Megaphone01Icon,
   Agreement02Icon,
-  ArrowDown01Icon,
-  ArrowUp01Icon,
   PrinterIcon,
 } from "@hugeicons/core-free-icons"
 import { IntakeSectionPersonal } from "./intake-section-personal"
@@ -222,9 +215,6 @@ export function IntakeForm({ patient }: IntakeFormProps) {
     buildInitialForm(patient)
   )
   const [errors, setErrors] = useState<Record<string, string>>({})
-  const [openSections, setOpenSections] = useState<Record<string, boolean>>(
-    () => Object.fromEntries(SECTIONS.map((s) => [s.id, true]))
-  )
   const [showPrint, setShowPrint] = useState(false)
 
   const duplicatePatient =
@@ -388,10 +378,6 @@ export function IntakeForm({ patient }: IntakeFormProps) {
     ) : null
   }
 
-  function toggleSection(id: string) {
-    setOpenSections((prev) => ({ ...prev, [id]: !prev[id] }))
-  }
-
   const duplicateWarning = duplicatePatient ? (
     <div className="flex items-center justify-between rounded-md border border-amber-300 bg-amber-50 px-4 py-2.5 text-sm text-amber-700 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-400">
       <span>
@@ -470,34 +456,22 @@ export function IntakeForm({ patient }: IntakeFormProps) {
   }
 
   return (
-    <div className="mx-auto max-w-4xl space-y-4 p-6">
+    <div className="mx-auto max-w-4xl space-y-8 p-6">
       {SECTIONS.map((section) => (
-        <Collapsible
-          key={section.id}
-          open={openSections[section.id]}
-          onOpenChange={() => toggleSection(section.id)}
-        >
-          <CollapsibleTrigger className="flex w-full items-center justify-between rounded-lg border border-border bg-background px-5 py-3 text-left hover:bg-muted/50">
-            <div className="flex items-center gap-2">
-              <HugeiconsIcon
-                icon={section.icon}
-                className="size-5"
-                strokeWidth={1.5}
-              />
-              <h2 className="text-lg font-bold">
-                {section.num}. {section.title}
-              </h2>
-            </div>
+        <section key={section.id}>
+          <div className="mb-1.5 flex items-center gap-2">
             <HugeiconsIcon
-              icon={openSections[section.id] ? ArrowUp01Icon : ArrowDown01Icon}
-              className="size-4 text-muted-foreground"
+              icon={section.icon}
+              className="size-5"
               strokeWidth={1.5}
             />
-          </CollapsibleTrigger>
-          <CollapsibleContent className="px-5 pt-4 pb-2">
-            {sectionComponents[section.id]}
-          </CollapsibleContent>
-        </Collapsible>
+            <h2 className="text-lg font-bold">
+              {section.num}. {section.title}
+            </h2>
+          </div>
+          <div className="mb-5 border-t border-border" />
+          {sectionComponents[section.id]}
+        </section>
       ))}
 
       {/* Footer actions */}

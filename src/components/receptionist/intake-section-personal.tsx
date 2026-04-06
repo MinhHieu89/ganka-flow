@@ -57,7 +57,7 @@ export function IntakeSectionPersonal({
             value={data.gender}
             onValueChange={(v) => onChange("gender", v)}
           >
-            <SelectTrigger aria-invalid={!!errors.gender}>
+            <SelectTrigger className="w-full" aria-invalid={!!errors.gender}>
               <SelectValue placeholder="" />
             </SelectTrigger>
             <SelectContent>
@@ -186,7 +186,7 @@ export function IntakeSectionPersonal({
               value={data.emergencyContactRelationship}
               onValueChange={(v) => onChange("emergencyContactRelationship", v)}
             >
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Chọn..." />
               </SelectTrigger>
               <SelectContent>
