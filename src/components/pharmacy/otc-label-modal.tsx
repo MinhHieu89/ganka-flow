@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import type { OtcOrder, OtcOrderItem } from "@/data/mock-otc"
+import { useClinic } from "@/hooks/use-clinic"
 
 interface OtcLabelModalProps {
   order: OtcOrder | null
@@ -36,6 +37,7 @@ function LabelCard({
   isSelected: boolean
   onToggle: () => void
 }) {
+  const clinic = useClinic()
   return (
     <div
       className={`relative rounded border border-dashed border-border p-3 ${
@@ -61,7 +63,7 @@ function LabelCard({
       <div className="flex items-start justify-between text-sm">
         <span className="font-medium">{item.product.name}</span>
         <span className="text-xs text-muted-foreground">
-          PK Ganka28 · {formatDate(order.soldAt)}
+          {clinic.name} · {formatDate(order.soldAt)}
         </span>
       </div>
 

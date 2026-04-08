@@ -8,6 +8,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { formatVnd, maskPhone } from "@/data/mock-otc"
 import type { OtcOrder, OtcPaymentMethod } from "@/data/mock-otc"
+import { useClinic } from "@/hooks/use-clinic"
 
 const paymentLabels: Record<OtcPaymentMethod, string> = {
   cash: "Tiền mặt",
@@ -37,6 +38,7 @@ export function OtcInvoiceModal({
   open,
   onClose,
 }: OtcInvoiceModalProps) {
+  const clinic = useClinic()
   if (!order) return null
 
   const handlePrint = () => {
@@ -82,10 +84,10 @@ export function OtcInvoiceModal({
               {/* Header */}
               <div className="border-b border-border pb-4 text-center">
                 <div className="text-base font-medium">
-                  PHÒNG KHÁM CHUYÊN KHOA MẮT GANKA28
+                  {clinic.name.toUpperCase()}
                 </div>
                 <div className="mt-0.5 text-[11px] text-muted-foreground">
-                  123 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh — ĐT: (028) 1234 5678
+                  {clinic.address} — ĐT: {clinic.hotline}
                 </div>
                 <div className="mt-3 text-lg font-medium tracking-wide">
                   HÓA ĐƠN BÁN HÀNG
@@ -163,7 +165,7 @@ export function OtcInvoiceModal({
               {/* Footer */}
               <div className="mt-4 flex justify-between border-t border-dashed border-border pt-3 text-xs text-muted-foreground">
                 <span>Cảm ơn quý khách!</span>
-                <span>PK Ganka28</span>
+                <span>{clinic.name}</span>
               </div>
             </div>
           </div>

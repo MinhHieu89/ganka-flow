@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import type { PrescriptionOrder } from "@/data/mock-pharmacy"
+import { useClinic } from "@/hooks/use-clinic"
 
 interface PrintPrescriptionModalProps {
   order: PrescriptionOrder
@@ -61,6 +62,7 @@ export function PrintPrescriptionModal({
   open,
   onClose,
 }: PrintPrescriptionModalProps) {
+  const clinic = useClinic()
   const prescribedDate = formatDateParts(order.prescribedAt)
   const expiryDate = formatDate(order.expiresAt)
   const medicationRows = getMedicationRows(order)
@@ -110,10 +112,10 @@ export function PrintPrescriptionModal({
               {/* 5.1 Header */}
               <div className="border-b border-border pb-4 text-center">
                 <div className="text-base font-medium">
-                  PHÒNG KHÁM CHUYÊN KHOA MẮT GANKA28
+                  {clinic.name.toUpperCase()}
                 </div>
                 <div className="mt-0.5 text-[11px] text-muted-foreground">
-                  123 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh — ĐT: (028) 1234 5678
+                  {clinic.address} — ĐT: {clinic.hotline}
                 </div>
                 <div className="mt-3 text-lg font-medium tracking-wide">
                   ĐƠN THUỐC

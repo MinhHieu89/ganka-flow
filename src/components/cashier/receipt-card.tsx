@@ -171,7 +171,7 @@ export function ReceiptCard({ payment }: ReceiptCardProps) {
 
       {/* Footer */}
       <div className="mt-4 border-t border-dashed border-border pt-4 text-center text-xs leading-relaxed text-muted-foreground">
-        Cảm ơn quý khách đã sử dụng dịch vụ tại Ganka28
+        Cảm ơn quý khách đã sử dụng dịch vụ tại {clinic.name}
         <br />
         Hotline: {clinic.hotline} · {clinic.website}
       </div>

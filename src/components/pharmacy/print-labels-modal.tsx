@@ -11,6 +11,7 @@ import type {
   PrescriptionOrder,
   PrescriptionMedication,
 } from "@/data/mock-pharmacy"
+import { useClinic } from "@/hooks/use-clinic"
 
 interface PrintLabelsModalProps {
   order: PrescriptionOrder
@@ -38,6 +39,7 @@ function LabelCard({
   isSelected: boolean
   onToggle: () => void
 }) {
+  const clinic = useClinic()
   const dispenseDate = order.dispensedAt
     ? formatDate(order.dispensedAt)
     : formatDate(new Date().toISOString())
@@ -78,7 +80,7 @@ function LabelCard({
         <span
           className={`text-muted-foreground ${actualSize ? "text-[7px]" : "text-xs"}`}
         >
-          PK Ganka28 · {dispenseDate}
+          {clinic.name} · {dispenseDate}
         </span>
       </div>
 

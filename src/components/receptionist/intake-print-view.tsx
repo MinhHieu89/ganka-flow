@@ -1,4 +1,5 @@
 import type { IntakeFormData } from "./intake-form"
+import { useClinic } from "@/hooks/use-clinic"
 
 interface IntakePrintViewProps {
   data: IntakeFormData
@@ -226,6 +227,7 @@ function Field({ label, value }: { label: string; value?: string }) {
 }
 
 export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
+  const clinic = useClinic()
   const today = new Date().toLocaleDateString("vi-VN")
   const conditions = data.systemicConditions ?? {}
   const hasDiabetes = conditions["dtd_type1"] || conditions["dtd_type2"]
@@ -260,7 +262,7 @@ export function IntakePrintView({ data, patientId }: IntakePrintViewProps) {
 
       {/* Header */}
       <div className="text-center">
-        <p className="font-bold">PHÒNG KHÁM MẮT GANKA28</p>
+        <p className="font-bold">{clinic.name.toUpperCase()}</p>
         <h1>PHIẾU THÔNG TIN BỆNH NHÂN KHÁM MẮT TỔNG QUÁT</h1>
         <p>Ngày khám: {today}</p>
       </div>
