@@ -129,31 +129,10 @@ function EyeBadge({ eye }: { eye: "OD" | "OS" }) {
 
 // ── Label maps ────────────────────────────────────────────────────────────────
 
-const SYMPTOM_LABELS: Record<string, string> = {
-  dryEyes: "Khô mắt",
-  gritty: "Cộm / rát mắt",
-  blurry: "Nhìn mờ",
-  tearing: "Chảy nước mắt",
-  itchy: "Ngứa mắt",
-  headache: "Nhức đầu",
-}
-
 const RED_FLAG_LABELS: Record<string, string> = {
   eyePain: "Đau mắt nhiều",
   suddenVisionLoss: "Giảm thị lực đột ngột",
   asymmetry: "Triệu chứng lệch 1 bên rõ",
-}
-
-const DISCOMFORT_LABELS: Record<string, string> = {
-  mild: "Nhẹ",
-  moderate: "Trung bình",
-  severe: "Nặng",
-}
-
-const BLINK_LABELS: Record<string, string> = {
-  yes: "Có",
-  no: "Không",
-  unclear: "Không rõ",
 }
 
 const OSDI_SEVERITY_LABELS: Record<string, string> = {
@@ -273,17 +252,6 @@ export function TabPreExam({ patient, visit }: TabPreExamProps) {
 
   const chiefComplaint =
     screening?.chiefComplaint || patient.chiefComplaint || ""
-
-  const activeSymptoms = screening?.symptoms
-    ? (
-        Object.entries(screening.symptoms) as [
-          keyof typeof SYMPTOM_LABELS,
-          boolean,
-        ][]
-      )
-        .filter(([, v]) => v)
-        .map(([k]) => k)
-    : []
 
   const activeRedFlags = screening?.redFlags
     ? (
