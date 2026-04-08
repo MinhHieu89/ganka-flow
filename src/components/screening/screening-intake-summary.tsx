@@ -147,7 +147,7 @@ const CONTACT_LENS_STATUS_LABELS: Record<string, string> = {
 }
 
 const SMOKING_LABELS: Record<string, string> = {
-  khong: "Không hút",
+  khong: "Không",
   co: "Có hút",
   da_bo: "Đã bỏ",
 }
@@ -209,6 +209,11 @@ export function ScreeningIntakeSummary({
 
   // Symptoms
   const checkedSymptoms = getCheckedKeys(patient.symptoms)
+  const hasSymptomDetail =
+    patient.symptomDetail?.onset ||
+    patient.symptomDetail?.severity ||
+    patient.symptomDetail?.frequency ||
+    patient.symptomDetail?.factors
 
   // Eye conditions
   const checkedEyeConditions = getCheckedKeys(patient.diagnosedEyeConditions)
@@ -307,7 +312,7 @@ export function ScreeningIntakeSummary({
               setDrawerOpen(true)
             }}
           >
-            Xem chi tiết
+            Cập nhật
           </Button>
         </div>
 
@@ -327,7 +332,7 @@ export function ScreeningIntakeSummary({
             )}
 
             {/* Trieu chung */}
-            {checkedSymptoms.length > 0 && (
+            {(checkedSymptoms.length > 0 || hasSymptomDetail) && (
               <div className="space-y-1">
                 <SectionHeading>Triệu chứng</SectionHeading>
                 <p className="text-foreground">
@@ -518,22 +523,20 @@ export function ScreeningIntakeSummary({
               <div className="space-y-1">
                 <SectionHeading>Lối sống</SectionHeading>
                 <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-foreground">
-                  {patient.smokingInfo &&
-                    patient.smokingInfo.status !== "khong" && (
-                      <span>
-                        Hút thuốc: {SMOKING_LABELS[patient.smokingInfo.status]}
-                        {patient.smokingInfo.quantity
-                          ? ` (${patient.smokingInfo.quantity})`
-                          : ""}
-                      </span>
-                    )}
-                  {patient.alcoholInfo &&
-                    patient.alcoholInfo.status !== "khong" && (
-                      <span>
-                        Rượu bia:{" "}
-                        {ALCOHOL_LABELS[patient.alcoholInfo.status]}
-                      </span>
-                    )}
+                  {patient.smokingInfo && (
+                    <span>
+                      Hút thuốc: {SMOKING_LABELS[patient.smokingInfo.status]}
+                      {patient.smokingInfo.quantity
+                        ? ` (${patient.smokingInfo.quantity})`
+                        : ""}
+                    </span>
+                  )}
+                  {patient.alcoholInfo && (
+                    <span>
+                      Rượu bia:{" "}
+                      {ALCOHOL_LABELS[patient.alcoholInfo.status]}
+                    </span>
+                  )}
                   {patient.screenTimeComputer && (
                     <span>Máy tính: {patient.screenTimeComputer}</span>
                   )}

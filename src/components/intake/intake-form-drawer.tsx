@@ -33,7 +33,7 @@ export function IntakeFormDrawer({
       <SheetContent
         side="right"
         showCloseButton={false}
-        className="w-[50vw] !max-w-[50vw] gap-0 overflow-hidden p-6"
+        className="w-[50vw] max-w-[50vw]! gap-0 overflow-hidden p-6 pb-2"
       >
         <SheetHeader className="p-0">
           <SheetTitle>Phiếu tiếp nhận — {patient.name}</SheetTitle>

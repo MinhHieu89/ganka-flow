@@ -44,14 +44,11 @@ function FamilyHistoryGrid({
       <p className="mb-1.5 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
         {title}
       </p>
-      <div className="space-y-2">
+      <div className="grid grid-cols-2 gap-x-6 gap-y-2">
         {items.map((item) => {
           const entry = values[item.key] ?? { has: false }
           return (
-            <div
-              key={item.key}
-              className="grid grid-cols-[1fr_1fr] items-center gap-4"
-            >
+            <div key={item.key} className="space-y-1.5">
               <label className="flex items-center gap-2 text-sm">
                 <input
                   type="checkbox"
@@ -73,7 +70,7 @@ function FamilyHistoryGrid({
                     onChange(item.key, { has: true, who: e.target.value })
                   }
                   placeholder="Ai bị? (VD: Bố, Mẹ...)"
-                  className="h-8"
+                  className="ml-6 h-8"
                 />
               )}
             </div>
@@ -97,7 +94,7 @@ export function IntakeSectionFamilyHistory({ data, onChange }: Props) {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-3">
       <p className="text-sm font-medium">
         Có ai trong gia đình (bố mẹ, ông bà, anh chị em ruột) bị các bệnh sau
         không?
@@ -118,7 +115,7 @@ export function IntakeSectionFamilyHistory({ data, onChange }: Props) {
       />
 
       {/* Other */}
-      <div className="grid grid-cols-[1fr_1fr] items-center gap-4">
+      <div className="space-y-1.5">
         <label className="flex items-center gap-2 text-sm">
           <input
             type="checkbox"
@@ -139,7 +136,7 @@ export function IntakeSectionFamilyHistory({ data, onChange }: Props) {
           Bệnh khác
         </label>
         {data.familyHistoryOther?.has && (
-          <div className="flex gap-2">
+          <div className="ml-6 flex gap-2">
             <Input
               value={data.familyHistoryOther?.detail ?? ""}
               onChange={(e) =>
