@@ -8,6 +8,7 @@ import { TabPatient } from "@/components/doctor/tab-patient"
 import { TabPreExam } from "@/components/doctor/tab-pre-exam"
 import { TabRequests } from "@/components/doctor/tab-requests"
 import { TabExam } from "@/components/doctor/tab-exam"
+import { TabTreatment } from "@/components/doctor/tab-treatment"
 import type { ExamData, VisitRequest } from "@/data/mock-patients"
 
 const EMPTY_SLIT_LAMP_EYE = {
@@ -130,6 +131,7 @@ export default function DoctorExam() {
             {activeTab === "exam" && (
               <TabExam examData={examData} onChange={setExamData} />
             )}
+            {activeTab === "treatment" && <TabTreatment />}
           </div>
         </div>
       </div>

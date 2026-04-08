@@ -4,10 +4,11 @@ import {
   ClipboardIcon,
   Note01Icon,
   Stethoscope02Icon,
+  TreatmentIcon,
 } from "@hugeicons/core-free-icons"
 import { cn } from "@/lib/utils"
 
-export type ExamTab = "patient" | "preExam" | "requests" | "exam"
+export type ExamTab = "patient" | "preExam" | "requests" | "exam" | "treatment"
 
 interface ExamSidebarProps {
   activeTab: ExamTab
@@ -24,6 +25,7 @@ const tabs: {
   { id: "preExam", label: "Pre-Exam", icon: ClipboardIcon },
   { id: "requests", label: "Yêu cầu", icon: Note01Icon },
   { id: "exam", label: "Khám & kết luận", icon: Stethoscope02Icon },
+  { id: "treatment", label: "Liệu trình", icon: TreatmentIcon },
 ]
 
 export function ExamSidebar({
