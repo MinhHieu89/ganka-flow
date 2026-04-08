@@ -1,3 +1,4 @@
+import { toast } from "sonner"
 import type { Patient } from "@/data/mock-patients"
 import {
   Sheet,
@@ -24,6 +25,7 @@ export function IntakeFormDrawer({
   function handleSave(data: Partial<Patient>) {
     onSave(data)
     onOpenChange(false)
+    toast.success("Đã lưu thay đổi")
   }
 
   return (
