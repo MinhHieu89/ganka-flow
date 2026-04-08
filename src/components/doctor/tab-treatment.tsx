@@ -1,5 +1,3 @@
-import { Skeleton } from "@/components/ui/skeleton"
-
 export function TabTreatment() {
   return (
     <div className="space-y-6">
@@ -13,27 +11,27 @@ export function TabTreatment() {
 
       {/* Course Summary Card */}
       <div className="rounded-lg border border-border p-5 space-y-4">
-        <Skeleton className="h-4 w-[40%]" />
-        <Skeleton className="h-3.5 w-[25%]" />
+        <div className="h-4 w-[40%] rounded-md bg-muted" />
+        <div className="h-3.5 w-[25%] rounded-md bg-muted" />
         <div className="flex gap-2.5 pt-1">
-          <Skeleton className="h-6 w-6 rounded-full" />
-          <Skeleton className="h-6 w-6 rounded-full" />
-          <Skeleton className="h-6 w-6 rounded-full" />
+          <div className="h-6 w-6 rounded-full bg-muted" />
+          <div className="h-6 w-6 rounded-full bg-muted" />
+          <div className="h-6 w-6 rounded-full bg-muted" />
         </div>
       </div>
 
       {/* Session List */}
       <div className="rounded-lg border border-border p-5 space-y-3">
-        <Skeleton className="h-10 w-full rounded-md" />
-        <Skeleton className="h-10 w-full rounded-md" />
-        <Skeleton className="h-10 w-full rounded-md" />
+        <div className="h-10 w-full rounded-md bg-muted" />
+        <div className="h-10 w-full rounded-md bg-muted" />
+        <div className="h-10 w-full rounded-md bg-muted" />
       </div>
 
       {/* Detail Area */}
       <div className="rounded-lg border border-border p-5 space-y-3">
-        <Skeleton className="h-20 w-full rounded-md" />
-        <Skeleton className="h-3.5 w-[60%]" />
-        <Skeleton className="h-3.5 w-[45%]" />
+        <div className="h-20 w-full rounded-md bg-muted" />
+        <div className="h-3.5 w-[60%] rounded-md bg-muted" />
+        <div className="h-3.5 w-[45%] rounded-md bg-muted" />
       </div>
     </div>
   )

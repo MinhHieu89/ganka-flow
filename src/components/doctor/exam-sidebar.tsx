@@ -4,7 +4,7 @@ import {
   ClipboardIcon,
   Note01Icon,
   Stethoscope02Icon,
-  TreatmentIcon,
+  Progress04Icon,
 } from "@hugeicons/core-free-icons"
 import { cn } from "@/lib/utils"
 
@@ -25,7 +25,7 @@ const tabs: {
   { id: "preExam", label: "Pre-Exam", icon: ClipboardIcon },
   { id: "requests", label: "Yêu cầu", icon: Note01Icon },
   { id: "exam", label: "Khám & kết luận", icon: Stethoscope02Icon },
-  { id: "treatment", label: "Liệu trình", icon: TreatmentIcon },
+  { id: "treatment", label: "Liệu trình", icon: Progress04Icon },
 ]
 
 export function ExamSidebar({
