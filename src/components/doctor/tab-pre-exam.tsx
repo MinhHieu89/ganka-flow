@@ -384,58 +384,6 @@ export function TabPreExam({ patient, visit }: TabPreExamProps) {
         )}
       </Section>
 
-      {/* 3. Câu hỏi định hướng — matches screening-form-questions.tsx */}
-      <Section title="Câu hỏi định hướng">
-        <div className="space-y-4">
-          {/* Triệu chứng */}
-          <div>
-            <div className="mb-1.5 text-xs text-muted-foreground">
-              Triệu chứng
-            </div>
-            {activeSymptoms.length > 0 ? (
-              <div className="flex flex-wrap gap-1.5">
-                {activeSymptoms.map((key) => (
-                  <Pill key={key}>{SYMPTOM_LABELS[key]}</Pill>
-                ))}
-              </div>
-            ) : (
-              <span className="text-sm text-muted-foreground">Không có</span>
-            )}
-          </div>
-
-          {/* Mini-cards grid */}
-          <div className="grid grid-cols-3 gap-2">
-            <MiniCard label="Chớp mắt cải thiện">
-              {screening?.blinkImprovement
-                ? BLINK_LABELS[screening.blinkImprovement]
-                : "—"}
-            </MiniCard>
-            <MiniCard label="Thời gian t/c">
-              {screening?.symptomDuration != null
-                ? `${screening.symptomDuration} ${screening.symptomDurationUnit}`
-                : "—"}
-            </MiniCard>
-            <MiniCard label="Screen time">
-              {screening?.screenTime
-                ? `${screening.screenTime} giờ/ngày`
-                : "—"}
-            </MiniCard>
-            <MiniCard label="Kính áp tròng">
-              {screening?.contactLens === "yes"
-                ? "Có"
-                : screening?.contactLens === "no"
-                  ? "Không"
-                  : "—"}
-            </MiniCard>
-            <MiniCard label="Mức độ khó chịu">
-              {screening?.discomfortLevel
-                ? DISCOMFORT_LABELS[screening.discomfortLevel]
-                : "—"}
-            </MiniCard>
-          </div>
-        </div>
-      </Section>
-
       {/* ── STEP 2 ─────────────────────────────────────────────────────── */}
 
       {/* 6. Nhóm bệnh đã chọn */}
