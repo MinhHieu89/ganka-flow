@@ -718,12 +718,12 @@ export const mockPatients: Patient[] = [
       tang_huyet_ap: true,
     },
     medicationsList: [
-      { name: "Refresh Tears 0.5%", dose: "1 giọt", frequency: "4 lần/ngày" },
-      { name: "Amlodipine 5mg", dose: "1 viên", frequency: "Sáng" },
+      { name: "Refresh Tears 0.5%", dose: "1 giọt", purpose: "Khô mắt" },
+      { name: "Amlodipine 5mg", dose: "1 viên", purpose: "Huyết áp" },
     ],
     allergiesInfo: {
       none: false,
-      items: [{ name: "Tetracycline", reaction: "Nổi mẩn đỏ" }],
+      items: [{ type: "thuoc" as const, name: "Tetracycline", reaction: "Nổi mẩn đỏ" }],
     },
     familyEyeHistory: {
       can_thi_nang: { has: true, who: "Mẹ" },
