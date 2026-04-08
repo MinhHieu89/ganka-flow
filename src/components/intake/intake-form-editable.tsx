@@ -331,26 +331,28 @@ export function IntakeFormEditable({
   }
 
   return (
-    <div className="space-y-8">
-      {SECTIONS.map((section) => (
-        <section key={section.id}>
-          <div className="mb-1.5 flex items-center gap-2">
-            <HugeiconsIcon
-              icon={section.icon}
-              className="size-5"
-              strokeWidth={1.5}
-            />
-            <h2 className="text-lg font-bold">
-              {section.num}. {section.title}
-            </h2>
-          </div>
-          <div className="mb-5 border-t border-border" />
-          {sectionComponents[section.id]}
-        </section>
-      ))}
+    <div className="flex min-h-0 flex-1 flex-col">
+      <div className="flex-1 space-y-8 overflow-y-auto">
+        {SECTIONS.map((section) => (
+          <section key={section.id}>
+            <div className="mb-1.5 flex items-center gap-2">
+              <HugeiconsIcon
+                icon={section.icon}
+                className="size-5"
+                strokeWidth={1.5}
+              />
+              <h2 className="text-lg font-bold">
+                {section.num}. {section.title}
+              </h2>
+            </div>
+            <div className="mb-5 border-t border-border" />
+            {sectionComponents[section.id]}
+          </section>
+        ))}
+      </div>
 
       {/* Footer */}
-      <div className="sticky bottom-0 flex items-center justify-end gap-2 border-t border-border bg-popover pt-4 pb-2">
+      <div className="flex shrink-0 items-center justify-end gap-2 border-t border-border bg-popover pt-4 pb-2">
         <Button variant="outline" onClick={onCancel}>
           Hủy
         </Button>
