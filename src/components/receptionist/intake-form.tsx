@@ -490,7 +490,7 @@ export function IntakeForm({ patient }: IntakeFormProps) {
                 In phiếu
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-h-[90vh] max-w-4xl overflow-y-auto">
+            <DialogContent className="h-[95vh] sm:max-w-[67.2vh] overflow-y-auto">
               <IntakePrintView data={form} patientId={patient?.id} />
               <div className="flex justify-end gap-2 border-t pt-4 print:hidden">
                 <Button variant="outline" onClick={() => setShowPrint(false)}>
@@ -520,6 +520,7 @@ export function IntakeForm({ patient }: IntakeFormProps) {
         patientName={form.name || undefined}
         patientId={patient?.id}
       />
+
     </div>
   )
 }

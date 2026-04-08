@@ -14,6 +14,7 @@ import { IntakeFormDrawer } from "@/components/intake/intake-form-drawer"
 interface ScreeningIntakeSummaryProps {
   patient: Patient
   onPatientUpdate?: (data: Partial<Patient>) => void
+  defaultOpen?: boolean
 }
 
 const VISIT_REASON_LABELS: Record<string, string> = {
@@ -194,8 +195,9 @@ function getCheckedKeys(
 export function ScreeningIntakeSummary({
   patient,
   onPatientUpdate,
+  defaultOpen = false,
 }: ScreeningIntakeSummaryProps) {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(defaultOpen)
   const [drawerOpen, setDrawerOpen] = useState(false)
 
   // Visit reasons summary

@@ -85,7 +85,7 @@ export default function IntakeDashboard() {
           </Button>
           <Button onClick={() => setCreateVisitOpen(true)}>
             <HugeiconsIcon icon={UserAdd01Icon} className="size-4" />
-            Tiếp nhận BN mới
+            Tiếp nhận bệnh nhân
           </Button>
         </div>
       </div>
