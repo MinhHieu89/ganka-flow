@@ -31,7 +31,6 @@ import { ScreeningFormHeader } from "./screening-form-header"
 import { ScreeningStepIndicator } from "./screening-step-indicator"
 import { ScreeningFormInitial } from "./screening-form-initial"
 import { ScreeningFormRedFlags } from "./screening-form-red-flags"
-import { ScreeningFormQuestions } from "./screening-form-questions"
 import { ScreeningFormNotes } from "./screening-form-notes"
 import { ScreeningStep2Summary } from "./screening-step2-summary"
 import { ScreeningStep2GroupSelector } from "./screening-step2-group-selector"
@@ -90,7 +89,7 @@ const INITIAL_STEP2: Step2FormData = {
 
 export function ScreeningForm({ patient, visit }: ScreeningFormProps) {
   const navigate = useNavigate()
-  const { saveScreeningData, updateVisitStatus } = useReceptionist()
+  const { saveScreeningData, updateVisitStatus, updatePatient } = useReceptionist()
 
   const [form, setForm] = useState<ScreeningFormData>(
     visit.screeningData ?? INITIAL_FORM
@@ -241,7 +240,10 @@ export function ScreeningForm({ patient, visit }: ScreeningFormProps) {
 
       {currentStep === 1 ? (
         <>
-          <ScreeningIntakeSummary patient={patient} />
+          <ScreeningIntakeSummary
+            patient={patient}
+            onPatientUpdate={(data) => updatePatient(patient.id, data)}
+          />
           <ScreeningFormInitial
             form={form}
             errors={errors}
@@ -252,7 +254,6 @@ export function ScreeningForm({ patient, visit }: ScreeningFormProps) {
             onUpdate={updateField}
             onFastTrack={handleFastTrack}
           />
-          <ScreeningFormQuestions form={form} onUpdate={updateField} />
           <ScreeningFormNotes form={form} onUpdate={updateField} />
 
           {/* Step 1 Footer */}

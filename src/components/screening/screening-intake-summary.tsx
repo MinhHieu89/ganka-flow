@@ -8,9 +8,12 @@ import {
 } from "@/components/ui/collapsible"
 import { cn } from "@/lib/utils"
 import type { Patient } from "@/data/mock-patients"
+import { Button } from "@/components/ui/button"
+import { IntakeFormDrawer } from "@/components/intake/intake-form-drawer"
 
 interface ScreeningIntakeSummaryProps {
   patient: Patient
+  onPatientUpdate?: (data: Partial<Patient>) => void
 }
 
 const VISIT_REASON_LABELS: Record<string, string> = {
@@ -190,8 +193,10 @@ function getCheckedKeys(
 
 export function ScreeningIntakeSummary({
   patient,
+  onPatientUpdate,
 }: ScreeningIntakeSummaryProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false)
 
   // Visit reasons summary
   const visitReasonLabels = (patient.visitReasons ?? []).map(
@@ -268,30 +273,43 @@ export function ScreeningIntakeSummary({
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <div className="rounded-lg border border-border bg-muted/30">
-        <CollapsibleTrigger asChild>
-          <button
-            type="button"
-            className="flex w-full items-center gap-3 px-4 py-3"
+        <div className="flex w-full items-center gap-3 px-4 py-3">
+          <CollapsibleTrigger asChild>
+            <button
+              type="button"
+              className="flex flex-1 items-center gap-3"
+            >
+              <HugeiconsIcon
+                icon={Note01Icon}
+                className="size-4 shrink-0 text-muted-foreground"
+                strokeWidth={1.5}
+              />
+              <span className="text-sm font-semibold">Phiếu tiếp nhận</span>
+              <span className="flex-1 truncate text-left text-sm text-muted-foreground">
+                {collapsedSummary}
+              </span>
+              <HugeiconsIcon
+                icon={ArrowDown01Icon}
+                className={cn(
+                  "size-4 shrink-0 text-muted-foreground transition-transform",
+                  isOpen && "rotate-180"
+                )}
+                strokeWidth={1.5}
+              />
+            </button>
+          </CollapsibleTrigger>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="shrink-0 text-xs text-muted-foreground"
+            onClick={(e) => {
+              e.stopPropagation()
+              setDrawerOpen(true)
+            }}
           >
-            <HugeiconsIcon
-              icon={Note01Icon}
-              className="size-4 shrink-0 text-muted-foreground"
-              strokeWidth={1.5}
-            />
-            <span className="text-sm font-semibold">Phiếu tiếp nhận</span>
-            <span className="flex-1 truncate text-left text-sm text-muted-foreground">
-              {collapsedSummary}
-            </span>
-            <HugeiconsIcon
-              icon={ArrowDown01Icon}
-              className={cn(
-                "size-4 shrink-0 text-muted-foreground transition-transform",
-                isOpen && "rotate-180"
-              )}
-              strokeWidth={1.5}
-            />
-          </button>
-        </CollapsibleTrigger>
+            Xem chi tiết
+          </Button>
+        </div>
 
         <CollapsibleContent>
           <div className="space-y-4 border-t border-border px-4 py-3 text-sm">
@@ -564,6 +582,12 @@ export function ScreeningIntakeSummary({
           </div>
         </CollapsibleContent>
       </div>
+      <IntakeFormDrawer
+        patient={patient}
+        open={drawerOpen}
+        onOpenChange={setDrawerOpen}
+        onSave={(data) => onPatientUpdate?.(data)}
+      />
     </Collapsible>
   )
 }
