@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/sidebar"
 import { NavUser } from "@/components/nav-user"
 import { HugeiconsIcon } from "@hugeicons/react"
-import logo from "@/assets/logo.svg"
 import {
   UserAdd01Icon,
   Calendar01Icon,
@@ -63,9 +62,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
-              <NavLink to="/">
-                <img src={logo} alt="Ganka28" className="h-10" />
+            <SidebarMenuButton size="lg" asChild className="h-auto py-1.5">
+              <NavLink to="/" className="flex flex-col items-start gap-0">
+                <span className="text-base font-semibold leading-tight">Ganka28</span>
+                <span className="text-[11px] leading-tight text-muted-foreground">Quản lý phòng khám</span>
               </NavLink>
             </SidebarMenuButton>
           </SidebarMenuItem>
