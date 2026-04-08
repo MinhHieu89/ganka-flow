@@ -331,7 +331,7 @@ export function IntakeFormEditable({
   }
 
   return (
-    <div className="space-y-8 pb-16">
+    <div className="space-y-8">
       {SECTIONS.map((section) => (
         <section key={section.id}>
           <div className="mb-1.5 flex items-center gap-2">
