@@ -23,6 +23,7 @@ import CashierDashboard from "@/pages/payment/index"
 import PaymentProcessingPage from "@/pages/payment/process"
 import PaymentSuccessPage from "@/pages/payment/success"
 import ShiftClosePage from "@/pages/payment/shift-close"
+import PatientHistory from "@/pages/patient/history"
 
 export function App() {
   return (
@@ -31,44 +32,91 @@ export function App() {
         <ReceptionistProvider>
           <DoctorProvider>
             <CashierProvider>
-            <SidebarProvider>
-              <AppSidebar />
-              <SidebarInset>
-                <SiteHeader />
-                <Routes>
-                  <Route path="/" element={<Navigate to="/intake" replace />} />
-                  <Route path="/intake" element={<IntakeDashboard />} />
-                  <Route path="/intake/new" element={<IntakeNew />} />
-                  <Route path="/intake/:id/edit" element={<IntakeEdit />} />
-                  <Route path="/patients" element={<PatientRegistry />} />
-                  <Route path="/patients/:id" element={<PatientDetail />} />
-                  <Route path="/schedule" element={<ScheduleCalendar />} />
-                  <Route path="/schedule/new" element={<ScheduleNew />} />
-                  <Route path="/screening" element={<ScreeningDashboard />} />
-                  <Route
-                    path="/screening/:visitId"
-                    element={<ScreeningVisit />}
-                  />
-                  <Route path="/doctor" element={<DoctorDashboard />} />
-                  <Route path="/doctor/:visitId" element={<DoctorExam />} />
-                  <Route path="/pharmacy" element={<PharmacyDashboard />} />
-                  <Route path="/optical" element={<OpticalDashboard />} />
-                  <Route path="/payment" element={<CashierDashboard />} />
-                  <Route
-                    path="/payment/process/:paymentRequestId"
-                    element={<PaymentProcessingPage />}
-                  />
-                  <Route
-                    path="/payment/:paymentId/success"
-                    element={<PaymentSuccessPage />}
-                  />
-                  <Route
-                    path="/payment/shift-close"
-                    element={<ShiftClosePage />}
-                  />
-                </Routes>
-              </SidebarInset>
-            </SidebarProvider>
+              <Routes>
+                {/* Patient-facing route (no sidebar/header) */}
+                <Route
+                  path="/patient/:visitId/history"
+                  element={<PatientHistory />}
+                />
+
+                {/* Staff-facing routes (with sidebar/header) */}
+                <Route
+                  path="/*"
+                  element={
+                    <SidebarProvider>
+                      <AppSidebar />
+                      <SidebarInset>
+                        <SiteHeader />
+                        <Routes>
+                          <Route
+                            path="/"
+                            element={<Navigate to="/intake" replace />}
+                          />
+                          <Route path="/intake" element={<IntakeDashboard />} />
+                          <Route path="/intake/new" element={<IntakeNew />} />
+                          <Route
+                            path="/intake/:id/edit"
+                            element={<IntakeEdit />}
+                          />
+                          <Route
+                            path="/patients"
+                            element={<PatientRegistry />}
+                          />
+                          <Route
+                            path="/patients/:id"
+                            element={<PatientDetail />}
+                          />
+                          <Route
+                            path="/schedule"
+                            element={<ScheduleCalendar />}
+                          />
+                          <Route
+                            path="/schedule/new"
+                            element={<ScheduleNew />}
+                          />
+                          <Route
+                            path="/screening"
+                            element={<ScreeningDashboard />}
+                          />
+                          <Route
+                            path="/screening/:visitId"
+                            element={<ScreeningVisit />}
+                          />
+                          <Route path="/doctor" element={<DoctorDashboard />} />
+                          <Route
+                            path="/doctor/:visitId"
+                            element={<DoctorExam />}
+                          />
+                          <Route
+                            path="/pharmacy"
+                            element={<PharmacyDashboard />}
+                          />
+                          <Route
+                            path="/optical"
+                            element={<OpticalDashboard />}
+                          />
+                          <Route
+                            path="/payment"
+                            element={<CashierDashboard />}
+                          />
+                          <Route
+                            path="/payment/process/:paymentRequestId"
+                            element={<PaymentProcessingPage />}
+                          />
+                          <Route
+                            path="/payment/:paymentId/success"
+                            element={<PaymentSuccessPage />}
+                          />
+                          <Route
+                            path="/payment/shift-close"
+                            element={<ShiftClosePage />}
+                          />
+                        </Routes>
+                      </SidebarInset>
+                    </SidebarProvider>
+                  }
+                />
+              </Routes>
             </CashierProvider>
           </DoctorProvider>
         </ReceptionistProvider>
