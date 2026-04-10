@@ -99,11 +99,11 @@ Split the intake form into two separate experiences:
 ### Components
 
 - `patient-history-form.tsx` — Orchestrator (wizard state machine)
-- `patient-history-step-complaint.tsx` — Reuses logic from `intake-section-complaint.tsx`
-- `patient-history-step-eye.tsx` — Reuses logic from `intake-section-eye-history.tsx`
-- `patient-history-step-medical.tsx` — Reuses logic from `intake-section-medical-history.tsx`
-- `patient-history-step-family.tsx` — Reuses logic from `intake-section-family-history.tsx`
-- `patient-history-step-lifestyle.tsx` — Reuses logic from `intake-section-lifestyle.tsx`
+- `patient-history-step-complaint.tsx` — Same fields as old `intake-section-complaint.tsx`, adapted for mobile wizard layout
+- `patient-history-step-eye.tsx` — Same fields as old `intake-section-eye-history.tsx`, adapted for mobile wizard layout
+- `patient-history-step-medical.tsx` — Same fields as old `intake-section-medical-history.tsx`, adapted for mobile wizard layout
+- `patient-history-step-family.tsx` — Same fields as old `intake-section-family-history.tsx`, adapted for mobile wizard layout
+- `patient-history-step-lifestyle.tsx` — Same fields as old `intake-section-lifestyle.tsx`, adapted for mobile wizard layout
 - `patient-history-summary.tsx` — Returning patient summary cards with "Cap nhat" buttons
 
 ---
