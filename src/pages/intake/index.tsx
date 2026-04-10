@@ -179,6 +179,7 @@ export default function IntakeDashboard() {
           shareVisit ? getPatient(shareVisit.patientId)?.name : undefined
         }
         patientId={shareVisit?.patientId}
+        visitId={shareVisit?.id}
       />
     </div>
   )
