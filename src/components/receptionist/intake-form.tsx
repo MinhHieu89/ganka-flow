@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { useReceptionist } from "@/contexts/receptionist-context"
 import type { Patient } from "@/data/mock-patients"
+import { TODAY } from "@/lib/demo-date"
 import { HugeiconsIcon } from "@hugeicons/react"
 import {
   UserAdd01Icon,
@@ -72,7 +73,8 @@ const SECTIONS = [
 
 export function IntakeForm({ patient }: IntakeFormProps) {
   const navigate = useNavigate()
-  const { addPatient, updatePatient, searchPatients } = useReceptionist()
+  const { addPatient, updatePatient, searchPatients, addVisit, visits } =
+    useReceptionist()
 
   const [form, setForm] = useState<IntakeFormData>(() =>
     buildInitialForm(patient)
@@ -80,6 +82,7 @@ export function IntakeForm({ patient }: IntakeFormProps) {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [showPrint, setShowPrint] = useState(false)
   const [showShare, setShowShare] = useState(false)
+  const [latestVisitId, setLatestVisitId] = useState<string>()
 
   const duplicatePatient =
     form.phone.length >= 10 && !patient
@@ -142,13 +145,33 @@ export function IntakeForm({ patient }: IntakeFormProps) {
       activeStatus: "hoat_dong" as const,
     }
 
+    let savedPatientId: string
     if (patient) {
       updatePatient(patient.id, data)
+      savedPatientId = patient.id
     } else {
-      addPatient(data as Omit<Patient, "id" | "createdAt">)
+      const newPatient = addPatient(
+        data as Omit<Patient, "id" | "createdAt">
+      )
+      savedPatientId = newPatient.id
     }
 
     if (goToScreening) {
+      // Find existing visit for today, or create a new one
+      const existingVisit = visits.find(
+        (v) => v.patientId === savedPatientId && v.date === TODAY
+      )
+      if (existingVisit) {
+        setLatestVisitId(existingVisit.id)
+      } else {
+        const newVisit = addVisit({
+          patientId: savedPatientId,
+          status: "cho_kham",
+          source: "walk_in",
+          date: TODAY,
+        })
+        setLatestVisitId(newVisit.id)
+      }
       setShowShare(true)
     } else {
       navigate("/intake")
@@ -273,6 +296,7 @@ export function IntakeForm({ patient }: IntakeFormProps) {
         }}
         patientName={form.name || undefined}
         patientId={patient?.id}
+        visitId={latestVisitId}
       />
 
     </div>

@@ -20,7 +20,7 @@ interface ReceptionistContextType {
   updatePatient: (id: string, data: Partial<Patient>) => void
   getPatient: (id: string) => Patient | undefined
   searchPatients: (query: string) => Patient[]
-  addVisit: (visit: Omit<Visit, "id">) => void
+  addVisit: (visit: Omit<Visit, "id">) => Visit
   updateVisitStatus: (visitId: string, status: PatientStatus) => void
   cancelVisit: (visitId: string) => void
   checkInVisit: (visitId: string) => void
@@ -72,12 +72,13 @@ export function ReceptionistProvider({ children }: { children: ReactNode }) {
     )
   }
 
-  function addVisit(data: Omit<Visit, "id">) {
+  function addVisit(data: Omit<Visit, "id">): Visit {
     const newVisit: Visit = {
       ...data,
       id: `v${Date.now()}`,
     }
     setVisits((prev) => [...prev, newVisit])
+    return newVisit
   }
 
   function updateVisitStatus(visitId: string, status: PatientStatus) {
