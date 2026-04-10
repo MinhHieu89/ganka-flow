@@ -1,20 +1,13 @@
 import { useState } from "react"
 import { useNavigate } from "react-router"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { useReceptionist } from "@/contexts/receptionist-context"
 import type { Patient } from "@/data/mock-patients"
 import { TODAY } from "@/lib/demo-date"
 import { HugeiconsIcon } from "@hugeicons/react"
-import {
-  UserAdd01Icon,
-  Megaphone01Icon,
-  PrinterIcon,
-  Share01Icon,
-} from "@hugeicons/core-free-icons"
+import { UserAdd01Icon, Megaphone01Icon } from "@hugeicons/core-free-icons"
 import { IntakeSectionPersonal } from "./intake-section-personal"
 import { IntakeSectionReferral } from "./intake-section-referral"
-import { IntakePrintView } from "./intake-print-view"
 import { IntakeShareModal } from "./intake-share-modal"
 
 export interface IntakeFormData {
@@ -62,10 +55,9 @@ interface IntakeFormProps {
 }
 
 const SECTIONS = [
-  { id: "personal", num: "I", title: "Thông tin cá nhân", icon: UserAdd01Icon },
+  { id: "personal", title: "Thông tin cá nhân", icon: UserAdd01Icon },
   {
     id: "referral",
-    num: "VII",
     title: "Nguồn thông tin về phòng khám",
     icon: Megaphone01Icon,
   },
@@ -80,7 +72,6 @@ export function IntakeForm({ patient }: IntakeFormProps) {
     buildInitialForm(patient)
   )
   const [errors, setErrors] = useState<Record<string, string>>({})
-  const [showPrint, setShowPrint] = useState(false)
   const [showShare, setShowShare] = useState(false)
   const [latestVisitId, setLatestVisitId] = useState<string>()
 
@@ -228,9 +219,7 @@ export function IntakeForm({ patient }: IntakeFormProps) {
               className="size-5"
               strokeWidth={1.5}
             />
-            <h2 className="text-lg font-bold">
-              {section.num}. {section.title}
-            </h2>
+            <h2 className="text-lg font-bold">{section.title}</h2>
           </div>
           <div className="mb-5 border-t border-border" />
           {sectionComponents[section.id]}
@@ -243,42 +232,6 @@ export function IntakeForm({ patient }: IntakeFormProps) {
           Hủy
         </Button>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={() => setShowShare(true)}>
-            <HugeiconsIcon
-              icon={Share01Icon}
-              className="mr-1.5 size-4"
-              strokeWidth={1.5}
-            />
-            Gửi cho BN
-          </Button>
-          <Dialog open={showPrint} onOpenChange={setShowPrint}>
-            <DialogTrigger asChild>
-              <Button variant="outline">
-                <HugeiconsIcon
-                  icon={PrinterIcon}
-                  className="mr-1.5 size-4"
-                  strokeWidth={1.5}
-                />
-                In phiếu
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="h-[95vh] sm:max-w-[67.2vh] overflow-y-auto">
-              <IntakePrintView data={form} patientId={patient?.id} />
-              <div className="flex justify-end gap-2 border-t pt-4 print:hidden">
-                <Button variant="outline" onClick={() => setShowPrint(false)}>
-                  Đóng
-                </Button>
-                <Button onClick={() => window.print()}>
-                  <HugeiconsIcon
-                    icon={PrinterIcon}
-                    className="mr-1.5 size-4"
-                    strokeWidth={1.5}
-                  />
-                  In
-                </Button>
-              </div>
-            </DialogContent>
-          </Dialog>
           <Button variant="outline" onClick={() => handleSave(false)}>
             Lưu
           </Button>
