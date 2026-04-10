@@ -234,6 +234,7 @@ export interface Visit {
   lastVisitDiagnosis?: string
   lastVisitDoctor?: string
   screeningData?: ScreeningFormData
+  historyStatus?: "pending" | "completed"
   examData?: ExamData
   previousVisits?: PreviousVisit[]
   requests?: VisitRequest[]
@@ -977,6 +978,7 @@ export const mockVisits: Visit[] = [
     lastVisitDate: "15/01/2026",
     lastVisitDiagnosis: "Khô mắt",
     lastVisitDoctor: "BS. Nguyễn Hải",
+    historyStatus: "pending",
   },
   {
     id: "v3",
@@ -987,6 +989,7 @@ export const mockVisits: Visit[] = [
     scheduledAt: "13:00",
     checkedInAt: todayTimestamp(65),
     date: TODAY,
+    historyStatus: "pending",
   },
   {
     id: "v4",
@@ -1048,6 +1051,7 @@ export const mockVisits: Visit[] = [
       discomfortLevel: "mild",
       notes: "Làm việc văn phòng nhiều giờ",
     },
+    historyStatus: "pending",
   },
   {
     id: "v-doc-2",
