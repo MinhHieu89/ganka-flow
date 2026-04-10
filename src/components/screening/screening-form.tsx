@@ -35,6 +35,8 @@ import { ScreeningFormNotes } from "./screening-form-notes"
 import { ScreeningStep2Summary } from "./screening-step2-summary"
 import { ScreeningStep2GroupSelector } from "./screening-step2-group-selector"
 import { ScreeningStep2GroupForm } from "./screening-step2-group-form"
+import { ScreeningHistoryPanel } from "./screening-history-panel"
+import { IntakeShareModal } from "../receptionist/intake-share-modal"
 
 interface ScreeningFormProps {
   patient: Patient
@@ -99,6 +101,7 @@ export function ScreeningForm({ patient, visit }: ScreeningFormProps) {
   )
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isDirty, setIsDirty] = useState(false)
+  const [showQr, setShowQr] = useState(false)
 
   // Determine initial step: if step2 data exists, start on step 2
   const [currentStep, setCurrentStep] = useState<1 | 2>(
@@ -236,6 +239,18 @@ export function ScreeningForm({ patient, visit }: ScreeningFormProps) {
   return (
     <div className="mx-auto max-w-6xl space-y-6 p-6">
       <ScreeningFormHeader patient={patient} visit={visit} />
+      <ScreeningHistoryPanel
+        patient={patient}
+        visit={visit}
+        onShowQr={() => setShowQr(true)}
+      />
+      <IntakeShareModal
+        open={showQr}
+        onOpenChange={setShowQr}
+        patientName={patient.name}
+        patientId={patient.id}
+        visitId={visit.id}
+      />
       <ScreeningStepIndicator currentStep={currentStep} />
 
       {currentStep === 1 ? (

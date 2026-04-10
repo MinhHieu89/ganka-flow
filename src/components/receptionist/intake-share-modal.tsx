@@ -21,23 +21,25 @@ interface IntakeShareModalProps {
   onOpenChange: (open: boolean) => void
   patientName?: string
   patientId?: string
+  visitId?: string
 }
 
 export function IntakeShareModal({
   open,
   onOpenChange,
   patientName,
-  patientId,
+  patientId: _patientId,
+  visitId,
 }: IntakeShareModalProps) {
   const [copied, setCopied] = useState(false)
 
   const mockUrl = useMemo(() => {
-    const token = (patientId ?? "new")
+    const token = (visitId ?? "new")
       .split("")
       .reduce((acc, c) => acc + c.charCodeAt(0), 0)
       .toString(36)
-    return `https://ganka28.vn/f/${patientId?.replace("GK-", "").replace(/-/g, "") ?? "0000"}${token}x${Date.now().toString(36).slice(-4)}`
-  }, [patientId])
+    return `${window.location.origin}/patient/${visitId ?? "unknown"}/history?token=${token}x${Date.now().toString(36).slice(-4)}`
+  }, [visitId])
 
   function handleCopy() {
     navigator.clipboard.writeText(mockUrl).then(() => {
