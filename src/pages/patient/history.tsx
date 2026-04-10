@@ -1,11 +1,9 @@
-import { useParams, useSearchParams } from "react-router"
+import { useParams } from "react-router"
 import { useReceptionist } from "@/contexts/receptionist-context"
 import { PatientHistoryForm } from "@/components/patient/patient-history-form"
 
 export default function PatientHistory() {
   const { visitId } = useParams<{ visitId: string }>()
-  const [searchParams] = useSearchParams()
-  const token = searchParams.get("token")
   const { todayVisits, getPatient } = useReceptionist()
 
   const visit = todayVisits.find((v) => v.id === visitId)

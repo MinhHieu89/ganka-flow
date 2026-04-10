@@ -28,7 +28,7 @@ export function IntakeShareModal({
   open,
   onOpenChange,
   patientName,
-  patientId,
+  patientId: _patientId,
   visitId,
 }: IntakeShareModalProps) {
   const [copied, setCopied] = useState(false)
