@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select"
 import { CheckboxGrid } from "./intake-checkbox-grid"
 import { ConditionalField } from "./intake-conditional-field"
+import { useMasterDataOptions } from "@/hooks/use-master-data-options"
 import type { IntakeFormData } from "@/components/screening/screening-intake-form-editable"
 import type { MedicationEntry, AllergyEntry } from "@/data/mock-patients"
 
@@ -19,64 +20,6 @@ interface Props {
   errors: Record<string, string>
   onChange: (field: string, value: unknown) => void
 }
-
-const SYSTEMIC_CONDITION_GROUPS = [
-  {
-    label: "Tim mạch",
-    items: [
-      { key: "tang_huyet_ap", label: "Tăng huyết áp" },
-      { key: "dau_that_nguc", label: "Đau thắt ngực" },
-      { key: "benh_tim_mach", label: "Bệnh tim mạch" },
-      { key: "dot_quy", label: "Đột quỵ/Tai biến mạch máu não" },
-    ],
-  },
-  {
-    label: "Nội tiết",
-    items: [
-      { key: "dtd_type1", label: "Đái tháo đường Típ 1" },
-      { key: "dtd_type2", label: "Đái tháo đường Típ 2" },
-      { key: "benh_tuyen_giap", label: "Bệnh tuyến giáp" },
-      { key: "cholesterol_cao", label: "Cholesterol cao" },
-    ],
-  },
-  {
-    label: "Thần kinh",
-    items: [
-      { key: "da_xo_cung", label: "Đa xơ cứng (MS)" },
-      { key: "dong_kinh", label: "Động kinh" },
-      { key: "parkinson", label: "Bệnh Parkinson" },
-      { key: "migraine", label: "Đau nửa đầu/Migraine" },
-    ],
-  },
-  {
-    label: "Hô hấp & Miễn dịch",
-    items: [
-      { key: "hen_suyen", label: "Hen suyễn" },
-      { key: "copd", label: "COPD" },
-      { key: "hiv", label: "HIV/AIDS" },
-      { key: "viem_gan_bc", label: "Viêm gan B/C" },
-      { key: "lupus", label: "Lupus ban đỏ hệ thống" },
-      { key: "viem_khop_dang_thap", label: "Viêm khớp dạng thấp" },
-    ],
-  },
-  {
-    label: "Ung thư",
-    items: [
-      { key: "ung_thu", label: "Ung thư" },
-      { key: "dang_hoa_xa_tri", label: "Đang điều trị hóa chất/xạ trị" },
-    ],
-  },
-  {
-    label: "Khác",
-    items: [
-      { key: "benh_than", label: "Bệnh thận" },
-      { key: "benh_gan", label: "Bệnh gan" },
-      { key: "roi_loan_dong_mau", label: "Rối loạn đông máu" },
-      { key: "benh_ngoai_da", label: "Bệnh ngoài da (vảy nến, chàm...)" },
-      { key: "tram_cam_lo_au", label: "Trầm cảm/Lo âu" },
-    ],
-  },
-]
 
 const ALLERGY_TYPE_OPTIONS = [
   { value: "thuoc", label: "Thuốc" },
@@ -93,6 +36,8 @@ const emptyAllergy: AllergyEntry = {
 }
 
 export function IntakeSectionMedicalHistory({ data, onChange }: Props) {
+  const systemicConditions = useMasterDataOptions("systemic_conditions")
+
   const conditions = data.systemicConditions ?? {}
   const hasDiabetes = conditions["dtd_type1"] || conditions["dtd_type2"]
   const hasCancer = conditions["ung_thu"]
@@ -180,20 +125,11 @@ export function IntakeSectionMedicalHistory({ data, onChange }: Props) {
       {/* Systemic conditions by group */}
       <div>
         <Label className="mb-2 block">Bạn có bị các bệnh sau không?</Label>
-        <div className="space-y-4">
-          {SYSTEMIC_CONDITION_GROUPS.map((group) => (
-            <div key={group.label}>
-              <p className="mb-1.5 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
-                {group.label}
-              </p>
-              <CheckboxGrid
-                items={group.items}
-                values={conditions}
-                onChange={updateCondition}
-              />
-            </div>
-          ))}
-        </div>
+        <CheckboxGrid
+          items={systemicConditions}
+          values={conditions}
+          onChange={updateCondition}
+        />
 
         {/* Diabetes detail */}
         {hasDiabetes && (
@@ -289,11 +225,7 @@ export function IntakeSectionMedicalHistory({ data, onChange }: Props) {
         )}
 
         <ConditionalField
-          show={
-            !SYSTEMIC_CONDITION_GROUPS.flatMap((g) =>
-              g.items.map((i) => i.key)
-            ).every((k) => !conditions[k])
-          }
+          show={systemicConditions.some((i) => conditions[i.key])}
           label=""
           value=""
           onChange={() => {}}

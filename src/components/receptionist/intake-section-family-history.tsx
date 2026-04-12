@@ -1,4 +1,5 @@
 import { Input } from "@/components/ui/input"
+import { useMasterDataOptions } from "@/hooks/use-master-data-options"
 import type { IntakeFormData } from "@/components/screening/screening-intake-form-editable"
 import type { FamilyHistoryEntry } from "@/data/mock-patients"
 
@@ -7,26 +8,6 @@ interface Props {
   errors: Record<string, string>
   onChange: (field: string, value: unknown) => void
 }
-
-const FAMILY_EYE_CONDITIONS = [
-  { key: "glaucoma", label: "Glaucoma (Tăng nhãn áp)" },
-  { key: "duc_thuy_tinh_the", label: "Đục thủy tinh thể" },
-  { key: "thoai_hoa_diem_vang", label: "Thoái hóa điểm vàng" },
-  { key: "benh_vong_mac", label: "Bệnh võng mạc" },
-  { key: "can_thi_nang", label: "Cận thị nặng" },
-  { key: "mu_mau", label: "Mù màu" },
-  { key: "lac_mat_luoi", label: "Mắt lác/Mắt lười" },
-  { key: "bong_vong_mac", label: "Bong võng mạc" },
-]
-
-const FAMILY_MEDICAL_CONDITIONS = [
-  { key: "dtd", label: "Đái tháo đường" },
-  { key: "tang_huyet_ap", label: "Tăng huyết áp" },
-  { key: "benh_tim_mach", label: "Bệnh tim mạch" },
-  { key: "dot_quy", label: "Đột quỵ" },
-  { key: "ung_thu", label: "Ung thư" },
-  { key: "benh_tu_mien", label: "Bệnh tự miễn (Lupus, RA...)" },
-]
 
 function FamilyHistoryGrid({
   title,
@@ -82,6 +63,11 @@ function FamilyHistoryGrid({
 }
 
 export function IntakeSectionFamilyHistory({ data, onChange }: Props) {
+  const familyEyeConditions = useMasterDataOptions("family_eye_conditions")
+  const familyMedicalConditions = useMasterDataOptions(
+    "family_medical_conditions"
+  )
+
   const familyEye = data.familyEyeHistory ?? {}
   const familyMedical = data.familyMedicalHistory ?? {}
 
@@ -102,14 +88,14 @@ export function IntakeSectionFamilyHistory({ data, onChange }: Props) {
 
       <FamilyHistoryGrid
         title="Bệnh mắt"
-        items={FAMILY_EYE_CONDITIONS}
+        items={familyEyeConditions}
         values={familyEye}
         onChange={updateEyeEntry}
       />
 
       <FamilyHistoryGrid
         title="Bệnh toàn thân"
-        items={FAMILY_MEDICAL_CONDITIONS}
+        items={familyMedicalConditions}
         values={familyMedical}
         onChange={updateMedicalEntry}
       />

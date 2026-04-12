@@ -2,6 +2,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { CheckboxGrid } from "./intake-checkbox-grid"
 import { ConditionalField } from "./intake-conditional-field"
+import { useMasterDataOptions } from "@/hooks/use-master-data-options"
 import type { IntakeFormData } from "@/components/screening/screening-intake-form-editable"
 
 interface Props {
@@ -10,43 +11,6 @@ interface Props {
   onChange: (field: string, value: unknown) => void
   renderFieldError: (field: string) => React.ReactNode
 }
-
-const VISIT_REASON_OPTIONS = [
-  { key: "kham_dinh_ky", label: "Khám định kỳ/Kiểm tra tổng quát" },
-  { key: "giam_thi_luc", label: "Giảm thị lực" },
-  { key: "mo_mat", label: "Mờ mắt" },
-  { key: "nhuc_dau_dau_mat", label: "Nhức đầu/Đau mắt" },
-  { key: "dau_mat_kho_chiu", label: "Đau mắt hoặc khó chịu" },
-  { key: "kho_nhin_gan", label: "Khó nhìn gần (đọc sách, xem điện thoại)" },
-  { key: "kho_nhin_xa", label: "Khó nhìn xa (xem bảng, lái xe)" },
-  { key: "kinh_ap_trong", label: "Muốn đeo kính áp tròng" },
-  {
-    key: "tu_van_phau_thuat",
-    label: "Tư vấn phẫu thuật (LASIK, đục thủy tinh thể...)",
-  },
-  { key: "khac", label: "Khác" },
-]
-
-const SYMPTOM_OPTIONS = [
-  { key: "mo_mat", label: "Nhìn mờ/Giảm thị lực" },
-  { key: "nhin_doi", label: "Nhìn đôi (song thị)" },
-  { key: "nhin_bien_dang", label: "Nhìn biến dạng" },
-  { key: "dom_bay", label: "Xuất hiện điểm đen/đốm bay" },
-  { key: "vong_sang", label: "Thấy vòng sáng quanh đèn" },
-  { key: "chop_sang", label: "Nhìn chớp sáng (flash)" },
-  { key: "mat_thi_truong", label: "Mất thị trường (góc nhìn)" },
-  { key: "mo_thay_doi_theo_gio", label: "Nhìn mờ thay đổi theo giờ" },
-  { key: "nhuc_dau", label: "Nhức đầu thường xuyên" },
-  { key: "choi_sang", label: "Chói sáng/Sợ ánh sáng" },
-  { key: "kho_mat", label: "Khô mắt" },
-  { key: "chay_nuoc_mat", label: "Chảy nước mắt nhiều" },
-  { key: "tiet_dich", label: "Tiết dịch/Ghèn mắt" },
-  { key: "ngua_mat", label: "Ngứa mắt" },
-  { key: "do_mat", label: "Đỏ mắt" },
-  { key: "sung_mi", label: "Sưng mi mắt" },
-  { key: "moi_mat_doc", label: "Mỏi mắt khi đọc/máy tính" },
-  { key: "kho_tap_trung_doc", label: "Khó tập trung khi đọc" },
-]
 
 const SEVERITY_OPTIONS = [
   { value: "nhe", label: "Nhẹ" },
@@ -71,6 +35,9 @@ export function IntakeSectionComplaint({
   onChange,
   renderFieldError,
 }: Props) {
+  const visitReasonOptions = useMasterDataOptions("visit_reasons")
+  const symptomOptions = useMasterDataOptions("symptoms")
+
   const visitReasonsMap = Object.fromEntries(
     (data.visitReasons ?? []).map((r) => [r, true])
   )
@@ -98,7 +65,7 @@ export function IntakeSectionComplaint({
           <span className="text-destructive">*</span>
         </Label>
         <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-0.5" role="group">
-          {VISIT_REASON_OPTIONS.map((opt) => (
+          {visitReasonOptions.map((opt) => (
             <label
               key={opt.key}
               className="flex cursor-pointer items-center gap-2 px-1 py-1 text-sm transition-colors hover:bg-muted/50 rounded"
@@ -228,7 +195,7 @@ export function IntakeSectionComplaint({
           Bạn có gặp các triệu chứng sau không?
         </Label>
         <CheckboxGrid
-          items={SYMPTOM_OPTIONS}
+          items={symptomOptions}
           values={data.symptoms ?? {}}
           onChange={updateSymptom}
         />

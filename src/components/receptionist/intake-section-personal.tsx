@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useMasterDataOptions } from "@/hooks/use-master-data-options"
 import type { IntakeFormData } from "./intake-form"
 
 interface Props {
@@ -18,14 +19,6 @@ interface Props {
   duplicateWarning?: React.ReactNode
 }
 
-const RELATIONSHIP_OPTIONS = [
-  { value: "bo_me", label: "Bố/Mẹ" },
-  { value: "vo_chong", label: "Vợ/Chồng" },
-  { value: "con", label: "Con" },
-  { value: "anh_chi_em", label: "Anh/Chị/Em" },
-  { value: "khac", label: "Khác" },
-]
-
 export function IntakeSectionPersonal({
   data,
   errors,
@@ -33,6 +26,13 @@ export function IntakeSectionPersonal({
   renderFieldError,
   duplicateWarning,
 }: Props) {
+  const relationshipOptions = useMasterDataOptions("relationships").map(
+    (i) => ({
+      value: i.key,
+      label: i.label,
+    })
+  )
+
   return (
     <div className="space-y-4">
       {/* Row 1: Name + Gender */}
@@ -191,7 +191,7 @@ export function IntakeSectionPersonal({
                 <SelectValue placeholder="Chọn..." />
               </SelectTrigger>
               <SelectContent>
-                {RELATIONSHIP_OPTIONS.map((opt) => (
+                {relationshipOptions.map((opt) => (
                   <SelectItem key={opt.value} value={opt.value}>
                     {opt.label}
                   </SelectItem>

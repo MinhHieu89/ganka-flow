@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ConditionalField } from "./intake-conditional-field"
+import { useMasterDataOptions } from "@/hooks/use-master-data-options"
 import type { IntakeFormData } from "@/components/screening/screening-intake-form-editable"
 
 interface Props {
@@ -8,20 +9,6 @@ interface Props {
   errors: Record<string, string>
   onChange: (field: string, value: unknown) => void
 }
-
-const SCREEN_TIME_OPTIONS = [
-  { value: "<2h", label: "< 2 giờ" },
-  { value: "2-4h", label: "2-4 giờ" },
-  { value: "4-8h", label: "4-8 giờ" },
-  { value: ">8h", label: "> 8 giờ" },
-]
-
-const OUTDOOR_TIME_OPTIONS = [
-  { value: "<30m", label: "< 30 phút" },
-  { value: "30-60m", label: "30-60 phút" },
-  { value: "1-2h", label: "1-2 giờ" },
-  { value: ">2h", label: "> 2 giờ" },
-]
 
 const SUNGLASSES_OPTIONS = [
   { value: "luon_luon", label: "Luôn luôn" },
@@ -65,6 +52,19 @@ function RadioRow({
 }
 
 export function IntakeSectionLifestyle({ data, onChange }: Props) {
+  const screenTimeOptions = useMasterDataOptions("screen_time_ranges").map(
+    (i) => ({
+      value: i.key,
+      label: i.label,
+    })
+  )
+  const outdoorTimeOptions = useMasterDataOptions("outdoor_time_ranges").map(
+    (i) => ({
+      value: i.key,
+      label: i.label,
+    })
+  )
+
   const smoking = data.smokingInfo ?? { status: "khong" as const }
   const alcohol = data.alcoholInfo ?? { status: "khong" as const }
   const driving = data.drivingInfo ?? { does: false }
@@ -185,7 +185,7 @@ export function IntakeSectionLifestyle({ data, onChange }: Props) {
           </Label>
           <RadioRow
             name="screenTimeComputer"
-            options={SCREEN_TIME_OPTIONS}
+            options={screenTimeOptions}
             value={data.screenTimeComputer}
             onChange={(v) => onChange("screenTimeComputer", v)}
           />
@@ -196,7 +196,7 @@ export function IntakeSectionLifestyle({ data, onChange }: Props) {
           </Label>
           <RadioRow
             name="screenTimePhone"
-            options={SCREEN_TIME_OPTIONS}
+            options={screenTimeOptions}
             value={data.screenTimePhone}
             onChange={(v) => onChange("screenTimePhone", v)}
           />
@@ -211,7 +211,7 @@ export function IntakeSectionLifestyle({ data, onChange }: Props) {
           </Label>
           <RadioRow
             name="outdoorTime"
-            options={OUTDOOR_TIME_OPTIONS}
+            options={outdoorTimeOptions}
             value={data.outdoorTime}
             onChange={(v) => onChange("outdoorTime", v)}
           />

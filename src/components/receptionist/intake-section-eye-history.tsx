@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { IntakeDatePicker } from "./intake-date-picker"
 import { CheckboxGrid } from "./intake-checkbox-grid"
 import { ConditionalField } from "./intake-conditional-field"
+import { useMasterDataOptions } from "@/hooks/use-master-data-options"
 import type { IntakeFormData } from "@/components/screening/screening-intake-form-editable"
 import type { EyeSurgery } from "@/data/mock-patients"
 
@@ -26,47 +27,6 @@ const CONTACT_LENS_STATUS_OPTIONS = [
   { value: "da_tung", label: "Đã từng đeo nhưng hiện không dùng" },
 ]
 
-const CONTACT_LENS_TYPE_OPTIONS = [
-  { key: "mem", label: "Mềm" },
-  { key: "cung", label: "Cứng (RGP)" },
-  { key: "deo_ngay", label: "Đeo ngày" },
-  { key: "deo_keo_dai", label: "Đeo kéo dài" },
-]
-
-const CONTACT_LENS_ISSUE_OPTIONS = [
-  { key: "kho_mat", label: "Khô mắt" },
-  { key: "kho_chiu", label: "Khó chịu" },
-  { key: "nhin_mo", label: "Nhìn mờ" },
-  { key: "khac", label: "Khác" },
-]
-
-const EYE_CONDITION_OPTIONS = [
-  { key: "can_thi", label: "Cận thị (Myopia)" },
-  { key: "vien_thi", label: "Viễn thị (Hyperopia)" },
-  { key: "loan_thi", label: "Loạn thị (Astigmatism)" },
-  { key: "lao_thi", label: "Lão thị (Presbyopia)" },
-  { key: "glaucoma", label: "Glaucoma (Tăng nhãn áp)" },
-  { key: "duc_thuy_tinh_the", label: "Đục thủy tinh thể (Cataract)" },
-  { key: "thoai_hoa_diem_vang", label: "Thoái hóa điểm vàng" },
-  { key: "benh_vong_mac_dtd", label: "Bệnh võng mạc do ĐTĐ" },
-  { key: "lac_mat", label: "Lác mắt (Strabismus)" },
-  { key: "mat_luoi", label: "Mắt lười (Amblyopia)" },
-  { key: "kho_mat_syndrome", label: "Khô mắt (Dry Eye)" },
-  { key: "viem_ket_mac", label: "Viêm kết mạc thường xuyên" },
-  { key: "bong_vong_mac", label: "Bong võng mạc" },
-  { key: "viem_mang_bo_dao", label: "Viêm màng bồ đào (Uveitis)" },
-  { key: "khac", label: "Khác" },
-]
-
-const SURGERY_TYPE_OPTIONS = [
-  { value: "lasik", label: "LASIK/PRK" },
-  { value: "duc_thuy_tinh_the", label: "Phẫu thuật đục thủy tinh thể" },
-  { value: "glaucoma", label: "Phẫu thuật glaucoma" },
-  { value: "vong_mac", label: "Phẫu thuật võng mạc" },
-  { value: "lac_mat", label: "Phẫu thuật lác mắt" },
-  { value: "khac", label: "Khác" },
-]
-
 const REFRACTION_CONDITIONS = ["can_thi", "vien_thi", "loan_thi"]
 
 const emptySurgery: EyeSurgery = {
@@ -77,6 +37,16 @@ const emptySurgery: EyeSurgery = {
 }
 
 export function IntakeSectionEyeHistory({ data, onChange }: Props) {
+  const contactLensTypeOptions = useMasterDataOptions("contact_lens_types")
+  const contactLensIssueOptions = useMasterDataOptions("contact_lens_issues")
+  const eyeConditionOptions = useMasterDataOptions("eye_conditions")
+  const surgeryTypeOptions = useMasterDataOptions("eye_surgery_types").map(
+    (i) => ({
+      value: i.key,
+      label: i.label,
+    })
+  )
+
   const conditions = data.diagnosedEyeConditions ?? {}
   const hasGlasses = (data.currentGlasses?.types ?? []).length > 0
   const showLensDetail =
@@ -276,7 +246,7 @@ export function IntakeSectionEyeHistory({ data, onChange }: Props) {
             <div>
               <Label className="text-sm text-muted-foreground">Loại</Label>
               <div className="mt-1 grid grid-cols-2 gap-x-4 gap-y-0.5">
-                {CONTACT_LENS_TYPE_OPTIONS.map((opt) => (
+                {contactLensTypeOptions.map((opt) => (
                   <label
                     key={opt.key}
                     className="flex cursor-pointer items-center gap-2 px-1 py-1 text-sm transition-colors hover:bg-muted/50 rounded"
@@ -321,7 +291,7 @@ export function IntakeSectionEyeHistory({ data, onChange }: Props) {
                 Có gặp vấn đề gì không?
               </Label>
               <div className="mt-1 grid grid-cols-2 gap-x-4 gap-y-0.5">
-                {CONTACT_LENS_ISSUE_OPTIONS.map((opt) => (
+                {contactLensIssueOptions.map((opt) => (
                   <label
                     key={opt.key}
                     className="flex cursor-pointer items-center gap-2 px-1 py-1 text-sm transition-colors hover:bg-muted/50 rounded"
@@ -397,7 +367,7 @@ export function IntakeSectionEyeHistory({ data, onChange }: Props) {
           Có từng được chẩn đoán hoặc điều trị các bệnh mắt sau không?
         </Label>
         <CheckboxGrid
-          items={EYE_CONDITION_OPTIONS}
+          items={eyeConditionOptions}
           values={conditions}
           onChange={updateCondition}
         />
@@ -502,7 +472,7 @@ export function IntakeSectionEyeHistory({ data, onChange }: Props) {
                     className="mt-1 w-full rounded-md border border-border bg-background px-3 py-1.5 text-sm"
                   >
                     <option value="">Chọn...</option>
-                    {SURGERY_TYPE_OPTIONS.map((opt) => (
+                    {surgeryTypeOptions.map((opt) => (
                       <option key={opt.value} value={opt.value}>
                         {opt.label}
                       </option>
