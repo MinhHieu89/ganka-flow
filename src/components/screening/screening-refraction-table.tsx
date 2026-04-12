@@ -61,7 +61,7 @@ export function RefractionTable({
             {columns.map((col) => (
               <td key={col} className="px-1 py-1">
                 <Input
-                  value={(odData as Record<string, string>)[col] ?? ""}
+                  value={(odData as unknown as Record<string, string>)[col] ?? ""}
                   onChange={(e) => onOdChange(col, e.target.value)}
                   className="h-8 text-center text-xs"
                   aria-label={`OD ${COLUMN_LABELS[col]}`}
@@ -78,7 +78,7 @@ export function RefractionTable({
             {columns.map((col) => (
               <td key={col} className="px-1 py-1">
                 <Input
-                  value={(osData as Record<string, string>)[col] ?? ""}
+                  value={(osData as unknown as Record<string, string>)[col] ?? ""}
                   onChange={(e) => onOsChange(col, e.target.value)}
                   className="h-8 text-center text-xs"
                   aria-label={`OS ${COLUMN_LABELS[col]}`}

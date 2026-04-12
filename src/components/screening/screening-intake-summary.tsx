@@ -204,10 +204,6 @@ export function ScreeningIntakeSummary({
   const visitReasonLabels = (patient.visitReasons ?? []).map(
     (r) => VISIT_REASON_LABELS[r] ?? r
   )
-  const collapsedSummary =
-    visitReasonLabels.length > 0
-      ? visitReasonLabels.join(", ")
-      : "Chưa có thông tin tiếp nhận"
 
   // Symptoms
   const checkedSymptoms = getCheckedKeys(patient.symptoms)

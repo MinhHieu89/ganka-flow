@@ -11,7 +11,6 @@ import type {
   RefractionEyeRow,
   RefractionEyeRowWithAdd,
   SubjectiveEyeRow,
-  CycloplegicAgent,
 } from "@/data/mock-patients"
 import { ScreeningFormHeader } from "./screening-form-header"
 import { ScreeningHistoryPanel } from "./screening-history-panel"
@@ -78,7 +77,7 @@ export function ScreeningForm({ patient, visit }: ScreeningFormProps) {
       [section]: {
         ...prev[section],
         [eye]: {
-          ...(prev[section][eye] as Record<string, string>),
+          ...(prev[section][eye] as unknown as Record<string, string>),
           [field]: value,
         },
       },
