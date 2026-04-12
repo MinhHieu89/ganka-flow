@@ -130,7 +130,7 @@ export default function DoctorExam() {
               <TabPatient patient={patient} visit={visit} />
             )}
             {activeTab === "preExam" && (
-              <TabPreExam patient={patient} visit={visit} />
+              <TabPreExam visit={visit} />
             )}
             {activeTab === "requests" && (
               <TabRequests

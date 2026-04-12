@@ -1,16 +1,7 @@
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
-import type { Patient, Visit } from "@/data/mock-patients"
+import type { Visit } from "@/data/mock-patients"
 import { cn } from "@/lib/utils"
 
 interface TabPreExamProps {
-  patient: Patient
   visit: Visit
 }
 
@@ -19,97 +10,16 @@ interface TabPreExamProps {
 function Section({
   title,
   children,
-  variant,
 }: {
   title: string
   children: React.ReactNode
-  variant?: "red"
 }) {
   return (
-    <div
-      className={cn(
-        "rounded-lg border bg-card px-5 py-4",
-        variant === "red"
-          ? "border-red-300 bg-red-50/30 dark:border-red-800 dark:bg-red-950/20"
-          : "border-border"
-      )}
-    >
-      <div
-        className={cn(
-          "mb-3.5 text-[11px] font-semibold tracking-wider uppercase",
-          variant === "red"
-            ? "text-red-600 dark:text-red-400"
-            : "text-muted-foreground/70"
-        )}
-      >
+    <div className="rounded-lg border border-border bg-card px-5 py-4">
+      <div className="mb-3.5 text-[11px] font-semibold tracking-wider text-muted-foreground/70 uppercase">
         {title}
       </div>
       {children}
-    </div>
-  )
-}
-
-function Pill({ children }: { children: React.ReactNode }) {
-  return (
-    <span
-      className="inline-block rounded-full px-2.5 py-0.5 text-xs font-medium"
-      style={{ backgroundColor: "#E6F1FB", color: "#0C447C" }}
-    >
-      {children}
-    </span>
-  )
-}
-
-function RedPill({ children }: { children: React.ReactNode }) {
-  return (
-    <span
-      className="inline-block rounded-full px-2.5 py-0.5 text-xs font-medium"
-      style={{ backgroundColor: "#FCEBEB", color: "#791F1F" }}
-    >
-      {children}
-    </span>
-  )
-}
-
-function WarnPill({ children }: { children: React.ReactNode }) {
-  return (
-    <span
-      className="inline-block rounded-full px-2 py-0.5 text-[10px] font-medium"
-      style={{ backgroundColor: "#FAEEDA", color: "#633806" }}
-    >
-      {children}
-    </span>
-  )
-}
-
-function KvRow({
-  label,
-  value,
-  bold,
-}: {
-  label: string
-  value: React.ReactNode
-  bold?: boolean
-}) {
-  return (
-    <div className="flex gap-3 text-sm">
-      <span className="w-28 shrink-0 text-muted-foreground">{label}</span>
-      <span className={cn(bold && "font-medium")}>{value ?? "—"}</span>
-    </div>
-  )
-}
-
-function MiniCard({
-  label,
-  children,
-}: {
-  label: string
-  children: React.ReactNode
-}) {
-  return (
-    <div className="rounded-lg bg-muted/40 px-3 py-2.5">
-      <div className="mb-1 text-[10px] text-muted-foreground">{label}</div>
-      <div className="text-sm font-semibold">{children}</div>
     </div>
   )
 }
@@ -118,8 +28,8 @@ function EyeBadge({ eye }: { eye: "OD" | "OS" }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-bold text-white",
-        eye === "OD" ? "bg-[#378ADD]" : "bg-[#D85A30]"
+        "inline-flex min-w-[28px] items-center justify-center rounded-md px-1.5 py-0.5 text-[10px] font-bold text-white",
+        eye === "OD" ? "bg-primary" : "bg-sky-500"
       )}
     >
       {eye}
@@ -127,342 +37,257 @@ function EyeBadge({ eye }: { eye: "OD" | "OS" }) {
   )
 }
 
-// ── Label maps ────────────────────────────────────────────────────────────────
-
-const RED_FLAG_LABELS: Record<string, string> = {
-  eyePain: "Đau mắt nhiều",
-  suddenVisionLoss: "Giảm thị lực đột ngột",
-  asymmetry: "Triệu chứng lệch 1 bên rõ",
+const CYCLOPLEGIC_LABELS: Record<string, string> = {
+  cyclogyl: "Cyclogyl",
+  mydrinP: "Mydrin P",
+  atropine: "Atropine",
 }
 
-const OSDI_SEVERITY_LABELS: Record<string, string> = {
-  normal: "Bình thường",
-  moderate: "Trung bình",
-  severe: "Nặng",
-}
+// ── Refraction table (read-only) ──────────────────────────────────────────────
 
-const DISEASE_GROUP_LABELS: Record<string, string> = {
-  dryEye: "Khô mắt",
-  refraction: "Khúc xạ",
-  myopiaControl: "Cận thị",
-  general: "Tổng quát",
-}
+function RefractionTable({
+  columns,
+  od,
+  os,
+}: {
+  columns: { key: string; label: string }[]
+  od: Record<string, string>
+  os: Record<string, string>
+}) {
+  const hasAnyValue = columns.some(
+    (col) => od[col.key]?.trim() || os[col.key]?.trim()
+  )
+  if (!hasAnyValue) return null
 
-// ── OSDI detail dialog ───────────────────────────────────────────────────────
-
-const OSDI_ANSWER_LABELS = [
-  "Không bao giờ",
-  "Thỉnh thoảng",
-  "Thường xuyên",
-  "Hầu hết thời gian",
-  "Liên tục",
-]
-
-const OSDI_QUESTION_GROUPS = [
-  {
-    title: "Triệu chứng mắt",
-    questions: [
-      { index: 0, text: "Chói mắt" },
-      { index: 1, text: "Nhìn mờ giữa các lần chớp mắt" },
-    ],
-  },
-  {
-    title: "Ảnh hưởng hoạt động",
-    questions: [
-      { index: 2, text: "Lái xe / ngồi trên xe ban đêm" },
-      { index: 3, text: "Xem tivi / máy tính / đọc sách" },
-    ],
-  },
-  {
-    title: "Yếu tố môi trường",
-    questions: [
-      { index: 4, text: "Nơi có gió / khô bụi" },
-      { index: 5, text: "Nơi có độ ẩm thấp / điều hòa" },
-    ],
-  },
-]
-
-function AnswerBadge({ value }: { value: number | null }) {
-  if (value == null) return <span className="text-muted-foreground">—</span>
   return (
-    <span className="text-sm font-medium">{OSDI_ANSWER_LABELS[value]}</span>
+    <table className="w-full text-sm">
+      <thead>
+        <tr>
+          <th className="w-12 pb-1.5 text-left font-normal text-muted-foreground" />
+          {columns.map((col) => (
+            <th
+              key={col.key}
+              className="pb-1.5 text-left text-xs font-normal text-muted-foreground"
+            >
+              {col.label}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td className="py-1">
+            <EyeBadge eye="OD" />
+          </td>
+          {columns.map((col) => (
+            <td key={col.key} className="py-1 font-medium tabular-nums">
+              {od[col.key] || "—"}
+            </td>
+          ))}
+        </tr>
+        <tr>
+          <td className="py-1">
+            <EyeBadge eye="OS" />
+          </td>
+          {columns.map((col) => (
+            <td key={col.key} className="py-1 font-medium tabular-nums">
+              {os[col.key] || "—"}
+            </td>
+          ))}
+        </tr>
+      </tbody>
+    </table>
   )
 }
 
-function OsdiDetailDialog({
-  open,
-  onOpenChange,
-  answers,
-  score,
-  severity,
+function OdOsPair({
+  label,
+  od,
+  os,
+  unit,
 }: {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  answers: (number | null)[]
-  score: number
-  severity: string | null
+  label: string
+  od: string
+  os: string
+  unit?: string
 }) {
+  if (!od && !os) return null
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md">
-        <DialogHeader>
-          <DialogTitle>Chi tiết OSDI-6</DialogTitle>
-        </DialogHeader>
-        <div className="space-y-4">
-          {OSDI_QUESTION_GROUPS.map((group) => (
-            <div key={group.title}>
-              <div className="mb-2 text-[11px] font-semibold tracking-wider text-muted-foreground/60 uppercase">
-                {group.title}
-              </div>
-              <div className="space-y-2">
-                {group.questions.map(({ index, text }) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between gap-4"
-                  >
-                    <span className="text-sm text-foreground/80">{text}</span>
-                    <AnswerBadge value={answers[index]} />
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-          <div className="flex items-center justify-between border-t pt-3">
-            <span className="text-sm font-medium">Điểm OSDI-6</span>
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-semibold tabular-nums">
-                {score}/100
-              </span>
-              {severity && (
-                <WarnPill>{OSDI_SEVERITY_LABELS[severity]}</WarnPill>
-              )}
-            </div>
-          </div>
-        </div>
-      </DialogContent>
-    </Dialog>
+    <div className="rounded-lg bg-muted/40 px-3 py-2.5">
+      <div className="mb-1 text-[10px] text-muted-foreground">{label}</div>
+      <div className="flex gap-3 text-sm font-semibold">
+        <span className="flex items-center gap-1">
+          <EyeBadge eye="OD" />
+          <span className="tabular-nums">
+            {od ? `${od}${unit ?? ""}` : "—"}
+          </span>
+        </span>
+        <span className="flex items-center gap-1">
+          <EyeBadge eye="OS" />
+          <span className="tabular-nums">
+            {os ? `${os}${unit ?? ""}` : "—"}
+          </span>
+        </span>
+      </div>
+    </div>
   )
 }
 
 // ── Main component ────────────────────────────────────────────────────────────
 
-export function TabPreExam({ patient, visit }: TabPreExamProps) {
-  const [osdiDetailOpen, setOsdiDetailOpen] = useState(false)
-  const screening = visit.screeningData
+const BASIC_COLS = [
+  { key: "sph", label: "SPH" },
+  { key: "cyl", label: "CYL" },
+  { key: "axis", label: "AXIS" },
+  { key: "va", label: "VA" },
+]
+const WITH_ADD_COLS = [...BASIC_COLS, { key: "add", label: "ADD" }]
+const SUBJECTIVE_COLS = [
+  ...WITH_ADD_COLS,
+  { key: "vaNear", label: "VA Near" },
+]
 
-  const chiefComplaint =
-    screening?.chiefComplaint || patient.chiefComplaint || ""
+export function TabPreExam({ visit }: TabPreExamProps) {
+  const refraction = visit.refractionData
 
-  const activeRedFlags = screening?.redFlags
-    ? (
-        Object.entries(screening.redFlags) as [
-          keyof typeof RED_FLAG_LABELS,
-          boolean,
-        ][]
-      )
-        .filter(([, v]) => v)
-        .map(([k]) => k)
-    : []
-
-  const dryEye = screening?.step2?.dryEye
-  const hasDryEye =
-    dryEye &&
-    (dryEye.osdiScore != null ||
-      !!dryEye.tbutOd ||
-      !!dryEye.tbutOs ||
-      !!dryEye.schirmerOd ||
-      !!dryEye.schirmerOs ||
-      !!dryEye.meibomian ||
-      !!dryEye.staining)
+  if (!refraction) {
+    return (
+      <div className="space-y-5">
+        <h2 className="text-base font-medium">Kết quả khám chức năng</h2>
+        <div className="rounded-lg border border-dashed border-border px-6 py-16 text-center text-sm text-muted-foreground">
+          Chưa có kết quả khám chức năng
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-5">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-base font-medium">Kết quả Pre-Exam</h2>
-        <Button variant="outline" size="sm" className="h-7 px-2 text-xs">
-          Chỉnh sửa
-        </Button>
-      </div>
+      <h2 className="text-base font-medium">Kết quả khám chức năng</h2>
 
-      {/* ── STEP 1 ─────────────────────────────────────────────────────── */}
-
-      {/* 1. Thông tin khám ban đầu — matches screening-form-initial.tsx */}
-      <Section title="Thông tin khám ban đầu">
-        <div className="space-y-3">
-          <KvRow label="Lý do đến khám" value={chiefComplaint || "—"} bold />
-          <div>
-            <div className="mb-1.5 text-xs text-muted-foreground">
-              Thị lực cơ bản (UCVA)
-            </div>
-            <div className="flex items-center gap-4 text-sm">
-              <span className="flex items-center gap-1.5">
-                <EyeBadge eye="OD" />
-                <span className="font-medium tabular-nums">
-                  {screening?.ucvaOd || "—"}
-                </span>
-              </span>
-              <span className="flex items-center gap-1.5">
-                <EyeBadge eye="OS" />
-                <span className="font-medium tabular-nums">
-                  {screening?.ucvaOs || "—"}
-                </span>
-              </span>
-            </div>
-          </div>
-          {(screening?.currentRxOd || screening?.currentRxOs) && (
-            <div>
-              <div className="mb-1.5 text-xs text-muted-foreground">
-                Kính hiện tại
-              </div>
-              <div className="flex items-center gap-4 text-sm">
-                <span className="flex items-center gap-1.5">
-                  <EyeBadge eye="OD" />
-                  <span className="font-medium tabular-nums">
-                    {screening?.currentRxOd || "—"}
-                  </span>
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <EyeBadge eye="OS" />
-                  <span className="font-medium tabular-nums">
-                    {screening?.currentRxOs || "—"}
-                  </span>
-                </span>
-              </div>
-            </div>
-          )}
-        </div>
+      {/* Kính cũ */}
+      <Section title="Kính cũ">
+        <RefractionTable
+          columns={WITH_ADD_COLS}
+          od={refraction.currentGlasses.od}
+          os={refraction.currentGlasses.os}
+        />
       </Section>
 
-      {/* 2. Red Flag — matches screening-form-red-flags.tsx */}
-      <Section
-        title="Red Flag"
-        variant={activeRedFlags.length > 0 ? "red" : undefined}
-      >
-        {activeRedFlags.length === 0 ? (
-          <span className="text-sm font-medium text-emerald-600 dark:text-emerald-400">
-            Không có Red Flag
-          </span>
-        ) : (
-          <div className="flex flex-wrap gap-1.5">
-            {activeRedFlags.map((key) => (
-              <RedPill key={key}>{RED_FLAG_LABELS[key]}</RedPill>
+      {/* Khúc xạ khách quan */}
+      <Section title="Khúc xạ khách quan">
+        <RefractionTable
+          columns={BASIC_COLS}
+          od={refraction.objective.od}
+          os={refraction.objective.os}
+        />
+      </Section>
+
+      {/* Khúc xạ chủ quan */}
+      <Section title="Khúc xạ chủ quan">
+        <RefractionTable
+          columns={SUBJECTIVE_COLS}
+          od={refraction.subjective.od}
+          os={refraction.subjective.os}
+        />
+      </Section>
+
+      {/* Liệt điều tiết */}
+      {refraction.cycloplegicEnabled && (
+        <Section title="Liệt điều tiết">
+          <div className="mb-3 flex flex-wrap gap-1.5">
+            {refraction.cycloplegicAgent.map((agent) => (
+              <span
+                key={agent}
+                className="inline-block rounded-full px-2.5 py-0.5 text-xs font-medium"
+                style={{ backgroundColor: "#E6F1FB", color: "#0C447C" }}
+              >
+                {CYCLOPLEGIC_LABELS[agent] ?? agent}
+              </span>
             ))}
           </div>
-        )}
-      </Section>
+          <RefractionTable
+            columns={BASIC_COLS}
+            od={refraction.cycloplegic.od}
+            os={refraction.cycloplegic.os}
+          />
+        </Section>
+      )}
 
-      {/* ── STEP 2 ─────────────────────────────────────────────────────── */}
+      {/* Các xét nghiệm khác */}
+      {(refraction.retinoscopy.od ||
+        refraction.retinoscopy.os ||
+        refraction.iop.od ||
+        refraction.iop.os ||
+        refraction.axialLength.od ||
+        refraction.axialLength.os) && (
+        <Section title="Các xét nghiệm khác">
+          <div className="grid grid-cols-3 gap-2">
+            <OdOsPair
+              label="Soi bóng đồng tử"
+              od={refraction.retinoscopy.od}
+              os={refraction.retinoscopy.os}
+            />
+            <OdOsPair
+              label="Nhãn áp (mmHg)"
+              od={refraction.iop.od}
+              os={refraction.iop.os}
+            />
+            <OdOsPair
+              label="Trục nhãn cầu (mm)"
+              od={refraction.axialLength.od}
+              os={refraction.axialLength.os}
+            />
+          </div>
+        </Section>
+      )}
 
-      {/* 6. Nhóm bệnh đã chọn */}
-      {screening?.step2?.selectedGroups &&
-        screening.step2.selectedGroups.length > 0 && (
-          <div className="space-y-5">
-            <div className="text-[11px] font-semibold tracking-wider text-muted-foreground/70 uppercase">
-              Kết quả chuyên sâu (Bước 2)
-            </div>
-
-            {/* Selected groups display */}
-            <div className="flex flex-wrap gap-1.5">
-              {screening.step2.selectedGroups.map((g) => (
-                <Pill key={g}>{DISEASE_GROUP_LABELS[g] ?? g}</Pill>
-              ))}
-            </div>
-
-            {/* Dry Eye data */}
-            {hasDryEye && (
-              <Section title="Khô mắt">
-                <div className="space-y-3">
-                  {/* OSDI */}
-                  {dryEye!.osdiScore != null && (
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-muted-foreground">
-                        OSDI-6:
-                      </span>
-                      <span className="text-sm font-medium">
-                        {dryEye!.osdiScore}/100
-                      </span>
-                      {dryEye!.osdiSeverity && (
-                        <WarnPill>
-                          {OSDI_SEVERITY_LABELS[dryEye!.osdiSeverity]}
-                        </WarnPill>
-                      )}
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-6 px-2 text-xs text-muted-foreground"
-                        onClick={() => setOsdiDetailOpen(true)}
-                      >
-                        Xem chi tiết
-                      </Button>
-                      <OsdiDetailDialog
-                        open={osdiDetailOpen}
-                        onOpenChange={setOsdiDetailOpen}
-                        answers={dryEye!.osdiAnswers}
-                        score={dryEye!.osdiScore!}
-                        severity={dryEye!.osdiSeverity}
-                      />
-                    </div>
-                  )}
-
-                  {/* Mini-cards grid */}
-                  <div className="grid grid-cols-2 gap-2">
-                    {(!!dryEye!.tbutOd || !!dryEye!.tbutOs) && (
-                      <MiniCard label="TBUT">
-                        <div className="flex gap-3">
-                          <span className="flex items-center gap-1">
-                            <EyeBadge eye="OD" />
-                            <span className="tabular-nums">
-                              {dryEye!.tbutOd ? `${dryEye!.tbutOd}s` : "—"}
-                            </span>
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <EyeBadge eye="OS" />
-                            <span className="tabular-nums">
-                              {dryEye!.tbutOs ? `${dryEye!.tbutOs}s` : "—"}
-                            </span>
-                          </span>
-                        </div>
-                      </MiniCard>
-                    )}
-                    {(!!dryEye!.schirmerOd || !!dryEye!.schirmerOs) && (
-                      <MiniCard label="Schirmer">
-                        <div className="flex gap-3">
-                          <span className="flex items-center gap-1">
-                            <EyeBadge eye="OD" />
-                            <span className="tabular-nums">
-                              {dryEye!.schirmerOd
-                                ? `${dryEye!.schirmerOd}mm`
-                                : "—"}
-                            </span>
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <EyeBadge eye="OS" />
-                            <span className="tabular-nums">
-                              {dryEye!.schirmerOs
-                                ? `${dryEye!.schirmerOs}mm`
-                                : "—"}
-                            </span>
-                          </span>
-                        </div>
-                      </MiniCard>
-                    )}
-                    {!!dryEye!.meibomian && (
-                      <MiniCard label="Meibomian">
-                        {dryEye!.meibomian}
-                      </MiniCard>
-                    )}
-                    {!!dryEye!.staining && (
-                      <MiniCard label="Staining">
-                        {dryEye!.staining}
-                      </MiniCard>
-                    )}
-                  </div>
-                </div>
-              </Section>
+      {/* Đơn kính */}
+      {refraction.glassesRxEnabled && (
+        <Section title="Đơn kính">
+          <RefractionTable
+            columns={WITH_ADD_COLS}
+            od={refraction.glassesRx.od}
+            os={refraction.glassesRx.os}
+          />
+          <div className="mt-3 grid grid-cols-3 gap-x-6 gap-y-2 border-t border-border pt-3">
+            {refraction.glassesRx.pd && (
+              <div className="flex gap-2 text-sm">
+                <span className="text-muted-foreground">PD</span>
+                <span className="font-medium">{refraction.glassesRx.pd}</span>
+              </div>
+            )}
+            {refraction.glassesRx.lensType && (
+              <div className="flex gap-2 text-sm">
+                <span className="text-muted-foreground">Loại kính</span>
+                <span className="font-medium">
+                  {refraction.glassesRx.lensType}
+                </span>
+              </div>
+            )}
+            {refraction.glassesRx.purpose && (
+              <div className="flex gap-2 text-sm">
+                <span className="text-muted-foreground">Mục đích</span>
+                <span className="font-medium">
+                  {refraction.glassesRx.purpose}
+                </span>
+              </div>
             )}
           </div>
-        )}
+          {refraction.glassesRx.notes && (
+            <div className="mt-2 text-sm text-muted-foreground">
+              {refraction.glassesRx.notes}
+            </div>
+          )}
+        </Section>
+      )}
+
+      {/* Ghi chú */}
+      {refraction.notes && (
+        <Section title="Ghi chú">
+          <p className="text-sm whitespace-pre-wrap">{refraction.notes}</p>
+        </Section>
+      )}
     </div>
   )
 }

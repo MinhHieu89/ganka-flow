@@ -35,7 +35,7 @@ export function IntakeDangerousSymptoms({
   return (
     <section
       className={cn(
-        "rounded-lg border-l-[3px] border-l-destructive p-5",
+        "p-5",
         hasAnyFlag ? "bg-destructive/[0.03]" : "bg-background"
       )}
     >
