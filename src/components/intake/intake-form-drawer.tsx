@@ -1,5 +1,6 @@
+import { useState } from "react"
 import { toast } from "sonner"
-import type { Patient } from "@/data/mock-patients"
+import type { Patient, Visit } from "@/data/mock-patients"
 import {
   Sheet,
   SheetContent,
@@ -11,6 +12,7 @@ import { IntakeFormEditable } from "./intake-form-editable"
 
 interface IntakeFormDrawerProps {
   patient: Patient
+  visit?: Visit
   open: boolean
   onOpenChange: (open: boolean) => void
   onSave: (data: Partial<Patient>) => void
@@ -18,10 +20,25 @@ interface IntakeFormDrawerProps {
 
 export function IntakeFormDrawer({
   patient,
+  visit,
   open,
   onOpenChange,
   onSave,
 }: IntakeFormDrawerProps) {
+  const [dangerousSymptoms, setDangerousSymptoms] = useState<
+    Record<string, boolean>
+  >(
+    () =>
+      visit?.dangerousSymptoms ?? {
+        eyePain: false,
+        suddenVisionLoss: false,
+        asymmetry: false,
+      }
+  )
+  const [specializedPackages, setSpecializedPackages] = useState<string[]>(
+    () => visit?.specializedPackages ?? []
+  )
+
   function handleSave(data: Partial<Patient>) {
     onSave(data)
     onOpenChange(false)
@@ -43,6 +60,10 @@ export function IntakeFormDrawer({
         </SheetHeader>
         <IntakeFormEditable
           patient={patient}
+          dangerousSymptoms={dangerousSymptoms}
+          specializedPackages={specializedPackages}
+          onDangerousSymptomsChange={setDangerousSymptoms}
+          onSpecializedPackagesChange={setSpecializedPackages}
           onSave={handleSave}
           onCancel={() => onOpenChange(false)}
         />

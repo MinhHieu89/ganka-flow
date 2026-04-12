@@ -6,9 +6,15 @@ import type { Patient } from "@/data/mock-patients"
 import type { IntakeFormData } from "@/components/receptionist/intake-form"
 import { IntakeSectionPersonal } from "@/components/receptionist/intake-section-personal"
 import { IntakeSectionReferral } from "@/components/receptionist/intake-section-referral"
+import { IntakeDangerousSymptoms } from "@/components/intake/intake-dangerous-symptoms"
+import { IntakeSpecializedPackages } from "@/components/intake/intake-specialized-packages"
 
 interface IntakeFormEditableProps {
   patient: Patient
+  dangerousSymptoms: Record<string, boolean>
+  specializedPackages: string[]
+  onDangerousSymptomsChange: (symptoms: Record<string, boolean>) => void
+  onSpecializedPackagesChange: (packages: string[]) => void
   onSave: (data: Partial<Patient>) => void
   onCancel: () => void
 }
@@ -76,6 +82,10 @@ function buildPatientData(form: IntakeFormData): Partial<Patient> {
 
 export function IntakeFormEditable({
   patient,
+  dangerousSymptoms,
+  specializedPackages,
+  onDangerousSymptomsChange,
+  onSpecializedPackagesChange,
   onSave,
   onCancel,
 }: IntakeFormEditableProps) {
@@ -159,6 +169,14 @@ export function IntakeFormEditable({
             {sectionComponents[section.id]}
           </section>
         ))}
+        <IntakeDangerousSymptoms
+          symptoms={dangerousSymptoms}
+          onUpdate={onDangerousSymptomsChange}
+        />
+        <IntakeSpecializedPackages
+          packages={specializedPackages}
+          onUpdate={onSpecializedPackagesChange}
+        />
       </div>
 
       {/* Footer */}
