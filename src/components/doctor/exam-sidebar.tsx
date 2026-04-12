@@ -5,15 +5,23 @@ import {
   Note01Icon,
   Stethoscope02Icon,
   Progress04Icon,
+  FirstAidKitIcon,
 } from "@hugeicons/core-free-icons"
 import { cn } from "@/lib/utils"
 
-export type ExamTab = "patient" | "preExam" | "requests" | "exam" | "treatment"
+export type ExamTab =
+  | "patient"
+  | "preExam"
+  | "requests"
+  | "specialized"
+  | "treatment"
+  | "exam"
 
 interface ExamSidebarProps {
   activeTab: ExamTab
   onTabChange: (tab: ExamTab) => void
   pendingRequestCount: number
+  specializedPackageCount: number
 }
 
 const tabs: {
@@ -22,16 +30,18 @@ const tabs: {
   icon: React.ComponentProps<typeof HugeiconsIcon>["icon"]
 }[] = [
   { id: "patient", label: "Bệnh nhân", icon: User02Icon },
-  { id: "preExam", label: "Pre-Exam", icon: ClipboardIcon },
-  { id: "requests", label: "Yêu cầu", icon: Note01Icon },
-  { id: "exam", label: "Khám & kết luận", icon: Stethoscope02Icon },
+  { id: "preExam", label: "Khám chức năng", icon: ClipboardIcon },
+  { id: "requests", label: "Cận lâm sàng", icon: Note01Icon },
+  { id: "specialized", label: "Khám chuyên sâu", icon: FirstAidKitIcon },
   { id: "treatment", label: "Liệu trình", icon: Progress04Icon },
+  { id: "exam", label: "Khám & kết luận", icon: Stethoscope02Icon },
 ]
 
 export function ExamSidebar({
   activeTab,
   onTabChange,
   pendingRequestCount,
+  specializedPackageCount,
 }: ExamSidebarProps) {
   return (
     <aside className="flex w-[175px] shrink-0 flex-col border-r border-border bg-muted/30">
@@ -61,6 +71,11 @@ export function ExamSidebar({
             {tab.id === "requests" && pendingRequestCount > 0 && (
               <span className="ml-auto flex min-w-[18px] items-center justify-center rounded-full bg-[#D85A30] px-1 text-[10px] leading-[18px] font-semibold text-white">
                 {pendingRequestCount}
+              </span>
+            )}
+            {tab.id === "specialized" && specializedPackageCount > 0 && (
+              <span className="ml-auto flex min-w-[18px] items-center justify-center rounded-full bg-teal-600 px-1 text-[10px] leading-[18px] font-semibold text-white">
+                {specializedPackageCount}
               </span>
             )}
           </button>
