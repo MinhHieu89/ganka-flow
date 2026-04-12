@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { IntakeFormDrawer } from "@/components/intake/intake-form-drawer"
+import { ScreeningIntakeDrawer } from "./screening-intake-drawer"
 import type { Patient } from "@/data/mock-patients"
 
 const VISIT_REASON_LABELS: Record<string, string> = {
@@ -51,7 +51,7 @@ export function ScreeningChiefComplaint({
           Cập nhật
         </Button>
       </div>
-      <IntakeFormDrawer
+      <ScreeningIntakeDrawer
         patient={patient}
         open={drawerOpen}
         onOpenChange={setDrawerOpen}

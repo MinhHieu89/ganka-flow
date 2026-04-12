@@ -9,7 +9,7 @@ import {
 import { cn } from "@/lib/utils"
 import type { Patient } from "@/data/mock-patients"
 import { Button } from "@/components/ui/button"
-import { IntakeFormDrawer } from "@/components/intake/intake-form-drawer"
+import { ScreeningIntakeDrawer } from "./screening-intake-drawer"
 
 interface ScreeningIntakeSummaryProps {
   patient: Patient
@@ -581,7 +581,7 @@ export function ScreeningIntakeSummary({
           </div>
         </CollapsibleContent>
       </div>
-      <IntakeFormDrawer
+      <ScreeningIntakeDrawer
         patient={patient}
         open={drawerOpen}
         onOpenChange={setDrawerOpen}
