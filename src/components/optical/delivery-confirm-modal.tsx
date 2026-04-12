@@ -18,6 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { cn } from "@/lib/utils"
+import { useMasterDataOptions } from "@/hooks/use-master-data-options"
 import type { OpticalOrder } from "@/data/mock-optical"
 
 export interface DeliveryData {
@@ -72,20 +73,13 @@ function RadioCard({ selected, onClick, label }: RadioCardProps) {
   )
 }
 
-const carrierOptions = [
-  "Grab",
-  "GHTK",
-  "GHN",
-  "Bee / Xanh SM",
-  "Tự giao",
-]
-
 export function DeliveryConfirmModal({
   open,
   onClose,
   order,
   onConfirm,
 }: DeliveryConfirmModalProps) {
+  const carrierOptions = useMasterDataOptions("delivery_carriers")
   const [method, setMethod] = useState<"pickup" | "shipping">("pickup")
   const [receiver, setReceiver] = useState("")
   const [address, setAddress] = useState("")
@@ -220,8 +214,8 @@ export function DeliveryConfirmModal({
                 </SelectTrigger>
                 <SelectContent>
                   {carrierOptions.map((opt) => (
-                    <SelectItem key={opt} value={opt}>
-                      {opt}
+                    <SelectItem key={opt.key} value={opt.label}>
+                      {opt.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
