@@ -9,6 +9,8 @@ import { UserAdd01Icon, Megaphone01Icon } from "@hugeicons/core-free-icons"
 import { IntakeSectionPersonal } from "./intake-section-personal"
 import { IntakeSectionReferral } from "./intake-section-referral"
 import { IntakeShareModal } from "./intake-share-modal"
+import { IntakeDangerousSymptoms } from "@/components/intake/intake-dangerous-symptoms"
+import { IntakeSpecializedPackages } from "@/components/intake/intake-specialized-packages"
 
 export interface IntakeFormData {
   // Section I — Personal Info
@@ -65,8 +67,14 @@ const SECTIONS = [
 
 export function IntakeForm({ patient }: IntakeFormProps) {
   const navigate = useNavigate()
-  const { addPatient, updatePatient, searchPatients, addVisit, visits } =
-    useReceptionist()
+  const {
+    addPatient,
+    updatePatient,
+    searchPatients,
+    addVisit,
+    visits,
+    updateVisitIntakeData,
+  } = useReceptionist()
 
   const [form, setForm] = useState<IntakeFormData>(() =>
     buildInitialForm(patient)
@@ -74,6 +82,10 @@ export function IntakeForm({ patient }: IntakeFormProps) {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [showShare, setShowShare] = useState(false)
   const [latestVisitId, setLatestVisitId] = useState<string>()
+  const [dangerousSymptoms, setDangerousSymptoms] = useState<
+    Record<string, boolean>
+  >({ eyePain: false, suddenVisionLoss: false, asymmetry: false })
+  const [specializedPackages, setSpecializedPackages] = useState<string[]>([])
 
   const duplicatePatient =
     form.phone.length >= 10 && !patient
@@ -148,11 +160,12 @@ export function IntakeForm({ patient }: IntakeFormProps) {
     }
 
     if (goToScreening) {
-      // Find existing visit for today, or create a new one
       const existingVisit = visits.find(
         (v) => v.patientId === savedPatientId && v.date === TODAY
       )
+      let visitIdForIntake: string
       if (existingVisit) {
+        visitIdForIntake = existingVisit.id
         setLatestVisitId(existingVisit.id)
       } else {
         const newVisit = addVisit({
@@ -161,8 +174,13 @@ export function IntakeForm({ patient }: IntakeFormProps) {
           source: "walk_in",
           date: TODAY,
         })
+        visitIdForIntake = newVisit.id
         setLatestVisitId(newVisit.id)
       }
+      updateVisitIntakeData(visitIdForIntake, {
+        dangerousSymptoms,
+        specializedPackages,
+      })
       setShowShare(true)
     } else {
       navigate("/intake")
@@ -225,6 +243,16 @@ export function IntakeForm({ patient }: IntakeFormProps) {
           {sectionComponents[section.id]}
         </section>
       ))}
+
+      {/* Dangerous Symptoms & Specialized Packages */}
+      <IntakeDangerousSymptoms
+        symptoms={dangerousSymptoms}
+        onUpdate={setDangerousSymptoms}
+      />
+      <IntakeSpecializedPackages
+        packages={specializedPackages}
+        onUpdate={setSpecializedPackages}
+      />
 
       {/* Footer actions */}
       <div className="sticky bottom-0 flex items-center justify-between border-t border-border bg-background pt-4 pb-2">
