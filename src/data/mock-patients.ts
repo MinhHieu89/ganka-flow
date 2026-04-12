@@ -239,6 +239,9 @@ export interface Visit {
   examData?: ExamData
   previousVisits?: PreviousVisit[]
   requests?: VisitRequest[]
+  dangerousSymptoms?: Record<string, boolean>
+  specializedPackages?: string[]
+  specializedPackageData?: Record<string, DryEyeFormData>
 }
 
 export interface ScreeningFormData {
