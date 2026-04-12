@@ -45,17 +45,19 @@ const CYCLOPLEGIC_LABELS: Record<string, string> = {
 
 // ── Refraction table (read-only) ──────────────────────────────────────────────
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function RefractionTable({
   columns,
   od,
   os,
 }: {
   columns: { key: string; label: string }[]
-  od: Record<string, string>
-  os: Record<string, string>
+  od: Record<string, any>
+  os: Record<string, any>
 }) {
   const hasAnyValue = columns.some(
-    (col) => od[col.key]?.trim() || os[col.key]?.trim()
+    (col) =>
+      (od[col.key] as string)?.trim() || (os[col.key] as string)?.trim()
   )
   if (!hasAnyValue) return null
 
