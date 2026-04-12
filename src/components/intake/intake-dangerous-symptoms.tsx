@@ -95,7 +95,7 @@ export function IntakeDangerousSymptoms({
             </div>
           </div>
           <Button variant="destructive" onClick={handleFastTrack}>
-            &rarr; Chuyển bác sĩ ngay
+            → Chuyển bác sĩ ngay
           </Button>
         </div>
       )}

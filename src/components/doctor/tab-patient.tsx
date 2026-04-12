@@ -50,7 +50,7 @@ function DangerousSymptomsAlert({ visit }: { visit: Visit }) {
       </div>
       <div>
         <p className="text-sm font-semibold text-destructive">
-          Triệu chứng nguy hiểm
+          Phát hiện triệu chứng nguy hiểm!
         </p>
         <p className="text-xs text-destructive/80">{active.join(", ")}</p>
       </div>

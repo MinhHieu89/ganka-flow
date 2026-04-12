@@ -31,7 +31,14 @@ export function SpecializedPackageCard({
         <div className="flex items-center gap-2.5">
           <div className="size-2 rounded-full bg-teal-600" />
           <span className="text-sm font-bold">{title}</span>
-          <span className="rounded bg-amber-100 px-2 py-0.5 text-[11px] font-medium text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+          <span
+            className={cn(
+              "rounded px-2 py-0.5 text-[11px] font-medium",
+              registeredBy === "receptionist"
+                ? "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
+                : "bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400"
+            )}
+          >
             {byLabel}
           </span>
         </div>
