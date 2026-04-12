@@ -292,9 +292,7 @@ export function ScreeningIntakeSummary({
                 strokeWidth={1.5}
               />
               <span className="text-sm font-semibold">Phiếu tiếp nhận</span>
-              <span className="flex-1 truncate text-left text-sm text-muted-foreground">
-                {collapsedSummary}
-              </span>
+              <span className="flex-1" />
               <HugeiconsIcon
                 icon={ArrowDown01Icon}
                 className={cn(
