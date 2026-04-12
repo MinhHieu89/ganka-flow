@@ -9,7 +9,8 @@ import { TabPreExam } from "@/components/doctor/tab-pre-exam"
 import { TabRequests } from "@/components/doctor/tab-requests"
 import { TabExam } from "@/components/doctor/tab-exam"
 import { TabTreatment } from "@/components/doctor/tab-treatment"
-import type { ExamData, VisitRequest } from "@/data/mock-patients"
+import { TabSpecialized } from "@/components/doctor/tab-specialized"
+import type { ExamData, VisitRequest, DryEyeFormData } from "@/data/mock-patients"
 
 const EMPTY_SLIT_LAMP_EYE = {
   lids: "",
@@ -52,6 +53,12 @@ export default function DoctorExam() {
     ...(visit?.examData ?? EMPTY_EXAM),
     requests: visit?.requests ?? [],
   }))
+  const [specializedPackages, setSpecializedPackages] = useState<string[]>(
+    () => visit?.specializedPackages ?? []
+  )
+  const [specializedPackageData, setSpecializedPackageData] = useState<
+    Record<string, DryEyeFormData>
+  >(() => (visit?.specializedPackageData as Record<string, DryEyeFormData>) ?? {})
 
   useEffect(() => {
     if (visit && visit.status === "cho_kham") {
@@ -66,6 +73,8 @@ export default function DoctorExam() {
       </div>
     )
   }
+
+  const specializedPackageCount = specializedPackages.length
 
   const pendingRequestCount = examData.requests.filter(
     (r) => r.status === "pending" || r.status === "in_progress"
@@ -113,6 +122,7 @@ export default function DoctorExam() {
           activeTab={activeTab}
           onTabChange={setActiveTab}
           pendingRequestCount={pendingRequestCount}
+          specializedPackageCount={specializedPackageCount}
         />
         <div className="flex-1 overflow-y-auto">
           <div className="mx-auto max-w-4xl px-6 py-6">
@@ -126,6 +136,15 @@ export default function DoctorExam() {
               <TabRequests
                 requests={examData.requests}
                 onAddRequest={handleAddRequest}
+              />
+            )}
+            {activeTab === "specialized" && (
+              <TabSpecialized
+                visit={visit}
+                packageData={specializedPackageData}
+                onPackageDataChange={setSpecializedPackageData}
+                packages={specializedPackages}
+                onPackagesChange={setSpecializedPackages}
               />
             )}
             {activeTab === "exam" && (
