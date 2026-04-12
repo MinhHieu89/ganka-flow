@@ -21,6 +21,7 @@ import {
   MedicineBottle02Icon,
   EyeIcon,
   Invoice03Icon,
+  Settings02Icon,
 } from "@hugeicons/core-free-icons"
 
 const navItems = [
@@ -48,6 +49,7 @@ const navItems = [
   { title: "Nhà thuốc", url: "/pharmacy", icon: MedicineBottle02Icon },
   { title: "Trung tâm kính", url: "/optical", icon: EyeIcon },
   { title: "Thu ngân", url: "/payment", icon: Invoice03Icon },
+  { title: "Cài đặt", url: "/settings", icon: Settings02Icon },
 ]
 
 const user = {

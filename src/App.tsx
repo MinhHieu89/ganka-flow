@@ -25,6 +25,8 @@ import PaymentProcessingPage from "@/pages/payment/process"
 import PaymentSuccessPage from "@/pages/payment/success"
 import ShiftClosePage from "@/pages/payment/shift-close"
 import PatientHistory from "@/pages/patient/history"
+import SettingsIndex from "@/pages/settings/index"
+import MasterDataPage from "@/pages/settings/master-data-page"
 
 export function App() {
   return (
@@ -118,6 +120,14 @@ export function App() {
                             <Route
                               path="/payment/shift-close"
                               element={<ShiftClosePage />}
+                            />
+                            <Route
+                              path="/settings"
+                              element={<SettingsIndex />}
+                            />
+                            <Route
+                              path="/settings/:listKey"
+                              element={<MasterDataPage />}
                             />
                           </Routes>
                         </SidebarInset>
