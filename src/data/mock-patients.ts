@@ -234,6 +234,7 @@ export interface Visit {
   lastVisitDiagnosis?: string
   lastVisitDoctor?: string
   screeningData?: ScreeningFormData
+  refractionData?: RefractionFormData
   historyStatus?: "pending" | "completed"
   examData?: ExamData
   previousVisits?: PreviousVisit[]
@@ -305,6 +306,47 @@ export interface Step2FormData {
   selectedGroups: DiseaseGroup[]
   groupOrder: DiseaseGroup[]
   dryEye: DryEyeFormData
+}
+
+// --- Refraction Examination Types ---
+
+export interface RefractionEyeRow {
+  sph: string
+  cyl: string
+  axis: string
+  va: string
+}
+
+export interface RefractionEyeRowWithAdd extends RefractionEyeRow {
+  add: string
+}
+
+export interface SubjectiveEyeRow extends RefractionEyeRowWithAdd {
+  vaNear: string
+}
+
+export type CycloplegicAgent = "cyclogyl" | "mydrinP" | "atropine"
+
+export interface RefractionFormData {
+  currentGlasses: { od: RefractionEyeRowWithAdd; os: RefractionEyeRowWithAdd }
+  objective: { od: RefractionEyeRow; os: RefractionEyeRow }
+  subjective: { od: SubjectiveEyeRow; os: SubjectiveEyeRow }
+  cycloplegicEnabled: boolean
+  cycloplegicAgent: CycloplegicAgent[]
+  cycloplegic: { od: RefractionEyeRow; os: RefractionEyeRow }
+  retinoscopy: { od: string; os: string }
+  iop: { od: string; os: string }
+  axialLength: { od: string; os: string }
+  glassesRxEnabled: boolean
+  glassesRx: {
+    od: RefractionEyeRowWithAdd
+    os: RefractionEyeRowWithAdd
+    pd: string
+    lensType: string
+    purpose: string
+    notes: string
+  }
+  notes: string
 }
 
 export interface Diagnosis {
