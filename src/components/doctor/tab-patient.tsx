@@ -1,3 +1,5 @@
+import { HugeiconsIcon } from "@hugeicons/react"
+import { Alert01Icon } from "@hugeicons/core-free-icons"
 import { Button } from "@/components/ui/button"
 import type { Patient, Visit, PreviousVisit } from "@/data/mock-patients"
 import { ScreeningIntakeSummary } from "@/components/screening/screening-intake-summary"
@@ -20,6 +22,40 @@ function daysAgo(dateStr: string): string {
   if (diffDays === 0) return "Hôm nay"
   if (diffDays === 1) return "1 ngày trước"
   return `${diffDays} ngày trước`
+}
+
+const SYMPTOM_LABELS: Record<string, string> = {
+  eyePain: "Đau mắt nhiều",
+  suddenVisionLoss: "Giảm thị lực đột ngột",
+  asymmetry: "Triệu chứng lệch 1 bên rõ",
+}
+
+function DangerousSymptomsAlert({ visit }: { visit: Visit }) {
+  const symptoms = visit.dangerousSymptoms
+  if (!symptoms) return null
+
+  const active = Object.entries(symptoms)
+    .filter(([, v]) => v)
+    .map(([k]) => SYMPTOM_LABELS[k] ?? k)
+
+  if (active.length === 0) return null
+
+  return (
+    <div
+      role="alert"
+      className="flex items-center gap-3 rounded-lg border border-red-300 bg-red-50 px-4 py-3 dark:border-red-800 dark:bg-red-950/30"
+    >
+      <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-destructive text-white">
+        <HugeiconsIcon icon={Alert01Icon} className="size-5" />
+      </div>
+      <div>
+        <p className="text-sm font-semibold text-destructive">
+          Triệu chứng nguy hiểm
+        </p>
+        <p className="text-xs text-destructive/80">{active.join(", ")}</p>
+      </div>
+    </div>
+  )
 }
 
 function AdminInfoSection({ patient }: { patient: Patient }) {
@@ -342,6 +378,7 @@ function VisitHistorySection({ visit }: { visit: Visit }) {
 export function TabPatient({ patient, visit }: TabPatientProps) {
   return (
     <div className="flex flex-col gap-8">
+      <DangerousSymptomsAlert visit={visit} />
       <AdminInfoSection patient={patient} />
       <ScreeningIntakeSummary patient={patient} defaultOpen />
       <VisitHistorySection visit={visit} />
