@@ -13,7 +13,6 @@ import type {
   SubjectiveEyeRow,
 } from "@/data/mock-patients"
 import { ScreeningFormHeader } from "./screening-form-header"
-import { ScreeningHistoryPanel } from "./screening-history-panel"
 import { ScreeningIntakeSummary } from "./screening-intake-summary"
 import { ScreeningChiefComplaint } from "./screening-chief-complaint"
 import { RefractionTable } from "./screening-refraction-table"
@@ -124,11 +123,6 @@ export function ScreeningForm({ patient, visit }: ScreeningFormProps) {
   return (
     <div className="mx-auto max-w-4xl space-y-3 p-6">
       <ScreeningFormHeader patient={patient} visit={visit} />
-      <ScreeningHistoryPanel
-        patient={patient}
-        visit={visit}
-        onShowQr={() => setShowQr(true)}
-      />
       <IntakeShareModal
         open={showQr}
         onOpenChange={setShowQr}
@@ -167,11 +161,8 @@ export function ScreeningForm({ patient, visit }: ScreeningFormProps) {
 
       {/* Khúc xạ khách quan */}
       <section className="rounded-lg border border-border bg-background">
-        <div className="flex items-center gap-2 px-3.5 py-2.5">
+        <div className="px-3.5 py-2.5">
           <span className="text-sm font-semibold">Khúc xạ khách quan</span>
-          <span className="rounded bg-amber-100 px-1.5 py-0.5 text-[9px] font-medium text-amber-800 dark:bg-amber-950 dark:text-amber-400">
-            Chỉ lưu trữ
-          </span>
         </div>
         <div className="border-t border-border px-3.5 py-3">
           <RefractionTable
