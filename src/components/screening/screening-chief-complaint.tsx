@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { ScreeningIntakeDrawer } from "./screening-intake-drawer"
+import { Textarea } from "@/components/ui/textarea"
 import type { Patient } from "@/data/mock-patients"
 
 const VISIT_REASON_LABELS: Record<string, string> = {
@@ -25,7 +25,8 @@ export function ScreeningChiefComplaint({
   patient,
   onPatientUpdate,
 }: ScreeningChiefComplaintProps) {
-  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [draft, setDraft] = useState("")
 
   const visitReasonLabels = (patient.visitReasons ?? []).map(
     (r) => VISIT_REASON_LABELS[r] ?? r
@@ -35,28 +36,61 @@ export function ScreeningChiefComplaint({
       ? visitReasonLabels.join(", ")
       : patient.visitReasonOther ?? "Chưa có thông tin"
 
+  function handleEdit() {
+    setDraft(patient.visitReasonOther ?? displayText)
+    setEditing(true)
+  }
+
+  function handleSave() {
+    onPatientUpdate({ visitReasonOther: draft.trim() })
+    setEditing(false)
+  }
+
+  function handleCancel() {
+    setEditing(false)
+  }
+
   return (
-    <>
-      <div className="flex items-baseline gap-2 rounded-lg border border-border bg-background px-3.5 py-2.5">
+    <div className="rounded-lg border border-border bg-background px-3.5 py-2.5">
+      <div className="flex items-baseline gap-2">
         <span className="shrink-0 text-xs font-semibold text-muted-foreground">
           Lý do khám
         </span>
-        <span className="flex-1 text-sm text-foreground">{displayText}</span>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="shrink-0 text-xs text-muted-foreground"
-          onClick={() => setDrawerOpen(true)}
-        >
-          Cập nhật
-        </Button>
+        {!editing && (
+          <>
+            <span className="flex-1 text-sm text-foreground">
+              {displayText}
+            </span>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="shrink-0 text-xs text-muted-foreground"
+              onClick={handleEdit}
+            >
+              Cập nhật
+            </Button>
+          </>
+        )}
       </div>
-      <ScreeningIntakeDrawer
-        patient={patient}
-        open={drawerOpen}
-        onOpenChange={setDrawerOpen}
-        onSave={(data) => onPatientUpdate(data)}
-      />
-    </>
+      {editing && (
+        <div className="mt-2 space-y-2">
+          <Textarea
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            rows={3}
+            className="text-sm"
+            autoFocus
+          />
+          <div className="flex justify-end gap-2">
+            <Button variant="outline" size="sm" onClick={handleCancel}>
+              Hủy
+            </Button>
+            <Button size="sm" onClick={handleSave}>
+              Lưu
+            </Button>
+          </div>
+        </div>
+      )}
+    </div>
   )
 }
