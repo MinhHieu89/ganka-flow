@@ -29,6 +29,10 @@ interface ReceptionistContextType {
   cancelAppointment: (appointmentId: string) => void
   saveScreeningData: (visitId: string, data: ScreeningFormData) => void
   saveRefractionData: (visitId: string, data: RefractionFormData) => void
+  updateVisitIntakeData: (
+    visitId: string,
+    data: Pick<Visit, "dangerousSymptoms" | "specializedPackages">
+  ) => void
 }
 
 const ReceptionistContext = createContext<ReceptionistContextType | null>(null)
@@ -135,6 +139,15 @@ export function ReceptionistProvider({ children }: { children: ReactNode }) {
     )
   }
 
+  function updateVisitIntakeData(
+    visitId: string,
+    data: Pick<Visit, "dangerousSymptoms" | "specializedPackages">
+  ) {
+    setVisits((prev) =>
+      prev.map((v) => (v.id === visitId ? { ...v, ...data } : v))
+    )
+  }
+
   return (
     <ReceptionistContext.Provider
       value={{
@@ -154,6 +167,7 @@ export function ReceptionistProvider({ children }: { children: ReactNode }) {
         cancelAppointment,
         saveScreeningData,
         saveRefractionData,
+        updateVisitIntakeData,
       }}
     >
       {children}
