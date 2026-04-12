@@ -1,41 +1,26 @@
 import { useState } from "react"
 import { useNavigate } from "react-router"
 import { toast } from "sonner"
-import {
-  DndContext,
-  closestCenter,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core"
-import type { DragEndEvent } from "@dnd-kit/core"
-import {
-  SortableContext,
-  sortableKeyboardCoordinates,
-  verticalListSortingStrategy,
-  arrayMove,
-} from "@dnd-kit/sortable"
 import { Button } from "@/components/ui/button"
+import { Textarea } from "@/components/ui/textarea"
 import { useReceptionist } from "@/contexts/receptionist-context"
 import type {
   Patient,
   Visit,
-  ScreeningFormData,
-  DiseaseGroup,
-  DryEyeFormData,
-  Step2FormData,
+  RefractionFormData,
+  RefractionEyeRow,
+  RefractionEyeRowWithAdd,
+  SubjectiveEyeRow,
+  CycloplegicAgent,
 } from "@/data/mock-patients"
-import { ScreeningIntakeSummary } from "./screening-intake-summary"
 import { ScreeningFormHeader } from "./screening-form-header"
-import { ScreeningStepIndicator } from "./screening-step-indicator"
-import { ScreeningFormInitial } from "./screening-form-initial"
-import { ScreeningFormRedFlags } from "./screening-form-red-flags"
-import { ScreeningFormNotes } from "./screening-form-notes"
-import { ScreeningStep2Summary } from "./screening-step2-summary"
-import { ScreeningStep2GroupSelector } from "./screening-step2-group-selector"
-import { ScreeningStep2GroupForm } from "./screening-step2-group-form"
 import { ScreeningHistoryPanel } from "./screening-history-panel"
+import { ScreeningIntakeSummary } from "./screening-intake-summary"
+import { ScreeningChiefComplaint } from "./screening-chief-complaint"
+import { RefractionTable } from "./screening-refraction-table"
+import { ScreeningCycloplegicSection } from "./screening-cycloplegic-section"
+import { ScreeningOtherTestCard } from "./screening-other-test-card"
+import { ScreeningGlassesRxSection } from "./screening-glasses-rx-section"
 import { IntakeShareModal } from "../receptionist/intake-share-modal"
 
 interface ScreeningFormProps {
@@ -43,109 +28,75 @@ interface ScreeningFormProps {
   visit: Visit
 }
 
-const INITIAL_FORM: ScreeningFormData = {
-  chiefComplaint: "",
-  ucvaOd: "",
-  ucvaOs: "",
-  currentRxOd: "",
-  currentRxOs: "",
-  redFlags: {
-    eyePain: false,
-    suddenVisionLoss: false,
-    asymmetry: false,
+const EMPTY_EYE_ROW: RefractionEyeRow = { sph: "", cyl: "", axis: "", va: "" }
+const EMPTY_EYE_ROW_ADD: RefractionEyeRowWithAdd = { ...EMPTY_EYE_ROW, add: "" }
+const EMPTY_SUBJECTIVE: SubjectiveEyeRow = { ...EMPTY_EYE_ROW_ADD, vaNear: "" }
+
+const INITIAL_FORM: RefractionFormData = {
+  currentGlasses: { od: { ...EMPTY_EYE_ROW_ADD }, os: { ...EMPTY_EYE_ROW_ADD } },
+  objective: { od: { ...EMPTY_EYE_ROW }, os: { ...EMPTY_EYE_ROW } },
+  subjective: { od: { ...EMPTY_SUBJECTIVE }, os: { ...EMPTY_SUBJECTIVE } },
+  cycloplegicEnabled: false,
+  cycloplegicAgent: [],
+  cycloplegic: { od: { ...EMPTY_EYE_ROW }, os: { ...EMPTY_EYE_ROW } },
+  retinoscopy: { od: "", os: "" },
+  iop: { od: "", os: "" },
+  axialLength: { od: "", os: "" },
+  glassesRxEnabled: false,
+  glassesRx: {
+    od: { ...EMPTY_EYE_ROW_ADD },
+    os: { ...EMPTY_EYE_ROW_ADD },
+    pd: "",
+    lensType: "",
+    purpose: "",
+    notes: "",
   },
-  symptoms: {
-    dryEyes: false,
-    gritty: false,
-    blurry: false,
-    tearing: false,
-    itchy: false,
-    headache: false,
-  },
-  blinkImprovement: null,
-  symptomDuration: 0,
-  symptomDurationUnit: "ngày",
-  screenTime: "",
-  contactLens: null,
-  discomfortLevel: null,
   notes: "",
-}
-
-const INITIAL_DRY_EYE: DryEyeFormData = {
-  osdiScore: null,
-  osdiAnswers: [null, null, null, null, null, null],
-  osdiSeverity: null,
-  tbutOd: "",
-  tbutOs: "",
-  schirmerOd: "",
-  schirmerOs: "",
-  meibomian: "",
-  staining: "",
-}
-
-const INITIAL_STEP2: Step2FormData = {
-  selectedGroups: [],
-  groupOrder: [],
-  dryEye: INITIAL_DRY_EYE,
 }
 
 export function ScreeningForm({ patient, visit }: ScreeningFormProps) {
   const navigate = useNavigate()
-  const { saveScreeningData, updateVisitStatus, updatePatient } = useReceptionist()
+  const { saveRefractionData, updateVisitStatus, updatePatient } =
+    useReceptionist()
 
-  const [form, setForm] = useState<ScreeningFormData>(
-    visit.screeningData ?? INITIAL_FORM
+  const [form, setForm] = useState<RefractionFormData>(
+    visit.refractionData ?? INITIAL_FORM
   )
-  const [step2, setStep2] = useState<Step2FormData>(
-    visit.screeningData?.step2 ?? INITIAL_STEP2
-  )
-  const [errors, setErrors] = useState<Record<string, string>>({})
   const [isDirty, setIsDirty] = useState(false)
   const [showQr, setShowQr] = useState(false)
 
-  // Determine initial step: if step2 data exists, start on step 2
-  const [currentStep, setCurrentStep] = useState<1 | 2>(
-    visit.screeningData?.step2 ? 2 : 1
-  )
-
-  // DnD sensors
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
-  )
-
-  function updateField<K extends keyof ScreeningFormData>(
-    field: K,
-    value: ScreeningFormData[K]
-  ) {
-    setForm((prev) => ({ ...prev, [field]: value }))
+  function update(patch: Partial<RefractionFormData>) {
+    setForm((prev) => ({ ...prev, ...patch }))
     setIsDirty(true)
-    if (errors[field as string]) {
-      setErrors((prev) => {
-        const next = { ...prev }
-        delete next[field as string]
-        return next
-      })
-    }
   }
 
-  function validate(): boolean {
-    const errs: Record<string, string> = {}
-    if (!form.chiefComplaint.trim())
-      errs.chiefComplaint = "Vui lòng nhập lý do đến khám"
-    if (!form.ucvaOd.trim()) errs.ucvaOd = "Vui lòng nhập thị lực mắt phải"
-    if (!form.ucvaOs.trim()) errs.ucvaOs = "Vui lòng nhập thị lực mắt trái"
-    setErrors(errs)
-    return Object.keys(errs).length === 0
+  function updateEyeSection<
+    S extends "currentGlasses" | "objective" | "subjective" | "cycloplegic",
+  >(section: S, eye: "od" | "os", field: string, value: string) {
+    setForm((prev) => ({
+      ...prev,
+      [section]: {
+        ...prev[section],
+        [eye]: {
+          ...(prev[section][eye] as Record<string, string>),
+          [field]: value,
+        },
+      },
+    }))
+    setIsDirty(true)
   }
 
-  function getFullData(): ScreeningFormData {
-    return { ...form, step2 }
+  function updateOdOs(
+    section: "retinoscopy" | "iop" | "axialLength",
+    eye: "od" | "os",
+    value: string
+  ) {
+    setForm((prev) => ({
+      ...prev,
+      [section]: { ...prev[section], [eye]: value },
+    }))
+    setIsDirty(true)
   }
-
-  // --- Step 1 handlers ---
 
   function handleCancel() {
     if (isDirty) {
@@ -158,86 +109,21 @@ export function ScreeningForm({ patient, visit }: ScreeningFormProps) {
   }
 
   function handleSaveDraft() {
-    saveScreeningData(visit.id, getFullData())
-    setIsDirty(false)
-    navigate("/screening")
-    toast.success("Đã lưu nháp")
-  }
-
-  function handleContinueToStep2() {
-    if (!validate()) return
-    saveScreeningData(visit.id, getFullData())
-    setCurrentStep(2)
-  }
-
-  function handleFastTrack() {
-    saveScreeningData(visit.id, getFullData())
-    updateVisitStatus(visit.id, "dang_kham")
-    navigate("/screening")
-    toast.warning("Đã chuyển bệnh nhân đến bác sĩ (Red Flag)")
-  }
-
-  // --- Step 2 handlers ---
-
-  function handleBackToStep1() {
-    setCurrentStep(1)
-  }
-
-  function handleStep2SaveDraft() {
-    saveScreeningData(visit.id, getFullData())
+    saveRefractionData(visit.id, form)
     setIsDirty(false)
     navigate("/screening")
     toast.success("Đã lưu nháp")
   }
 
   function handleComplete() {
-    saveScreeningData(visit.id, getFullData())
+    saveRefractionData(visit.id, form)
     updateVisitStatus(visit.id, "dang_kham")
     navigate("/screening")
-    toast.success("Hoàn thành sàng lọc — chờ bác sĩ khám")
-  }
-
-  function toggleGroup(group: DiseaseGroup) {
-    setStep2((prev) => {
-      const isSelected = prev.selectedGroups.includes(group)
-      if (isSelected) {
-        return {
-          ...prev,
-          selectedGroups: prev.selectedGroups.filter((g) => g !== group),
-          groupOrder: prev.groupOrder.filter((g) => g !== group),
-        }
-      }
-      return {
-        ...prev,
-        selectedGroups: [...prev.selectedGroups, group],
-        groupOrder: [...prev.groupOrder, group],
-      }
-    })
-    setIsDirty(true)
-  }
-
-  function handleDragEnd(event: DragEndEvent) {
-    const { active, over } = event
-    if (over && active.id !== over.id) {
-      setStep2((prev) => {
-        const oldIndex = prev.groupOrder.indexOf(active.id as DiseaseGroup)
-        const newIndex = prev.groupOrder.indexOf(over.id as DiseaseGroup)
-        return {
-          ...prev,
-          groupOrder: arrayMove(prev.groupOrder, oldIndex, newIndex),
-        }
-      })
-      setIsDirty(true)
-    }
-  }
-
-  function handleDryEyeUpdate(data: DryEyeFormData) {
-    setStep2((prev) => ({ ...prev, dryEye: data }))
-    setIsDirty(true)
+    toast.success("Hoàn thành khám khúc xạ — chờ bác sĩ khám")
   }
 
   return (
-    <div className="mx-auto max-w-6xl space-y-6 p-6">
+    <div className="mx-auto max-w-4xl space-y-3 p-6">
       <ScreeningFormHeader patient={patient} visit={visit} />
       <ScreeningHistoryPanel
         patient={patient}
@@ -251,86 +137,147 @@ export function ScreeningForm({ patient, visit }: ScreeningFormProps) {
         patientId={patient.id}
         visitId={visit.id}
       />
-      <ScreeningStepIndicator currentStep={currentStep} />
 
-      {currentStep === 1 ? (
-        <>
-          <ScreeningIntakeSummary
-            patient={patient}
-            onPatientUpdate={(data) => updatePatient(patient.id, data)}
-          />
-          <ScreeningFormInitial
-            form={form}
-            errors={errors}
-            onUpdate={updateField}
-          />
-          <ScreeningFormRedFlags
-            form={form}
-            onUpdate={updateField}
-            onFastTrack={handleFastTrack}
-          />
-          <ScreeningFormNotes form={form} onUpdate={updateField} />
+      {/* Intake Summary */}
+      <ScreeningIntakeSummary
+        patient={patient}
+        onPatientUpdate={(data) => updatePatient(patient.id, data)}
+      />
 
-          {/* Step 1 Footer */}
-          <div className="flex items-center justify-between border-t border-border pt-4">
-            <Button variant="outline" onClick={handleCancel}>
-              Hủy
-            </Button>
-            <div className="flex gap-2">
-              <Button variant="outline" onClick={handleSaveDraft}>
-                Lưu nháp
-              </Button>
-              <Button onClick={handleContinueToStep2}>Tiếp tục →</Button>
-            </div>
-          </div>
-        </>
-      ) : (
-        <>
-          <ScreeningStep2Summary form={form} />
-          <ScreeningStep2GroupSelector
-            selectedGroups={step2.selectedGroups}
-            onToggle={toggleGroup}
+      {/* Chief Complaint */}
+      <ScreeningChiefComplaint
+        patient={patient}
+        onPatientUpdate={(data) => updatePatient(patient.id, data)}
+      />
+
+      {/* Kính cũ */}
+      <section className="rounded-lg border border-border bg-background">
+        <div className="px-3.5 py-2.5">
+          <span className="text-sm font-semibold">Kính cũ</span>
+        </div>
+        <div className="border-t border-border px-3.5 py-3">
+          <RefractionTable
+            odData={form.currentGlasses.od}
+            osData={form.currentGlasses.os}
+            columns={["sph", "cyl", "axis", "va", "add"]}
+            onOdChange={(f, v) => updateEyeSection("currentGlasses", "od", f, v)}
+            onOsChange={(f, v) => updateEyeSection("currentGlasses", "os", f, v)}
           />
+        </div>
+      </section>
 
-          {/* Sortable group forms */}
-          {step2.groupOrder.length > 0 && (
-            <DndContext
-              sensors={sensors}
-              collisionDetection={closestCenter}
-              onDragEnd={handleDragEnd}
-            >
-              <SortableContext
-                items={step2.groupOrder}
-                strategy={verticalListSortingStrategy}
-              >
-                <div className="space-y-3">
-                  {step2.groupOrder.map((group) => (
-                    <ScreeningStep2GroupForm
-                      key={group}
-                      group={group}
-                      dryEyeData={step2.dryEye}
-                      onDryEyeUpdate={handleDryEyeUpdate}
-                    />
-                  ))}
-                </div>
-              </SortableContext>
-            </DndContext>
-          )}
+      {/* Khúc xạ khách quan */}
+      <section className="rounded-lg border border-border bg-background">
+        <div className="flex items-center gap-2 px-3.5 py-2.5">
+          <span className="text-sm font-semibold">Khúc xạ khách quan</span>
+          <span className="rounded bg-amber-100 px-1.5 py-0.5 text-[9px] font-medium text-amber-800 dark:bg-amber-950 dark:text-amber-400">
+            Chỉ lưu trữ
+          </span>
+        </div>
+        <div className="border-t border-border px-3.5 py-3">
+          <RefractionTable
+            odData={form.objective.od}
+            osData={form.objective.os}
+            columns={["sph", "cyl", "axis", "va"]}
+            onOdChange={(f, v) => updateEyeSection("objective", "od", f, v)}
+            onOsChange={(f, v) => updateEyeSection("objective", "os", f, v)}
+          />
+        </div>
+      </section>
 
-          {/* Step 2 Footer */}
-          <div className="flex items-center justify-between border-t border-border pt-4">
-            <Button variant="outline" onClick={handleBackToStep1}>
-              ← Quay lại
-            </Button>
-            <div className="flex gap-2">
-              <Button variant="outline" onClick={handleStep2SaveDraft}>
-                Lưu nháp
-              </Button>
-              <Button onClick={handleComplete}>Hoàn thành →</Button>
-            </div>
-          </div>
-        </>
-      )}
+      {/* Khúc xạ chủ quan */}
+      <section className="rounded-lg border border-border bg-background">
+        <div className="px-3.5 py-2.5">
+          <span className="text-sm font-semibold">Khúc xạ chủ quan</span>
+        </div>
+        <div className="border-t border-border px-3.5 py-3">
+          <RefractionTable
+            odData={form.subjective.od}
+            osData={form.subjective.os}
+            columns={["sph", "cyl", "axis", "va", "add", "vaNear"]}
+            onOdChange={(f, v) => updateEyeSection("subjective", "od", f, v)}
+            onOsChange={(f, v) => updateEyeSection("subjective", "os", f, v)}
+          />
+        </div>
+      </section>
+
+      {/* Liệt điều tiết */}
+      <ScreeningCycloplegicSection
+        enabled={form.cycloplegicEnabled}
+        onEnabledChange={(v) => update({ cycloplegicEnabled: v })}
+        agents={form.cycloplegicAgent}
+        onAgentsChange={(v) => update({ cycloplegicAgent: v })}
+        od={form.cycloplegic.od}
+        os={form.cycloplegic.os}
+        onOdChange={(f, v) => updateEyeSection("cycloplegic", "od", f, v)}
+        onOsChange={(f, v) => updateEyeSection("cycloplegic", "os", f, v)}
+      />
+
+      {/* Soi bóng đồng tử */}
+      <ScreeningOtherTestCard
+        title="Soi bóng đồng tử"
+        odValue={form.retinoscopy.od}
+        osValue={form.retinoscopy.os}
+        onOdChange={(v) => updateOdOs("retinoscopy", "od", v)}
+        onOsChange={(v) => updateOdOs("retinoscopy", "os", v)}
+      />
+
+      {/* Nhãn áp */}
+      <ScreeningOtherTestCard
+        title="Nhãn áp"
+        odValue={form.iop.od}
+        osValue={form.iop.os}
+        onOdChange={(v) => updateOdOs("iop", "od", v)}
+        onOsChange={(v) => updateOdOs("iop", "os", v)}
+      />
+
+      {/* Trục nhãn cầu */}
+      <ScreeningOtherTestCard
+        title="Trục nhãn cầu"
+        odValue={form.axialLength.od}
+        osValue={form.axialLength.os}
+        onOdChange={(v) => updateOdOs("axialLength", "od", v)}
+        onOsChange={(v) => updateOdOs("axialLength", "os", v)}
+      />
+
+      {/* Đơn kính */}
+      <ScreeningGlassesRxSection
+        enabled={form.glassesRxEnabled}
+        onEnabledChange={(v) => update({ glassesRxEnabled: v })}
+        data={form.glassesRx}
+        onDataChange={(v) => update({ glassesRx: v })}
+        subjectiveOd={form.subjective.od}
+        subjectiveOs={form.subjective.os}
+      />
+
+      {/* Ghi chú */}
+      <section className="rounded-lg border border-border bg-background">
+        <div className="px-3.5 py-2.5">
+          <span className="text-sm font-semibold">Ghi chú</span>
+        </div>
+        <div className="border-t border-border px-3.5 py-3">
+          <Textarea
+            value={form.notes}
+            onChange={(e) => update({ notes: e.target.value })}
+            placeholder="Ghi chú thêm nếu cần..."
+            rows={3}
+            className="text-xs"
+          />
+        </div>
+      </section>
+
+      {/* Footer */}
+      <div className="flex items-center justify-between border-t border-border pt-4">
+        <Button variant="outline" onClick={handleCancel}>
+          Hủy
+        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={handleSaveDraft}>
+            Lưu nháp
+          </Button>
+          <Button onClick={handleComplete}>Hoàn thành →</Button>
+        </div>
+      </div>
     </div>
   )
 }
